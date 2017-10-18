@@ -1,6 +1,11 @@
 #' @importFrom RcppParallel RcppParallelLibs
 #' @importFrom Rcpp sourceCpp
 #' @importFrom magrittr '%>%' '%T>%' '%<>%'
-#' @importFrom future '%<-%'
-#' @useDynLib detrendr
+#' @importFrom foreach '%dopar%'
+#' @useDynLib detrendr, .registration = TRUE
 NULL
+
+## quiet concerns of R CMD check re: the .'s that appear in pipelines
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(c(".", "var", "maxl", "l", "seed"))
+}

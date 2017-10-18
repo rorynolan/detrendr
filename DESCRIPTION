@@ -1,12 +1,17 @@
 Package: detrendr
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Detrend Images
+Version: 0.0.0.9001
+Authors@R: c(person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
+                    role = c("aut", "cre", "cph")),
+             person("Sergi", "Padilla-Parra", email = "spadilla@well.ox.ac.uk",
+                    role = c("ths", "cph")))
+Maintainer: Rory Nolan <rorynoolan@gmail.com>
+Description: Image series affected by bleaching must be corrected by 
+    'detrending' prior to the performance of quantitative analysis. 
+    'detrendr' is for correctly detrending images. It uses Nolan's algorithm
+    (Nolan et al., 2017 <doi:10.1093/bioinformatics/btx434>).
+License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
 LinkingTo: Rcpp,
@@ -19,8 +24,21 @@ Imports: Rcpp,
     BBmisc,
     checkmate,
     magrittr,
-    future,
     dplyr,
-    radiant.data
+    radiant.data,
+    foreach,
+    doParallel,
+    RSAGA,
+    fields,
+    filesstrings,
+    abind,
+    iterators,
+    purrr,
+    tiff,
+    viridisLite
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

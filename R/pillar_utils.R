@@ -1,13 +1,13 @@
-brightness_rows <- function(mat, parallel = FALSE) {
+pillars_to_cols <- function(arr3d, parallel = FALSE) {
   n_cores <- translate_parallel(parallel)
   RcppParallel::setThreadOptions(n_cores)
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
-  brightness_rows_(mat)
+  pillars_to_cols_(arr3d)
 }
 
-mean_rows <- function(mat, parallel = FALSE) {
+cols_to_pillars <- function(mat, output_dim, parallel = FALSE) {
   n_cores <- translate_parallel(parallel)
   RcppParallel::setThreadOptions(n_cores)
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
-  mean_rows_(mat)
+  cols_to_pillars_(mat, output_dim)
 }

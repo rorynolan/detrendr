@@ -36,22 +36,106 @@ img_detrend_l_specified <- function(arr3d, l, seed, parallel) {
   img_detrend_smoothed(arr3d, smoothed, seed, parallel)
 }
 
-img_detrend_exp <- function(arr3d, tau, cutoff = 0.05,
+img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
+  d <- dim(arr3d)
+  smoothed <- poly_fit_pillars(arr3d, degree, parallel = parallel)
+  img_detrend_smoothed(arr3d, smoothed, seed, parallel = parallel)
+}
+
+
+#' Detrend images.
+#'
+#' Correct images for bleaching (or any other effect that intorduces an unwanted
+#' trend) by *detrending*.
+#'
+#' There are 3 detrending methods available: *boxcar*, *exponential filtering*
+#' and *polynomial*. These are described in detail in Nolan et al., 2017.
+#' \itemize{\item *Boxcar* detrending with parameter \eqn{l} is a moving average
+#' detrending method using a sliding window of size \eqn{2l + 1}. \item
+#' *Exponential filtering* detrending is a moving weighted average method where
+#' for parameter \eqn{tau} the weights are calculated as exp\eqn{(- t / tau)}
+#' where \eqn{t} is the distance from the point of interest. \item *Polynomial*
+#' detrending works by fitting a polynomial line to a series of points and then
+#' correcting the series to remove the trend detailed by this polynomial fit.}
+#'
+#' @param img The image series to be detrended. This must be a 3-dimensional
+#'   array of non-negative integers, with the matrix defined as `img[, , 1]`
+#'   being the first frame of the image series.
+#' @param l The length parameter for *boxcar* detrending. The size of the
+#'   sliding window will be `2 * l + 1`. This must be a positive integer. Set
+#'   this to "auto" to use Nolan's algorithm to automatically find a suitable
+#'   value for this parameter (recommended).
+#' @param tau The \eqn{tau} parameter for *exponential filtering* detrending.
+#'   This must be a positive number. Set this to "auto" to use Nolan's algorithm
+#'   to automatically find a suitable value for this parameter (recommended).
+#' @param cutoff In *exponential filtering* detrending, for the weighted
+#'   average, every point gets a weight. This can slow down the computation
+#'   massively. However, many of the weights will be approximately zero. With
+#'   cutoff, we say that any point with weight less than or equal to `cutoff`
+#'   times the maximum weight may be ignored; so with `cutoff = 0.05`, any
+#'   weight less than 5\% of the maximum weight may be ignored. The default
+#'   value of this parameter is sensible and its value should not be set to
+#'   anything else without good reason.
+#' @param degree The degree of the polynomial to use for the polynomial
+#'   detrending. This must be a positive integer. Set this to "auto" to use
+#'   Nolan's algorithm to automatically find a suitable value for this
+#'   parameter (recommended).
+#' @param seed Random numbers may be generated during the detrending process.
+#'   For reproducability, you can set a seed for this random number generation
+#'   here.
+#' @param parallel Would you like to use multiple cores to speed up this
+#'   function? If so, set the number of cores here, or to use all available
+#'   cores, use `parallel = TRUE`.
+#'
+#' @return The detrended image, an object of class [detrended_img].
+#'
+#' @name detrending
+
+#' @rdname detrending
+#' @export
+img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
+  if (is.null(seed)) seed <- rand_seed()
+  checkmate::check_int(l, na.ok = TRUE)
+  if (is.na(l)) {
+    detrended_img(img, "boxcar", l, NA)
+  } else if (is.numeric(l)) {
+    if (l <= 0) stop("l must be greater than zero.")
+    l %<>% floor()
+    img_detrend_l_specified(img, l, seed, parallel) %>%
+      detrended_img("boxcar", l, FALSE)
+  } else if (is.character(l)) {
+    l <- tolower(l)
+    if (startsWith("auto", l)) {
+      l <- best_l(img, seed = seed, parallel = parallel)
+      img_detrend_l_specified(img, l, seed, parallel) %>%
+        detrended_img("boxcar", l, TRUE)
+    } else {
+      stop("If l is a string, the only permissible value is 'auto' whereas ",
+           "you have used '", l, "'.")
+    }
+  } else {
+    stop("l must be specified as a positive number or as 'auto'.")
+  }
+}
+
+#' @rdname detrending
+#' @export
+img_detrend_exp <- function(img, tau, cutoff = 0.05,
                             seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()
   checkmate::check_scalar(tau, na.ok = TRUE)
   if (is.na(tau)) {
-    radiant.data::set_attr(arr3d, "tau", NA)
+    detrended_img(img, "exponential", tau, NA)
   } else if (is.numeric(tau)) {
     if (tau <= 0) stop("tau must be greater than zero.")
-    img_detrend_tau_specified(arr3d, tau, cutoff, seed, parallel) %>%
-      radiant.data::set_attr("tau", tau)
+    img_detrend_tau_specified(img, tau, cutoff, seed, parallel) %>%
+      detrended_img("exponential", tau, TRUE)
   } else if (is.character(tau)) {
     tau <- tolower(tau)
     if (startsWith("auto", tau)) {
-      tau <- best_tau(arr3d, cutoff = cutoff, seed = seed, parallel = parallel)
-      img_detrend_tau_specified(arr3d, tau, cutoff, seed, parallel) %>%
-        radiant.data::set_attr("tau", paste("auto", tau))
+      tau <- best_tau(img, cutoff = cutoff, seed = seed, parallel = parallel)
+      img_detrend_tau_specified(img, tau, cutoff, seed, parallel) %>%
+        detrended_img("exponential", tau, FALSE)
     } else {
       stop("If tau is a string, the only permissible value is 'auto' whereas ",
            "you have used '", tau, "'.")
@@ -61,26 +145,28 @@ img_detrend_exp <- function(arr3d, tau, cutoff = 0.05,
   }
 }
 
-img_detrend_boxcar <- function(arr3d, l, seed = NULL, parallel = FALSE) {
+#' @rdname detrending
+#' @export
+img_detrend_polynom <- function(img, degree, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()
-  checkmate::check_int(l, na.ok = TRUE)
-  if (is.na(l)) {
-    radiant.data::set_attr(arr3d, "l", NA)
-  } else if (is.numeric(tau)) {
-    if (l <= 0) stop("l must be greater than zero.")
-    img_detrend_l_specified(arr3d, l, seed, parallel) %>%
-      radiant.data::set_attr("l", l)
-  } else if (is.character(l)) {
-    l <- tolower(l)
-    if (startsWith("auto", l)) {
-      l <- best_l(arr3d, seed = seed, parallel = parallel)
-      img_detrend_tau_specified(arr3d, l, seed, parallel) %>%
-        radiant.data::set_attr("l", paste("auto", l))
+  checkmate::check_int(degree, na.ok = TRUE)
+  if (is.na(degree)) {
+    detrended_img(img, "polynomial", degree, TRUE)
+  } else if (is.numeric(degree)) {
+    if (degree <= 0) stop("degree must be greater than zero.")
+    img_detrend_degree_specified(img, degree, seed, parallel) %>%
+      detrended_img("polynomial", degree, FALSE)
+  } else if (is.character(degree)) {
+    degree <- tolower(degree)
+    if (startsWith("auto", degree)) {
+      degree <- best_degree(img, seed = seed, parallel = parallel)
+      img_detrend_degree_specified(img, degree, seed, parallel) %>%
+        detrended_img("polynomial", degree, TRUE)
     } else {
-      stop("If tau is a string, the only permissible value is 'auto' whereas ",
-           "you have used '", l, "'.")
+      stop("If degree is a string, the only permissible value is 'auto' ",
+           "whereas you have used '", degree, "'.")
     }
   } else {
-    stop("tau must be specified as a positive number or as 'auto'.")
+    stop("degree must be specified as a positive number or as 'auto'.")
   }
 }

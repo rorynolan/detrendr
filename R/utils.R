@@ -23,3 +23,14 @@ mat_to_col_list <- function(mat) {
 }
 
 rand_seed <- function() sample.int(2 ^ 30, 1)
+
+can_be_integer <- function(x) {
+  all.equal(x, floor(x), check.attributes = FALSE)
+}
+
+frames_to_list <- function(img) {
+  if (is.matrix(img)) return(list(img))
+  d <- dim(img)
+  stopifnot(length(d) == 3)
+  purrr::map(seq_len(d[3]), ~ img[, , .])
+}
