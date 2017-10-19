@@ -3,3 +3,5 @@
 language: R
 sudo: false
 cache: packages
+
+- travis_wait 100 Rscript -e 'covr::codecov()'

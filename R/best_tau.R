@@ -13,21 +13,14 @@ rows_detrend_tau_specified_extended_mean_b <- function(mat, mat_extended,
     brightness_rows(parallel = parallel) %>%
     mean()
 }
-rows_detrend_tau_specified <- function(mat, tau, cutoff, parallel) {
-  l <- min(floor(- tau * log(cutoff)), ncol(mat) %>% {(. - 1) + (. - 2)})
-  extend_both_sides_by <- min(ncol(mat) - 2, l)
-  extended <- med_reflect_extend_rows(mat, extend_both_sides_by,
-                                      parallel = parallel)
-  rows_detrend_tau_specified_extended(mat, extended, tau, l, seed, parallel)
-}
 
 #' Find the best tau parameter for exponential smoothing detrending.
 #'
 #' Use Nolan's algorithm to find the ideal tau parameter for exponential
 #' smoothing detrending.
 #'
-#' @param arr3d A 3-dimensional array of integers representing the image series.
-#'   `arr3d[i, j, k]` is the pixel at `x = i`, `y = j` in frame `k` of the image
+#' @param img A 3-dimensional array of integers representing the image series.
+#'   `img[i, j, k]` is the pixel at `x = i`, `y = j` in frame `k` of the image
 #'   series.
 #' @param cutoff When exponential smoothing, neglect weights which are less than
 #'   `cutoff * central weight`. It is fine to leave this parameter at the
@@ -39,13 +32,17 @@ rows_detrend_tau_specified <- function(mat, tau, cutoff, parallel) {
 #' @return If no detrend is necessary, this function returns `NA`. If a detrend is required, this function returns a natural number which is the ideal `tau` parameter for exponential smoothing detrending.
 #'
 #' @references Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a novel automatic detrending algorithm, Bioinformatics, https://doi.org/10.1093/bioinformatics/btx434.
+#' @examples
+#' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+#'                 n_ch = 1)
+#' best_tau(img, seed = 0, parallel = 2)
 #'
 #' @export
-best_tau <- function(arr3d, cutoff = 0.05, seed = NULL, parallel = FALSE) {
+best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()
-  d <- dim(arr3d)
-  frame_length <- sum(!is.na(arr3d[, , 1]))
-  frame_means <- apply(arr3d, 3, mean, na.rm = TRUE)
+  d <- dim(img)
+  frame_length <- sum(!is.na(img[, , 1]))
+  frame_means <- apply(img, 3, mean, na.rm = TRUE)
   sim_mat <- myrpois_frames(frame_means, frame_length, seed, parallel)
   sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
     mean()
@@ -96,12 +93,6 @@ best_tau <- function(arr3d, cutoff = 0.05, seed = NULL, parallel = FALSE) {
     l <- min(floor(- middle_tau * log(cutoff)), max_l)
     middle_brightness_mean <- rows_detrend_tau_specified_extended_mean_b(
       sim_mat, sim_extended, middle_tau, l, seed, parallel = parallel)
-    if (middle_brightness_mean >= mean_brightness_tau_upper) {
-      return(round(mean(c(tau_upper, middle_tau))))
-    }
-    if (middle_brightness_mean <= mean_brightness_tau_lower) {
-      return(round(mean(c(tau_lower, middle_tau))))
-    }
     if (middle_brightness_mean < 1) {
       tau_lower <- middle_tau
       mean_brightness_tau_lower <- middle_brightness_mean
@@ -110,22 +101,6 @@ best_tau <- function(arr3d, cutoff = 0.05, seed = NULL, parallel = FALSE) {
       mean_brightness_tau_upper <- middle_brightness_mean
     } else {
       return(round(middle_tau))
-    }
-  }
-  round(mean(c(tau_lower, tau_upper)))
-  while (tau_upper - tau_lower > 1) {
-    middle_tau <- mean(c(tau_lower, tau_upper))
-    l <- min(floor(- middle_tau * log(cutoff)), max_l)
-    middle_brightness_mean <- rows_detrend_tau_specified_extended_mean_b(
-      sim_mat, sim_extended, middle_tau, l, seed, parallel = parallel)
-    if (middle_brightness_mean < 1) {
-      tau_lower <- middle_tau
-      mean_brightness_tau_lower <- middle_brightness_mean
-    } else if (middle_brightness_mean > 1) {
-      tau_upper <- middle_tau
-      mean_brightness_tau_upper <- middle_brightness_mean
-    } else {
-      return(middle_tau)
     }
   }
   upper_closer <- abs(mean_brightness_tau_upper - 1) >

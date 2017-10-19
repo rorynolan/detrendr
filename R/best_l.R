@@ -28,13 +28,7 @@ rows_detrend_l_specified_extended_mean_b <- function(mat, mat_extended, l,
     brightness_rows(parallel = parallel) %>%
     mean()
 }
-rows_detrend_l_specified <- function(mat, l, parallel) {
-  l <- min(l, ncol(mat) %>% {(. - 1) + (. - 2)})
-  extend_both_sides_by <- min(ncol(mat) - 2, l)
-  extended <- med_reflect_extend_rows(mat, extend_both_sides_by,
-                                      parallel = parallel)
-  rows_detrend_l_specified_extended(mat, extended, l, seed, parallel)
-}
+
 
 #' Find the best length parameter for boxcar detrending.
 #'
@@ -52,13 +46,17 @@ rows_detrend_l_specified <- function(mat, l, parallel) {
 #'   Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
 #'   novel automatic detrending algorithm, Bioinformatics,
 #'   https://doi.org/10.1093/bioinformatics/btx434.
+#' @examples
+#' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+#'                 n_ch = 1)
+#' best_l(img, seed = 0, parallel = 2)
 #'
 #' @export
-best_l <- function(arr3d, seed = NULL, parallel = FALSE) {
+best_l <- function(img, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()
-  d <- dim(arr3d)
-  frame_length <- sum(!is.na(arr3d[, , 1]))
-  frame_means <- apply(arr3d, 3, mean, na.rm = TRUE)
+  d <- dim(img)
+  frame_length <- sum(!is.na(img[, , 1]))
+  frame_means <- apply(img, 3, mean, na.rm = TRUE)
   sim_mat <- myrpois_frames(frame_means, frame_length, seed, parallel)
   sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
     mean()

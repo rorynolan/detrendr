@@ -9,10 +9,6 @@ mean_cols_ <- function(cols) {
     .Call(`_detrendr_mean_cols_`, cols)
 }
 
-mean_frames <- function(arr3d) {
-    .Call(`_detrendr_mean_frames`, arr3d)
-}
-
 med_reflect_extend_rows_ <- function(current, original, extend_both_sides_by, preserve_mean, smooth) {
     .Call(`_detrendr_med_reflect_extend_rows_`, current, original, extend_both_sides_by, preserve_mean, smooth)
 }

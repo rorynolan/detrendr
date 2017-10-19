@@ -32,12 +32,17 @@ cols_detrend_degree_specified_mean_b <- function(mat, degree, seed, parallel) {
 #'   novel automatic detrending algorithm, Bioinformatics,
 #'   https://doi.org/10.1093/bioinformatics/btx434.
 #'
+#' @examples
+#' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+#'                 n_ch = 1)
+#' best_degree(img, seed = 0, parallel = 2)
+#'
 #' @export
-best_degree <- function(arr3d, seed = NULL, parallel = FALSE) {
+best_degree <- function(img, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()
-  d <- dim(arr3d)
-  frame_length <- sum(!is.na(arr3d[, , 1]))
-  frame_means <- apply(arr3d, 3, mean, na.rm = TRUE)
+  d <- dim(img)
+  frame_length <- sum(!is.na(img[, , 1]))
+  frame_means <- apply(img, 3, mean, na.rm = TRUE)
   sim_mat <- myrpois_frames_t(frame_means, frame_length, seed, parallel)
   sim_brightness <- brightness_cols(sim_mat, parallel = parallel) %>%
     mean()

@@ -4,11 +4,11 @@
 \alias{best_tau}
 \title{Find the best tau parameter for exponential smoothing detrending.}
 \usage{
-best_tau(arr3d, cutoff = 0.05, seed = NULL, parallel = FALSE)
+best_tau(img, cutoff = 0.05, seed = NULL, parallel = FALSE)
 }
 \arguments{
-\item{arr3d}{A 3-dimensional array of integers representing the image series.
-\code{arr3d[i, j, k]} is the pixel at \code{x = i}, \code{y = j} in frame \code{k} of the image
+\item{img}{A 3-dimensional array of integers representing the image series.
+\code{img[i, j, k]} is the pixel at \code{x = i}, \code{y = j} in frame \code{k} of the image
 series.}
 
 \item{cutoff}{When exponential smoothing, neglect weights which are less than
@@ -26,6 +26,12 @@ If no detrend is necessary, this function returns \code{NA}. If a detrend is req
 \description{
 Use Nolan's algorithm to find the ideal tau parameter for exponential
 smoothing detrending.
+}
+\examples{
+img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+                n_ch = 1)
+best_tau(img, seed = 0, parallel = 2)
+
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a novel automatic detrending algorithm, Bioinformatics, https://doi.org/10.1093/bioinformatics/btx434.

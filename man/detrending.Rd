@@ -67,3 +67,29 @@ where \eqn{t} is the distance from the point of interest. \item \emph{Polynomial
 detrending works by fitting a polynomial line to a series of points and then
 correcting the series to remove the trend detailed by this polynomial fit.}
 }
+\examples{
+img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+                n_ch = 1)
+corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
+corrected10 <- img_detrend_boxcar(img, 10, seed = 0, parallel = 2)
+corrected50 <- img_detrend_boxcar(img, 50, seed = 0, parallel = 2)
+corrected100 <- img_detrend_boxcar(img, 100, seed = 0, parallel = 2)
+corrected300 <- img_detrend_boxcar(img, 300, seed = 0, parallel = 2)
+
+img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+                n_ch = 1)
+corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
+corrected10 <- img_detrend_exp(img, 10, seed = 0, parallel = 2)
+corrected50 <- img_detrend_exp(img, 50, seed = 0, parallel = 2)
+corrected100 <- img_detrend_exp(img, 100, seed = 0, parallel = 2)
+corrected1000 <- img_detrend_exp(img, 1000, seed = 0, parallel = 2)
+
+img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+                n_ch = 1)
+corrected <- img_detrend_polynom(img, "auto", seed = 0, parallel = 2)
+corrected1 <- img_detrend_polynom(img, 1, seed = 0, parallel = 2)
+corrected2 <- img_detrend_polynom(img, 2, seed = 0, parallel = 2)
+corrected4 <- img_detrend_polynom(img, 4, seed = 0, parallel = 2)
+corrected8 <- img_detrend_polynom(img, 8, seed = 0, parallel = 2)
+
+}

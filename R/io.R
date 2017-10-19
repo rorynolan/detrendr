@@ -38,25 +38,6 @@ read_tif <- function(path, n_ch = 1) {
   msg <- paste0("Could not recognise image '", path, "' as one with ",
                 n_ch, " channels.")
   if (n_dim == 2 && n_ch != 1) stop(msg)
-  if (n_dim == 4) {
-    rgb_chs_g0 <- purrr::map_lgl(seq_len(dim(image_data)[3]),
-                                 ~ any(image_data[, , ., ] > 0, ))
-    n_rgb_chs_g0 <- sum(rgb_chs_g0)
-    if (! n_rgb_chs_g0 %in% c(1, n_ch)) {
-      stop(msg)
-    }
-    image_data %>% {.[, , rgb_chs_g0, ]}
-    d <- dim(image_data)
-    if (d[3] == 1 && n_ch > 1) {
-      if (! d[4] %% n_ch == 0) {
-        stop(msg)
-      }
-      seqs <- purrr::map(seq_len(n_ch), seq(., d[4], by = n_ch))
-      image_data <- purrr::map(seqs, ~ image_data[, , 1, .]) %>%
-        purrr::reduce(~ abind::abind(.x, .y, along = 4)) %>%
-        aperm(c(1, 2, 4, 3))
-    }
-  }
   if (n_dim == 3) {
     if (n_ch > d[3]) stop(msg)
     if (n_ch > 1 && n_ch < d[3]) {
@@ -158,7 +139,7 @@ write_tif <- function(img, file_name, na = "error", rds = TRUE) {
   d <- dim(img)
   ndim <- length(d)
   if (ndim > 4) {
-    stop("WriteIntImage can handle images of at most 4 dimensions. ",
+    stop("write_tif() can handle images of at most 4 dimensions. ",
          "Your image has ", ndim, "dimensions.")
   } else if (ndim == 4) {
     for (i in seq_along(d[3])) {

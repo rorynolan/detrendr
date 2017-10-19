@@ -27,9 +27,9 @@ path <- system.file("extdata", "bleached.tif", package = "detrendr")
 img <- read_tif(path)
 dim(img)  # img has 500 frames
 display(img[, , 1],  # first frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+        breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
 display(img[, , 500],  # last frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+        breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
 ```
 
 ## Detrending
@@ -41,11 +41,11 @@ plot(apply(img, 3, mean), ylim = c(60, 150))
 We can correct for this (and check how long it takes):
 ```{r detrend}
 system.time(corrected_exp <- img_detrend_exp(img, "auto", 
-                                         seed = 0, parallel = 2))["elapsed"]
+                                             seed = 0, parallel = 2))["elapsed"]
 display(corrected_exp[, , 1],  # first frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+        breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
 display(corrected_exp[, , 500],  # last frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+        breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
 ```
 
 So we see that the corrected series does not have this drop-off in intensity. 

@@ -27,17 +27,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// mean_frames
-NumericVector mean_frames(NumericVector arr3d);
-RcppExport SEXP _detrendr_mean_frames(SEXP arr3dSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
-    rcpp_result_gen = Rcpp::wrap(mean_frames(arr3d));
-    return rcpp_result_gen;
-END_RCPP
-}
 // med_reflect_extend_rows_
 NumericMatrix med_reflect_extend_rows_(NumericMatrix current, NumericMatrix original, std::size_t extend_both_sides_by, bool preserve_mean, bool smooth);
 RcppExport SEXP _detrendr_med_reflect_extend_rows_(SEXP currentSEXP, SEXP originalSEXP, SEXP extend_both_sides_bySEXP, SEXP preserve_meanSEXP, SEXP smoothSEXP) {
@@ -332,7 +321,6 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_brightness_cols_", (DL_FUNC) &_detrendr_brightness_cols_, 1},
     {"_detrendr_mean_cols_", (DL_FUNC) &_detrendr_mean_cols_, 1},
-    {"_detrendr_mean_frames", (DL_FUNC) &_detrendr_mean_frames, 1},
     {"_detrendr_med_reflect_extend_rows_", (DL_FUNC) &_detrendr_med_reflect_extend_rows_, 5},
     {"_detrendr_med_reflect_extend_pillars_", (DL_FUNC) &_detrendr_med_reflect_extend_pillars_, 5},
     {"_detrendr_med_reflect_extend_", (DL_FUNC) &_detrendr_med_reflect_extend_, 5},

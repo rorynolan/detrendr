@@ -19,7 +19,6 @@ LinkingTo: Rcpp,
 SystemRequirements: GNU make
 Imports: Rcpp,
     RcppParallel,
-    matrixStats,
     parallel,
     BBmisc,
     checkmate,
@@ -35,10 +34,11 @@ Imports: Rcpp,
     iterators,
     purrr,
     tiff,
-    viridisLite
+    grDevices
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Suggests: testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr

@@ -4,11 +4,11 @@
 \alias{best_l}
 \title{Find the best length parameter for boxcar detrending.}
 \usage{
-best_l(arr3d, seed = NULL, parallel = FALSE)
+best_l(img, seed = NULL, parallel = FALSE)
 }
 \arguments{
-\item{arr3d}{A 3-dimensional array of integers representing the image series.
-\code{arr3d[i, j, k]} is the pixel at \code{x = i}, \code{y = j} in frame \code{k} of the image
+\item{img}{A 3-dimensional array of integers representing the image series.
+\code{img[i, j, k]} is the pixel at \code{x = i}, \code{y = j} in frame \code{k} of the image
 series.}
 
 \item{seed}{A seed for the random number generation needed in this function.
@@ -24,6 +24,12 @@ length parameter for boxcar detrending.
 \description{
 Use Nolan's algorithm to find the ideal length parameter for boxcar
 detrending. Boxcar detrending is also referred to as 'running average'.
+}
+\examples{
+img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
+                n_ch = 1)
+best_l(img, seed = 0, parallel = 2)
+
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro

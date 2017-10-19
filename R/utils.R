@@ -25,7 +25,7 @@ mat_to_col_list <- function(mat) {
 rand_seed <- function() sample.int(2 ^ 30, 1)
 
 can_be_integer <- function(x) {
-  all.equal(x, floor(x), check.attributes = FALSE)
+  isTRUE(all.equal(x, floor(x), check.attributes = FALSE))
 }
 
 frames_to_list <- function(img) {
@@ -33,4 +33,29 @@ frames_to_list <- function(img) {
   d <- dim(img)
   stopifnot(length(d) == 3)
   purrr::map(seq_len(d[3]), ~ img[, , .])
+}
+
+#' Apply a function to each pillar of a 3-dimensional array.
+#'
+#' Define a 'pillar' of a 3-dimensional array as pillar `i,j` off array
+#' `arr` being `arr[i, j, ]`. This function applies a specified
+#' function to each pillar.
+#'
+#' @param arr3d A 3-dimensional array.
+#' @param FUN A function which takes a vector as imput and, for a given input
+#'   length, outputs a vector of constant length (can be 1).
+#'
+#' @return If `FUN` is returning length 1 vectors, a matrix whereby
+#'   `mat[i, j] = FUN(arr3d[i, j, ])`. If FUN is returning vectors of
+#'   length `l > 1`, a 3-dimensional array whereby \code{arr[i, j, ] =
+#'   FUN(arr3d[i, j, ])}.
+#' @export
+apply_on_pillars <- function(arr3d, FUN) {
+  apply(arr3d, c(1, 2), FUN) %>% {
+    if (length(dim(.)) == 3) {
+      aperm(., c(2, 3, 1))
+    } else {
+      .
+    }
+  }
 }

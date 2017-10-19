@@ -2,6 +2,7 @@
 #' @importFrom Rcpp sourceCpp
 #' @importFrom magrittr '%>%' '%T>%' '%<>%'
 #' @importFrom foreach '%dopar%'
+#' @importFrom grDevices adjustcolor
 #' @useDynLib detrendr, .registration = TRUE
 NULL
 
