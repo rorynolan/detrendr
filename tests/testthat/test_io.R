@@ -2,6 +2,9 @@ img_path <- system.file("extdata", "bleached.tif", package = "detrendr")
 img <- read_tif(img_path, n_ch = 1)
 
 test_that("display works", {
+  cwd <- getwd()
+  on.exit(setwd(cwd))
+  setwd(tempdir())
   expect_null(display(img[, , 1]))
 })
 
