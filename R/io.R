@@ -13,8 +13,7 @@
 #'
 #' If the result has
 #'
-#' @param path The path to the image file on disk. The file extension must
-#'   be one of '.jpeg', '.png', '.tiff' or '.tif'.
+#' @param path The path to the image file on disk.
 #' @param n_ch The number of channels in the image.
 #'
 #' @return An array of integers representing the image.

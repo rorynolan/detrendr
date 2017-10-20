@@ -7,8 +7,7 @@
 read_tif(path, n_ch = 1)
 }
 \arguments{
-\item{path}{The path to the image file on disk. The file extension must
-be one of '.jpeg', '.png', '.tiff' or '.tif'.}
+\item{path}{The path to the image file on disk.}
 
 \item{n_ch}{The number of channels in the image.}
 }
