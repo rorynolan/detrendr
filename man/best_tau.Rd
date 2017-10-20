@@ -18,10 +18,14 @@ default level.}
 \item{seed}{A seed for the random number generation needed in this function.
 If you do not set a seed, one will be chosen randomly.}
 
-\item{parallel}{Do you want this function to run on multiple cores? If not, use \code{parallel = FALSE} (the default). To use \code{n} cores, use \code{parallel = n} or to use all available cores use \code{parallel = TRUE}.}
+\item{parallel}{Do you want this function to run on multiple cores? If not,
+use \code{parallel = FALSE} (the default). To use \code{n} cores, use \code{parallel = n}
+or to use all available cores use \code{parallel = TRUE}.}
 }
 \value{
-If no detrend is necessary, this function returns \code{NA}. If a detrend is required, this function returns a natural number which is the ideal \code{tau} parameter for exponential smoothing detrending.
+If no detrend is necessary, this function returns \code{NA}. If a detrend
+is required, this function returns a natural number which is the ideal
+\code{tau} parameter for exponential smoothing detrending.
 }
 \description{
 Use Nolan's algorithm to find the ideal tau parameter for exponential
@@ -34,5 +38,9 @@ best_tau(img, seed = 0, parallel = 2)
 
 }
 \references{
-Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a novel automatic detrending algorithm, Bioinformatics, https://doi.org/10.1093/bioinformatics/btx434.
+Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro
+Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu
+Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
+novel automatic detrending algorithm, Bioinformatics,
+https://doi.org/10.1093/bioinformatics/btx434.
 }

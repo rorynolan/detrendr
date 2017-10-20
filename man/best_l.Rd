@@ -14,7 +14,9 @@ series.}
 \item{seed}{A seed for the random number generation needed in this function.
 If you do not set a seed, one will be chosen randomly.}
 
-\item{parallel}{Do you want this function to run on multiple cores? If not, use \code{parallel = FALSE} (the default). To use \code{n} cores, use \code{parallel = n} or to use all available cores use \code{parallel = TRUE}.}
+\item{parallel}{Do you want this function to run on multiple cores? If not,
+use \code{parallel = FALSE} (the default). To use \code{n} cores, use \code{parallel = n}
+or to use all available cores use \code{parallel = TRUE}.}
 }
 \value{
 If no detrend is necessary, this function returns \code{NA}. If a detrend

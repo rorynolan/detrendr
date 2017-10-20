@@ -79,7 +79,7 @@ display <- function(img, ...) {
 
 #' Write an integer array to disk as a tiff image.
 #'
-#' This function allows you to write integer-vlued arrays to disk as tiff files
+#' This function allows you to write integer-valued arrays to disk as tiff files
 #' as you would want, which is cumbersome with [tiff::writeTIFF()].
 #'
 #' @param img An integer array.

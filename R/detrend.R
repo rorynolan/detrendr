@@ -45,7 +45,7 @@ img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
 
 #' Detrend images.
 #'
-#' Correct images for bleaching (or any other effect that intorduces an unwanted
+#' Correct images for bleaching (or any other effect that introduces an unwanted
 #' trend) by *detrending*.
 #'
 #' There are 3 detrending methods available: *boxcar*, *exponential filtering*
@@ -81,7 +81,7 @@ img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
 #'   Nolan's algorithm to automatically find a suitable value for this
 #'   parameter (recommended).
 #' @param seed Random numbers may be generated during the detrending process.
-#'   For reproducability, you can set a seed for this random number generation
+#'   For reproducibility, you can set a seed for this random number generation
 #'   here.
 #' @param parallel Would you like to use multiple cores to speed up this
 #'   function? If so, set the number of cores here, or to use all available
@@ -92,6 +92,12 @@ img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
 #' @name detrending
 
 #' @rdname detrending
+#'
+#' @references Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro
+#'   Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu
+#'   Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
+#'   novel automatic detrending algorithm, Bioinformatics,
+#'   https://doi.org/10.1093/bioinformatics/btx434.
 #'
 #' @examples
 #' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),

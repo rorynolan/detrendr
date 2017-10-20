@@ -24,7 +24,7 @@ this to "auto" to use Nolan's algorithm to automatically find a suitable
 value for this parameter (recommended).}
 
 \item{seed}{Random numbers may be generated during the detrending process.
-For reproducability, you can set a seed for this random number generation
+For reproducibility, you can set a seed for this random number generation
 here.}
 
 \item{parallel}{Would you like to use multiple cores to speed up this
@@ -53,7 +53,7 @@ parameter (recommended).}
 The detrended image, an object of class \link{detrended_img}.
 }
 \description{
-Correct images for bleaching (or any other effect that intorduces an unwanted
+Correct images for bleaching (or any other effect that introduces an unwanted
 trend) by \emph{detrending}.
 }
 \details{
@@ -92,4 +92,11 @@ corrected2 <- img_detrend_polynom(img, 2, seed = 0, parallel = 2)
 corrected4 <- img_detrend_polynom(img, 4, seed = 0, parallel = 2)
 corrected8 <- img_detrend_polynom(img, 8, seed = 0, parallel = 2)
 
+}
+\references{
+Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro
+Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu
+Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
+novel automatic detrending algorithm, Bioinformatics,
+https://doi.org/10.1093/bioinformatics/btx434.
 }

@@ -23,7 +23,7 @@ An object of class \code{detrended_img}.
 }
 \description{
 A \link{detrended_img} is a 3-dimensional array of integers which is the result of
-a detrendind routine. It has 3 attributes: \describe{\item{\code{method}}{The
+a detrending routine. It has 3 attributes: \describe{\item{\code{method}}{The
 detrending method used. This must be one of \code{"boxcar"}, \code{"exponential"} or
 \code{"polynomial"}. } \item{\code{parameter}}{The value of the parameter used. This
 will be the \code{l}, \code{tau} or \code{degree} parameter for the respective methods.}

@@ -27,11 +27,19 @@ rows_detrend_tau_specified_extended_mean_b <- function(mat, mat_extended,
 #'   default level.
 #' @param seed A seed for the random number generation needed in this function.
 #'   If you do not set a seed, one will be chosen randomly.
-#' @param parallel Do you want this function to run on multiple cores? If not, use `parallel = FALSE` (the default). To use `n` cores, use `parallel = n` or to use all available cores use `parallel = TRUE`.
+#' @param parallel Do you want this function to run on multiple cores? If not,
+#'   use `parallel = FALSE` (the default). To use `n` cores, use `parallel = n`
+#'   or to use all available cores use `parallel = TRUE`.
 #'
-#' @return If no detrend is necessary, this function returns `NA`. If a detrend is required, this function returns a natural number which is the ideal `tau` parameter for exponential smoothing detrending.
+#' @return If no detrend is necessary, this function returns `NA`. If a detrend
+#'   is required, this function returns a natural number which is the ideal
+#'   `tau` parameter for exponential smoothing detrending.
 #'
-#' @references Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a novel automatic detrending algorithm, Bioinformatics, https://doi.org/10.1093/bioinformatics/btx434.
+#' @references Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro
+#'   Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu
+#'   Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
+#'   novel automatic detrending algorithm, Bioinformatics,
+#'   https://doi.org/10.1093/bioinformatics/btx434.
 #' @examples
 #' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
 #'                 n_ch = 1)

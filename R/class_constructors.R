@@ -1,7 +1,7 @@
 #' Detrended image class.
 #'
 #' A [detrended_img] is a 3-dimensional array of integers which is the result of
-#' a detrendind routine. It has 3 attributes: \describe{\item{`method`}{The
+#' a detrending routine. It has 3 attributes: \describe{\item{`method`}{The
 #' detrending method used. This must be one of `"boxcar"`, `"exponential"` or
 #' `"polynomial"`. } \item{`parameter`}{The value of the parameter used. This
 #' will be the `l`, `tau` or `degree` parameter for the respective methods.}

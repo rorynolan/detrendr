@@ -9,7 +9,7 @@ apply_on_pillars(arr3d, FUN)
 \arguments{
 \item{arr3d}{A 3-dimensional array.}
 
-\item{FUN}{A function which takes a vector as imput and, for a given input
+\item{FUN}{A function which takes a vector as input and, for a given input
 length, outputs a vector of constant length (can be 1).}
 }
 \value{

@@ -23,7 +23,7 @@ here a natural number (must be between 0 and 2 ^ 32 - 1) to use in place of
 single R object) file?}
 }
 \description{
-This function allows you to write integer-vlued arrays to disk as tiff files
+This function allows you to write integer-valued arrays to disk as tiff files
 as you would want, which is cumbersome with \code{\link[tiff:writeTIFF]{tiff::writeTIFF()}}.
 }
 \examples{

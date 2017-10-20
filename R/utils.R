@@ -42,7 +42,7 @@ frames_to_list <- function(img) {
 #' function to each pillar.
 #'
 #' @param arr3d A 3-dimensional array.
-#' @param FUN A function which takes a vector as imput and, for a given input
+#' @param FUN A function which takes a vector as input and, for a given input
 #'   length, outputs a vector of constant length (can be 1).
 #'
 #' @return If `FUN` is returning length 1 vectors, a matrix whereby
