@@ -6,6 +6,9 @@ test_that("display works", {
 })
 
 test_that("write_tif works", {
+  skip_on_appveyor()
+  skip_on_cran()
+  skip_on_travis()
   cwd <- getwd()
   on.exit(setwd(cwd))
   setwd(tempdir())

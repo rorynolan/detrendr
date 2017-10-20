@@ -2,6 +2,9 @@ img <- read_tif(system.file("extdata", "bleached.tif", package = "detrendr"),
                 n_ch = 1)
 
 test_that("detrending works", {
+  skip_on_appveyor()
+  skip_on_cran()
+  skip_on_travis()
   corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected)), 4), 1.8061)
   corrected10 <- img_detrend_boxcar(img, 10, seed = 0, parallel = 2)
