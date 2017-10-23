@@ -6,11 +6,10 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 4 notes
+0 errors | 0 warnings | 2 notes
 
 Note 1. This is a new release.
 Note 2. GNU make is a system requirement. This is needed to use RcppParallel.
-Notes 3 and 4. Examples are taking a while (4 mins) to run. I like these examples and I would prefer not to shorten them, but I can if needed.
 
 ## Reverse dependencies
 
