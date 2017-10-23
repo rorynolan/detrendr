@@ -28,10 +28,13 @@ Use Nolan's algorithm to find the ideal polynomial degree for polynomial
 detrending.
 }
 \examples{
+\dontrun{
+## These examples are not run on CRAN because they take too long.
+## You should still try them for yourself.
 img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
                 n_ch = 1)
 best_degree(img, seed = 0, parallel = 2)
-
+}
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro

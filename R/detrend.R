@@ -100,6 +100,9 @@ img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
 #'   https://doi.org/10.1093/bioinformatics/btx434.
 #'
 #' @examples
+#' \dontrun{
+#' ## These examples are not run on CRAN because they take too long.
+#' ## You should still try them for yourself.
 #' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
 #'                 n_ch = 1)
 #' corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
@@ -107,7 +110,17 @@ img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
 #' corrected50 <- img_detrend_boxcar(img, 50, seed = 0, parallel = 2)
 #' corrected100 <- img_detrend_boxcar(img, 100, seed = 0, parallel = 2)
 #' corrected300 <- img_detrend_boxcar(img, 300, seed = 0, parallel = 2)
-#'
+#' corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
+#' corrected10 <- img_detrend_exp(img, 10, seed = 0, parallel = 2)
+#' corrected50 <- img_detrend_exp(img, 50, seed = 0, parallel = 2)
+#' corrected100 <- img_detrend_exp(img, 100, seed = 0, parallel = 2)
+#' corrected1000 <- img_detrend_exp(img, 1000, seed = 0, parallel = 2)
+#' corrected <- img_detrend_polynom(img, "auto", seed = 0, parallel = 2)
+#' corrected1 <- img_detrend_polynom(img, 1, seed = 0, parallel = 2)
+#' corrected2 <- img_detrend_polynom(img, 2, seed = 0, parallel = 2)
+#' corrected4 <- img_detrend_polynom(img, 4, seed = 0, parallel = 2)
+#' corrected8 <- img_detrend_polynom(img, 8, seed = 0, parallel = 2)
+#' }
 #' @export
 img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()
@@ -135,16 +148,6 @@ img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
 }
 
 #' @rdname detrending
-#'
-#' @examples
-#' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
-#'                 n_ch = 1)
-#' corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
-#' corrected10 <- img_detrend_exp(img, 10, seed = 0, parallel = 2)
-#' corrected50 <- img_detrend_exp(img, 50, seed = 0, parallel = 2)
-#' corrected100 <- img_detrend_exp(img, 100, seed = 0, parallel = 2)
-#' corrected1000 <- img_detrend_exp(img, 1000, seed = 0, parallel = 2)
-#'
 #' @export
 img_detrend_exp <- function(img, tau, cutoff = 0.05,
                             seed = NULL, parallel = FALSE) {
@@ -172,16 +175,6 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05,
 }
 
 #' @rdname detrending
-#'
-#' @examples
-#' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
-#'                 n_ch = 1)
-#' corrected <- img_detrend_polynom(img, "auto", seed = 0, parallel = 2)
-#' corrected1 <- img_detrend_polynom(img, 1, seed = 0, parallel = 2)
-#' corrected2 <- img_detrend_polynom(img, 2, seed = 0, parallel = 2)
-#' corrected4 <- img_detrend_polynom(img, 4, seed = 0, parallel = 2)
-#' corrected8 <- img_detrend_polynom(img, 8, seed = 0, parallel = 2)
-#'
 #' @export
 img_detrend_polynom <- function(img, degree, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()

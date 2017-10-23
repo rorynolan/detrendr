@@ -41,10 +41,13 @@ rows_detrend_tau_specified_extended_mean_b <- function(mat, mat_extended,
 #'   novel automatic detrending algorithm, Bioinformatics,
 #'   https://doi.org/10.1093/bioinformatics/btx434.
 #' @examples
+#' \dontrun{
+#' ## These examples are not run on CRAN because they take too long.
+#' ## You should still try them for yourself.
 #' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
 #'                 n_ch = 1)
 #' best_tau(img, seed = 0, parallel = 2)
-#'
+#' }
 #' @export
 best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()

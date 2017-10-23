@@ -33,10 +33,13 @@ cols_detrend_degree_specified_mean_b <- function(mat, degree, seed, parallel) {
 #'   https://doi.org/10.1093/bioinformatics/btx434.
 #'
 #' @examples
+#' \dontrun{
+#' ## These examples are not run on CRAN because they take too long.
+#' ## You should still try them for yourself.
 #' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
 #'                 n_ch = 1)
 #' best_degree(img, seed = 0, parallel = 2)
-#'
+#' }
 #' @export
 best_degree <- function(img, seed = NULL, parallel = FALSE) {
   if (is.null(seed)) seed <- rand_seed()
