@@ -10,7 +10,8 @@
 #include "summary_stats.h"
 
 template <class Vec>
-double reflect_index_med(const Vec& vec, std::size_t ind, char side) {
+double reflect_index_med(const Vec& vec, std::size_t ind, char side,
+                         bool no_negs = false) {
   int n = vec.size();
   double out = NAN;
   double med;
@@ -40,6 +41,8 @@ double reflect_index_med(const Vec& vec, std::size_t ind, char side) {
       out = vec[ind] + dist_to_go / median_dist * (med - vec[ind]);
     }
   }
+  if (no_negs && out < 0)
+    out = 0;
   return out;
 }
 
@@ -64,7 +67,8 @@ template <class Vec>
 std::vector<double> med_reflect_extend_(const Vec& vec, const Vec& orig,
                                         std::size_t extend_both_sides_by,
                                         bool preserve_mean = false,
-                                        bool smooth = false) {
+                                        bool smooth = false,
+                                        bool no_negs = false) {
   std::size_t vec_size = vec.size();
   std::size_t orig_size = orig.size();
   if (orig_size > vec_size)
@@ -85,10 +89,11 @@ std::vector<double> med_reflect_extend_(const Vec& vec, const Vec& orig,
     already_extended_total / 2;
   for (std::size_t i = 1; i <= extend_both_sides_by; ++i) {
     extended[extend_both_sides_by - i] =
-      reflect_index_med(orig, already_extended_both_sides + i , 'l');
+      reflect_index_med(orig, already_extended_both_sides + i , 'l', no_negs);
     extended[extended_size - extend_both_sides_by - 1 + i] =
       reflect_index_med(orig,
-                        orig_size - (already_extended_both_sides + i + 1), 'r');
+                        orig_size - (already_extended_both_sides + i + 1), 'r',
+                        no_negs);
   }
   if (smooth) {
     std::vector<double> extended_side(extended.begin(),

@@ -25,6 +25,8 @@
 #'
 #' @export
 read_tif <- function(path, n_ch = 1) {
+  checkmate::assert_int(n_ch)
+  checkmate::assert_scalar(n_ch)
   image_data <- suppressWarnings(tiff::readTIFF(path,
                                                 as.is = TRUE, all = TRUE))
   d <- dim(image_data[[1]])
@@ -101,7 +103,7 @@ display <- function(img, ...) {
 #' suppressWarnings(file.remove(list.files()))  # cleanup
 #'
 #' @export
-write_tif <- function(img, file_name, na = "error", rds = TRUE) {
+write_tif <- function(img, file_name, na = "error", rds = FALSE) {
   to_invisibly_return <- img
   if (!all(can_be_integer(img), na.rm = TRUE)) {
     stop("img must contain only integers")

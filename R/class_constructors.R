@@ -8,6 +8,10 @@
 #' \item{`auto`}{A boolean that is `TRUE` if the parameter was found
 #' automatically or `FALSE` if it was manually selected. }}
 #'
+#' Sometimes when detrending, you can get slight negative values in the
+#' detrended image. These values should really just be zero, so this constructor
+#' function sets negative values of `img` to zero.
+#'
 #' @param img The detrended image series. A 3-dimensional array of non-negative
 #'   integers.
 #' @param method The method used. One of `"boxcar"`, `"exponential"` or
@@ -22,6 +26,7 @@
 detrended_img <- function(img, method, parameter, auto) {
   checkmate::check_array(img, d = 3)
   checkmate::check_int(img, lower = 0)
+  img[img < 0] <- 0
   method %<>% RSAGA::match.arg.ext(c("boxcar", "exponential", "polynomial"),
                                    ignore.case = TRUE)
   attr(img, "method") <- method

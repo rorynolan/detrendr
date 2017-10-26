@@ -12,7 +12,7 @@ cols_detrend_degree_specified <- function(mat, degree, seed, parallel) {
 cols_detrend_degree_specified_mean_b <- function(mat, degree, seed, parallel) {
   cols_detrend_degree_specified(mat, degree, seed, parallel) %>%
     brightness_cols(parallel = parallel) %>%
-    mean()
+    mean(na.rm = TRUE)
 }
 
 #' Find the best polynomial degree for polynomial detrending.
@@ -48,7 +48,7 @@ best_degree <- function(img, seed = NULL, parallel = FALSE) {
   frame_means <- apply(img, 3, mean, na.rm = TRUE)
   sim_mat <- myrpois_frames_t(frame_means, frame_length, seed, parallel)
   sim_brightness <- brightness_cols(sim_mat, parallel = parallel) %>%
-    mean()
+    mean(na.rm = TRUE)
   if (sim_brightness <= 1) return(NA)
   lower_degree <- 0
   lower_degree_brightness <- sim_brightness

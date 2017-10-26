@@ -27,39 +27,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// med_reflect_extend_rows_
-NumericMatrix med_reflect_extend_rows_(NumericMatrix current, NumericMatrix original, std::size_t extend_both_sides_by, bool preserve_mean, bool smooth);
-RcppExport SEXP _detrendr_med_reflect_extend_rows_(SEXP currentSEXP, SEXP originalSEXP, SEXP extend_both_sides_bySEXP, SEXP preserve_meanSEXP, SEXP smoothSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type current(currentSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type original(originalSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type extend_both_sides_by(extend_both_sides_bySEXP);
-    Rcpp::traits::input_parameter< bool >::type preserve_mean(preserve_meanSEXP);
-    Rcpp::traits::input_parameter< bool >::type smooth(smoothSEXP);
-    rcpp_result_gen = Rcpp::wrap(med_reflect_extend_rows_(current, original, extend_both_sides_by, preserve_mean, smooth));
-    return rcpp_result_gen;
-END_RCPP
-}
-// med_reflect_extend_pillars_
-NumericVector med_reflect_extend_pillars_(NumericVector current, NumericVector original, std::size_t extend_both_sides_by, bool preserve_mean, bool smooth);
-RcppExport SEXP _detrendr_med_reflect_extend_pillars_(SEXP currentSEXP, SEXP originalSEXP, SEXP extend_both_sides_bySEXP, SEXP preserve_meanSEXP, SEXP smoothSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type current(currentSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type original(originalSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type extend_both_sides_by(extend_both_sides_bySEXP);
-    Rcpp::traits::input_parameter< bool >::type preserve_mean(preserve_meanSEXP);
-    Rcpp::traits::input_parameter< bool >::type smooth(smoothSEXP);
-    rcpp_result_gen = Rcpp::wrap(med_reflect_extend_pillars_(current, original, extend_both_sides_by, preserve_mean, smooth));
-    return rcpp_result_gen;
-END_RCPP
-}
 // med_reflect_extend_
-NumericVector med_reflect_extend_(NumericVector vec, NumericVector orig, std::size_t extend_both_sides_by, bool preserve_mean, bool smooth);
-RcppExport SEXP _detrendr_med_reflect_extend_(SEXP vecSEXP, SEXP origSEXP, SEXP extend_both_sides_bySEXP, SEXP preserve_meanSEXP, SEXP smoothSEXP) {
+NumericVector med_reflect_extend_(NumericVector vec, NumericVector orig, std::size_t extend_both_sides_by, bool preserve_mean, bool smooth, bool no_negs);
+RcppExport SEXP _detrendr_med_reflect_extend_(SEXP vecSEXP, SEXP origSEXP, SEXP extend_both_sides_bySEXP, SEXP preserve_meanSEXP, SEXP smoothSEXP, SEXP no_negsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -68,7 +38,40 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::size_t >::type extend_both_sides_by(extend_both_sides_bySEXP);
     Rcpp::traits::input_parameter< bool >::type preserve_mean(preserve_meanSEXP);
     Rcpp::traits::input_parameter< bool >::type smooth(smoothSEXP);
-    rcpp_result_gen = Rcpp::wrap(med_reflect_extend_(vec, orig, extend_both_sides_by, preserve_mean, smooth));
+    Rcpp::traits::input_parameter< bool >::type no_negs(no_negsSEXP);
+    rcpp_result_gen = Rcpp::wrap(med_reflect_extend_(vec, orig, extend_both_sides_by, preserve_mean, smooth, no_negs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// med_reflect_extend_rows_
+NumericMatrix med_reflect_extend_rows_(NumericMatrix current, NumericMatrix original, std::size_t extend_both_sides_by, bool preserve_mean, bool smooth, bool no_negs);
+RcppExport SEXP _detrendr_med_reflect_extend_rows_(SEXP currentSEXP, SEXP originalSEXP, SEXP extend_both_sides_bySEXP, SEXP preserve_meanSEXP, SEXP smoothSEXP, SEXP no_negsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type current(currentSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type original(originalSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type extend_both_sides_by(extend_both_sides_bySEXP);
+    Rcpp::traits::input_parameter< bool >::type preserve_mean(preserve_meanSEXP);
+    Rcpp::traits::input_parameter< bool >::type smooth(smoothSEXP);
+    Rcpp::traits::input_parameter< bool >::type no_negs(no_negsSEXP);
+    rcpp_result_gen = Rcpp::wrap(med_reflect_extend_rows_(current, original, extend_both_sides_by, preserve_mean, smooth, no_negs));
+    return rcpp_result_gen;
+END_RCPP
+}
+// med_reflect_extend_pillars_
+NumericVector med_reflect_extend_pillars_(NumericVector current, NumericVector original, std::size_t extend_both_sides_by, bool preserve_mean, bool smooth, bool no_negs);
+RcppExport SEXP _detrendr_med_reflect_extend_pillars_(SEXP currentSEXP, SEXP originalSEXP, SEXP extend_both_sides_bySEXP, SEXP preserve_meanSEXP, SEXP smoothSEXP, SEXP no_negsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type current(currentSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type original(originalSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type extend_both_sides_by(extend_both_sides_bySEXP);
+    Rcpp::traits::input_parameter< bool >::type preserve_mean(preserve_meanSEXP);
+    Rcpp::traits::input_parameter< bool >::type smooth(smoothSEXP);
+    Rcpp::traits::input_parameter< bool >::type no_negs(no_negsSEXP);
+    rcpp_result_gen = Rcpp::wrap(med_reflect_extend_pillars_(current, original, extend_both_sides_by, preserve_mean, smooth, no_negs));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -211,6 +214,47 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// boxcar_smooth
+NumericVector boxcar_smooth(NumericVector extended, std::size_t extended_both_sides_by, std::size_t l);
+RcppExport SEXP _detrendr_boxcar_smooth(SEXP extendedSEXP, SEXP extended_both_sides_bySEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type extended(extendedSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type extended_both_sides_by(extended_both_sides_bySEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(boxcar_smooth(extended, extended_both_sides_by, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_smooth
+NumericVector weighted_smooth(NumericVector extended, std::size_t extended_both_sides_by, NumericVector weights, double weight_sum);
+RcppExport SEXP _detrendr_weighted_smooth(SEXP extendedSEXP, SEXP extended_both_sides_bySEXP, SEXP weightsSEXP, SEXP weight_sumSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type extended(extendedSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type extended_both_sides_by(extended_both_sides_bySEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< double >::type weight_sum(weight_sumSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_smooth(extended, extended_both_sides_by, weights, weight_sum));
+    return rcpp_result_gen;
+END_RCPP
+}
+// exp_smooth
+NumericVector exp_smooth(NumericVector extended, std::size_t extended_both_sides_by, double tau, std::size_t l);
+RcppExport SEXP _detrendr_exp_smooth(SEXP extendedSEXP, SEXP extended_both_sides_bySEXP, SEXP tauSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type extended(extendedSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type extended_both_sides_by(extended_both_sides_bySEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(exp_smooth(extended, extended_both_sides_by, tau, l));
+    return rcpp_result_gen;
+END_RCPP
+}
 // boxcar_smooth_rows_
 NumericMatrix boxcar_smooth_rows_(NumericMatrix extended, std::size_t extended_both_sides_by, std::size_t l);
 RcppExport SEXP _detrendr_boxcar_smooth_rows_(SEXP extendedSEXP, SEXP extended_both_sides_bySEXP, SEXP lSEXP) {
@@ -265,47 +309,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// boxcar_smooth
-NumericVector boxcar_smooth(NumericVector extended, std::size_t extended_both_sides_by, std::size_t l);
-RcppExport SEXP _detrendr_boxcar_smooth(SEXP extendedSEXP, SEXP extended_both_sides_bySEXP, SEXP lSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type extended(extendedSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type extended_both_sides_by(extended_both_sides_bySEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
-    rcpp_result_gen = Rcpp::wrap(boxcar_smooth(extended, extended_both_sides_by, l));
-    return rcpp_result_gen;
-END_RCPP
-}
-// weighted_smooth
-NumericVector weighted_smooth(NumericVector extended, std::size_t extended_both_sides_by, NumericVector weights, double weight_sum);
-RcppExport SEXP _detrendr_weighted_smooth(SEXP extendedSEXP, SEXP extended_both_sides_bySEXP, SEXP weightsSEXP, SEXP weight_sumSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type extended(extendedSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type extended_both_sides_by(extended_both_sides_bySEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
-    Rcpp::traits::input_parameter< double >::type weight_sum(weight_sumSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_smooth(extended, extended_both_sides_by, weights, weight_sum));
-    return rcpp_result_gen;
-END_RCPP
-}
-// exp_smooth
-NumericVector exp_smooth(NumericVector extended, std::size_t extended_both_sides_by, double tau, std::size_t l);
-RcppExport SEXP _detrendr_exp_smooth(SEXP extendedSEXP, SEXP extended_both_sides_bySEXP, SEXP tauSEXP, SEXP lSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type extended(extendedSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type extended_both_sides_by(extended_both_sides_bySEXP);
-    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
-    rcpp_result_gen = Rcpp::wrap(exp_smooth(extended, extended_both_sides_by, tau, l));
-    return rcpp_result_gen;
-END_RCPP
-}
 // square_root_
 NumericVector square_root_(NumericVector x);
 RcppExport SEXP _detrendr_square_root_(SEXP xSEXP) {
@@ -321,9 +324,9 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_brightness_cols_", (DL_FUNC) &_detrendr_brightness_cols_, 1},
     {"_detrendr_mean_cols_", (DL_FUNC) &_detrendr_mean_cols_, 1},
-    {"_detrendr_med_reflect_extend_rows_", (DL_FUNC) &_detrendr_med_reflect_extend_rows_, 5},
-    {"_detrendr_med_reflect_extend_pillars_", (DL_FUNC) &_detrendr_med_reflect_extend_pillars_, 5},
-    {"_detrendr_med_reflect_extend_", (DL_FUNC) &_detrendr_med_reflect_extend_, 5},
+    {"_detrendr_med_reflect_extend_", (DL_FUNC) &_detrendr_med_reflect_extend_, 6},
+    {"_detrendr_med_reflect_extend_rows_", (DL_FUNC) &_detrendr_med_reflect_extend_rows_, 6},
+    {"_detrendr_med_reflect_extend_pillars_", (DL_FUNC) &_detrendr_med_reflect_extend_pillars_, 6},
     {"_detrendr_mean_pillars_", (DL_FUNC) &_detrendr_mean_pillars_, 1},
     {"_detrendr_var_pillars_", (DL_FUNC) &_detrendr_var_pillars_, 1},
     {"_detrendr_median_pillars_", (DL_FUNC) &_detrendr_median_pillars_, 1},
@@ -336,13 +339,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_myrpois_", (DL_FUNC) &_detrendr_myrpois_, 2},
     {"_detrendr_myrpois_frames_", (DL_FUNC) &_detrendr_myrpois_frames_, 3},
     {"_detrendr_myrpois_frames_t_", (DL_FUNC) &_detrendr_myrpois_frames_t_, 3},
+    {"_detrendr_boxcar_smooth", (DL_FUNC) &_detrendr_boxcar_smooth, 3},
+    {"_detrendr_weighted_smooth", (DL_FUNC) &_detrendr_weighted_smooth, 4},
+    {"_detrendr_exp_smooth", (DL_FUNC) &_detrendr_exp_smooth, 4},
     {"_detrendr_boxcar_smooth_rows_", (DL_FUNC) &_detrendr_boxcar_smooth_rows_, 3},
     {"_detrendr_boxcar_smooth_pillars_", (DL_FUNC) &_detrendr_boxcar_smooth_pillars_, 3},
     {"_detrendr_exp_smooth_rows_", (DL_FUNC) &_detrendr_exp_smooth_rows_, 4},
     {"_detrendr_exp_smooth_pillars_", (DL_FUNC) &_detrendr_exp_smooth_pillars_, 4},
-    {"_detrendr_boxcar_smooth", (DL_FUNC) &_detrendr_boxcar_smooth, 3},
-    {"_detrendr_weighted_smooth", (DL_FUNC) &_detrendr_weighted_smooth, 4},
-    {"_detrendr_exp_smooth", (DL_FUNC) &_detrendr_exp_smooth, 4},
     {"_detrendr_square_root_", (DL_FUNC) &_detrendr_square_root_, 1},
     {NULL, NULL, 0}
 };

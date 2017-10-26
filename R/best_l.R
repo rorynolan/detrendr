@@ -2,7 +2,9 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, seed, parallel) {
   deviations_from_smoothed <- mat - mat_smoothed
   row_means <- mean_rows(mat, parallel = parallel)
   variance_correction_factors <- square_root(row_means / mat_smoothed,
-                                             parallel = parallel)
+                                             parallel = parallel) %T>% {
+    .[!is.finite(.)] <- 1
+  }
   deviations_from_smoothed <- deviations_from_smoothed *
     variance_correction_factors
   rm(variance_correction_factors)
@@ -26,7 +28,7 @@ rows_detrend_l_specified_extended_mean_b <- function(mat, mat_extended, l,
                                                      seed, parallel) {
   rows_detrend_l_specified_extended(mat, mat_extended, l, seed, parallel) %>%
     brightness_rows(parallel = parallel) %>%
-    mean()
+    mean(na.rm = TRUE)
 }
 
 
@@ -62,7 +64,7 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
   frame_means <- apply(img, 3, mean, na.rm = TRUE)
   sim_mat <- myrpois_frames(frame_means, frame_length, seed, parallel)
   sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
-    mean()
+    mean(na.rm = TRUE)
   if (sim_brightness <= 1) return(NA)
   max_possible_extension_both_sides <- d[3] - 2
   extend_both_sides_by <- min(250, max_possible_extension_both_sides)

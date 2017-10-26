@@ -22,7 +22,7 @@ struct MedReflectExtendRows : public Worker {
 
   std::size_t extend_both_sides_by;
 
-  bool preserve_mean, smooth;
+  bool preserve_mean, smooth, no_negs;
 
   // destination matrix
   RMatrix<double> output;
@@ -31,11 +31,11 @@ struct MedReflectExtendRows : public Worker {
   MedReflectExtendRows(NumericMatrix current,
                        NumericMatrix original,
                        std::size_t extend_both_sides_by,
-                       bool preserve_mean, bool smooth,
+                       bool preserve_mean, bool smooth, bool no_negs,
                        NumericMatrix output) :
     current(current), original(original),
     extend_both_sides_by(extend_both_sides_by),
-    preserve_mean(preserve_mean), smooth(smooth),
+    preserve_mean(preserve_mean), smooth(smooth), no_negs(no_negs),
     output(output) {}
 
   // extend the rows
@@ -48,7 +48,8 @@ struct MedReflectExtendRows : public Worker {
       vector<double> extended = med_reflect_extend_(current_row_i,
                                                     original_row_i,
                                                     extend_both_sides_by,
-                                                    preserve_mean, smooth);
+                                                    preserve_mean, smooth,
+                                                    no_negs);
       std::copy(extended.begin(), extended.end(), output.row(i).begin());
     }
   }
@@ -59,7 +60,8 @@ struct MedReflectExtendRows : public Worker {
 NumericMatrix med_reflect_extend_rows_(NumericMatrix current,
                                        NumericMatrix original,
                                        std::size_t extend_both_sides_by,
-                                       bool preserve_mean, bool smooth) {
+                                       bool preserve_mean, bool smooth,
+                                       bool no_negs) {
 
    // allocate the matrix we will return
    NumericMatrix output(current.nrow(),
@@ -68,7 +70,7 @@ NumericMatrix med_reflect_extend_rows_(NumericMatrix current,
    // create the worker
    MedReflectExtendRows medReflectExtendRows(current, original,
                                              extend_both_sides_by,
-                                             preserve_mean, smooth,
+                                             preserve_mean, smooth, no_negs,
                                              output);
 
    // call it with parallelFor
@@ -88,7 +90,7 @@ struct MedReflectExtendPillars : public Worker {
 
   const std::size_t extend_both_sides_by;
 
-  const bool preserve_mean, smooth;
+  const bool preserve_mean, smooth, no_negs;
 
   // destination matrix
   RVector<double> output;
@@ -100,11 +102,12 @@ struct MedReflectExtendPillars : public Worker {
                           const IntegerVector original_dim,
                           const std::size_t extend_both_sides_by,
                           const bool preserve_mean, const bool smooth,
+                          const bool no_negs,
                           NumericVector output) :
     current(current), current_dim(current_dim),
     original(original), original_dim(original_dim),
     extend_both_sides_by(extend_both_sides_by),
-    preserve_mean(preserve_mean), smooth(smooth),
+    preserve_mean(preserve_mean), smooth(smooth), no_negs(no_negs),
     output(output) {}
 
   // extend the rows
@@ -120,7 +123,8 @@ struct MedReflectExtendPillars : public Worker {
       vector<double> extended = med_reflect_extend_(current_pillar,
                                                     original_pillar,
                                                     extend_both_sides_by,
-                                                    preserve_mean, smooth);
+                                                    preserve_mean, smooth,
+                                                    no_negs);
       assign_pillar(output, output_dim, extended, p);
     }
   }
@@ -131,7 +135,8 @@ NumericVector med_reflect_extend_pillars_(NumericVector current,
                                           NumericVector original,
                                           std::size_t extend_both_sides_by,
                                           bool preserve_mean = false,
-                                          bool smooth = false) {
+                                          bool smooth = false,
+                                          bool no_negs = false) {
   IntegerVector current_dim = current.attr("dim");
   IntegerVector original_dim = original.attr("dim");
 
@@ -147,6 +152,7 @@ NumericVector med_reflect_extend_pillars_(NumericVector current,
                                                   original, original_dim,
                                                   extend_both_sides_by,
                                                   preserve_mean, smooth,
+                                                  no_negs,
                                                   output);
 
   // call it with parallelFor

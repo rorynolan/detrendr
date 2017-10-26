@@ -4,7 +4,7 @@
 \alias{write_tif}
 \title{Write an integer array to disk as a tiff image.}
 \usage{
-write_tif(img, file_name, na = "error", rds = TRUE)
+write_tif(img, file_name, na = "error", rds = FALSE)
 }
 \arguments{
 \item{img}{An integer array.}

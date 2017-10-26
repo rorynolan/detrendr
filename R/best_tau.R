@@ -11,7 +11,7 @@ rows_detrend_tau_specified_extended_mean_b <- function(mat, mat_extended,
   rows_detrend_tau_specified_extended(mat, mat_extended, tau, l, seed,
                                       parallel) %>%
     brightness_rows(parallel = parallel) %>%
-    mean()
+    mean(na.rm = TRUE)
 }
 
 #' Find the best tau parameter for exponential smoothing detrending.
@@ -56,7 +56,7 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
   frame_means <- apply(img, 3, mean, na.rm = TRUE)
   sim_mat <- myrpois_frames(frame_means, frame_length, seed, parallel)
   sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
-    mean()
+    mean(na.rm = TRUE)
   if (sim_brightness <= 1) return(NA)
   max_possible_extension_both_sides <- d[3] - 2
   extend_both_sides_by <- min(250, max_possible_extension_both_sides)

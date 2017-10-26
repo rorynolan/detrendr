@@ -30,3 +30,8 @@ will be the \code{l}, \code{tau} or \code{degree} parameter for the respective m
 \item{\code{auto}}{A boolean that is \code{TRUE} if the parameter was found
 automatically or \code{FALSE} if it was manually selected. }}
 }
+\details{
+Sometimes when detrending, you can get slight negative values in the
+detrended image. These values should really just be zero, so this constructor
+function sets negative values of \code{img} to zero.
+}

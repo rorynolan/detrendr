@@ -1,8 +1,12 @@
 img_detrend_smoothed <- function(arr3d, arr3d_smoothed, seed, parallel) {
+  arr3d_smoothed[arr3d_smoothed < 0] <- 0
   deviations_from_smoothed <- arr3d - arr3d_smoothed
   pillar_means <- as.vector(mean_pillars(arr3d, parallel = parallel))
-  variance_correction_factors <- square_root(pillar_means / arr3d_smoothed,
-                                             parallel = parallel)
+  variance_correction_factors <- square_root(pillar_means /
+                                               arr3d_smoothed,
+                                             parallel = parallel) %T>% {
+    .[!is.finite(.)] <- 1
+  }
   deviations_from_smoothed <- deviations_from_smoothed *
     variance_correction_factors
   rm(variance_correction_factors)
@@ -15,6 +19,7 @@ img_detrend_smoothed <- function(arr3d, arr3d_smoothed, seed, parallel) {
 }
 
 img_detrend_tau_specified <- function(arr3d, tau, cutoff, seed, parallel) {
+  if (is.na(tau)) return(arr3d)
   d <- dim(arr3d)
   l <- min(floor(- tau * log(cutoff)), d[3] %>% {(. - 1) + (. - 2)})
   extend_both_sides_by <- min(d[3] - 2, l)
@@ -26,6 +31,7 @@ img_detrend_tau_specified <- function(arr3d, tau, cutoff, seed, parallel) {
 }
 
 img_detrend_l_specified <- function(arr3d, l, seed, parallel) {
+  if (is.na(l)) return(arr3d)
   d <- dim(arr3d)
   l <- min(l, d[3] %>% {(. - 1) + (. - 2)})
   extend_both_sides_by <- min(d[3] - 2, l)
@@ -37,6 +43,7 @@ img_detrend_l_specified <- function(arr3d, l, seed, parallel) {
 }
 
 img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
+  if (is.na(degree)) return(arr3d)
   d <- dim(arr3d)
   smoothed <- poly_fit_pillars(arr3d, degree, parallel = parallel)
   img_detrend_smoothed(arr3d, smoothed, seed, parallel = parallel)
@@ -164,7 +171,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05,
     if (startsWith("auto", tau)) {
       tau <- best_tau(img, cutoff = cutoff, seed = seed, parallel = parallel)
       img_detrend_tau_specified(img, tau, cutoff, seed, parallel) %>%
-        detrended_img("exponential", tau, FALSE)
+        detrended_img("exponential", tau, TRUE)
     } else {
       stop("If tau is a string, the only permissible value is 'auto' whereas ",
            "you have used '", tau, "'.")
