@@ -1,3 +1,5 @@
+context("I/O")
+
 img_path <- system.file("extdata", "bleached.tif", package = "detrendr")
 img <- read_tif(img_path, n_ch = 1)
 
@@ -39,3 +41,4 @@ test_that("read_tif works", {
                img[, , seq(1, dim(img)[3], by = 2)])
   expect_error(read_tif(img_path, n_ch = 3), "Could not recognise")
 })
+

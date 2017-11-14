@@ -1,3 +1,5 @@
+context("Utilities")
+
 test_that("translate_parallel works", {
   expect_equal(detrendr:::translate_parallel(FALSE), 1)
   expect_equal(detrendr:::translate_parallel(2), 2)

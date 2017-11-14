@@ -20,27 +20,22 @@ using std::vector;
 
 struct BoxcarSmoothRows : public Worker {
   // source matrix
-  RMatrix<double> extended;
+  RMatrix<double> mat;
 
-  const std::size_t extended_both_sides_by, l;
+  const std::size_t l;
 
   // destination matrix
   RMatrix<double> output;
 
   // initialize with source and destination
-  BoxcarSmoothRows(NumericMatrix extended,
-                   std::size_t extended_both_sides_by, std::size_t l,
-                   NumericMatrix output) :
-    extended(extended), extended_both_sides_by(extended_both_sides_by), l(l),
-    output(output) {}
+  BoxcarSmoothRows(NumericMatrix mat, std::size_t l, NumericMatrix output) :
+    mat(mat), l(l), output(output) {}
 
   // extend the rows
   void operator()(std::size_t begin, std::size_t end) {
-    vector<double> smoothed(extended.ncol() - 2 * extended_both_sides_by);
     for (std::size_t i = begin; i != end; ++i) {
-      vector<double> row_i(extended.row(i).begin(), extended.row(i).end());
-      smoothed = boxcar_smooth<vector<double> >(row_i,
-                                                extended_both_sides_by, l);
+      vector<double> row_i(mat.row(i).begin(), mat.row(i).end());
+      vector<double> smoothed = boxcar_smooth<vector<double> >(row_i, l);
       std::copy(smoothed.begin(), smoothed.end(), output.row(i).begin());
     }
   }
@@ -48,20 +43,16 @@ struct BoxcarSmoothRows : public Worker {
 
 
 // [[Rcpp::export]]
-NumericMatrix boxcar_smooth_rows_(NumericMatrix extended,
-                                  std::size_t extended_both_sides_by,
-                                  std::size_t l) {
+NumericMatrix boxcar_smooth_rows_(NumericMatrix mat, std::size_t l) {
 
   // allocate the matrix we will return
-  NumericMatrix output(extended.nrow(),
-                       extended.ncol() - 2 * extended_both_sides_by);
+  NumericMatrix output(mat.nrow(), mat.ncol());
 
   // create the worker
-  BoxcarSmoothRows boxcarSmoothRows(extended, extended_both_sides_by, l,
-                                    output);
+  BoxcarSmoothRows boxcarSmoothRows(mat, l, output);
 
   // call it with parallelFor
-  parallelFor(0, extended.nrow(), boxcarSmoothRows);
+  parallelFor(0, mat.nrow(), boxcarSmoothRows);
 
   return output;
 }
@@ -69,62 +60,45 @@ NumericMatrix boxcar_smooth_rows_(NumericMatrix extended,
 
 struct BoxcarSmoothPillars : public Worker {
 
-  const RVector<double> extended;
-  const RVector<int> extended_dim;
+  const RVector<double> arr;
+  const RVector<int> arr_dim;
 
-  const std::size_t extended_both_sides_by, l;
+  const std::size_t l;
 
   // destination matrix
   RVector<double> output;
 
   // initialize with source and destination
-  BoxcarSmoothPillars(NumericVector extended, IntegerVector extended_dim,
-                      std::size_t extended_both_sides_by, std::size_t l,
-                      NumericVector output) :
-    extended(extended), extended_dim(extended_dim),
-    extended_both_sides_by(extended_both_sides_by), l(l),
-    output(output) {}
+  BoxcarSmoothPillars(NumericVector arr, IntegerVector arr_dim,
+                      std::size_t l, NumericVector output) :
+    arr(arr), arr_dim(arr_dim), l(l), output(output) {}
 
   // extend the rows
   void operator()(std::size_t begin, std::size_t end) {
-    vector<double> extended_pillar(extended_dim[2]);
-    std::vector<int> output_dim = {extended_dim[0], extended_dim[1],
-                                   extended_dim[2] -
-                                     2 * (int) extended_both_sides_by};
-    vector<double> smoothed_pillar(output_dim[2]);
+    vector<double> arr_pillar(arr_dim[2]);
+    vector<double> smoothed_pillar(arr_dim[2]);
     for (std::size_t p = begin; p != end; ++p) {
-      extended_pillar = extract_pillar<double>(extended, extended_dim, p);
-      smoothed_pillar = boxcar_smooth<vector<double> >(extended_pillar,
-                                                       extended_both_sides_by,
-                                                       l);
-      assign_pillar(output, output_dim, smoothed_pillar, p);
+      arr_pillar = extract_pillar<double>(arr, arr_dim, p);
+      smoothed_pillar = boxcar_smooth<vector<double> >(arr_pillar, l);
+      assign_pillar(output, arr_dim, smoothed_pillar, p);
     }
   }
 };
 
 // [[Rcpp::export]]
-NumericVector boxcar_smooth_pillars_(NumericVector extended,
-                                     std::size_t extended_both_sides_by,
-                                     std::size_t l) {
-  IntegerVector extended_dim = extended.attr("dim");
-
-  IntegerVector output_dim = IntegerVector::create(
-    extended_dim[0], extended_dim[1],
-    extended_dim[2] - 2 * extended_both_sides_by
-  );
+NumericVector boxcar_smooth_pillars_(NumericVector arr, std::size_t l) {
+  IntegerVector arr_dim = arr.attr("dim");
 
   // allocate the matrix we will return
-  NumericVector output(myprod(output_dim));
+  NumericVector output(myprod(arr_dim));
 
   // create the worker
-  BoxcarSmoothPillars boxcarSmoothPillars(extended, extended_dim,
-                                          extended_both_sides_by, l,
-                                          output);
+  BoxcarSmoothPillars boxcarSmoothPillars(arr, arr_dim, l, output);
 
   // call it with parallelFor
-  parallelFor(0, extended_dim[0] * extended_dim[1], boxcarSmoothPillars);
+  parallelFor(0, arr_dim[0] * arr_dim[1], boxcarSmoothPillars);
 
-  output.attr("dim") = output_dim;
+  output.attr("dim") = arr_dim;
 
   return output;
 }
@@ -133,9 +107,8 @@ NumericVector boxcar_smooth_pillars_(NumericVector extended,
 
 struct ExpSmoothRows : public Worker {
   // source matrix
-  RMatrix<double> extended;
+  RMatrix<double> mat;
 
-  const std::size_t extended_both_sides_by;
 
   const double tau;
 
@@ -145,26 +118,20 @@ struct ExpSmoothRows : public Worker {
   RMatrix<double> output;
 
   // initialize with source and destination
-  ExpSmoothRows(NumericMatrix extended,
-                std::size_t extended_both_sides_by, double tau,
-                int l, NumericMatrix output) :
-    extended(extended), extended_both_sides_by(extended_both_sides_by),
-    tau(tau), l(l), output(output) {}
+  ExpSmoothRows(NumericMatrix mat, double tau, int l, NumericMatrix output) :
+    mat(mat), tau(tau), l(l), output(output) {}
 
   // extend the rows
   void operator()(std::size_t begin, std::size_t end) {
-    vector<double> smoothed(extended.ncol() - 2 * extended_both_sides_by);
+    vector<double> smoothed(mat.ncol());
     vector<double> weights(2 * l + 1);
     weights[l] = 1;
     for (std::size_t i = 1; i != l + 1; ++i) {
       weights[l - i] = weights[l + i] = std::exp(- (double) i / tau);
     }
-    double weight_sum = std::accumulate(weights.begin(), weights.end(), 0.0);
     for (std::size_t i = begin; i != end; ++i) {
-      vector<double> row_i(extended.row(i).begin(), extended.row(i).end());
-      smoothed = weighted_smooth<vector<double> >(row_i,
-                                                  extended_both_sides_by,
-                                                  weights, weight_sum);
+      vector<double> row_i(mat.row(i).begin(), mat.row(i).end());
+      smoothed = weighted_smooth<vector<double> >(row_i, weights);
       std::copy(smoothed.begin(), smoothed.end(), output.row(i).begin());
     }
   }
@@ -172,20 +139,16 @@ struct ExpSmoothRows : public Worker {
 
 
 // [[Rcpp::export]]
-NumericMatrix exp_smooth_rows_(NumericMatrix extended,
-                               std::size_t extended_both_sides_by,
-                               double tau, int l) {
+NumericMatrix exp_smooth_rows_(NumericMatrix mat, double tau, int l) {
 
   // allocate the matrix we will return
-  NumericMatrix output(extended.nrow(),
-                       extended.ncol() - 2 * extended_both_sides_by);
+  NumericMatrix output(mat.nrow(), mat.ncol());
 
   // create the worker
-  ExpSmoothRows expSmoothRows(extended, extended_both_sides_by, tau, l,
-                              output);
+  ExpSmoothRows expSmoothRows(mat, tau, l, output);
 
   // call it with parallelFor
-  parallelFor(0, extended.nrow(), expSmoothRows);
+  parallelFor(0, mat.nrow(), expSmoothRows);
 
   return output;
 }
@@ -193,10 +156,8 @@ NumericMatrix exp_smooth_rows_(NumericMatrix extended,
 
 struct ExpSmoothPillars : public Worker {
 
-  RVector<double> extended;
-  const RVector<int> extended_dim;
-
-  const std::size_t extended_both_sides_by;
+  RVector<double> arr;
+  const RVector<int> arr_dim;
 
   const double tau;
 
@@ -206,56 +167,44 @@ struct ExpSmoothPillars : public Worker {
   RVector<double> output;
 
   // initialize with source and destination
-  ExpSmoothPillars(NumericVector extended, IntegerVector extended_dim,
-                   std::size_t extended_both_sides_by, double tau,
-                   int l, NumericVector output) :
-    extended(extended), extended_dim(extended_dim),
-    extended_both_sides_by(extended_both_sides_by),
+  ExpSmoothPillars(NumericVector arr, IntegerVector arr_dim,
+                   double tau, int l, NumericVector output) :
+    arr(arr), arr_dim(arr_dim),
     tau(tau), l(l), output(output) {}
 
   // extend the rows
   void operator()(std::size_t begin, std::size_t end) {
-    vector<double> extended_pillar(extended_dim[2]);
-    std::vector<int> output_dim = {extended_dim[0], extended_dim[1],
-                                   extended_dim[2] -
-                                     2 * (int) extended_both_sides_by};
+    vector<double> arr_pillar(arr_dim[2]);
+    std::vector<int> output_dim = {arr_dim[0], arr_dim[1], arr_dim[2]};
     vector<double> smoothed_pillar(output_dim[2]);
     vector<double> weights(2 * l + 1);
     weights[l] = 1;
     for (int i = 1; i != l + 1; ++i) {
       weights[l - i] = weights[l + i] = std::exp(- i / tau);
     }
-    double weight_sum = std::accumulate(weights.begin(), weights.end(), 0.0);
     for (std::size_t p = begin; p != end; ++p) {
-      extended_pillar = extract_pillar<double>(extended, extended_dim, p);
-      smoothed_pillar = weighted_smooth<vector<double> >(extended_pillar,
-                                                         extended_both_sides_by,
-                                                         weights, weight_sum);
+      arr_pillar = extract_pillar<double>(arr, arr_dim, p);
+      smoothed_pillar = weighted_smooth<vector<double> >(arr_pillar, weights);
       assign_pillar(output, output_dim, smoothed_pillar, p);
     }
   }
 };
 
 // [[Rcpp::export]]
-NumericVector exp_smooth_pillars_(NumericVector extended,
-                                  std::size_t extended_both_sides_by,
-                                  double tau, int l) {
-  IntegerVector extended_dim = extended.attr("dim");
+NumericVector exp_smooth_pillars_(NumericVector arr, double tau, int l) {
+  IntegerVector arr_dim = arr.attr("dim");
 
   IntegerVector output_dim = IntegerVector::create(
-    extended_dim[0], extended_dim[1],
-    extended_dim[2] - 2 * extended_both_sides_by);
+    arr_dim[0], arr_dim[1], arr_dim[2]);
 
   // allocate the matrix we will return
   NumericVector output(myprod(output_dim));
 
   // create the worker
-  ExpSmoothPillars expSmoothPillars(extended, extended_dim,
-                                    extended_both_sides_by, tau, l,
-                                    output);
+  ExpSmoothPillars expSmoothPillars(arr, arr_dim, tau, l, output);
 
   // call it with parallelFor
-  parallelFor(0, extended_dim[0] * extended_dim[1], expSmoothPillars);
+  parallelFor(0, arr_dim[0] * arr_dim[1], expSmoothPillars);
 
   output.attr("dim") = output_dim;
 

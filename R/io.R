@@ -104,6 +104,7 @@ display <- function(img, ...) {
 #'
 #' @export
 write_tif <- function(img, file_name, na = "error", rds = FALSE) {
+  checkmate::assert_string(file_name)
   to_invisibly_return <- img
   if (!all(can_be_integer(img), na.rm = TRUE)) {
     stop("img must contain only integers")
@@ -143,15 +144,20 @@ write_tif <- function(img, file_name, na = "error", rds = FALSE) {
     stop("write_tif() can handle images of at most 4 dimensions. ",
          "Your image has ", ndim, "dimensions.")
   } else if (ndim == 4) {
-    for (i in seq_along(d[3])) {
-      file_name_i <- filesstrings::give_ext(paste0(file_name, "_ch", i), "tif")
-      message("Now writing ", file_name_i, ".")
+    for (i in seq_len(d[3])) {
+      file_name_i <- file_name %T>% {
+        if (endsWith(., ".tif")) {
+          . <- filesstrings::before_last_dot(.)
+        }
+      } %>% paste0("_ch", i) %>%
+        filesstrings::give_ext("tif")
+      message("Now writing: ", file_name_i)
       tiff::writeTIFF(frames_to_list(img[, , i, ]), file_name_i,
                       bits.per.sample = bits_per_sample)
     }
   } else {
     file_name %<>% filesstrings::give_ext("tif")
-    message("Now writing ", file_name, ".")
+    message("Now writing: ", file_name)
     tiff::writeTIFF(frames_to_list(img), file_name,
                     bits.per.sample = bits_per_sample)
   }

@@ -22,11 +22,7 @@ img_detrend_tau_specified <- function(arr3d, tau, cutoff, seed, parallel) {
   if (is.na(tau)) return(arr3d)
   d <- dim(arr3d)
   l <- min(floor(- tau * log(cutoff)), d[3] %>% {(. - 1) + (. - 2)})
-  extend_both_sides_by <- min(d[3] - 2, l)
-  extended <- med_reflect_extend_pillars(arr3d, extend_both_sides_by,
-                                         parallel = parallel)
-  smoothed <- exp_smooth_pillars(extended, extend_both_sides_by,
-                                 tau, l, parallel = parallel)
+  smoothed <- exp_smooth_pillars(arr3d, tau, l, parallel = parallel)
   img_detrend_smoothed(arr3d, smoothed, seed, parallel)
 }
 
@@ -34,11 +30,7 @@ img_detrend_l_specified <- function(arr3d, l, seed, parallel) {
   if (is.na(l)) return(arr3d)
   d <- dim(arr3d)
   l <- min(l, d[3] %>% {(. - 1) + (. - 2)})
-  extend_both_sides_by <- min(d[3] - 2, l)
-  extended <- med_reflect_extend_pillars(arr3d, extend_both_sides_by,
-                                         parallel = parallel)
-  smoothed <- boxcar_smooth_pillars(extended, extend_both_sides_by,
-                                    l, parallel = parallel)
+  smoothed <- boxcar_smooth_pillars(arr3d, l, parallel = parallel)
   img_detrend_smoothed(arr3d, smoothed, seed, parallel)
 }
 
@@ -165,7 +157,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05,
   } else if (is.numeric(tau)) {
     if (tau <= 0) stop("tau must be greater than zero.")
     img_detrend_tau_specified(img, tau, cutoff, seed, parallel) %>%
-      detrended_img("exponential", tau, TRUE)
+      detrended_img("exponential", tau, FALSE)
   } else if (is.character(tau)) {
     tau <- tolower(tau)
     if (startsWith("auto", tau)) {

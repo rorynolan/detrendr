@@ -3,14 +3,13 @@
 * ubuntu 12.04 (on travis-ci), R 3.4.2
 * Windows Server 2012 (on AppVeyor), R 3.4.2
 * win-builder (devel and release)
+* x86_64-pc-linux-gnu with valgrind (on r-hub), R 3.4.2
 
-## R CMD check results
+# R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 note
 
-Note 1. This is a new release.
-Note 2. GNU make is a system requirement. This is needed to use RcppParallel.
+Note 1. GNU make is a system requirement. This is needed to use RcppParallel.
 
 ## Reverse dependencies
-
-This is a new release, so there are no reverse dependencies.
+There are no reverse dependencies.

@@ -1,3 +1,5 @@
+context("Pillar calculations")
+
 test_that("brightness_pillars works", {
   aaa <- array(1:16, dim = c(2, 2, 4))
   expect_equal(brightness_pillars(aaa), apply_on_pillars(aaa, brightness_vec))
