@@ -30,11 +30,11 @@ struct MyRPois : public Worker {
     means(means), seed(seed), output(output) {}
 
   void operator()(std::size_t begin, std::size_t end) {
-    std::default_random_engine generator_int(seed + begin);
+    std::minstd_rand generator_int(seed + begin);
     std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
     for (std::size_t i = begin; i != end; ++i) {
       int seed_i = distribution_int(generator_int);
-      std::default_random_engine generator(seed_i);
+      std::minstd_rand generator(seed_i);
       std::poisson_distribution<int> distribution(std::abs(means[i]));
       output[i] = distribution(generator) * mysign(means[i]);
     }
