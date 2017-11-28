@@ -28,13 +28,11 @@ Imports: Rcpp,
     foreach,
     doParallel,
     RSAGA,
-    fields,
     filesstrings (>= 1.1.0),
     abind,
     iterators,
     purrr,
     tiff,
-    grDevices,
     ijtiff
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)

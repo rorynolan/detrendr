@@ -3,6 +3,7 @@ img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
 
 test_that("detrending works", {
   skip_on_appveyor()
+  skip_on_cran()
   context("Boxcar detrending")
   corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
   expect_true(round(mean(brightness_pillars(corrected)), 1) %in% c(1.8, 1.9))
