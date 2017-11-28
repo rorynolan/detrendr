@@ -6,3 +6,7 @@ cache: packages
 
 after_success:
   - travis_wait 100 Rscript -e 'covr::codecov()'
+
+r_github_packages:
+  - rorynolan/filesstrings
+  - rorynolan/ijtiff
