@@ -3,7 +3,7 @@ detrendr
 
 Detrend image series.
 
-[![Travis-CI Build Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://travis-ci.org/rorynolan/detrendr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rorynolan/detrendr?branch=master&svg=true)](https://ci.appveyor.com/project/rorynolan/detrendr) [![codecov](https://codecov.io/gh/rorynolan/detrendr/branch/master/graph/badge.svg)](https://codecov.io/gh/rorynolan/detrendr) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr) ![RStudio CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Travis-CI Build Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://travis-ci.org/rorynolan/detrendr) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rorynolan/detrendr?branch=master&svg=true)](https://ci.appveyor.com/project/rorynolan/detrendr) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr) ![RStudio CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
 Installation
 ============
@@ -32,29 +32,27 @@ library(detrendr)
 Image I/O and display
 ---------------------
 
-The package contains convenient functions for reading and writing TIFF files. It also contains a sample image series which can be found at `system.file("extdata", "cells.tif", package = "detrendr")`. Let's read it in and display the first and last frames:
+The package contains a sample image series which can be found at `system.file("extdata", "cells.tif", package = "detrendr")`. Let's read it in and inspect the first and last frames:
 
 ``` r
 path <- system.file("extdata", "bleached.tif", package = "detrendr")
-img <- read_tif(path)
+img <- ijtiff::read_tif(path)[, , 1, ]  # first channel
 dim(img)  # img has 500 frames
 ```
 
-    #> [1]  70  70 500
+    #> [1]  60  60 500
 
 ``` r
-display(img[, , 1],  # first frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+mean(img[, , 1])  # first frame
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/display-1.png)
+    #> [1] 152.4489
 
 ``` r
-display(img[, , 500],  # last frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+mean(img[, , 500])  # last frame
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/display-2.png)
+    #> [1] 68.51583
 
 Detrending
 ----------
@@ -67,21 +65,19 @@ system.time(corrected <- img_detrend_exp(img, "auto",
 ```
 
     #> elapsed 
-    #>  10.791
+    #>   8.046
 
 ``` r
-display(corrected[, , 1],  # first frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+mean(corrected[, , 1])  # first frame
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/detrend-1.png)
+    #> [1] 112.9569
 
 ``` r
-display(corrected[, , 500],  # last frame
-        breaks = 0:500, col = viridisLite::viridis(500))
+mean(corrected[, , 500])  # last frame
 ```
 
-![](README_files/figure-markdown_github-ascii_identifiers/detrend-2.png)
+    #> [1] 103.33
 
 So we see that the corrected series does not have this drop-off in intensity.
 
