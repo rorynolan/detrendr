@@ -30,11 +30,11 @@ struct MyRPois : public Worker {
     means(means), seed(seed), output(output) {}
 
   void operator()(std::size_t begin, std::size_t end) {
-    std::mt19937 generator_int(seed + begin);
+    std::minstd_rand generator_int(seed + begin);
     std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
     for (std::size_t i = begin; i != end; ++i) {
       int seed_i = distribution_int(generator_int);
-      std::mt19937 generator(seed_i);
+      std::minstd_rand generator(seed_i);
       std::poisson_distribution<int> distribution(std::abs(means[i]));
       output[i] = distribution(generator) * mysign(means[i]);
     }
@@ -74,10 +74,10 @@ struct MyRPoisFrames : public Worker {
 
   void operator()(std::size_t begin, std::size_t end) {
     for (std::size_t i = begin; i != end; ++i) {
-      std::default_random_engine generator_int(seed + begin);
+      std::minstd_rand generator_int(seed + begin);
       std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
       int seed_i = distribution_int(generator_int);
-      std::default_random_engine generator(seed_i);
+      std::minstd_rand generator(seed_i);
       std::poisson_distribution<int> distribution(std::abs(means[i]));
       for (std::size_t j = 0; j != frame_length; ++j) {
         output(j, i) = distribution(generator);
@@ -120,10 +120,10 @@ struct MyRPoisFramesT : public Worker {
 
   void operator()(std::size_t begin, std::size_t end) {
     for (std::size_t i = begin; i != end; ++i) {
-      std::default_random_engine generator_int(seed + begin);
+      std::minstd_rand generator_int(seed + begin);
       std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
       int seed_i = distribution_int(generator_int);
-      std::default_random_engine generator(seed_i);
+      std::minstd_rand generator(seed_i);
       std::poisson_distribution<int> distribution(std::abs(means[i]));
       for (std::size_t j = 0; j != frame_length; ++j) {
         output(i, j) = distribution(generator);
