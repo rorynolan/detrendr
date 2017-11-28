@@ -36,8 +36,8 @@ cols_detrend_degree_specified_mean_b <- function(mat, degree, seed, parallel) {
 #' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You should still try them for yourself.
-#' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
-#'                 n_ch = 1)
+#' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
+#'                                     package = 'detrendr'))
 #' best_degree(img, seed = 0, parallel = 2)
 #' }
 #' @export

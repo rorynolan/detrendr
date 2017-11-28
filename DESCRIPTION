@@ -20,7 +20,7 @@ SystemRequirements: GNU make
 Imports: Rcpp,
     RcppParallel,
     parallel,
-    BBmisc,
+    backports,
     checkmate,
     magrittr,
     dplyr,
@@ -34,7 +34,8 @@ Imports: Rcpp,
     iterators,
     purrr,
     tiff,
-    grDevices
+    grDevices,
+    ijtiff
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Suggests: testthat,

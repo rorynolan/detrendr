@@ -14,9 +14,9 @@ rows_detrend_tau_specified_mean_b <- function(mat, tau, l, seed, parallel) {
 #' Use Nolan's algorithm to find the ideal tau parameter for exponential
 #' smoothing detrending.
 #'
-#' @param img A 3-dimensional array of integers representing the image series.
-#'   `img[i, j, k]` is the pixel at `x = i`, `y = j` in frame `k` of the image
-#'   series.
+#' @param img A 3-dimensional array of integers representing the image series,
+#'   indexed as `img[y, x, frame]`. This can be gotten by subsetting an
+#'   [ijtiff_img][ijtiff::ijtiff_img].
 #' @param cutoff When exponential smoothing, neglect weights which are less than
 #'   `cutoff * central weight`. It is fine to leave this parameter at the
 #'   default level.
@@ -39,8 +39,8 @@ rows_detrend_tau_specified_mean_b <- function(mat, tau, l, seed, parallel) {
 #' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You should still try them for yourself.
-#' img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
-#'                 n_ch = 1)
+#' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
+#'                                     package = 'detrendr'))[, , 1, ]
 #' best_tau(img, seed = 0, parallel = 2)
 #' }
 #' @export

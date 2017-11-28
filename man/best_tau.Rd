@@ -7,9 +7,9 @@
 best_tau(img, cutoff = 0.05, seed = NULL, parallel = FALSE)
 }
 \arguments{
-\item{img}{A 3-dimensional array of integers representing the image series.
-\code{img[i, j, k]} is the pixel at \code{x = i}, \code{y = j} in frame \code{k} of the image
-series.}
+\item{img}{A 3-dimensional array of integers representing the image series,
+indexed as \code{img[y, x, frame]}. This can be gotten by subsetting an
+\link[ijtiff:ijtiff_img]{ijtiff_img}.}
 
 \item{cutoff}{When exponential smoothing, neglect weights which are less than
 \code{cutoff * central weight}. It is fine to leave this parameter at the
@@ -35,8 +35,8 @@ smoothing detrending.
 \dontrun{
 ## These examples are not run on CRAN because they take too long.
 ## You should still try them for yourself.
-img <- read_tif(system.file('extdata', 'bleached.tif', package = 'detrendr'),
-                n_ch = 1)
+img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
+                                    package = 'detrendr'))[, , 1, ]
 best_tau(img, seed = 0, parallel = 2)
 }
 }

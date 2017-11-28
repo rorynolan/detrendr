@@ -12,7 +12,8 @@ vignette: >
 Detrend image series.
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+knitr::opts_chunk$set(echo = TRUE, comment = "#>", 
+                      fig.width = 8, fig.height = 7)
 ```
 
 First let's load the library: 
@@ -20,15 +21,15 @@ First let's load the library:
 library(detrendr)
 ```
 
-## Image I/O and display
-The package contains convenient functions for reading and writing TIFF files. It also contains a sample image series which can be found at `system.file("extdata", "cells.tif", package = "detrendr")`. Let's read it in and display the first and last frames:
+## Example image
+The package contains a sample image series which can be found at `system.file("extdata", "cells.tif", package = "detrendr")`. Let's read it in and display the first and last frames:
 ```{r display}
 path <- system.file("extdata", "bleached.tif", package = "detrendr")
-img <- read_tif(path)
+img <- ijtiff::read_tif(path)[, , 1, ]
 dim(img)  # img has 500 frames
-display(img[, , 1],  # first frame
+ijtiff::display(img[, , 1],  # first frame
         breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
-display(img[, , 500],  # last frame
+ijtiff::display(img[, , 500],  # last frame
         breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
 ```
 
@@ -42,9 +43,9 @@ We can correct for this (and check how long it takes):
 ```{r detrend}
 system.time(corrected_exp <- img_detrend_exp(img, "auto", 
                                              seed = 0, parallel = 2))["elapsed"]
-display(corrected_exp[, , 1],  # first frame
+ijtiff::display(corrected_exp[, , 1],  # first frame
         breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
-display(corrected_exp[, , 500],  # last frame
+ijtiff::display(corrected_exp[, , 500],  # last frame
         breaks = 0:500, col = grDevices::grey(seq(0, 1, length.out = 500)))
 ```
 
