@@ -1,4 +1,4 @@
-citHeader("To cite filesstrings in publications use:")
+citHeader("To cite detrendr in publications use:")
 
 citEntry(entry   = "Article",
          title   = "{nandb}--—number and brightness in R with a novel automatic detrending algorithm",

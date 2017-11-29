@@ -24,16 +24,14 @@ Imports: Rcpp,
     checkmate,
     magrittr,
     dplyr,
-    radiant.data,
     foreach,
     doParallel,
     RSAGA,
-    filesstrings (>= 1.1.0),
-    abind,
     iterators,
     purrr,
-    tiff,
     ijtiff
+URL: https://www.github.com/rorynolan/detrendr
+BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Suggests: testthat,

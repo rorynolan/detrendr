@@ -16,7 +16,8 @@ myrpois_frames <- function(means, frame_length, seed = NULL, parallel = FALSE) {
 }
 
 ## every column is a pixel, every row is a frame
-myrpois_frames_t <- function(means, frame_length, seed = NULL, parallel = FALSE) {
+myrpois_frames_t <- function(means, frame_length,
+                             seed = NULL, parallel = FALSE) {
   n_cores <- translate_parallel(parallel)
   RcppParallel::setThreadOptions(n_cores)
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
