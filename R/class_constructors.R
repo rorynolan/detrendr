@@ -27,8 +27,8 @@
 #'
 #' @export
 detrended_img <- function(img, method, parameter, auto) {
-  checkmate::check_array(img, min.d = 3, max.d = 4)
-  checkmate::check_numeric(img)
+  checkmate::assert_array(img, min.d = 3, max.d = 4)
+  checkmate::assert_numeric(img)
   if (!all.equal(floor(img), img, check.attributes = FALSE)) {
     stop("Elements of a detrended_img must all be integers.")
   }
