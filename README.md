@@ -36,20 +36,20 @@ The package contains a sample image series which can be found at `system.file("e
 
 ``` r
 path <- system.file("extdata", "bleached.tif", package = "detrendr")
-img <- ijtiff::read_tif(path)[, , 1, ]  # first channel
+img <- ijtiff::read_tif(path)
 dim(img)  # img has 500 frames
 ```
 
-    #> [1]  60  60 500
+    #> [1]  60  60   1 500
 
 ``` r
-mean(img[, , 1])  # first frame
+mean(img[, , 1, 1])  # first channel, first frame
 ```
 
     #> [1] 152.4489
 
 ``` r
-mean(img[, , 500])  # last frame
+mean(img[, , 1, 500])  # first channel, last frame
 ```
 
     #> [1] 68.51583
@@ -65,16 +65,16 @@ system.time(corrected <- img_detrend_exp(img, "auto",
 ```
 
     #> elapsed 
-    #>   8.046
+    #>   7.589
 
 ``` r
-mean(corrected[, , 1])  # first frame
+mean(corrected[, , 1, 1])  # first channel, first frame
 ```
 
     #> [1] 112.9569
 
 ``` r
-mean(corrected[, , 500])  # last frame
+mean(corrected[, , 1, 500])  # first channel, last frame
 ```
 
     #> [1] 103.33

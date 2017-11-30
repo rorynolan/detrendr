@@ -4,21 +4,26 @@
 \alias{brightness_pillars}
 \title{Get the brightness of pillars of a 3d array.}
 \usage{
-brightness_pillars(arr3d, parallel = FALSE)
+brightness_pillars(img, parallel = FALSE)
 }
 \arguments{
-\item{arr3d}{A 3-dimensional array.}
+\item{img}{A 4-dimensional array in the style of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
+or a 3-dimensional array which is a single channel of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
 
-\item{parallel}{Do you want to parallelize the computation across multiple
-cores? If so, set this to the number of cores that you would like to use,
-or set it to \code{TRUE} to use all available cores.}
+\item{parallel}{Would you like to use multiple cores to speed up this
+function? If so, set the number of cores here, or to use all available
+cores, use \code{parallel = TRUE}.}
 }
 \value{
-A matrix \code{mat} where element \code{mat[i, j]} is equal to \code{var(mat3d[i, j, ]) / mean(mat3d[i, j, ])}.
+An \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{arr} with
+one frame. \code{arr[y, x, ch, 1]} is equal to \code{var(img[y, x, ch, ]) / mean(img[y, x, ch, ])}.
 }
 \description{
-For a 3-dimensional array \code{mat3d}, pillar \code{ij} is defined as \code{mat3d[i, j, ]}.
-This function computes the brightness of each pillar. Brightness is \code{variance / mean}.
+For an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{img} (indexed as \code{img[y, x, channel, frame]}),  3-dimensional array \code{mat3d}, pillar \code{xy}  of channel
+\code{ch} is defined as \code{img[y, x, ch, ]}. This function computes the brightness,
+of each pillar.
 }
 \examples{
 aaa <- array(1:16, dim = c(2, 2, 4))
