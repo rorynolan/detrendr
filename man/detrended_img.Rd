@@ -7,28 +7,30 @@
 detrended_img(img, method, parameter, auto)
 }
 \arguments{
-\item{img}{The detrended image series. A 3-dimensional array of non-negative
-integers.}
+\item{img}{The detrended image series. A 4-dimensional array of non-negative
+integers in the style of an \link[ijtiff:ijtiff_img]{ijtiff_img}, or a
+3-dimensional array of non-negative integers which represents a single
+channel of an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array (indexed by
+\code{img[y, x, frame]}).}
 
 \item{method}{The method used. One of \code{"boxcar"}, \code{"exponential"} or
 \code{"polynomial"}.}
 
-\item{parameter}{A number. The detrend parameter used.}
+\item{parameter}{A number. The detrend parameter used. One per channel.}
 
-\item{auto}{Logical. Was automatic detrending used? This is \code{NA} if the
-detrending parameter is \code{NA}.}
+\item{auto}{Logical. Was automatic detrending used? One per channel.}
 }
 \value{
 An object of class \code{detrended_img}.
 }
 \description{
-A \link{detrended_img} is a 3-dimensional array of integers which is the result of
-a detrending routine. It has 3 attributes: \describe{\item{\code{method}}{The
-detrending method used. This must be one of \code{"boxcar"}, \code{"exponential"} or
-\code{"polynomial"}. } \item{\code{parameter}}{The value of the parameter used. This
-will be the \code{l}, \code{tau} or \code{degree} parameter for the respective methods.}
-\item{\code{auto}}{A boolean that is \code{TRUE} if the parameter was found
-automatically or \code{FALSE} if it was manually selected. }}
+A \link{detrended_img} is a 4-dimensional array of positive integers in the style
+of an \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]}) which is the result of a detrending routine. It has 3 attributes:
+\describe{\item{\code{method}}{The detrending method used. This must be one of
+\code{"boxcar"}, \code{"exponential"} or \code{"polynomial"}. } \item{\code{parameter}}{The value
+of the parameter used. This will be the \code{l}, \code{tau} or \code{degree} parameter for
+the respective methods.} \item{\code{auto}}{A boolean that is \code{TRUE} if the
+parameter was found automatically or \code{FALSE} if it was manually selected. }}
 }
 \details{
 Sometimes when detrending, you can get slight negative values in the

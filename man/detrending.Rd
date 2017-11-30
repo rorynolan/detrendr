@@ -14,14 +14,17 @@ img_detrend_exp(img, tau, cutoff = 0.05, seed = NULL, parallel = FALSE)
 img_detrend_polynom(img, degree, seed = NULL, parallel = FALSE)
 }
 \arguments{
-\item{img}{The image series to be detrended. This must be a 3-dimensional
-array of non-negative integers, with the matrix defined as \code{img[, , 1]}
-being the first frame of the image series.}
+\item{img}{A 4-dimensional array in the style of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
+or a 3-dimensional array which is a single channel of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
 
 \item{l}{The length parameter for \emph{boxcar} detrending. The size of the
 sliding window will be \code{2 * l + 1}. This must be a positive integer. Set
 this to "auto" to use Nolan's algorithm to automatically find a suitable
-value for this parameter (recommended).}
+value for this parameter (recommended). For multi-channel images, it is
+possible to have a different \code{l} for each channel by specifying \code{l} as a
+vector or list.}
 
 \item{seed}{Random numbers may be generated during the detrending process.
 For reproducibility, you can set a seed for this random number generation
@@ -33,7 +36,9 @@ cores, use \code{parallel = TRUE}.}
 
 \item{tau}{The \eqn{tau} parameter for \emph{exponential filtering} detrending.
 This must be a positive number. Set this to "auto" to use Nolan's algorithm
-to automatically find a suitable value for this parameter (recommended).}
+to automatically find a suitable value for this parameter (recommended).
+For multi-channel images, it is possible to have a different \code{tau} for each
+channel by specifying \code{tau} as a vector or list.}
 
 \item{cutoff}{In \emph{exponential filtering} detrending, for the weighted
 average, every point gets a weight. This can slow down the computation
@@ -46,8 +51,9 @@ anything else without good reason.}
 
 \item{degree}{The degree of the polynomial to use for the polynomial
 detrending. This must be a positive integer. Set this to "auto" to use
-Nolan's algorithm to automatically find a suitable value for this
-parameter (recommended).}
+Nolan's algorithm to automatically find a suitable value for this parameter
+(recommended). For multi-channel images, it is possible to have a different
+\code{degree} for each channel by specifying \code{degree} as a vector or list.}
 }
 \value{
 The detrended image, an object of class \link{detrended_img}.

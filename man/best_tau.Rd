@@ -7,25 +7,34 @@
 best_tau(img, cutoff = 0.05, seed = NULL, parallel = FALSE)
 }
 \arguments{
-\item{img}{A 3-dimensional array of integers representing the image series,
-indexed as \code{img[y, x, frame]}. This can be gotten by subsetting an
-\link[ijtiff:ijtiff_img]{ijtiff_img}.}
+\item{img}{A 4-dimensional array in the style of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
+or a 3-dimensional array which is a single channel of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
 
-\item{cutoff}{When exponential smoothing, neglect weights which are less than
-\code{cutoff * central weight}. It is fine to leave this parameter at the
-default level.}
+\item{cutoff}{In \emph{exponential filtering} detrending, for the weighted
+average, every point gets a weight. This can slow down the computation
+massively. However, many of the weights will be approximately zero. With
+cutoff, we say that any point with weight less than or equal to \code{cutoff}
+times the maximum weight may be ignored; so with \code{cutoff = 0.05}, any
+weight less than 5\% of the maximum weight may be ignored. The default
+value of this parameter is sensible and its value should not be set to
+anything else without good reason.}
 
-\item{seed}{A seed for the random number generation needed in this function.
-If you do not set a seed, one will be chosen randomly.}
+\item{seed}{Random numbers may be generated during the detrending process.
+For reproducibility, you can set a seed for this random number generation
+here.}
 
-\item{parallel}{Do you want this function to run on multiple cores? If not,
-use \code{parallel = FALSE} (the default). To use \code{n} cores, use \code{parallel = n}
-or to use all available cores use \code{parallel = TRUE}.}
+\item{parallel}{Would you like to use multiple cores to speed up this
+function? If so, set the number of cores here, or to use all available
+cores, use \code{parallel = TRUE}.}
 }
 \value{
 If no detrend is necessary, this function returns \code{NA}. If a detrend
 is required, this function returns a natural number which is the ideal
-\code{tau} parameter for exponential smoothing detrending.
+\code{tau} parameter for exponential smoothing detrending. If there are multiple
+channels, the function returns a vector, one \code{tau} parameter for each
+channel.
 }
 \description{
 Use Nolan's algorithm to find the ideal tau parameter for exponential

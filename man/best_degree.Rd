@@ -7,21 +7,25 @@
 best_degree(img, seed = NULL, parallel = FALSE)
 }
 \arguments{
-\item{img}{A 3-dimensional array of integers representing the image series,
-indexed as \code{img[y, x, frame]}. This can be gotten by subsetting an
-\link[ijtiff:ijtiff_img]{ijtiff_img}.}
+\item{img}{A 4-dimensional array in the style of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
+or a 3-dimensional array which is a single channel of an
+\link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
 
-\item{seed}{A seed for the random number generation needed in this function.
-If you do not set a seed, one will be chosen randomly.}
+\item{seed}{Random numbers may be generated during the detrending process.
+For reproducibility, you can set a seed for this random number generation
+here.}
 
-\item{parallel}{Do you want this function to run on multiple cores? If not,
-use \code{parallel = FALSE} (the default). To use \code{n} cores, use \code{parallel = n}
-or to use all available cores use \code{parallel = TRUE}.}
+\item{parallel}{Would you like to use multiple cores to speed up this
+function? If so, set the number of cores here, or to use all available
+cores, use \code{parallel = TRUE}.}
 }
 \value{
 If no detrend is necessary, this function returns \code{NA}. If a detrend
 is required, this function returns a natural number which is the ideal
-polynomial degree for polynomial detrending.
+polynomial degree for polynomial detrending. If there are multiple
+channels, the function returns a vector, one \code{degree} parameter for each
+channel.
 }
 \description{
 Use Nolan's algorithm to find the ideal polynomial degree for polynomial

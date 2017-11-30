@@ -1,7 +1,7 @@
 #' Get the means/medians/variances of pillars of a 3d array.
 #'
-#' For a 3-dimensional array `mat3d`, pillar `ij` is defined as
-#' `mat3d[i, j, ]`. These functions compute the mean, median and variance
+#' For a 3-dimensional array `mat3d`, pillar `xy` is defined as
+#' `mat3d[y, x, ]`. These functions compute the mean, median and variance
 #' of each pillar.
 #'
 #' @param arr3d A 3-dimensional array.
@@ -9,7 +9,7 @@
 #'   cores? If so, set this to the number of cores that you would like to use,
 #'   or set it to `TRUE` to use all available cores.
 #'
-#' @return A matrix where element `i,j` is equal to
+#' @return A matrix `mat` where element `mat[i, j]` is equal to
 #'   `mean(mat3d[i, j, ])`, `median(mat3d[i, j, ])`, or
 #'   `var(mat3d[i, j, ])`.
 #'
@@ -25,6 +25,8 @@ NULL
 #' @rdname pillar-stats
 #' @export
 mean_pillars <- function(arr3d, parallel = FALSE) {
+  checkmate::assert_numeric(arr3d)
+  checkmate::assert_array(arr3d, d = 3)
   n_cores <- translate_parallel(parallel)
   RcppParallel::setThreadOptions(n_cores)
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
@@ -34,6 +36,8 @@ mean_pillars <- function(arr3d, parallel = FALSE) {
 #' @rdname pillar-stats
 #' @export
 median_pillars <- function(arr3d, parallel = FALSE) {
+  checkmate::assert_numeric(arr3d)
+  checkmate::assert_array(arr3d, d = 3)
   n_cores <- translate_parallel(parallel)
   RcppParallel::setThreadOptions(n_cores)
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
@@ -43,6 +47,8 @@ median_pillars <- function(arr3d, parallel = FALSE) {
 #' @rdname pillar-stats
 #' @export
 var_pillars <- function(arr3d, parallel = FALSE) {
+  checkmate::assert_numeric(arr3d)
+  checkmate::assert_array(arr3d, d = 3)
   n_cores <- translate_parallel(parallel)
   RcppParallel::setThreadOptions(n_cores)
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
@@ -60,8 +66,8 @@ var_pillars <- function(arr3d, parallel = FALSE) {
 #'   cores? If so, set this to the number of cores that you would like to use,
 #'   or set it to `TRUE` to use all available cores.
 #'
-#' @return A matrix where element `i,j` is equal to `var(mat3d[i, j, ]) /
-#'   mean(mat3d[i, j, ])`.
+#' @return A matrix `mat` where element `mat[i, j]` is equal to `var(mat3d[i, j,
+#'   ]) / mean(mat3d[i, j, ])`.
 #'
 #' @examples
 #' aaa <- array(1:16, dim = c(2, 2, 4))
@@ -69,6 +75,8 @@ var_pillars <- function(arr3d, parallel = FALSE) {
 #'
 #' @export
 brightness_pillars <- function(arr3d, parallel = FALSE) {
+  checkmate::assert_numeric(arr3d)
+  checkmate::assert_array(arr3d, d = 3)
   n_cores <- translate_parallel(parallel)
   RcppParallel::setThreadOptions(n_cores)
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))

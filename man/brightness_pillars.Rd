@@ -14,7 +14,7 @@ cores? If so, set this to the number of cores that you would like to use,
 or set it to \code{TRUE} to use all available cores.}
 }
 \value{
-A matrix where element \code{i,j} is equal to \code{var(mat3d[i, j, ]) / mean(mat3d[i, j, ])}.
+A matrix \code{mat} where element \code{mat[i, j]} is equal to \code{var(mat3d[i, j, ]) / mean(mat3d[i, j, ])}.
 }
 \description{
 For a 3-dimensional array \code{mat3d}, pillar \code{ij} is defined as \code{mat3d[i, j, ]}.
