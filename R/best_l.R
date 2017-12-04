@@ -10,8 +10,9 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, seed, parallel) {
   rm(variance_correction_factors)
   out_real <- row_means + deviations_from_smoothed
   rm(deviations_from_smoothed)
-  out_int <- floor(out_real) %>% {. + myrbern(out_real - ., seed = seed,
-                                              parallel = parallel)}
+  out_int <- floor(out_real) %>%
+    {. + myrbern(out_real - ., seed = seed, parallel = parallel)} %T>%
+    {.[. < 0] <- 0}
   dim(out_int) <- dim(mat)
   out_int
 }
