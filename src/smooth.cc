@@ -6,16 +6,16 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-NumericVector boxcar_smooth(NumericVector extended, std::size_t l) {
-  return boxcar_smooth<NumericVector>(extended, l);
+NumericVector boxcar_smooth(NumericVector vec, std::size_t l) {
+  return boxcar_smooth<NumericVector>(vec, l);
 }
 
 // [[Rcpp::export]]
-NumericVector weighted_smooth(NumericVector extended, NumericVector weights) {
-  return weighted_smooth<NumericVector>(extended, weights);
+NumericVector weighted_smooth(NumericVector vec, NumericVector weights) {
+  return weighted_smooth<NumericVector>(vec, weights);
 }
 
 // [[Rcpp::export]]
-NumericVector exp_smooth(NumericVector extended, double tau, std::size_t l) {
-  return exp_smooth<NumericVector>(extended, tau, l);
+NumericVector exp_smooth(NumericVector vec, double tau, std::size_t l) {
+  return exp_smooth<NumericVector>(vec, tau, l);
 }
