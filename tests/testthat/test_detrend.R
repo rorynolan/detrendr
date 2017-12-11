@@ -1,5 +1,5 @@
 img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
-                                    package = "detrendr"))
+                                    package = "detrendr"), msg = FALSE)
 
 test_that("detrending works", {
   skip_on_os("windows")

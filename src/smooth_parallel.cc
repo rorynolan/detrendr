@@ -112,13 +112,14 @@ struct ExpSmoothRows : public Worker {
 
   const double tau;
 
-  const int l;
+  const std::size_t l;
 
   // destination matrix
   RMatrix<double> output;
 
   // initialize with source and destination
-  ExpSmoothRows(NumericMatrix mat, double tau, int l, NumericMatrix output) :
+  ExpSmoothRows(NumericMatrix mat, double tau, std::size_t l,
+                NumericMatrix output) :
     mat(mat), tau(tau), l(l), output(output) {}
 
   // extend the rows
@@ -139,7 +140,7 @@ struct ExpSmoothRows : public Worker {
 
 
 // [[Rcpp::export]]
-NumericMatrix exp_smooth_rows_(NumericMatrix mat, double tau, int l) {
+NumericMatrix exp_smooth_rows_(NumericMatrix mat, double tau, std::size_t l) {
 
   // allocate the matrix we will return
   NumericMatrix output(mat.nrow(), mat.ncol());

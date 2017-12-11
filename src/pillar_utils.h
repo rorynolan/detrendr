@@ -17,7 +17,7 @@ std::vector<T> extract_pillar(const Vec& arr3d,
   vT pillar(pillar_len);
   std::size_t row = p % arr3d_dim[1];
   std::size_t col = p / arr3d_dim[1];
-  for (vTst slice = 0; slice != arr3d_dim[2]; ++slice) {
+  for (vTst slice = 0; slice != pillar_len; ++slice) {
     pillar[slice] = arr3d[slice * arr3d_dim[1] * arr3d_dim[0] +
                           col * arr3d_dim[0] +
                           row];
@@ -34,7 +34,8 @@ void assign_pillar(Vec& arr3d,
   typedef typename std::vector<T>::size_type vTst;
   std::size_t row = p % arr3d_dim[1];
   std::size_t col = p / arr3d_dim[1];
-  for (vTst slice = 0; slice != arr3d_dim[2]; ++slice) {
+  for (vTst slice = 0, pillar_len = arr3d_dim[2];
+       slice != pillar_len; ++slice) {
     arr3d[slice * arr3d_dim[0] * arr3d_dim[1] +
           col * arr3d_dim[0] +
           row] = pillar[slice];

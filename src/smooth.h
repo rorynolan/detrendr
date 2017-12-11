@@ -56,8 +56,8 @@ template <class ReturnVec, class Vec>
 ReturnVec exp_smooth(Vec vec, double tau, const std::size_t l) {
   Vec weights(2 * l + 1);
   weights[l] = 1;
-  for (int i = 1; i != l + 1; ++i) {
-    weights[l - i] = weights[l + i] = std::exp(- i / tau);
+  for (std::size_t i = 1; i != l + 1; ++i) {
+    weights[l - i] = weights[l + i] = std::exp(- (double) i / tau);
   }
   return weighted_smooth<ReturnVec>(vec, weights);
 }

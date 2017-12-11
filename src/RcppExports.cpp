@@ -191,14 +191,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // exp_smooth_rows_
-NumericMatrix exp_smooth_rows_(NumericMatrix mat, double tau, int l);
+NumericMatrix exp_smooth_rows_(NumericMatrix mat, double tau, std::size_t l);
 RcppExport SEXP _detrendr_exp_smooth_rows_(SEXP matSEXP, SEXP tauSEXP, SEXP lSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
     Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
-    Rcpp::traits::input_parameter< int >::type l(lSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
     rcpp_result_gen = Rcpp::wrap(exp_smooth_rows_(mat, tau, l));
     return rcpp_result_gen;
 END_RCPP
