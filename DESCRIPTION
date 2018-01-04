@@ -20,7 +20,7 @@ SystemRequirements: GNU make
 Imports: Rcpp,
     RcppParallel,
     parallel,
-    backports,
+    rlang,
     checkmate,
     magrittr,
     dplyr,
