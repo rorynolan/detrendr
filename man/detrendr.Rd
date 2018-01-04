@@ -8,7 +8,7 @@
 \title{detrendr: Image detrending in R.}
 \description{
 The \code{detrendr} package gives functions for detrending images, most often used
-for preprocessing in fluorescence fluctuation spectoscopy.
+for preprocessing in fluorescence fluctuation spectroscopy.
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro

@@ -18,7 +18,7 @@ if (getRversion() >= "2.15.1") {
 #' detrendr: Image detrending in R.
 #'
 #' The `detrendr` package gives functions for detrending images, most often used
-#' for preprocessing in fluorescence fluctuation spectoscopy.
+#' for preprocessing in fluorescence fluctuation spectroscopy.
 #'
 #' @docType package
 #' @name detrendr
