@@ -166,43 +166,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// boxcar_smooth
-NumericVector boxcar_smooth(NumericVector vec, std::size_t l);
-RcppExport SEXP _detrendr_boxcar_smooth(SEXP vecSEXP, SEXP lSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
-    rcpp_result_gen = Rcpp::wrap(boxcar_smooth(vec, l));
-    return rcpp_result_gen;
-END_RCPP
-}
-// weighted_smooth
-NumericVector weighted_smooth(NumericVector vec, NumericVector weights);
-RcppExport SEXP _detrendr_weighted_smooth(SEXP vecSEXP, SEXP weightsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_smooth(vec, weights));
-    return rcpp_result_gen;
-END_RCPP
-}
-// exp_smooth
-NumericVector exp_smooth(NumericVector vec, double tau, std::size_t l);
-RcppExport SEXP _detrendr_exp_smooth(SEXP vecSEXP, SEXP tauSEXP, SEXP lSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
-    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
-    rcpp_result_gen = Rcpp::wrap(exp_smooth(vec, tau, l));
-    return rcpp_result_gen;
-END_RCPP
-}
 // boxcar_smooth_rows_
 NumericMatrix boxcar_smooth_rows_(NumericMatrix mat, std::size_t l);
 RcppExport SEXP _detrendr_boxcar_smooth_rows_(SEXP matSEXP, SEXP lSEXP) {
@@ -253,6 +216,43 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// boxcar_smooth
+NumericVector boxcar_smooth(NumericVector vec, std::size_t l);
+RcppExport SEXP _detrendr_boxcar_smooth(SEXP vecSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(boxcar_smooth(vec, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_smooth
+NumericVector weighted_smooth(NumericVector vec, NumericVector weights);
+RcppExport SEXP _detrendr_weighted_smooth(SEXP vecSEXP, SEXP weightsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_smooth(vec, weights));
+    return rcpp_result_gen;
+END_RCPP
+}
+// exp_smooth
+NumericVector exp_smooth(NumericVector vec, double tau, std::size_t l);
+RcppExport SEXP _detrendr_exp_smooth(SEXP vecSEXP, SEXP tauSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(exp_smooth(vec, tau, l));
+    return rcpp_result_gen;
+END_RCPP
+}
 // square_root_
 NumericVector square_root_(NumericVector x);
 RcppExport SEXP _detrendr_square_root_(SEXP xSEXP) {
@@ -280,13 +280,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_myrpois_", (DL_FUNC) &_detrendr_myrpois_, 2},
     {"_detrendr_myrpois_frames_", (DL_FUNC) &_detrendr_myrpois_frames_, 3},
     {"_detrendr_myrpois_frames_t_", (DL_FUNC) &_detrendr_myrpois_frames_t_, 3},
-    {"_detrendr_boxcar_smooth", (DL_FUNC) &_detrendr_boxcar_smooth, 2},
-    {"_detrendr_weighted_smooth", (DL_FUNC) &_detrendr_weighted_smooth, 2},
-    {"_detrendr_exp_smooth", (DL_FUNC) &_detrendr_exp_smooth, 3},
     {"_detrendr_boxcar_smooth_rows_", (DL_FUNC) &_detrendr_boxcar_smooth_rows_, 2},
     {"_detrendr_boxcar_smooth_pillars_", (DL_FUNC) &_detrendr_boxcar_smooth_pillars_, 2},
     {"_detrendr_exp_smooth_rows_", (DL_FUNC) &_detrendr_exp_smooth_rows_, 3},
     {"_detrendr_exp_smooth_pillars_", (DL_FUNC) &_detrendr_exp_smooth_pillars_, 3},
+    {"_detrendr_boxcar_smooth", (DL_FUNC) &_detrendr_boxcar_smooth, 2},
+    {"_detrendr_weighted_smooth", (DL_FUNC) &_detrendr_weighted_smooth, 2},
+    {"_detrendr_exp_smooth", (DL_FUNC) &_detrendr_exp_smooth, 3},
     {"_detrendr_square_root_", (DL_FUNC) &_detrendr_square_root_, 1},
     {NULL, NULL, 0}
 };
