@@ -29,9 +29,9 @@ An \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{arr} with one frame.
 \code{arr[y, x, ch, 1]} is equal to \code{mean(img[y, x, ch, ])}, \code{median(img[y, x, ch, ])}, or \code{var(img[y, x, ch, ])}.
 }
 \description{
-For an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{img} (indexed as \code{img[y, x, channel, frame]}),  3-dimensional array \code{mat3d}, pillar \code{xy}  of channel
+For an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{img} (indexed as \code{img[y, x, channel, frame]}), pillar \code{xy} of channel
 \code{ch} is defined as \code{img[y, x, ch, ]}. These functions compute the mean,
-median and variance of each pillar.
+median and variance of each pillar for each channel.
 }
 \examples{
 aaa <- array(seq_len(2 ^ 4), dim = rep(2, 4))  # a 2-channel, 2-frame array

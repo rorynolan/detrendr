@@ -2,9 +2,9 @@
 #' [ijtiff_img][ijtiff::ijtiff_img]-style array.
 #'
 #' For an [ijtiff_img][ijtiff::ijtiff_img]-style array `img` (indexed as `img[y,
-#' x, channel, frame]`),  3-dimensional array `mat3d`, pillar `xy`  of channel
+#' x, channel, frame]`), pillar `xy` of channel
 #' `ch` is defined as `img[y, x, ch, ]`. These functions compute the mean,
-#' median and variance of each pillar.
+#' median and variance of each pillar for each channel.
 #'
 #' @inheritParams detrending
 #'
