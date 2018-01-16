@@ -1,9 +1,9 @@
 ## Test environments
 * local OS X install, R 3.4.3
-* ubuntu 12.04 (on travis-ci), R 3.4.3
+* ubuntu 14.04 (on travis-ci), R 3.4.3
+* ubuntu 16.04 with valgrind, R 3.4.3
 * Windows Server 2012 (on AppVeyor), R 3.4.3
 * win-builder (devel and release)
-* x86_64-pc-linux-gnu with valgrind (on r-hub), R 3.4.2
 
 # R CMD check results
 
@@ -13,3 +13,7 @@ Note 1. GNU make is a system requirement. This is needed to use RcppParallel.
 
 ## Reverse dependencies
 There are no reverse dependencies.
+
+## CRAN test results
+* Some of the CRAN test results are ERRORs due to differences in numerical percision across platforms. This version attempts to address those by including higher tolerance.
+* Additional CRAN checks throw up issues for clang-UBSAN and gcc-UBSAN. These are from an issue with RcppParallel, and will be fixed in the new version of that package, which is rumored to be nearly ready for CRAN.
