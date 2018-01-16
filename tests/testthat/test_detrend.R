@@ -4,7 +4,8 @@ img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
 test_that("detrending works", {
   context("Boxcar detrending")
   corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
-  expect_equal(round(mean(brightness_pillars(corrected[, , 1, ])), 2), 1.85)
+  expect_equal(round(mean(brightness_pillars(corrected[, , 1, ])), 2), 1.85,
+               tolerance = 0.05)
   corrected10 <- img_detrend_boxcar(img, 10, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected10[, , 1, ])), 2), 1.25)
   corrected50 <- img_detrend_boxcar(img, 50, seed = 0, parallel = 2)
@@ -15,7 +16,8 @@ test_that("detrending works", {
   expect_equal(round(mean(brightness_pillars(corrected300[, , 1, ])), 2), 8.16)
   context("Exponential filtering detrending")
   corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
-  expect_equal(round(mean(brightness_pillars(corrected[, , 1, ])), 2), 2.09)
+  expect_equal(round(mean(brightness_pillars(corrected[, , 1, ])), 2), 2.09,
+               tolerance = 0.05)
   corrected10 <- img_detrend_exp(img, 10, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected10[, , 1, ])), 2), 1.28)
   corrected50 <- img_detrend_exp(img, 50, seed = 0, parallel = 2)
@@ -31,7 +33,8 @@ test_that("detrending works", {
   corrected <- suppressWarnings(img_detrend_polynom(img, "auto",
                                                     seed = 0, parallel = 2))
   expect_equal(round(mean(brightness_pillars(corrected[, , 1, ]),
-                         na.rm = TRUE), 2), 2.12)
+                         na.rm = TRUE), 2),
+               2.12, tolerance = 0.15)
   corrected1 <- img_detrend_polynom(img, 1, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected1[, , 1, ]),
                           na.rm = TRUE), 1), 5.0)
