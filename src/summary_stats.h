@@ -28,7 +28,7 @@ double mymean(const Vec& vec) {
 }
 
 template <class Vec>
-double myvar(Vec& vec) {
+double myvar(const Vec& vec) {
   double mean = mymean(vec);
   double accum = 0.0;
   double diff;

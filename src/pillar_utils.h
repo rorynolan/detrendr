@@ -13,13 +13,14 @@ std::vector<T> extract_pillar(const Vec& arr3d,
                               const std::size_t p) {
   typedef typename std::vector<T> vT;
   typedef typename std::vector<T>::size_type vTst;
+  std::size_t nrow = arr3d_dim[0], ncol = arr3d_dim[1];
   std::size_t pillar_len = arr3d_dim[2];
   vT pillar(pillar_len);
-  std::size_t row = p % arr3d_dim[1];
-  std::size_t col = p / arr3d_dim[1];
+  std::size_t row = p % nrow;
+  std::size_t col = p / nrow;
   for (vTst slice = 0; slice != pillar_len; ++slice) {
-    pillar[slice] = arr3d[slice * arr3d_dim[1] * arr3d_dim[0] +
-                          col * arr3d_dim[0] +
+    pillar[slice] = arr3d[slice * ncol * nrow +
+                          col * nrow +
                           row];
   }
   return pillar;
@@ -32,13 +33,15 @@ void assign_pillar(Vec& arr3d,
                    const std::vector<T>& pillar,
                    const std::size_t p) {
   typedef typename std::vector<T>::size_type vTst;
-  std::size_t row = p % arr3d_dim[1];
-  std::size_t col = p / arr3d_dim[1];
-  for (vTst slice = 0, pillar_len = arr3d_dim[2];
-       slice != pillar_len; ++slice) {
-    arr3d[slice * arr3d_dim[0] * arr3d_dim[1] +
-          col * arr3d_dim[0] +
-          row] = pillar[slice];
+  std::size_t nrow = arr3d_dim[0], ncol = arr3d_dim[1];
+  std::size_t pillar_len = arr3d_dim[2];
+  std::size_t row = p % nrow;
+  std::size_t col = p / nrow;
+  for (vTst slice = 0; slice != pillar_len; ++slice) {
+    arr3d[slice * ncol * nrow +
+          col * nrow +
+          row] =
+      pillar[slice];
   }
 }
 
