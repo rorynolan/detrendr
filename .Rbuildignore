@@ -1,8 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^junk$
-^README\.Rmd$
+^README.*$
 ^cran-comments\.md$
 ^CONDUCT\.md$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^src/.*gcda$
+^src/.*gcno$

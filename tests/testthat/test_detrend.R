@@ -17,7 +17,7 @@ test_that("detrending works", {
   context("Exponential filtering detrending")
   corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected[, , 1, ])), 2), 1.64,
-               tolerance = 0.05)
+               tolerance = 0.1)
   corrected10 <- img_detrend_exp(img, 10, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected10[, , 1, ])), 2), 1.29)
   corrected50 <- img_detrend_exp(img, 50, seed = 0, parallel = 2)
