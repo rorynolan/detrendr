@@ -16,4 +16,5 @@ There are no reverse dependencies.
 
 ## CRAN test results
 * Some of the CRAN test results are ERRORs due to differences in numerical percision across platforms. This version attempts to address those by including higher tolerance.
+* Some of the CRAN test results are NOTEs because the package is large. This version brings the package size under 5MB by reducing the size of the example image.
 * Additional CRAN checks throw up issues for clang-UBSAN and gcc-UBSAN. These are from an issue with RcppParallel, and will be fixed in the new version of that package, which is rumored to be nearly ready for CRAN.

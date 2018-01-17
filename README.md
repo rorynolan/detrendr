@@ -29,55 +29,44 @@ First let's load the library:
 library(detrendr)
 ```
 
-Image I/O and display
----------------------
+An image in need of detrending
+------------------------------
 
-The package contains a sample image series which can be found at `system.file("extdata", "cells.tif", package = "detrendr")`. Let's read it in and inspect the first and last frames:
+The package contains a sample image series which can be found at
+`system.file("extdata", "bleached.tif", package = "detrendr")`. It's 500 frames of diffusing fluorescent particles which are bleaching over the course of the acquisition. We can see they're bleaching by displaying every 99th frame.
 
 ``` r
+library(magrittr)
 path <- system.file("extdata", "bleached.tif", package = "detrendr")
-img <- ijtiff::read_tif(path)
-dim(img)  # img has 500 frames
+img <- ijtiff::read_tif(path, msg = FALSE)
+every100th <- purrr::map(seq(1, dim(img)[4], by = 99), ~ img[, , 1, .]) %>% 
+  purrr::reduce(~ cbind(.x, max(img), .y))
+ijtiff::display(every100th)
 ```
 
-    #> [1]  60  60   1 500
-
-``` r
-mean(img[, , 1, 1])  # first channel, first frame
-```
-
-    #> [1] 152.4489
-
-``` r
-mean(img[, , 1, 500])  # first channel, last frame
-```
-
-    #> [1] 68.51583
+![](README_files/figure-markdown_github/visualize%20bleaching-1.png)
 
 Detrending
 ----------
 
-We see that the intensity is much lower for the last frame, this is because the image series has been bleached. We can correct for this (and check how long it takes):
+We see that the intensity is much lower for the last frame, this is because the image series has been bleached. We can correct for this.
 
 ``` r
-system.time(corrected <- img_detrend_exp(img, "auto", 
-                                         seed = 0, parallel = 2))["elapsed"]
+system.time(corrected_exp <- img_detrend_exp(img, "auto", 
+                                             seed = 0, parallel = 2))["elapsed"]
 ```
 
     #> elapsed 
-    #>   7.589
+    #>   2.888
 
 ``` r
-mean(corrected[, , 1, 1])  # first channel, first frame
+every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 
+                         ~ corrected_exp[, , 1, .]) %>% 
+  purrr::reduce(~ cbind(.x, max(img), .y))
+ijtiff::display(every100th)
 ```
 
-    #> [1] 112.9569
-
-``` r
-mean(corrected[, , 1, 500])  # first channel, last frame
-```
-
-    #> [1] 103.33
+![](README_files/figure-markdown_github/detrend-1.png)
 
 So we see that the corrected series does not have this drop-off in intensity.
 

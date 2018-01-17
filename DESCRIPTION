@@ -29,7 +29,8 @@ Imports: Rcpp,
     RSAGA,
     iterators,
     purrr,
-    ijtiff
+    ijtiff,
+    magick
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.0.1

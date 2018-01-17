@@ -32,23 +32,29 @@ First let's load the library:
 library(detrendr)
 ```
 
-## Image I/O and display
-The package contains a sample image series which can be found at `system.file("extdata", "cells.tif", package = "detrendr")`. Let's read it in and inspect the first and last frames:
-```{r display}
+## An image in need of detrending
+The package contains a sample image series which can be found at  
+`system.file("extdata", "bleached.tif", package = "detrendr")`. It's 500 frames of diffusing fluorescent particles which are bleaching over the course of the acquisition. We can see they're bleaching by displaying every 99th frame.
+
+```{r visualize bleaching, fig.height=3.3, fig.width=11}
+library(magrittr)
 path <- system.file("extdata", "bleached.tif", package = "detrendr")
-img <- ijtiff::read_tif(path)
-dim(img)  # img has 500 frames
-mean(img[, , 1, 1])  # first channel, first frame
-mean(img[, , 1, 500])  # first channel, last frame
+img <- ijtiff::read_tif(path, msg = FALSE)
+every100th <- purrr::map(seq(1, dim(img)[4], by = 99), ~ img[, , 1, .]) %>% 
+  purrr::reduce(~ cbind(.x, max(img), .y))
+ijtiff::display(every100th)
 ```
 
 ## Detrending
-We see that the intensity is much lower for the last frame, this is because the image series has been bleached. We can correct for this (and check how long it takes):
-```{r detrend}
-system.time(corrected <- img_detrend_exp(img, "auto", 
-                                         seed = 0, parallel = 2))["elapsed"]
-mean(corrected[, , 1, 1])  # first channel, first frame
-mean(corrected[, , 1, 500])  # first channel, last frame
+We see that the intensity is much lower for the last frame, this is because the image series has been bleached. We can correct for this. 
+
+```{r detrend, fig.height=3.3, fig.width=11}
+system.time(corrected_exp <- img_detrend_exp(img, "auto", 
+                                             seed = 0, parallel = 2))["elapsed"]
+every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 
+                         ~ corrected_exp[, , 1, .]) %>% 
+  purrr::reduce(~ cbind(.x, max(img), .y))
+ijtiff::display(every100th)
 ```
 
 So we see that the corrected series does not have this drop-off in intensity. 
