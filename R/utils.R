@@ -1,14 +1,12 @@
 translate_parallel <- function(parallel) {
-  parallel <- parallel[1]
-  if (rlang::is_false(parallel)) {
-    n_cores <- 1
-  } else if (isTRUE(parallel)) {
+  checkmate::assert(checkmate::check_int(parallel),
+                    checkmate::check_logical(parallel, len = 1))
+  n_cores <- 1
+  if (isTRUE(parallel)) {
     n_cores <- parallel::detectCores()
   } else if (is.numeric(parallel)) {
-    n_cores <- floor(parallel)
+    n_cores <- parallel
     if (n_cores > parallel::detectCores()) n_cores <- parallel::detectCores()
-  } else {
-    stop("If parallel is not TRUE or FALSE, then it must be numeric.")
   }
   n_cores
 }

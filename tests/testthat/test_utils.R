@@ -1,9 +1,10 @@
 context("Utilities")
 
 test_that("translate_parallel works", {
-  expect_equal(detrendr:::translate_parallel(FALSE), 1)
-  expect_equal(detrendr:::translate_parallel(2), 2)
-  expect_true(detrendr:::translate_parallel(TRUE) >= 2)
+  expect_equal(translate_parallel(FALSE), 1)
+  max_cores <- parallel::detectCores()
+  expect_equal(translate_parallel(2), min(2, max_cores))
+  expect_equal(translate_parallel(TRUE), max_cores)
 })
 
 test_that("apply_on_pillars works", {

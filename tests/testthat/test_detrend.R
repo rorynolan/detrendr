@@ -5,7 +5,7 @@ test_that("detrending works", {
   context("Boxcar detrending")
   corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected[, , 1, ])), 2), 1.45,
-               tolerance = 0.05)
+               tolerance = 0.15)
   corrected10 <- img_detrend_boxcar(img, 10, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected10[, , 1, ])), 2), 1.27)
   corrected50 <- img_detrend_boxcar(img, 50, seed = 0, parallel = 2)

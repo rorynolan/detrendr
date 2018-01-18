@@ -20,7 +20,6 @@ SystemRequirements: GNU make
 Imports: Rcpp,
     RcppParallel,
     parallel,
-    rlang,
     checkmate,
     magrittr,
     dplyr,
@@ -29,8 +28,7 @@ Imports: Rcpp,
     RSAGA,
     iterators,
     purrr,
-    ijtiff,
-    magick
+    ijtiff
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.0.1

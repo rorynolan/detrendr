@@ -57,18 +57,6 @@ myrpois_frames_t_ <- function(means, frame_length, seed) {
     .Call(`_detrendr_myrpois_frames_t_`, means, frame_length, seed)
 }
 
-boxcar_smooth <- function(vec, l) {
-    .Call(`_detrendr_boxcar_smooth`, vec, l)
-}
-
-weighted_smooth <- function(vec, weights) {
-    .Call(`_detrendr_weighted_smooth`, vec, weights)
-}
-
-exp_smooth <- function(vec, tau, l) {
-    .Call(`_detrendr_exp_smooth`, vec, tau, l)
-}
-
 boxcar_smooth_rows_ <- function(mat, l) {
     .Call(`_detrendr_boxcar_smooth_rows_`, mat, l)
 }
@@ -83,6 +71,18 @@ exp_smooth_rows_ <- function(mat, tau, l) {
 
 exp_smooth_pillars_ <- function(arr, tau, l) {
     .Call(`_detrendr_exp_smooth_pillars_`, arr, tau, l)
+}
+
+boxcar_smooth <- function(vec, l) {
+    .Call(`_detrendr_boxcar_smooth`, vec, l)
+}
+
+weighted_smooth <- function(vec, weights) {
+    .Call(`_detrendr_weighted_smooth`, vec, weights)
+}
+
+exp_smooth <- function(vec, tau, l) {
+    .Call(`_detrendr_exp_smooth`, vec, tau, l)
 }
 
 square_root_ <- function(x) {
