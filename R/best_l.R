@@ -61,11 +61,25 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   d <- dim(img)
   if (length(d) == 3) {
+    if (filesstrings::all_equal(img))
+      stop("All elements of img are equal; img is not fit for detrending.")
     if (is.null(seed)) seed <- rand_seed()
     frame_length <- sum(!is.na(img[, , 1]))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
-    sim_mat <- myrpois_frames(frame_means, frame_length, seed, parallel)
-    sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>% mean()
+    sim_brightness <- NA
+    for (i in 0:9) {
+      if (is.na(sim_brightness)) {
+        sim_mat <- myrpois_frames(frame_means, frame_length, seed + i, parallel)
+        if (!filesstrings::all_equal(sim_mat)) {
+          sim_brightness <- brightness_rows(sim_mat, parallel = parallel)
+          if (all(is.na(sim_brightness))) {
+            sim_brightness <- NA
+          } else {
+            sim_brightness %<>% mean(na.rm = TRUE)
+          }
+        }
+      }
+    }
     if (sim_brightness <= 1) return(NA)
     maxl <- d[3] - 1
     big_l <- min(10, maxl)

@@ -51,9 +51,21 @@ best_degree <- function(img, seed = NULL, parallel = FALSE) {
     if (is.null(seed)) seed <- rand_seed()
     frame_length <- sum(!is.na(img[, , 1]))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
-    sim_mat <- myrpois_frames_t(frame_means, frame_length, seed, parallel)
-    sim_brightness <- brightness_cols(sim_mat, parallel = parallel) %>%
-      mean(na.rm = TRUE)
+    sim_brightness <- NA
+    for (i in 0:9) {
+      if (is.na(sim_brightness)) {
+        sim_mat <- myrpois_frames_t(frame_means, frame_length,
+                                    seed + i, parallel)
+        if (!filesstrings::all_equal(sim_mat)) {
+          sim_brightness <- brightness_cols(sim_mat, parallel = parallel)
+          if (all(is.na(sim_brightness))) {
+            sim_brightness <- NA
+          } else {
+            sim_brightness %<>% mean(na.rm = TRUE)
+          }
+        }
+      }
+    }
     if (sim_brightness <= 1) return(NA)
     lower_degree <- 0
     lower_degree_brightness <- sim_brightness
@@ -74,7 +86,7 @@ best_degree <- function(img, seed = NULL, parallel = FALSE) {
         parallel = parallel)
     }
     out <- ifelse(1 - upper_degree_brightness < lower_degree_brightness - 1,
-                  upper_degree, lower_degree)
+                  upper_degree, lower_degree)  # checking which is closer to 1
     if (out > 3) {
       warning("The polynomial degree found for your detrend was ", out, ". ",
               "Degrees above 3 are not recommended as they usually indicate ",

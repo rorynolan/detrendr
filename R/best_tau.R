@@ -44,9 +44,20 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
     if (is.null(seed)) seed <- rand_seed()
     frame_length <- sum(!is.na(img[, , 1]))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
-    sim_mat <- myrpois_frames(frame_means, frame_length, seed, parallel)
-    sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
-      mean(na.rm = TRUE)
+    sim_brightness <- NA
+    for (i in 0:9) {
+      if (is.na(sim_brightness)) {
+        sim_mat <- myrpois_frames(frame_means, frame_length, seed + i, parallel)
+        if (!filesstrings::all_equal(sim_mat)) {
+          sim_brightness <- brightness_rows(sim_mat, parallel = parallel)
+          if (all(is.na(sim_brightness))) {
+            sim_brightness <- NA
+          } else {
+            sim_brightness %<>% mean(na.rm = TRUE)
+          }
+        }
+      }
+    }
     if (sim_brightness <= 1) return(NA)
     big_tau <- 100
     big_tau_old <- big_tau

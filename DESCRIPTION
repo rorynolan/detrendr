@@ -1,7 +1,7 @@
 Package: detrendr
 Type: Package
 Title: Detrend Images
-Version: 0.2.1
+Version: 0.3.0
 Authors@R: c(person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
                     role = c("aut", "cre", "cph")),
              person("Sergi", "Padilla-Parra", email = "spadilla@well.ox.ac.uk",
@@ -28,7 +28,11 @@ Imports: Rcpp,
     RSAGA,
     iterators,
     purrr,
-    ijtiff
+    ijtiff,
+    autothresholdr,
+    rlang,
+    stringr,
+    filesstrings
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.0.1

@@ -1,7 +1,17 @@
+### 0.3.0
+
+#### NEW FEATURES
+* Batch processing: detrend an entire folder with the likes of `dir_detrend_exp()`.
+
+#### BUG FIXES
+* Asymmetric images caused R to crash.
+* `NA`s in simulated brightnesses were needlessly causing the automatic parameter-finding routines to fail.
+
+
 ### 0.2.0
 
 #### NEW FEATURES
-* The process of extending time series prior to smoothing is not done any more. This was introducing errors for images with low counts. Smoothing works fine without it. This gives a massive improvement in detrending speed.
+* The process of extending time series prior to smoothing is not done any more. This was introducing errors for images with low counts. Smoothing works fine without it. Dropping this extension gives a massive improvement in detrending speed :-)
 * TIFF I/O and image display are now taken care of by the `ijtiff` package.
 * Images are now represented in the style of an `ijtiff::ijtiff_img`.
 
@@ -11,6 +21,3 @@
 
 # detrendr 0.1.0
 * The first CRAN-worthy version.
-
-
-
