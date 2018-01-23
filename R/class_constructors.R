@@ -29,7 +29,7 @@
 detrended_img <- function(img, method, parameter, auto) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   checkmate::assert_numeric(img)
-  if (!all.equal(floor(img), img, check.attributes = FALSE)) {
+  if (!filesstrings::all_equal(floor(img), img)) {
     stop("Elements of a detrended_img must all be integers.")
   }
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}

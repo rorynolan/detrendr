@@ -59,6 +59,10 @@ rows_detrend_l_specified_mean_b <- function(mat, l, seed, parallel) {
 best_l <- function(img, seed = NULL, parallel = FALSE) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
+  if (filesstrings::all_equal(img)) {
+    stop("Your image is constant: all pixel values are equal to ",
+         img[[1]], ". This type of image is not detrendable.")
+  }
   d <- dim(img)
   if (length(d) == 3) {
     if (filesstrings::all_equal(img))
@@ -79,6 +83,12 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
           }
         }
       }
+    }
+    if (is.na(sim_brightness)) {
+      stop("Your image is too close to zero. ",
+           "Can't detrend an image with so few nonzero values. \n",
+           "* img has ", length(img), " elements and just ", sum(img > 0),
+           " of them are greater than zero.")
     }
     if (sim_brightness <= 1) return(NA)
     maxl <- d[3] - 1

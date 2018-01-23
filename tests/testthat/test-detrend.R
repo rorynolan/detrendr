@@ -14,6 +14,9 @@ test_that("detrending works", {
   expect_equal(round(mean(brightness_pillars(corrected100[, , 1, ])), 2), 3.04)
   corrected300 <- img_detrend_boxcar(img, 300, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected300[, , 1, ])), 2), 5.6)
+  correctedNA <- img_detrend_boxcar(img, NA)
+  expect_equal(list(dim(correctedNA), as.vector(correctedNA)),
+               list(dim(img), as.vector(img)))
   context("Exponential filtering detrending")
   corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected[, , 1, ])), 2), 1.64,
@@ -26,6 +29,9 @@ test_that("detrending works", {
   expect_equal(round(mean(brightness_pillars(corrected100[, , 1, ])), 2), 3.38)
   corrected1000 <- img_detrend_exp(img, 1000, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected1000[, , 1, ])), 2), 6.01)
+  correctedNA <- img_detrend_exp(img, NA)
+  expect_equal(list(dim(correctedNA), as.vector(correctedNA)),
+               list(dim(img), as.vector(img)))
   context("Polynomial detrending")
   expect_warning(img_detrend_polynom(img, "auto", seed = 0, parallel = 2),
                  "polynomial degree")
@@ -46,6 +52,9 @@ test_that("detrending works", {
   corrected8 <- img_detrend_polynom(img, 8, seed = 0, parallel = 2)
   expect_equal(round(mean(brightness_pillars(corrected8[, , 1, ]),
                           na.rm = TRUE), 1), 1.9)
+  correctedNA <- img_detrend_polynom(img, NA)
+  expect_equal(list(dim(correctedNA), as.vector(correctedNA)),
+               list(dim(img), as.vector(img)))
 })
 
 context("Detrending errors")
@@ -56,4 +65,11 @@ test_that("detrending errors correctly", {
   expect_error(img_detrend_boxcar(img, FALSE), "positive number or")
   expect_error(img_detrend_exp(img, FALSE), "positive number or")
   expect_error(img_detrend_polynom(img, FALSE), "positive number or")
+  img <- img[, , 1, ]
+  expect_error(img_detrend_polynom(img, degree = 1:7),
+               "length 1 or length equal to the number of channels.+7.+1")
+  expect_error(img_detrend_boxcar(img, l = 1:7),
+               "length 1 or length equal to the number of channels.+7.+1")
+  expect_error(img_detrend_boxcar(img, l = 1:7),
+               "length 1 or length equal to the number of channels.+7.+1")
 })

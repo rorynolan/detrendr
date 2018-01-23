@@ -66,6 +66,12 @@ best_degree <- function(img, seed = NULL, parallel = FALSE) {
         }
       }
     }
+    if (is.na(sim_brightness)) {
+      stop("Your image is too close to zero. ",
+           "Can't detrend an image with so few nonzero values. \n",
+           "* img has ", length(img), " elements and just ", sum(img > 0),
+           " of them are greater than zero.")
+    }
     if (sim_brightness <= 1) return(NA)
     lower_degree <- 0
     lower_degree_brightness <- sim_brightness

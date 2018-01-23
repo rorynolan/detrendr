@@ -136,7 +136,9 @@ img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
   if (length(l) == 1) l %<>% rep(n_ch)
   if (length(l) != n_ch) {
     stop("Argument l must have length 1 or length equal to ",
-         "the number of channels.")
+         "the number of channels. \n",
+         "* Your l argument has length ", length(l), " and your ",
+         "image has ", n_ch, " channels.")
   }
   auto <- rep(FALSE, n_ch)
   for (i in seq_len(n_ch)) {
@@ -178,7 +180,9 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05,
   if (length(tau) == 1) tau %<>% rep(n_ch)
   if (length(tau) != n_ch) {
     stop("Argument tau must have length 1 or length equal to ",
-         "the number of channels.")
+         "the number of channels. \n",
+         "* Your tau argument has length ", length(tau), " and your ",
+         "image has ", n_ch, " channels.")
   }
   auto <- rep(FALSE, n_ch)
   for (i in seq_len(n_ch)) {
@@ -219,7 +223,9 @@ img_detrend_polynom <- function(img, degree, seed = NULL, parallel = FALSE) {
   if (length(degree) == 1) degree %<>% rep(n_ch)
   if (length(degree) != n_ch) {
     stop("Argument degree must have length 1 or length equal to ",
-         "the number of channels.")
+         "the number of channels. \n",
+         "* Your degree argument has length ", length(degree), " and your ",
+         "image has ", n_ch, " channels.")
   }
   auto <- rep(FALSE, n_ch)
   for (i in seq_len(n_ch)) {

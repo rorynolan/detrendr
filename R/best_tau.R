@@ -39,6 +39,10 @@ rows_detrend_tau_specified_mean_b <- function(mat, tau, l, seed, parallel) {
 best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
+  if (filesstrings::all_equal(img)) {
+    stop("Your image is constant: all pixel values are equal to ",
+         img[[1]], ". This type of image is not detrendable.")
+  }
   d <- dim(img)
   if (length(d) == 3) {
     if (is.null(seed)) seed <- rand_seed()
@@ -57,6 +61,12 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
           }
         }
       }
+    }
+    if (is.na(sim_brightness)) {
+      stop("Your image is too close to zero. ",
+           "Can't detrend an image with so few nonzero values. \n",
+           "* img has ", length(img), " elements and just ", sum(img > 0),
+           " of them are greater than zero.")
     }
     if (sim_brightness <= 1) return(NA)
     big_tau <- 100
@@ -98,7 +108,7 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
         tau_upper <- middle_tau
         mean_brightness_tau_upper <- middle_brightness_mean
       } else {
-        return(round(middle_tau))
+        return(round(middle_tau))  # incredibly unlikely to be needed
       }
     }
     upper_closer <- abs(mean_brightness_tau_upper - 1) >

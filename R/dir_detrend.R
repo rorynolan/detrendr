@@ -137,7 +137,7 @@ make_detrended_filename_ending <- function(img) {
   method <- attr(img, "method")
   parameter <- attr(img, "parameter")
   stopifnot(method %in% c("boxcar", "exponential", "polynomial"))
-  symbol <- switch(method, boxcar = "l", expenential = "tau",
+  symbol <- switch(method, boxcar = "l", exponential = "tau",
                    polynomial = "degree")
   auto <- attr(img, "auto")
   thresh_part <- ""
