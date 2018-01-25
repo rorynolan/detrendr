@@ -7,7 +7,7 @@ test_that("best_tau works", {
                tolerance = 2)
   set.seed(3)
   img <- array(rpois(99 ^ 3, 99), dim = rep(99, 3))
-  expect_equal(round(best_tau(img, seed = 7)), 6618, tolerance = 6000)
+  expect_equal(round(best_tau(img, seed = 7)), 6618, tolerance = 6400)
   img[] <- 0
   expect_error(best_tau(img), "all pixel values are equal to 0")
 })
@@ -19,7 +19,7 @@ test_that("best_l works", {
                tolerance = 2)
   set.seed(3)
   img <- array(rpois(99 ^ 3, 99), dim = rep(99, 3))
-  expect_equal(round(best_tau(img, seed = 7)), 28372, tolerance = 28000)
+  expect_equal(round(best_tau(img, seed = 7)), 28372, tolerance = 28200)
   img[] <- 0
   expect_error(best_l(img), "all pixel values are equal to 0")
   img <- array(round(seq(0, .Machine$integer.max, length.out = 2 ^ 3)),
