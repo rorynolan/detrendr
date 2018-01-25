@@ -4,6 +4,7 @@
 #' @importFrom foreach '%dopar%'
 #' @importFrom grDevices adjustcolor
 #' @importFrom ijtiff ijtiff_img
+#' @importFrom abind acorn
 #' @useDynLib detrendr, .registration = TRUE
 NULL
 

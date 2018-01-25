@@ -32,12 +32,14 @@ Imports: Rcpp,
     autothresholdr,
     rlang,
     stringr,
-    filesstrings
+    filesstrings,
+    abind
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
 Suggests: testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr

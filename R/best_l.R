@@ -75,21 +75,15 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
       if (is.na(sim_brightness)) {
         sim_mat <- myrpois_frames(frame_means, frame_length, seed + i, parallel)
         if (!filesstrings::all_equal(sim_mat)) {
-          sim_brightness <- brightness_rows(sim_mat, parallel = parallel)
-          if (all(is.na(sim_brightness))) {
-            sim_brightness <- NA
-          } else {
-            sim_brightness %<>% mean(na.rm = TRUE)
-          }
+          sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
+            mean(na.rm = TRUE)
         }
       }
     }
-    if (is.na(sim_brightness)) {
-      stop("Your image is too close to zero. ",
-           "Can't detrend an image with so few nonzero values. \n",
-           "* img has ", length(img), " elements and just ", sum(img > 0),
-           " of them are greater than zero.")
-    }
+    msg <- paste("Your image is too close to zero. Can't detrend an image with",
+                 "so few nonzero values. \n* img has", length(img), "elements",
+                 "and just", sum(img > 0), "of them are greater than zero.")
+    if (is.na(sim_brightness)) stop(msg)
     if (sim_brightness <= 1) return(NA)
     maxl <- d[3] - 1
     big_l <- min(10, maxl)
@@ -97,23 +91,26 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
     max_l <- ncol(sim_mat) %>% {(. - 1) + (. - 2)}
     mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
       sim_mat, big_l, seed, parallel = parallel)
+    if (is.na(mean_brightness_big_l)) stop(msg)
     mean_brightness_big_l_old <- mean_brightness_big_l
     while (mean_brightness_big_l <= 1) {
       big_l_old <- big_l
       big_l <- min(maxl, 2 * big_l)
       mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
         sim_mat, big_l, seed, parallel = parallel)
+      if (is.na(mean_brightness_big_l)) stop(msg)
     }
     if (big_l_old == big_l) {
       while (mean_brightness_big_l_old > 1) {
         big_l_old <- big_l_old %/% 2
         if (big_l_old == 0) {
-          stop("Even with box size l = 1 (the most severe detrend)",
+          stop("Even with box size l = 1 (the most severe detrend) ",
                "the brightness B was still above 1. ",
                "There is probably something wrong with your data.")
         }
         mean_brightness_big_l_old <- rows_detrend_l_specified_mean_b(
           sim_mat, big_l_old, seed, parallel = parallel)
+        if (is.na(mean_brightness_big_l_old)) stop(msg)
       }
     }
     if (mean_brightness_big_l_old == 1) return(round(big_l_old))
@@ -125,6 +122,7 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
       middle_l <- round(mean(c(l_lower, l_upper)))
       middle_brightness_mean <- rows_detrend_l_specified_mean_b(
         sim_mat, middle_l, seed, parallel = parallel)
+      if (is.na(middle_brightness_mean)) stop(msg)
       if (middle_brightness_mean < 1) {
         l_lower <- middle_l
         mean_brightness_l_lower <- middle_brightness_mean
@@ -132,12 +130,13 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
         l_upper <- middle_l
         mean_brightness_l_upper <- middle_brightness_mean
       } else {
-        return(middle_l)
+        return(middle_l)  # very unlikely to be needed
       }
     }
     upper_closer <- abs(mean_brightness_l_upper - 1) >
       abs(mean_brightness_l_lower - 1)
-    dplyr::if_else(upper_closer, l_upper, l_lower)
+    dplyr::if_else(upper_closer, l_upper, l_lower) %>%
+      as.integer()
   } else {
     purrr::map_int(seq_len(d[3]),
                    ~ best_l(img[, , ., ], seed = seed, parallel = parallel))

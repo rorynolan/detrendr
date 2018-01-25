@@ -8,3 +8,4 @@
 ^appveyor\.yml$
 ^src/.*gcda$
 ^src/.*gcno$
+^codecov\.yml$

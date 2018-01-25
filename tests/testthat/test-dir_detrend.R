@@ -11,29 +11,38 @@ test_that("detrending entire derectories works", {
                            method = "tri") %>%
     purrr::map(img_detrend_boxcar, l = "auto", seed = 0)
   dir_detrend_boxcar(l = "auto", thresh = "tri", seed = 0)
-  detrendeds_dir <- dir(pattern = "detrended.*tif") %>%
+  detrendeds_dir <- dir(pattern = "detrended.*tif", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif)
   expect_equal(purrr::map(detrendeds, dim), purrr::map(detrendeds_dir, dim))
   expect_equal(unlist(detrendeds), unlist(detrendeds_dir))
-  file.remove(dir(pattern = "detrended.*tif$"))
+  filesstrings::dir.remove("detrended")
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
                            method = "tri") %>%
     purrr::map(img_detrend_exp, tau = "auto", seed = 0)
   dir_detrend_exp(tau = "auto", thresh = "tri", seed = 0)
-  detrendeds_dir <- dir(pattern = "detrended.*tif") %>%
+  detrendeds_dir <- dir(pattern = "detrended.*tif", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif)
   expect_equal(purrr::map(detrendeds, dim), purrr::map(detrendeds_dir, dim))
   expect_equal(unlist(detrendeds), unlist(detrendeds_dir))
-  file.remove(dir(pattern = "detrended.*tif$"))
+  filesstrings::dir.remove("detrended")
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
                            method = "tri") %>%
     purrr::map(~ suppressWarnings(img_detrend_polynom(., degree = "auto",
                                                       seed = 0)))
   suppressWarnings(dir_detrend_polynom(degree = "auto", thresh = "tri",
                                        seed = 0))
-  detrendeds_dir <- dir(pattern = "detrended.*tif") %>%
+  detrendeds_dir <- dir(pattern = "detrended.*tif", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif)
   expect_equal(purrr::map(detrendeds, dim), purrr::map(detrendeds_dir, dim))
   expect_equal(unlist(detrendeds), unlist(detrendeds_dir))
+  filesstrings::dir.remove("detrended")
   file.remove(dir(pattern = "tif$"))
+})
+
+test_that("file_detrend() deals with other directories correctly", {
+  setwd(tempdir())
+  filesstrings::create_dir("tempwithintemp")
+  file.copy(system.file("extdata", "bleached.tif", package = "detrendr"),
+            "tempwithintemp")
+  file_detrend("tempwithintemp/bleached.tif", method = "exp", parameter = 5)
 })

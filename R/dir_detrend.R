@@ -17,6 +17,8 @@
 #' @param thresh The threshold or thresholding method (see
 #'   [autothresholdr::mean_stack_thresh()]) to use on the image prior to
 #'   detrending.
+#' @param msg Receive messages to tell you how the processing of the directory is
+#'   going? Default is yes.
 #'
 #' @return Silently, a character vector of the paths to the detrended images.
 #'
@@ -39,47 +41,48 @@ NULL
 #' @rdname detrend-directory
 #' @export
 dir_detrend_boxcar <- function(folder_path = ".", l, thresh = NULL,
-                               seed = NULL, parallel = FALSE) {
+                               seed = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   cwd <- getwd()
   on.exit(setwd(cwd))
   setwd(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "box", parameter = l, thresh = thresh,
-                 seed = seed, parallel = parallel) %>%
+                 seed = seed, parallel = parallel, msg = msg) %>%
     invisible()
 }
 
 #' @rdname detrend-directory
 #' @export
 dir_detrend_exp <- function(folder_path = ".", tau, thresh = NULL,
-                               seed = NULL, parallel = FALSE) {
+                               seed = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   cwd <- getwd()
   on.exit(setwd(cwd))
   setwd(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "exp", parameter = tau, thresh = thresh,
-                 seed = seed, parallel = parallel) %>%
+                 seed = seed, parallel = parallel, msg = msg) %>%
     invisible()
 }
 
 #' @rdname detrend-directory
 #' @export
 dir_detrend_polynom <- function(folder_path = ".", degree, thresh = NULL,
-                                seed = NULL, parallel = FALSE) {
+                                seed = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   cwd <- getwd()
   on.exit(setwd(cwd))
   setwd(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "poly", parameter = degree,
-                 thresh = thresh, seed = seed, parallel = parallel) %>%
+                 thresh = thresh, seed = seed, parallel = parallel,
+                 msg = msg) %>%
     invisible()
 }
 
 file_detrend <- function(path, method, parameter, thresh = NULL,
-                         seed = NULL, parallel = FALSE) {
+                         seed = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_file_exists(path)
   checkmate::assert_string(method)
   method %<>% RSAGA::match.arg.ext(c("boxcar", "exponential", "polynomial"),
@@ -92,7 +95,8 @@ file_detrend <- function(path, method, parameter, thresh = NULL,
     setwd(dir)
     path %<>% filesstrings::str_after_last("/")
   }
-  img <- ijtiff::read_tif(path)
+  img <- ijtiff::read_tif(path, msg = msg)
+  if (msg) message("Detrending ", path, " . . .")
   if (!is.null(thresh)) {
     img %<>% autothresholdr::mean_stack_thresh(thresh)
     thresh <- attr(img, "thresh")
@@ -105,11 +109,13 @@ file_detrend <- function(path, method, parameter, thresh = NULL,
     img %<>% img_detrend_polynom(degree = parameter,
                                  seed = seed, parallel = parallel)
   }
+  if (msg) message("\b Done.")
   if (!is.null(thresh)) attr(img, "thresh") <- thresh
   filename_start <- filesstrings::before_last_dot(path)
   filename_end <- make_detrended_filename_ending(img)
-  path <- paste0(filename_start, filename_end, ".tif")
-  ijtiff::write_tif(img, path)
+  suppressMessages(filesstrings::create_dir("detrended"))
+  path <- paste0("detrended", "/", filename_start, filename_end, ".tif")
+  ijtiff::write_tif(img, path, msg = msg)
   path
 }
 
@@ -139,6 +145,7 @@ make_detrended_filename_ending <- function(img) {
   stopifnot(method %in% c("boxcar", "exponential", "polynomial"))
   symbol <- switch(method, boxcar = "l", exponential = "tau",
                    polynomial = "degree")
+  checkmate::assert_string(symbol)
   auto <- attr(img, "auto")
   thresh_part <- ""
   if ("thresh" %in% names(attributes(img)))

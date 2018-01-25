@@ -11,6 +11,7 @@ Detrend image series.
 
 [![Travis-CI Build Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://travis-ci.org/rorynolan/detrendr)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rorynolan/detrendr?branch=master&svg=true)](https://ci.appveyor.com/project/rorynolan/detrendr)
+[![Coverage Status](https://img.shields.io/codecov/c/github/rorynolan/detrendr/master.svg)](https://codecov.io/github/rorynolan/detrendr?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
 ![RStudio CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)

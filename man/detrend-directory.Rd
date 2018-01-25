@@ -8,13 +8,13 @@
 \title{Detrend all TIFF images in an entire folder.}
 \usage{
 dir_detrend_boxcar(folder_path = ".", l, thresh = NULL, seed = NULL,
-  parallel = FALSE)
+  parallel = FALSE, msg = TRUE)
 
 dir_detrend_exp(folder_path = ".", tau, thresh = NULL, seed = NULL,
-  parallel = FALSE)
+  parallel = FALSE, msg = TRUE)
 
 dir_detrend_polynom(folder_path = ".", degree, thresh = NULL, seed = NULL,
-  parallel = FALSE)
+  parallel = FALSE, msg = TRUE)
 }
 \arguments{
 \item{folder_path}{The path (relative or absolute) to the folder you wish to
@@ -38,6 +38,9 @@ here.}
 \item{parallel}{Would you like to use multiple cores to speed up this
 function? If so, set the number of cores here, or to use all available
 cores, use \code{parallel = TRUE}.}
+
+\item{msg}{Receive messages to tell you how the processing of the directory is
+going? Default is yes.}
 
 \item{tau}{The \eqn{tau} parameter for \emph{exponential filtering} detrending.
 This must be a positive number. Set this to "auto" to use Nolan's algorithm
