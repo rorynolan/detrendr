@@ -61,15 +61,16 @@ ijtiff::display(every100th)
 ## Detrending
 
 We see that the intensity is much lower for the last frame, this is
-because the image series has been bleached. We can correct for this.
+because the image series has been bleached. We can correct for
+this.
 
 ``` r
-system.time(corrected_exp <- img_detrend_exp(img, "auto", 
+system.time(corrected_exp <- img_detrend_exp(img, "auto", purpose = "FFS",
                                              seed = 0, parallel = 2))["elapsed"]
 ```
 
     #> elapsed 
-    #>   2.515
+    #>   2.553
 
 ``` r
 every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 

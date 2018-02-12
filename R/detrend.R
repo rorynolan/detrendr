@@ -1,15 +1,20 @@
-img_detrend_smoothed <- function(arr3d, arr3d_smoothed, seed, parallel) {
+img_detrend_smoothed <- function(arr3d, arr3d_smoothed, purpose,
+                                 seed, parallel) {
+  checkmate::assert_string(purpose)
+  stopifnot(purpose %in% c("fcs", "ffs"))
   arr3d_smoothed[arr3d_smoothed < 0] <- 0
   deviations_from_smoothed <- arr3d - arr3d_smoothed
   pillar_means <- as.vector(mean_pillars(arr3d, parallel = parallel))
-  variance_correction_factors <- square_root(pillar_means /
-                                               arr3d_smoothed,
-                                             parallel = parallel) %T>% {
-    .[!is.finite(.)] <- 1
+  if (purpose == "ffs") {
+    variance_correction_factors <- square_root(pillar_means /
+                                                 arr3d_smoothed,
+                                               parallel = parallel) %T>% {
+      .[!is.finite(.)] <- 1
+    }
+    deviations_from_smoothed <- deviations_from_smoothed *
+      variance_correction_factors
+    rm(variance_correction_factors)
   }
-  deviations_from_smoothed <- deviations_from_smoothed *
-    variance_correction_factors
-  rm(variance_correction_factors)
   out_real <- pillar_means + deviations_from_smoothed
   rm(deviations_from_smoothed)
   out_int <- floor(out_real) %>% {. + myrbern(out_real - ., seed = seed,
@@ -18,27 +23,32 @@ img_detrend_smoothed <- function(arr3d, arr3d_smoothed, seed, parallel) {
   out_int
 }
 
-img_detrend_tau_specified <- function(arr3d, tau, cutoff, seed, parallel) {
+img_detrend_tau_specified <- function(arr3d, tau, cutoff, purpose,
+                                      seed, parallel) {
   if (is.na(tau)) return(arr3d)
   d <- dim(arr3d)
   l <- min(floor(- tau * log(cutoff)), d[3] %>% {(. - 1) + (. - 2)})
   smoothed <- exp_smooth_pillars(arr3d, tau, l, parallel = parallel)
-  img_detrend_smoothed(arr3d, smoothed, seed, parallel)
+  img_detrend_smoothed(arr3d, smoothed, purpose = purpose,
+                       seed = seed, parallel = parallel)
 }
 
-img_detrend_l_specified <- function(arr3d, l, seed, parallel) {
+img_detrend_l_specified <- function(arr3d, l, purpose, seed, parallel) {
   if (is.na(l)) return(arr3d)
   d <- dim(arr3d)
   l <- min(l, d[3] %>% {(. - 1) + (. - 2)})
   smoothed <- boxcar_smooth_pillars(arr3d, l, parallel = parallel)
-  img_detrend_smoothed(arr3d, smoothed, seed, parallel)
+  img_detrend_smoothed(arr3d, smoothed, purpose = purpose,
+                       seed = seed, parallel = parallel)
 }
 
-img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
+img_detrend_degree_specified <- function(arr3d, degree, purpose,
+                                         seed, parallel) {
   if (is.na(degree)) return(arr3d)
   d <- dim(arr3d)
   smoothed <- poly_fit_pillars(arr3d, degree, parallel = parallel)
-  img_detrend_smoothed(arr3d, smoothed, seed, parallel = parallel)
+  img_detrend_smoothed(arr3d, smoothed, purpose = purpose,
+                       seed = seed, parallel = parallel)
 }
 
 
@@ -85,6 +95,14 @@ img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
 #'   Nolan's algorithm to automatically find a suitable value for this parameter
 #'   (recommended). For multi-channel images, it is possible to have a different
 #'   `degree` for each channel by specifying `degree` as a vector or list.
+#' @param purpose What type of calculation do you intend to perform on the
+#'   detrended image? If it is an FFS (fluorescence fluctuation spectroscopy)
+#'   calculation (like number and brightness), choose 'FFS'. If it is an FCS
+#'   (fluorescence correlation spectroscopy) calculation (like cross-correlated
+#'   number and brightness or autocorrelation), choose 'FCS'. The difference is
+#'   that if `purpose` is 'FFS', the time series is corrected for non-stationary
+#'   mean and variance, whereas if `purpose` is 'FCS', the time series is
+#'   corrected for non-stationary mean only.
 #' @param seed Random numbers may be generated during the detrending process.
 #'   For reproducibility, you can set a seed for this random number generation
 #'   here.
@@ -110,25 +128,30 @@ img_detrend_degree_specified <- function(arr3d, degree, seed, parallel) {
 #' ## You should still try them for yourself.
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))
-#' corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
-#' corrected10 <- img_detrend_boxcar(img, 10, seed = 0, parallel = 2)
-#' corrected50 <- img_detrend_boxcar(img, 50, seed = 0, parallel = 2)
-#' corrected100 <- img_detrend_boxcar(img, 100, seed = 0, parallel = 2)
-#' corrected300 <- img_detrend_boxcar(img, 300, seed = 0, parallel = 2)
-#' corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
-#' corrected10 <- img_detrend_exp(img, 10, seed = 0, parallel = 2)
-#' corrected50 <- img_detrend_exp(img, 50, seed = 0, parallel = 2)
-#' corrected100 <- img_detrend_exp(img, 100, seed = 0, parallel = 2)
-#' corrected1000 <- img_detrend_exp(img, 1000, seed = 0, parallel = 2)
-#' corrected <- img_detrend_polynom(img, "auto", seed = 0, parallel = 2)
-#' corrected1 <- img_detrend_polynom(img, 1, seed = 0, parallel = 2)
-#' corrected2 <- img_detrend_polynom(img, 2, seed = 0, parallel = 2)
-#' corrected4 <- img_detrend_polynom(img, 4, seed = 0, parallel = 2)
-#' corrected8 <- img_detrend_polynom(img, 8, seed = 0, parallel = 2)
-#' }
+#' corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs",
+#'                                 seed = 0, parallel = 2)
+#' corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs",
+#'                                   seed = 0, parallel = 2)
+#' corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs",
+#'                                   seed = 0, parallel = 2)
+#' corrected <- img_detrend_exp(img, "auto", purpose = "ffs",
+#'                              seed = 0, parallel = 2)
+#' corrected10 <- img_detrend_exp(img, 10, purpose = "ffs",
+#'                                seed = 0, parallel = 2)
+#' corrected50 <- img_detrend_exp(img, 50, purpose = "fcs",
+#'                                seed = 0, parallel = 2)
+#' corrected <- img_detrend_polynom(img, "auto", purpose = "ffs",
+#'                                  seed = 0, parallel = 2)
+#' corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs",
+#'                                   seed = 0, parallel = 2)}
 #' @export
-img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
+img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
+                               seed = NULL, parallel = FALSE) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
+  if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
+    stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
+  checkmate::assert_string(purpose)
+  purpose %<>% RSAGA::match.arg.ext(c("fcs", "ffs"), ignore.case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   n_ch <- dim(img)[3]
   out <- array(0, dim = dim(img))
@@ -145,10 +168,17 @@ img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
     if (is.na(l[[i]])) {
       out[, , i, ] <- img[, , i, ]
     } else if (is.numeric(l[[i]])) {
-      if (l[[i]] <= 0) stop("l must be greater than zero.")
-      l[[i]] %<>% floor()
+      if (l[[i]] <= 0) {
+        stop("`l` must be greater than zero.", "\n",
+             "* You have `l` equal to ", l[[i]], ".")
+      }
+      if (!isTRUE(checkmate::check_int(l[[i]]))) {
+        stop("`l` must be an integer.", "\n",
+             "* You have `l` equal to ", l[[i]], ".")
+      }
       out[, , i, ] <- img_detrend_l_specified(img[, , i, ], l[[i]],
-                                              seed, parallel)
+                                              purpose = purpose,
+                                              seed = seed, parallel = parallel)
     } else if (is.character(l[[i]])) {
       l[[i]] %<>% tolower()
       if (startsWith("auto", l[[i]])) {
@@ -156,7 +186,9 @@ img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
         l[[i]] <- best_l(img[, , i, ], seed = seed, parallel = parallel)
         out[, , i, ] <- img_detrend_l_specified(img[, , i, ],
                                                 as.numeric(l[[i]]),
-                                                seed, parallel)
+                                                purpose = purpose,
+                                                seed = seed,
+                                                parallel = parallel)
       } else {
         stop("If l is a string, the only permissible value is 'auto' whereas ",
              "you have used '", l[[i]], "'.")
@@ -165,21 +197,25 @@ img_detrend_boxcar <- function(img, l, seed = NULL, parallel = FALSE) {
       stop("l must be specified as a positive number or as 'auto'.")
     }
   }
-  detrended_img(out, "boxcar", as.integer(unlist(l)), auto)
+  detrended_img(out, "boxcar", as.integer(unlist(l)), auto, purpose = purpose)
 }
 
 #' @rdname detrending
 #' @export
-img_detrend_exp <- function(img, tau, cutoff = 0.05,
+img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
                             seed = NULL, parallel = FALSE) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
+  if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
+    stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
+  checkmate::assert_string(purpose)
+  purpose %<>% RSAGA::match.arg.ext(c("fcs", "ffs"), ignore.case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   n_ch <- dim(img)[3]
   out <- array(0, dim = dim(img))
   if (is.null(seed)) seed <- rand_seed()
   if (length(tau) == 1) tau %<>% rep(n_ch)
   if (length(tau) != n_ch) {
-    stop("Argument tau must have length 1 or length equal to ",
+    stop("Argument `tau` must have length 1 or length equal to ",
          "the number of channels. \n",
          "* Your tau argument has length ", length(tau), " and your ",
          "image has ", n_ch, " channels.")
@@ -189,9 +225,14 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05,
     if (is.na(tau[[i]])) {
       out[, , i, ] <- img[, , i, ]
     } else if (is.numeric(tau[[i]])) {
-      if (tau[[i]] <= 0) stop("tau must be greater than zero.")
+      if (tau[[i]] <= 0) {
+        stop("`tau` must be greater than zero.", "\n",
+             "* You have `tau` equal to ", tau[[i]], ".")
+      }
       out[, , i, ] <- img_detrend_tau_specified(img[, , i, ], tau[[i]], cutoff,
-                                                seed, parallel)
+                                                purpose = purpose,
+                                                seed = seed,
+                                                parallel = parallel)
     } else if (is.character(tau[[i]])) {
       tau[[i]] %<>% tolower()
       if (startsWith("auto", tau[[i]])) {
@@ -200,22 +241,31 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05,
                              seed = seed, parallel = parallel)
         out[, , i, ] <- img_detrend_tau_specified(img[, , i, ],
                                                   as.numeric(tau[[i]]),
-                                                  cutoff, seed, parallel)
+                                                  cutoff,
+                                                  purpose = purpose,
+                                                  seed = seed,
+                                                  parallel = parallel)
       } else {
-        stop("If tau is a string, the only permissible value is 'auto' whereas ",
-             "you have used '", tau[[i]], "'.")
+        stop("If `tau` is a string, the only permissible value is 'auto'.",
+             "\n", "* You have used '", tau[[i]], "'.")
       }
     } else {
-      stop("tau must be specified as a positive number or as 'auto'.")
+      stop("`tau` must be specified as a positive number or as 'auto'.")
     }
   }
-  detrended_img(out, "exponential", as.numeric(unlist(tau)), auto)
+  detrended_img(out, "exponential", as.numeric(unlist(tau)), auto,
+                purpose = purpose)
 }
 
 #' @rdname detrending
 #' @export
-img_detrend_polynom <- function(img, degree, seed = NULL, parallel = FALSE) {
+img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
+                                seed = NULL, parallel = FALSE) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
+  if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
+    stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
+  checkmate::assert_string(purpose)
+  purpose %<>% RSAGA::match.arg.ext(c("fcs", "ffs"), ignore.case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   n_ch <- dim(img)[3]
   out <- array(0, dim = dim(img))
@@ -232,9 +282,18 @@ img_detrend_polynom <- function(img, degree, seed = NULL, parallel = FALSE) {
     if (is.na(degree[[i]])) {
       out[, , i, ] <- img[, , i, ]
     } else if (is.numeric(degree[[i]])) {
-      if (degree <= 0) stop("degree must be greater than zero.")
+      if (degree[[i]] <= 0) {
+        stop("`degree` must be greater than zero.", "\n",
+             "* You have `degree` equal to ", degree[[i]], ".")
+      }
+      if (!isTRUE(checkmate::check_int(degree[[i]]))) {
+        stop("`degree` must be an integer.", "\n",
+             "* You have `degree` equal to ", degree[[i]], ".")
+      }
       out[, , i, ] <- img_detrend_degree_specified(img[, , i, ], degree[[i]],
-                                                   seed, parallel)
+                                                   purpose = purpose,
+                                                   seed = seed,
+                                                   parallel = parallel)
     } else if (is.character(degree[[i]])) {
       degree[[i]] %<>% tolower()
       if (startsWith("auto", degree[[i]])) {
@@ -242,7 +301,9 @@ img_detrend_polynom <- function(img, degree, seed = NULL, parallel = FALSE) {
                                    seed = seed, parallel = parallel)
         out[, , i, ] <- img_detrend_degree_specified(img[, , i, ],
                                                      as.numeric(degree[[i]]),
-                                                     seed, parallel)
+                                                     purpose = purpose,
+                                                     seed = seed,
+                                                     parallel = parallel)
       } else {
         stop("If degree is a string, the only permissible value is 'auto' ",
              "whereas you have used '", degree[[i]], "'.")
@@ -251,5 +312,6 @@ img_detrend_polynom <- function(img, degree, seed = NULL, parallel = FALSE) {
       stop("degree must be specified as a positive number or as 'auto'.")
     }
   }
-  detrended_img(out, "polynomial", as.numeric(unlist(degree)), auto)
+  detrended_img(out, "polynomial", as.numeric(unlist(degree)), auto,
+                purpose = purpose)
 }

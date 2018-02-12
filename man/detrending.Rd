@@ -7,11 +7,14 @@
 \alias{img_detrend_polynom}
 \title{Detrend images.}
 \usage{
-img_detrend_boxcar(img, l, seed = NULL, parallel = FALSE)
+img_detrend_boxcar(img, l, purpose = c("FCS", "FFS"), seed = NULL,
+  parallel = FALSE)
 
-img_detrend_exp(img, tau, cutoff = 0.05, seed = NULL, parallel = FALSE)
+img_detrend_exp(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
+  seed = NULL, parallel = FALSE)
 
-img_detrend_polynom(img, degree, seed = NULL, parallel = FALSE)
+img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"), seed = NULL,
+  parallel = FALSE)
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
@@ -25,6 +28,15 @@ this to "auto" to use Nolan's algorithm to automatically find a suitable
 value for this parameter (recommended). For multi-channel images, it is
 possible to have a different \code{l} for each channel by specifying \code{l} as a
 vector or list.}
+
+\item{purpose}{What type of calculation do you intend to perform on the
+detrended image? If it is an FFS (fluorescence fluctuation spectroscopy)
+calculation (like number and brightness), choose 'FFS'. If it is an FCS
+(fluorescence correlation spectroscopy) calculation (like cross-correlated
+number and brightness or autocorrelation), choose 'FCS'. The difference is
+that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
+mean and variance, whereas if \code{purpose} is 'FCS', the time series is
+corrected for non-stationary mean only.}
 
 \item{seed}{Random numbers may be generated during the detrending process.
 For reproducibility, you can set a seed for this random number generation
@@ -79,22 +91,22 @@ correcting the series to remove the trend detailed by this polynomial fit.}
 ## You should still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))
-corrected <- img_detrend_boxcar(img, "auto", seed = 0, parallel = 2)
-corrected10 <- img_detrend_boxcar(img, 10, seed = 0, parallel = 2)
-corrected50 <- img_detrend_boxcar(img, 50, seed = 0, parallel = 2)
-corrected100 <- img_detrend_boxcar(img, 100, seed = 0, parallel = 2)
-corrected300 <- img_detrend_boxcar(img, 300, seed = 0, parallel = 2)
-corrected <- img_detrend_exp(img, "auto", seed = 0, parallel = 2)
-corrected10 <- img_detrend_exp(img, 10, seed = 0, parallel = 2)
-corrected50 <- img_detrend_exp(img, 50, seed = 0, parallel = 2)
-corrected100 <- img_detrend_exp(img, 100, seed = 0, parallel = 2)
-corrected1000 <- img_detrend_exp(img, 1000, seed = 0, parallel = 2)
-corrected <- img_detrend_polynom(img, "auto", seed = 0, parallel = 2)
-corrected1 <- img_detrend_polynom(img, 1, seed = 0, parallel = 2)
-corrected2 <- img_detrend_polynom(img, 2, seed = 0, parallel = 2)
-corrected4 <- img_detrend_polynom(img, 4, seed = 0, parallel = 2)
-corrected8 <- img_detrend_polynom(img, 8, seed = 0, parallel = 2)
-}
+corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs",
+                                seed = 0, parallel = 2)
+corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs",
+                                  seed = 0, parallel = 2)
+corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs",
+                                  seed = 0, parallel = 2)
+corrected <- img_detrend_exp(img, "auto", purpose = "ffs",
+                             seed = 0, parallel = 2)
+corrected10 <- img_detrend_exp(img, 10, purpose = "ffs",
+                               seed = 0, parallel = 2)
+corrected50 <- img_detrend_exp(img, 50, purpose = "fcs",
+                               seed = 0, parallel = 2)
+corrected <- img_detrend_polynom(img, "auto", purpose = "ffs",
+                                 seed = 0, parallel = 2)
+corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs",
+                                  seed = 0, parallel = 2)}
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro

@@ -23,22 +23,20 @@ cores, use \code{parallel = TRUE}.}
 \value{
 If no detrend is necessary, this function returns \code{NA}. If a detrend
 is required, this function returns a natural number which is the ideal
-length parameter for boxcar detrending. If there are multiple
-channels, the function returns a vector, one \code{l} parameter for each
-channel.
+length parameter for boxcar detrending. If there are multiple channels, the
+function returns a vector, one \code{l} parameter for each channel.
 }
 \description{
 Use Nolan's algorithm to find the ideal length parameter for boxcar
 detrending. Boxcar detrending is also referred to as 'running average'.
 }
 \examples{
-\dontrun{
 ## These examples are not run on CRAN because they take too long.
 ## You should still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))
 best_l(img, seed = 0, parallel = 2)
-}
+
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro

@@ -1,13 +1,18 @@
-rows_detrend_smoothed <- function(mat, mat_smoothed, seed, parallel) {
+rows_detrend_smoothed <- function(mat, mat_smoothed, purpose,
+                                  seed, parallel) {
+  checkmate::assert_string(purpose)
+  stopifnot(purpose %in% c("fcs", "ffs"))
   deviations_from_smoothed <- mat - mat_smoothed
   row_means <- mean_rows(mat, parallel = parallel)
-  variance_correction_factors <- square_root(row_means / mat_smoothed,
-                                             parallel = parallel) %T>% {
-    .[!is.finite(.)] <- 1
+  if (purpose == "ffs") {
+    variance_correction_factors <- square_root(row_means / mat_smoothed,
+                                               parallel = parallel) %T>% {
+      .[!is.finite(.)] <- 1
+    }
+    deviations_from_smoothed <- deviations_from_smoothed *
+      variance_correction_factors
+    rm(variance_correction_factors)
   }
-  deviations_from_smoothed <- deviations_from_smoothed *
-    variance_correction_factors
-  rm(variance_correction_factors)
   out_real <- row_means + deviations_from_smoothed
   rm(deviations_from_smoothed)
   out_int <- floor(out_real) %>%
@@ -17,13 +22,15 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, seed, parallel) {
   out_int
 }
 
-rows_detrend_l_specified <- function(mat, l, seed, parallel) {
+rows_detrend_l_specified <- function(mat, l, purpose, seed, parallel) {
   smoothed <- boxcar_smooth_rows(mat, l, parallel = parallel)
-  rows_detrend_smoothed(mat, smoothed, seed, parallel)
+  rows_detrend_smoothed(mat, smoothed, purpose = purpose,
+                        seed = seed, parallel = parallel)
 }
 
-rows_detrend_l_specified_mean_b <- function(mat, l, seed, parallel) {
-  rows_detrend_l_specified(mat, l, seed, parallel) %>%
+rows_detrend_l_specified_mean_b <- function(mat, l, purpose, seed, parallel) {
+  rows_detrend_l_specified(mat, l, purpose = purpose,
+                           seed = seed, parallel = parallel) %>%
     brightness_rows(parallel = parallel) %>%
     mean(na.rm = TRUE)
 }
@@ -38,23 +45,22 @@ rows_detrend_l_specified_mean_b <- function(mat, l, seed, parallel) {
 #'
 #' @return If no detrend is necessary, this function returns `NA`. If a detrend
 #'   is required, this function returns a natural number which is the ideal
-#'   length parameter for boxcar detrending. If there are multiple
-#'   channels, the function returns a vector, one `l` parameter for each
-#'   channel.
+#'   length parameter for boxcar detrending. If there are multiple channels, the
+#'   function returns a vector, one `l` parameter for each channel.
 #'
 #' @references Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro
 #'   Iliopoulou, G. Maria Jakobsdottir, Marina Rodriguez-Muñoz, A. Radu
 #'   Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
 #'   novel automatic detrending algorithm, Bioinformatics,
 #'   https://doi.org/10.1093/bioinformatics/btx434.
+#'
 #' @examples
-#' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You should still try them for yourself.
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))
 #' best_l(img, seed = 0, parallel = 2)
-#' }
+#'
 #' @export
 best_l <- function(img, seed = NULL, parallel = FALSE) {
   checkmate::assert_numeric(img, lower = 0)
@@ -90,14 +96,14 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
     big_l_old <- big_l
     max_l <- ncol(sim_mat) %>% {(. - 1) + (. - 2)}
     mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
-      sim_mat, big_l, seed, parallel = parallel)
+      sim_mat, big_l, purpose = "ffs", seed = seed, parallel = parallel)
     if (is.na(mean_brightness_big_l)) stop(msg)
     mean_brightness_big_l_old <- mean_brightness_big_l
     while (mean_brightness_big_l <= 1) {
       big_l_old <- big_l
       big_l <- min(maxl, 2 * big_l)
       mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
-        sim_mat, big_l, seed, parallel = parallel)
+        sim_mat, big_l, purpose = "ffs", seed = seed, parallel = parallel)
       if (is.na(mean_brightness_big_l)) stop(msg)
     }
     if (big_l_old == big_l) {
@@ -109,7 +115,7 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
                "There is probably something wrong with your data.")
         }
         mean_brightness_big_l_old <- rows_detrend_l_specified_mean_b(
-          sim_mat, big_l_old, seed, parallel = parallel)
+          sim_mat, big_l_old, purpose = "ffs", seed = seed, parallel = parallel)
         if (is.na(mean_brightness_big_l_old)) stop(msg)
       }
     }
@@ -121,7 +127,7 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
     while (l_upper - l_lower > 1) {
       middle_l <- round(mean(c(l_lower, l_upper)))
       middle_brightness_mean <- rows_detrend_l_specified_mean_b(
-        sim_mat, middle_l, seed, parallel = parallel)
+        sim_mat, middle_l, purpose = "ffs", seed = seed, parallel = parallel)
       if (is.na(middle_brightness_mean)) stop(msg)
       if (middle_brightness_mean < 1) {
         l_lower <- middle_l
@@ -139,6 +145,7 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
       as.integer()
   } else {
     purrr::map_int(seq_len(d[3]),
-                   ~ best_l(img[, , ., ], seed = seed, parallel = parallel))
+                   ~ best_l(img[, , ., ],
+                            seed = seed, parallel = parallel))
   }
 }

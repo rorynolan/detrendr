@@ -38,7 +38,7 @@ ijtiff::display(every100th)
 We see that the intensity is much lower for the last frame, this is because the image series has been bleached. We can correct for this. 
 
 ```{r detrend, fig.height=2.6, fig.width=7}
-system.time(corrected_exp <- img_detrend_exp(img, "auto", 
+system.time(corrected_exp <- img_detrend_exp(img, "auto", purpose = "FFS",
                                              seed = 0, parallel = 2))["elapsed"]
 every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 
                          ~ corrected_exp[, , 1, .]) %>% 
@@ -50,9 +50,10 @@ So we see that the corrected series does not have this drop-off in intensity.
 
 Above we used *exponential filtering* detrending, but we could also use *boxcar* or *polynomial*. 
 ```{r boxcar and polynom}
-system.time(corrected_boxcar <- img_detrend_boxcar(img, "auto", 
+system.time(corrected_boxcar <- img_detrend_boxcar(img, "auto", purpose = "FFS",
                                   seed = 0, parallel = 2))["elapsed"]
 system.time(corrected_polynom <- img_detrend_polynom(img, "auto", 
+                                   purpose = "FFS",
                                    seed = 0, parallel = 2))["elapsed"]
 ```
 

@@ -1,16 +1,21 @@
-cols_detrend_smoothed <- function(mat, mat_smoothed, seed, parallel) {
+cols_detrend_smoothed <- function(mat, mat_smoothed, purpose, seed, parallel) {
   t(mat) %>%
-    rows_detrend_smoothed(t(mat_smoothed), seed, parallel = parallel) %>%
+    rows_detrend_smoothed(t(mat_smoothed), purpose = purpose,
+                          seed = seed, parallel = parallel) %>%
     t()
 }
 
-cols_detrend_degree_specified <- function(mat, degree, seed, parallel) {
+cols_detrend_degree_specified <- function(mat, degree, purpose,
+                                          seed, parallel) {
   smoothed <- poly_fit_cols(mat, degree, parallel = parallel)
-  cols_detrend_smoothed(mat, smoothed, seed, parallel)
+  cols_detrend_smoothed(mat, smoothed, purpose = purpose,
+                        seed = seed, parallel = parallel)
 }
 
-cols_detrend_degree_specified_mean_b <- function(mat, degree, seed, parallel) {
-  cols_detrend_degree_specified(mat, degree, seed, parallel) %>%
+cols_detrend_degree_specified_mean_b <- function(mat, degree, purpose,
+                                                 seed, parallel) {
+  cols_detrend_degree_specified(mat, degree, purpose = purpose,
+                                seed = seed, parallel = parallel) %>%
     brightness_cols(parallel = parallel) %>%
     mean(na.rm = TRUE)
 }
@@ -21,6 +26,7 @@ cols_detrend_degree_specified_mean_b <- function(mat, degree, seed, parallel) {
 #' detrending.
 #'
 #' @inheritParams detrending
+#' @inheritParams best_l
 #'
 #' @return If no detrend is necessary, this function returns `NA`. If a detrend
 #'   is required, this function returns a natural number which is the ideal
@@ -75,8 +81,8 @@ best_degree <- function(img, seed = NULL, parallel = FALSE) {
     lower_degree_brightness <- sim_brightness
     upper_degree <- 1
     upper_degree_brightness <- cols_detrend_degree_specified_mean_b(
-      sim_mat, upper_degree, seed,
-      parallel = parallel)
+      sim_mat, upper_degree, purpose = "ffs",
+      seed = seed, parallel = parallel)
     if (is.na(upper_degree_brightness)) stop(msg)
     if (upper_degree_brightness < 1) {
       return(ifelse(1 - upper_degree_brightness < lower_degree_brightness - 1,
@@ -87,8 +93,8 @@ best_degree <- function(img, seed = NULL, parallel = FALSE) {
       lower_degree_brightness <- upper_degree_brightness
       upper_degree <- upper_degree + 1
       upper_degree_brightness <- cols_detrend_degree_specified_mean_b(
-        sim_mat, upper_degree, seed,
-        parallel = parallel)
+        sim_mat, upper_degree, purpose = "ffs",
+        seed = seed, parallel = parallel)
       if (is.na(upper_degree_brightness)) stop(msg)
     }
     out <- ifelse(1 - upper_degree_brightness < lower_degree_brightness - 1,

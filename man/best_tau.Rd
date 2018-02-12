@@ -41,13 +41,10 @@ Use Nolan's algorithm to find the ideal tau parameter for exponential
 smoothing detrending.
 }
 \examples{
-\dontrun{
-## These examples are not run on CRAN because they take too long.
-## You should still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))[, , 1, ]
 best_tau(img, seed = 0, parallel = 2)
-}
+
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro

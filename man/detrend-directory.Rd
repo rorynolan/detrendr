@@ -7,14 +7,14 @@
 \alias{dir_detrend_polynom}
 \title{Detrend all TIFF images in an entire folder.}
 \usage{
-dir_detrend_boxcar(folder_path = ".", l, thresh = NULL, seed = NULL,
-  parallel = FALSE, msg = TRUE)
+dir_detrend_boxcar(folder_path = ".", l, purpose = c("FCS", "FFS"),
+  thresh = NULL, seed = NULL, parallel = FALSE, msg = TRUE)
 
-dir_detrend_exp(folder_path = ".", tau, thresh = NULL, seed = NULL,
-  parallel = FALSE, msg = TRUE)
+dir_detrend_exp(folder_path = ".", tau, purpose = c("FCS", "FFS"),
+  thresh = NULL, seed = NULL, parallel = FALSE, msg = TRUE)
 
-dir_detrend_polynom(folder_path = ".", degree, thresh = NULL, seed = NULL,
-  parallel = FALSE, msg = TRUE)
+dir_detrend_polynom(folder_path = ".", degree, purpose = c("FCS", "FFS"),
+  thresh = NULL, seed = NULL, parallel = FALSE, msg = TRUE)
 }
 \arguments{
 \item{folder_path}{The path (relative or absolute) to the folder you wish to
@@ -26,6 +26,15 @@ this to "auto" to use Nolan's algorithm to automatically find a suitable
 value for this parameter (recommended). For multi-channel images, it is
 possible to have a different \code{l} for each channel by specifying \code{l} as a
 vector or list.}
+
+\item{purpose}{What type of calculation do you intend to perform on the
+detrended image? If it is an FFS (fluorescence fluctuation spectroscopy)
+calculation (like number and brightness), choose 'FFS'. If it is an FCS
+(fluorescence correlation spectroscopy) calculation (like cross-correlated
+number and brightness or autocorrelation), choose 'FCS'. The difference is
+that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
+mean and variance, whereas if \code{purpose} is 'FCS', the time series is
+corrected for non-stationary mean only.}
 
 \item{thresh}{The threshold or thresholding method (see
 \code{\link[autothresholdr:mean_stack_thresh]{autothresholdr::mean_stack_thresh()}}) to use on the image prior to
@@ -76,10 +85,7 @@ setwd(tempdir())
 file.copy(c(system.file("extdata", "bleached.tif", package = "detrendr"),
             system.file("img", "2ch_ij.tif", package = "ijtiff")),
           ".")
-dir_detrend_boxcar(l = "auto", thresh = "tri")
-file.remove(dir(pattern = "detrended.*tif$"))
-dir_detrend_exp(tau = "auto", thresh = "tri")
-file.remove(dir(pattern = "detrended.*tif$"))
-dir_detrend_polynom(degree = "auto", thresh = "tri")
-file.remove(dir(pattern = "tif$"))}
+dir_detrend_boxcar(l = "auto", thresh = "tri", purpose = "FFS")
+dir_detrend_exp(tau = "auto", thresh = "tri", purpose = "FCS")
+dir_detrend_polynom(degree = "auto", thresh = "huang", purpose = "FFS")}
 }

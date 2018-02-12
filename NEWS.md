@@ -1,3 +1,9 @@
+### 0.4.0
+
+#### NEW FEATURES
+* Add the option to detrend for the purpose of FCS or FFS.
+
+
 ### 0.3.0
 
 #### NEW FEATURES
