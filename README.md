@@ -12,6 +12,9 @@ Status](https://img.shields.io/codecov/c/github/rorynolan/detrendr/master.svg)](
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
 ![RStudio CRAN
 downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr)
+![RStudio CRAN monthly
+downloads](http://cranlogs.r-pkg.org/badges/detrendr)
+[![Rdocumentation](http://www.rdocumentation.org/badges/version/detrendr)](http://www.rdocumentation.org/packages/detrendr)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -70,7 +73,7 @@ system.time(corrected_exp <- img_detrend_exp(img, "auto", purpose = "FFS",
 ```
 
     #> elapsed 
-    #>   2.553
+    #>   2.583
 
 ``` r
 every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 
@@ -86,8 +89,8 @@ intensity.
 
 # Vignette
 
-For more detailed instruction on how to use the package, see
-`vignette("detrendr")`.
+For more detailed instruction on how to use the package, see the package
+[vignette](https://cran.r-project.org/web/packages/detrendr/vignettes/detrendr.html).
 
 # Contribution
 

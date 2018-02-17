@@ -90,4 +90,14 @@ test_that("detrending errors correctly", {
                "length 1 or length equal to the number of channels.+7.+1")
   expect_error(img_detrend_exp(img, tau = 1:7, purpose = "ff"),
                "length 1 or length equal to the number of channels.+7.+1")
+  expect_error(img_detrend_polynom(img, degree = -1, purpose = "ff"),
+               "must be greater than zero")
+  expect_error(img_detrend_polynom(img, degree = 1.5, purpose = "ff"),
+               "must be an integer")
+  expect_error(img_detrend_boxcar(img, l = -1, purpose = "ff"),
+               "must be greater than zero")
+  expect_error(img_detrend_boxcar(img, l = 1.5, purpose = "ff"),
+               "must be an integer")
+  expect_error(img_detrend_exp(img, tau = -1, purpose = "ff"),
+               "must be greater than zero")
 })

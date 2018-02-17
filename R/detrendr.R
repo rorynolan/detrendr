@@ -2,9 +2,6 @@
 #' @importFrom Rcpp sourceCpp
 #' @importFrom magrittr '%>%' '%T>%' '%<>%'
 #' @importFrom foreach '%dopar%'
-#' @importFrom grDevices adjustcolor
-#' @importFrom ijtiff ijtiff_img
-#' @importFrom abind acorn
 #' @useDynLib detrendr, .registration = TRUE
 NULL
 
@@ -20,7 +17,8 @@ if (getRversion() >= "2.15.1") {
 #' detrendr: Image detrending in R.
 #'
 #' The `detrendr` package gives functions for detrending images, most often used
-#' for preprocessing in fluorescence fluctuation spectroscopy.
+#' for preprocessing in fluorescence fluctuation and correlation spectroscopy
+#' (FFS and FCS).
 #'
 #' @docType package
 #' @name detrendr

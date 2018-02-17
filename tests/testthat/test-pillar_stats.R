@@ -7,7 +7,6 @@ test_that("brightness_pillars works", {
 })
 
 test_that("pillar-stats works", {
-  library(magrittr)
   d <- 2:4
   aaa <- array(seq_len(prod(d)), dim = d)
   expect_equal(mean_pillars(aaa), apply_on_pillars(aaa, mean))
@@ -15,6 +14,7 @@ test_that("pillar-stats works", {
   expect_equal(var_pillars(aaa), apply_on_pillars(aaa, var))
   d <- 2:5
   aaaa <- array(sample.int(prod(d)), dim = d)
+  skip_if_not_installed("abind")
   ans <- purrr::map(seq_len(dim(aaaa)[3]), ~ mean_pillars(aaaa[, , ., ])) %>%
     purrr::reduce(~ abind::abind(.x, .y, along = 3)) %T>% {
       dim(.) <- c(dim(.), 1)

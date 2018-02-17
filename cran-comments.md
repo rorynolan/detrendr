@@ -17,4 +17,4 @@ There are no reverse dependencies.
 ## CRAN test results
 * Some of the current CRAN test results are ERRORs due to differences in numerical percision across platforms. This version addresses those by including higher tolerance.
 * Some of the current CRAN test results are NOTEs because the package is large. This version brings the package size under 5MB by reducing the size of the example image.
-* Additional CRAN checks throw up issues for clang-UBSAN and gcc-UBSAN. These are from an issue with RcppParallel, and will be fixed in the new version of that package, which is rumored to be nearly ready for CRAN.
+* Additional CRAN checks throw up issues for clang-UBSAN and gcc-UBSAN. These are from an issue with RcppParallel, which in turn is an issue from Intel's TBB library. These issues are harmless sanitizer things but will only be fixed when Intel irons them out. See discussion at https://github.com/RcppCore/RcppParallel/issues/36.

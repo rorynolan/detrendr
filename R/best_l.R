@@ -6,9 +6,8 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, purpose,
   row_means <- mean_rows(mat, parallel = parallel)
   if (purpose == "ffs") {
     variance_correction_factors <- square_root(row_means / mat_smoothed,
-                                               parallel = parallel) %T>% {
-      .[!is.finite(.)] <- 1
-    }
+                                               parallel = parallel) %T>%
+      {.[!is.finite(.)] <- 1}
     deviations_from_smoothed <- deviations_from_smoothed *
       variance_correction_factors
     rm(variance_correction_factors)

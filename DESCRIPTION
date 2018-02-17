@@ -28,12 +28,11 @@ Imports: Rcpp,
     RSAGA,
     iterators,
     purrr,
-    ijtiff,
-    autothresholdr,
+    ijtiff (>= 0.3.0),
+    autothresholdr (>= 1.1.1),
     rlang,
     stringr,
-    filesstrings,
-    abind
+    filesstrings (>= 2.0.4)
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.0.1
@@ -41,5 +40,6 @@ Roxygen: list(markdown = TRUE)
 Suggests: testthat,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    abind
 VignetteBuilder: knitr

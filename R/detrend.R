@@ -160,7 +160,7 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
   if (length(l) != n_ch) {
     stop("Argument l must have length 1 or length equal to ",
          "the number of channels. \n",
-         "* Your l argument has length ", length(l), " and your ",
+         "    * Your l argument has length ", length(l), " and your ",
          "image has ", n_ch, " channels.")
   }
   auto <- rep(FALSE, n_ch)
@@ -170,11 +170,11 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
     } else if (is.numeric(l[[i]])) {
       if (l[[i]] <= 0) {
         stop("`l` must be greater than zero.", "\n",
-             "* You have `l` equal to ", l[[i]], ".")
+             "    * You have `l` equal to ", l[[i]], ".")
       }
       if (!isTRUE(checkmate::check_int(l[[i]]))) {
         stop("`l` must be an integer.", "\n",
-             "* You have `l` equal to ", l[[i]], ".")
+             "    * You have `l` equal to ", l[[i]], ".")
       }
       out[, , i, ] <- img_detrend_l_specified(img[, , i, ], l[[i]],
                                               purpose = purpose,
@@ -190,11 +190,12 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
                                                 seed = seed,
                                                 parallel = parallel)
       } else {
-        stop("If l is a string, the only permissible value is 'auto' whereas ",
-             "you have used '", l[[i]], "'.")
+        stop("If `l` is a string, the only permissible value is 'auto'.", "\n",
+             "    * You have used '", l[[i]], "'.")
       }
     } else {
-      stop("l must be specified as a positive number or as 'auto'.")
+      stop("`l` must be specified as a positive number or as 'auto'.", "\n",
+           "    * You have used '", l[[i]], "'.")
     }
   }
   detrended_img(out, "boxcar", as.integer(unlist(l)), auto, purpose = purpose)
@@ -217,7 +218,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
   if (length(tau) != n_ch) {
     stop("Argument `tau` must have length 1 or length equal to ",
          "the number of channels. \n",
-         "* Your tau argument has length ", length(tau), " and your ",
+         "    * Your tau argument has length ", length(tau), " and your ",
          "image has ", n_ch, " channels.")
   }
   auto <- rep(FALSE, n_ch)
@@ -227,7 +228,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
     } else if (is.numeric(tau[[i]])) {
       if (tau[[i]] <= 0) {
         stop("`tau` must be greater than zero.", "\n",
-             "* You have `tau` equal to ", tau[[i]], ".")
+             "    * You have `tau` equal to ", tau[[i]], ".")
       }
       out[, , i, ] <- img_detrend_tau_specified(img[, , i, ], tau[[i]], cutoff,
                                                 purpose = purpose,
@@ -247,10 +248,11 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
                                                   parallel = parallel)
       } else {
         stop("If `tau` is a string, the only permissible value is 'auto'.",
-             "\n", "* You have used '", tau[[i]], "'.")
+             "\n", "    * You have used '", tau[[i]], "'.")
       }
     } else {
-      stop("`tau` must be specified as a positive number or as 'auto'.")
+      stop("`tau` must be specified as a positive number or as 'auto'.",
+           "\n", "    * You have used '", tau[[i]], "'.")
     }
   }
   detrended_img(out, "exponential", as.numeric(unlist(tau)), auto,
@@ -274,7 +276,7 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
   if (length(degree) != n_ch) {
     stop("Argument degree must have length 1 or length equal to ",
          "the number of channels. \n",
-         "* Your degree argument has length ", length(degree), " and your ",
+         "    * Your degree argument has length ", length(degree), " and your ",
          "image has ", n_ch, " channels.")
   }
   auto <- rep(FALSE, n_ch)
@@ -284,11 +286,11 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
     } else if (is.numeric(degree[[i]])) {
       if (degree[[i]] <= 0) {
         stop("`degree` must be greater than zero.", "\n",
-             "* You have `degree` equal to ", degree[[i]], ".")
+             "    * You have `degree` equal to ", degree[[i]], ".")
       }
       if (!isTRUE(checkmate::check_int(degree[[i]]))) {
         stop("`degree` must be an integer.", "\n",
-             "* You have `degree` equal to ", degree[[i]], ".")
+             "    * You have `degree` equal to ", degree[[i]], ".")
       }
       out[, , i, ] <- img_detrend_degree_specified(img[, , i, ], degree[[i]],
                                                    purpose = purpose,
@@ -305,11 +307,12 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
                                                      seed = seed,
                                                      parallel = parallel)
       } else {
-        stop("If degree is a string, the only permissible value is 'auto' ",
-             "whereas you have used '", degree[[i]], "'.")
+        stop("If `degree` is a string, the only permissible value is 'auto'.",
+             "\n", "    * You have used '", degree[[i]], "'.")
       }
     } else {
-      stop("degree must be specified as a positive number or as 'auto'.")
+      stop("`degree` must be specified as a positive number or as 'auto'.",
+           "\n", "    * You have used '", degree[[i]], "'.")
     }
   }
   detrended_img(out, "polynomial", as.numeric(unlist(degree)), auto,
