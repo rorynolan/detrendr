@@ -1,15 +1,11 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: false
+sudo: true
 cache: packages
 
 apt_packages:
-  - libssl-dev
   - libtiff4-dev
-  - libfftw3-dev
-  - libcurl4-openssl-dev
-  - libxml2-dev
 
 after_success:
   - travis_wait 50 Rscript -e 'covr::codecov()'
