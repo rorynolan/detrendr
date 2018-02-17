@@ -5,7 +5,11 @@ sudo: false
 cache: packages
 
 apt_packages:
+  - libssl-dev
   - libtiff4-dev
+  - libfftw3-dev
+  - libcurl4-openssl-dev
+  - libxml2-dev
 
 after_success:
   - travis_wait 50 Rscript -e 'covr::codecov()'
