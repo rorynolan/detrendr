@@ -1,3 +1,9 @@
+### 0.5.0
+
+#### NEW FEATURES
+* The package no longer depends on `RSAGA`, making it lighter.
+
+
 ### 0.4.0
 
 #### NEW FEATURES

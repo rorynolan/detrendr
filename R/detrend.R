@@ -151,7 +151,7 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
   if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
     stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
   checkmate::assert_string(purpose)
-  purpose %<>% RSAGA::match.arg.ext(c("fcs", "ffs"), ignore.case = TRUE)
+  purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   n_ch <- dim(img)[3]
   out <- array(0, dim = dim(img))
@@ -209,7 +209,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
   if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
     stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
   checkmate::assert_string(purpose)
-  purpose %<>% RSAGA::match.arg.ext(c("fcs", "ffs"), ignore.case = TRUE)
+  purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   n_ch <- dim(img)[3]
   out <- array(0, dim = dim(img))
@@ -267,7 +267,7 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
   if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
     stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
   checkmate::assert_string(purpose)
-  purpose %<>% RSAGA::match.arg.ext(c("fcs", "ffs"), ignore.case = TRUE)
+  purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   n_ch <- dim(img)[3]
   out <- array(0, dim = dim(img))

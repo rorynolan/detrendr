@@ -39,14 +39,13 @@ detrended_img <- function(img, method, parameter, auto,
     stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
   checkmate::assert_string(purpose)
   purpose %<>%
-    RSAGA::match.arg.ext(c("fcs", "ffs"), ignore.case = TRUE) %>%
-    stringr::str_to_upper()
+    filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
   if (!filesstrings::all_equal(floor(img), img))
     stop("Elements of a detrended_img must all be integers.")
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   img[img < 0] <- 0
-  method %<>% RSAGA::match.arg.ext(c("boxcar", "exponential", "polynomial"),
-                                   ignore.case = TRUE)
+  method %<>% filesstrings::match_arg(c("boxcar", "exponential", "polynomial"),
+                                      ignore_case = TRUE)
   img %<>% structure(method = method, parameter = parameter, auto = auto,
                      purpose = purpose)
   class(img) %<>% c("detrended_img", .)

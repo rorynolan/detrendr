@@ -17,8 +17,8 @@
 #' @param thresh The threshold or thresholding method (see
 #'   [autothresholdr::mean_stack_thresh()]) to use on the image prior to
 #'   detrending.
-#' @param msg Receive messages to tell you how the processing of the directory is
-#'   going? Default is yes.
+#' @param msg Receive messages to tell you how the processing of the directory
+#'   is going? Default is yes.
 #'
 #' @return Silently, a character vector of the paths to the detrended images.
 #'
@@ -89,8 +89,8 @@ file_detrend <- function(path, method, parameter,
                          seed = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_file_exists(path)
   checkmate::assert_string(method)
-  method %<>% RSAGA::match.arg.ext(c("boxcar", "exponential", "polynomial"),
-                                   ignore.case = TRUE)
+  method %<>% filesstrings::match_arg(c("boxcar", "exponential", "polynomial"),
+                                      ignore_case = TRUE)
   need_to_change_dir <- stringr::str_detect(path, "/")
   if (need_to_change_dir) {
     dir <- filesstrings::str_before_last(path, "/")

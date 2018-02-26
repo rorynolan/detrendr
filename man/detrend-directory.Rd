@@ -48,8 +48,8 @@ here.}
 function? If so, set the number of cores here, or to use all available
 cores, use \code{parallel = TRUE}.}
 
-\item{msg}{Receive messages to tell you how the processing of the directory is
-going? Default is yes.}
+\item{msg}{Receive messages to tell you how the processing of the directory
+is going? Default is yes.}
 
 \item{tau}{The \eqn{tau} parameter for \emph{exponential filtering} detrending.
 This must be a positive number. Set this to "auto" to use Nolan's algorithm
