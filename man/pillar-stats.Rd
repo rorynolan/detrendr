@@ -2,12 +2,15 @@
 % Please edit documentation in R/pillar_stats.R
 \name{pillar-stats}
 \alias{pillar-stats}
+\alias{sum_pillars}
 \alias{mean_pillars}
 \alias{median_pillars}
 \alias{var_pillars}
-\title{Get the means/medians/variances of pillars of an
+\title{Get the sums/means/medians/variances of pillars of an
 \link[ijtiff:ijtiff_img]{ijtiff_img}-style array.}
 \usage{
+sum_pillars(img, parallel = FALSE)
+
 mean_pillars(img, parallel = FALSE)
 
 median_pillars(img, parallel = FALSE)
@@ -35,6 +38,7 @@ median and variance of each pillar for each channel.
 }
 \examples{
 aaa <- array(seq_len(2 ^ 4), dim = rep(2, 4))  # a 2-channel, 2-frame array
+sum_pillars(aaa)
 mean_pillars(aaa)
 median_pillars(aaa)
 var_pillars(aaa)

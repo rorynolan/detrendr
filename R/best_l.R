@@ -1,5 +1,4 @@
-rows_detrend_smoothed <- function(mat, mat_smoothed, purpose,
-                                  seed, parallel) {
+rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
   checkmate::assert_string(purpose)
   stopifnot(purpose %in% c("fcs", "ffs"))
   deviations_from_smoothed <- mat - mat_smoothed
@@ -15,21 +14,21 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, purpose,
   out_real <- row_means + deviations_from_smoothed
   rm(deviations_from_smoothed)
   out_int <- floor(out_real) %>%
-    {. + myrbern(out_real - ., seed = seed, parallel = parallel)} %T>%
+    {. + myrbern(out_real - ., parallel = parallel)} %T>%
     {.[. < 0] <- 0}
   dim(out_int) <- dim(mat)
   out_int
 }
 
-rows_detrend_l_specified <- function(mat, l, purpose, seed, parallel) {
+rows_detrend_l_specified <- function(mat, l, purpose, parallel) {
   smoothed <- boxcar_smooth_rows(mat, l, parallel = parallel)
   rows_detrend_smoothed(mat, smoothed, purpose = purpose,
-                        seed = seed, parallel = parallel)
+                        parallel = parallel)
 }
 
-rows_detrend_l_specified_mean_b <- function(mat, l, purpose, seed, parallel) {
+rows_detrend_l_specified_mean_b <- function(mat, l, purpose, parallel) {
   rows_detrend_l_specified(mat, l, purpose = purpose,
-                           seed = seed, parallel = parallel) %>%
+                           parallel = parallel) %>%
     brightness_rows(parallel = parallel) %>%
     mean(na.rm = TRUE)
 }
@@ -55,13 +54,13 @@ rows_detrend_l_specified_mean_b <- function(mat, l, purpose, seed, parallel) {
 #'
 #' @examples
 #' ## These examples are not run on CRAN because they take too long.
-#' ## You should still try them for yourself.
+#' ## You can still try them for yourself.
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))
-#' best_l(img, seed = 0, parallel = 2)
+#' best_l(img, parallel = 2)
 #'
 #' @export
-best_l <- function(img, seed = NULL, parallel = FALSE) {
+best_l <- function(img, parallel = FALSE) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
@@ -72,13 +71,12 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
   if (length(d) == 3) {
     if (filesstrings::all_equal(img))
       stop("All elements of img are equal; img is not fit for detrending.")
-    if (is.null(seed)) seed <- rand_seed()
     frame_length <- sum(!is.na(img[, , 1]))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_brightness <- NA
     for (i in 0:9) {
       if (is.na(sim_brightness)) {
-        sim_mat <- myrpois_frames(frame_means, frame_length, seed + i, parallel)
+        sim_mat <- myrpois_frames(frame_means, frame_length, parallel)
         if (!filesstrings::all_equal(sim_mat)) {
           sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
             mean(na.rm = TRUE)
@@ -86,7 +84,8 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
       }
     }
     msg <- paste("Your image is too close to zero. Can't detrend an image with",
-                 "so few nonzero values. \n* img has", length(img), "elements",
+                 "so few nonzero values. \n* `img` has",
+                 length(img), "elements",
                  "and just", sum(img > 0), "of them are greater than zero.")
     if (is.na(sim_brightness)) stop(msg)
     if (sim_brightness <= 1) return(NA)
@@ -95,14 +94,14 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
     big_l_old <- big_l
     max_l <- ncol(sim_mat) %>% {(. - 1) + (. - 2)}
     mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
-      sim_mat, big_l, purpose = "ffs", seed = seed, parallel = parallel)
+      sim_mat, big_l, purpose = "ffs", parallel = parallel)
     if (is.na(mean_brightness_big_l)) stop(msg)
     mean_brightness_big_l_old <- mean_brightness_big_l
     while (mean_brightness_big_l <= 1) {
       big_l_old <- big_l
       big_l <- min(maxl, 2 * big_l)
       mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
-        sim_mat, big_l, purpose = "ffs", seed = seed, parallel = parallel)
+        sim_mat, big_l, purpose = "ffs", parallel = parallel)
       if (is.na(mean_brightness_big_l)) stop(msg)
     }
     if (big_l_old == big_l) {
@@ -114,7 +113,7 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
                "There is probably something wrong with your data.")
         }
         mean_brightness_big_l_old <- rows_detrend_l_specified_mean_b(
-          sim_mat, big_l_old, purpose = "ffs", seed = seed, parallel = parallel)
+          sim_mat, big_l_old, purpose = "ffs", parallel = parallel)
         if (is.na(mean_brightness_big_l_old)) stop(msg)
       }
     }
@@ -126,7 +125,7 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
     while (l_upper - l_lower > 1) {
       middle_l <- round(mean(c(l_lower, l_upper)))
       middle_brightness_mean <- rows_detrend_l_specified_mean_b(
-        sim_mat, middle_l, purpose = "ffs", seed = seed, parallel = parallel)
+        sim_mat, middle_l, purpose = "ffs", parallel = parallel)
       if (is.na(middle_brightness_mean)) stop(msg)
       if (middle_brightness_mean < 1) {
         l_lower <- middle_l
@@ -144,7 +143,6 @@ best_l <- function(img, seed = NULL, parallel = FALSE) {
       as.integer()
   } else {
     purrr::map_int(seq_len(d[3]),
-                   ~ best_l(img[, , ., ],
-                            seed = seed, parallel = parallel))
+                   ~ best_l(img[, , ., ], parallel = parallel))
   }
 }

@@ -5,8 +5,32 @@ brightness_cols_ <- function(cols) {
     .Call(`_detrendr_brightness_cols_`, cols)
 }
 
+brightness_cols_given_mean_ <- function(cols, means) {
+    .Call(`_detrendr_brightness_cols_given_mean_`, cols, means)
+}
+
 mean_cols_ <- function(cols) {
     .Call(`_detrendr_mean_cols_`, cols)
+}
+
+var_cols_given_mean_ <- function(cols, means) {
+    .Call(`_detrendr_var_cols_given_mean_`, cols, means)
+}
+
+sum_cols_ <- function(cols) {
+    .Call(`_detrendr_sum_cols_`, cols)
+}
+
+mean_frames_ <- function(arr3d) {
+    .Call(`_detrendr_mean_frames_`, arr3d)
+}
+
+sum_frames_ <- function(arr3d) {
+    .Call(`_detrendr_sum_frames_`, arr3d)
+}
+
+sum_pillars_ <- function(arr3d) {
+    .Call(`_detrendr_sum_pillars_`, arr3d)
 }
 
 mean_pillars_ <- function(arr3d) {
@@ -37,12 +61,40 @@ myrbernoulli_ <- function(p, seed) {
     .Call(`_detrendr_myrbernoulli_`, p, seed)
 }
 
+rfromboxes_ <- function(n, balls, weights, seed, quick) {
+    .Call(`_detrendr_rfromboxes_`, n, balls, weights, seed, quick)
+}
+
+rtoboxes_ <- function(n, boxes, weights, capacities, seed, quick) {
+    .Call(`_detrendr_rtoboxes_`, n, boxes, weights, capacities, seed, quick)
+}
+
+px_take_arr3d <- function(arr3d, frames_losing, seed) {
+    .Call(`_detrendr_px_take_arr3d`, arr3d, frames_losing, seed)
+}
+
+px_take_mat <- function(mat, mat_orig, frames_losing, seed) {
+    .Call(`_detrendr_px_take_mat`, mat, mat_orig, frames_losing, seed)
+}
+
 brightness_rows_ <- function(rows) {
     .Call(`_detrendr_brightness_rows_`, rows)
 }
 
+brightness_rows_given_mean_ <- function(rows, means) {
+    .Call(`_detrendr_brightness_rows_given_mean_`, rows, means)
+}
+
 mean_rows_ <- function(rows) {
     .Call(`_detrendr_mean_rows_`, rows)
+}
+
+var_rows_given_mean_ <- function(rows, means) {
+    .Call(`_detrendr_var_rows_given_mean_`, rows, means)
+}
+
+sum_rows_ <- function(rows) {
+    .Call(`_detrendr_sum_rows_`, rows)
 }
 
 myrpois_ <- function(means, seed) {
@@ -87,5 +139,13 @@ exp_smooth <- function(vec, tau, l) {
 
 square_root_ <- function(x) {
     .Call(`_detrendr_square_root_`, x)
+}
+
+mat_add1s <- function(mat, add_pos) {
+    .Call(`_detrendr_mat_add1s`, mat, add_pos)
+}
+
+vec_add1s <- function(vec, add_pos) {
+    .Call(`_detrendr_vec_add1s`, vec, add_pos)
 }
 

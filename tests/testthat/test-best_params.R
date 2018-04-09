@@ -4,11 +4,10 @@ test_that("best_tau works", {
   skip_on_os("solaris")
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
                                       package = "detrendr"), msg = FALSE)
-  expect_equal(round(best_tau(img, seed = 0, parallel = 2)), 34,
-               tolerance = 2)
-  set.seed(3)
+  set.seed(1)
+  expect_equal(round(best_tau(img, parallel = 2)), 34, tolerance = 2)
   img <- array(rpois(99 ^ 3, 99), dim = rep(99, 3))
-  expect_equal(round(best_tau(img, seed = 7)), 6618, tolerance = 6400)
+  expect_equal(round(best_tau(img)), 6618, tolerance = 6400)
   img[] <- 0
   expect_error(best_tau(img), "all pixel values are equal to 0")
 })
@@ -17,11 +16,13 @@ test_that("best_l works", {
   skip_on_os("solaris")
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
                                       package = "detrendr"), msg = FALSE)
-  expect_equal(round(best_l(img, seed = 0, parallel = 2)), 17,
-               tolerance = 2)
-  set.seed(3)
+  set.seed(1)
+  expect_equal(round(best_l(img, parallel = 2)), 17, tolerance = 2)
+  set.seed(4)
   img <- array(rpois(99 ^ 3, 99), dim = rep(99, 3))
-  expect_equal(round(best_tau(img, seed = 7)), 28372, tolerance = 28200)
+  bt <- round(best_tau(img))
+  if (!is.na(bt))
+    expect_equal(bt, 28372, tolerance = 28200)
   img[] <- 0
   expect_error(best_l(img), "all pixel values are equal to 0")
   img <- array(round(seq(0, .Machine$integer.max, length.out = 2 ^ 3)),
@@ -32,12 +33,24 @@ test_that("best_l works", {
 test_that("best_degree works", {
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
                                       package = "detrendr"), msg = FALSE)
-  best_degree <- suppressWarnings(round(best_degree(img, seed = 0)))
+  set.seed(1)
+  best_degree <- suppressWarnings(round(best_degree(img)))
   expect_equal(best_degree, 17, tolerance = 2)
   set.seed(7)
   img <- array(rpois(99 ^ 3, 99), dim = rep(99, 3))
-  best_degree <- suppressWarnings(round(best_degree(img, seed = 0)))
+  best_degree <- suppressWarnings(round(best_degree(img)))
   expect_equal(best_degree, NA_real_)
   img[] <- 0
   expect_error(best_degree(img), "all pixel values are equal to 0")
+})
+
+test_that("best_swaps() works", {
+  img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+                                      package = "detrendr"
+  ))
+  set.seed(1)
+  expect_equal(best_swaps(img), 1588366)
+  expect_error(best_swaps(array(7, dim = rep(1, 4))),
+               paste("Your image is constant: all pixel values are equal to 7.",
+                     "This type of image is not detrendable."))
 })

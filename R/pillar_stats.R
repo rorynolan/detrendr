@@ -1,4 +1,4 @@
-#' Get the means/medians/variances of pillars of an
+#' Get the sums/means/medians/variances of pillars of an
 #' [ijtiff_img][ijtiff::ijtiff_img]-style array.
 #'
 #' For an [ijtiff_img][ijtiff::ijtiff_img]-style array `img` (indexed as `img[y,
@@ -14,12 +14,33 @@
 #'
 #' @examples
 #' aaa <- array(seq_len(2 ^ 4), dim = rep(2, 4))  # a 2-channel, 2-frame array
+#' sum_pillars(aaa)
 #' mean_pillars(aaa)
 #' median_pillars(aaa)
 #' var_pillars(aaa)
 #'
 #' @name pillar-stats
 NULL
+
+#' @rdname pillar-stats
+#' @export
+sum_pillars <- function(img, parallel = FALSE) {
+  checkmate::assert_numeric(img)
+  checkmate::assert_array(img, min.d = 3, max.d = 4)
+  d <- dim(img)
+  if (length(d) == 3) {
+    n_cores <- translate_parallel(parallel)
+    RcppParallel::setThreadOptions(n_cores)
+    on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
+    sum_pillars_(img)
+  } else {
+    out <- purrr::map(seq_len(d[3]), ~ sum_pillars_(img[, , ., ])) %>%
+      unlist()
+    d[4] <- 1
+    dim(out) <- d
+    out
+  }
+}
 
 #' @rdname pillar-stats
 #' @export

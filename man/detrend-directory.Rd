@@ -8,13 +8,13 @@
 \title{Detrend all TIFF images in an entire folder.}
 \usage{
 dir_detrend_boxcar(folder_path = ".", l, purpose = c("FCS", "FFS"),
-  thresh = NULL, seed = NULL, parallel = FALSE, msg = TRUE)
+  thresh = NULL, parallel = FALSE, msg = TRUE)
 
 dir_detrend_exp(folder_path = ".", tau, purpose = c("FCS", "FFS"),
-  thresh = NULL, seed = NULL, parallel = FALSE, msg = TRUE)
+  thresh = NULL, parallel = FALSE, msg = TRUE)
 
 dir_detrend_polynom(folder_path = ".", degree, purpose = c("FCS", "FFS"),
-  thresh = NULL, seed = NULL, parallel = FALSE, msg = TRUE)
+  thresh = NULL, parallel = FALSE, msg = TRUE)
 }
 \arguments{
 \item{folder_path}{The path (relative or absolute) to the folder you wish to
@@ -39,10 +39,6 @@ corrected for non-stationary mean only.}
 \item{thresh}{The threshold or thresholding method (see
 \code{\link[autothresholdr:mean_stack_thresh]{autothresholdr::mean_stack_thresh()}}) to use on the image prior to
 detrending.}
-
-\item{seed}{Random numbers may be generated during the detrending process.
-For reproducibility, you can set a seed for this random number generation
-here.}
 
 \item{parallel}{Would you like to use multiple cores to speed up this
 function? If so, set the number of cores here, or to use all available

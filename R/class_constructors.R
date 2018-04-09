@@ -21,31 +21,47 @@
 #'   3-dimensional array of non-negative integers which represents a single
 #'   channel of an [ijtiff_img][ijtiff::ijtiff_img]-style array (indexed by
 #'   `img[y, x, frame]`).
-#' @param method The method used. One of `"boxcar"`, `"exponential"` or
-#'   `"polynomial"`.
+#' @param method The method used. One of `"robinhood"`,` "boxcar"`,
+#'   `"exponential"` or `"polynomial"`.
 #' @param parameter A number. The detrend parameter used. One per channel.
 #' @param auto Logical. Was automatic detrending used? One per channel.
-#' @param purpose Was the image detrended for the purpose of doing FCS or FFS
-#'   calculations? See [detrending].
+#' @param purpose Either `"FCS"` or `"FFS"`. Was the image detrended for the
+#'   purpose of doing FCS or FFS calculations? See [detrending]. `purpose`` is
+#'   not required for _Robin Hood_ detrending.
 #'
 #' @return An object of class `detrended_img`.
 #'
 #' @export
-detrended_img <- function(img, method, parameter, auto,
-                          purpose = c("FCS", "FFS")) {
+detrended_img <- function(img, method, parameter, auto, purpose = NULL) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   checkmate::assert_numeric(img)
-  if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
-    stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
-  checkmate::assert_string(purpose)
-  purpose %<>%
-    filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
+  checkmate::assert_string(method)
+  if (method == "r") method <- "robinhood"
+  method %<>% filesstrings::match_arg(c("boxcar", "exponential", "polynomial",
+                                        "rh", "robinhood"),
+                                      ignore_case = TRUE)
+  if (method == "rh") method <- "robinhood"
+  if (method != "robinhood") {
+    checkmate::assert_string(purpose)
+    purpose %<>%
+      filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
+  }
   if (!filesstrings::all_equal(floor(img), img))
     stop("Elements of a detrended_img must all be integers.")
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
+  n_ch <- dim(img)[3]
+  if (length(parameter) == 1) parameter %<>% rep(n_ch)
+  if (length(parameter) != n_ch) {
+    stop("The length of the `parameter` argument must be equal to 1 or ",
+         "equal to the number of channels in `img`.", "\n",
+         "    * Your `img` has ", n_ch, " channel",
+         dplyr::if_else(n_ch == 1, "", "s"),
+         " and your `parameter` ",
+         "argument is of length ", length(parameter), ".")
+  }
+  if (method == "robinhood")
+    parameter[is.na(parameter)] <- 0
   img[img < 0] <- 0
-  method %<>% filesstrings::match_arg(c("boxcar", "exponential", "polynomial"),
-                                      ignore_case = TRUE)
   img %<>% structure(method = method, parameter = parameter, auto = auto,
                      purpose = purpose)
   class(img) %<>% c("detrended_img", .)

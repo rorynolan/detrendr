@@ -38,8 +38,7 @@ NULL
 #' @rdname detrend-directory
 #' @export
 dir_detrend_boxcar <- function(folder_path = ".", l, purpose = c("FCS", "FFS"),
-                               thresh = NULL,
-                               seed = NULL, parallel = FALSE, msg = TRUE) {
+                               thresh = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   cwd <- getwd()
   on.exit(setwd(cwd))
@@ -47,15 +46,14 @@ dir_detrend_boxcar <- function(folder_path = ".", l, purpose = c("FCS", "FFS"),
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "box", parameter = l,
                  purpose = purpose, thresh = thresh,
-                 seed = seed, parallel = parallel, msg = msg) %>%
+                 parallel = parallel, msg = msg) %>%
     invisible()
 }
 
 #' @rdname detrend-directory
 #' @export
 dir_detrend_exp <- function(folder_path = ".", tau, purpose = c("FCS", "FFS"),
-                            thresh = NULL,
-                            seed = NULL, parallel = FALSE, msg = TRUE) {
+                            thresh = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   cwd <- getwd()
   on.exit(setwd(cwd))
@@ -63,7 +61,7 @@ dir_detrend_exp <- function(folder_path = ".", tau, purpose = c("FCS", "FFS"),
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "exp", parameter = tau,
                  purpose = purpose, thresh = thresh,
-                 seed = seed, parallel = parallel, msg = msg) %>%
+                 parallel = parallel, msg = msg) %>%
     invisible()
 }
 
@@ -71,7 +69,7 @@ dir_detrend_exp <- function(folder_path = ".", tau, purpose = c("FCS", "FFS"),
 #' @export
 dir_detrend_polynom <- function(folder_path = ".", degree,
                                 purpose = c("FCS", "FFS"), thresh = NULL,
-                                seed = NULL, parallel = FALSE, msg = TRUE) {
+                                parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   cwd <- getwd()
   on.exit(setwd(cwd))
@@ -79,14 +77,13 @@ dir_detrend_polynom <- function(folder_path = ".", degree,
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "poly", parameter = degree,
                  purpose = purpose,
-                 thresh = thresh, seed = seed, parallel = parallel,
-                 msg = msg) %>%
+                 thresh = thresh, parallel = parallel, msg = msg) %>%
     invisible()
 }
 
 file_detrend <- function(path, method, parameter,
                          purpose = c("FCS", "FFS"), thresh = NULL,
-                         seed = NULL, parallel = FALSE, msg = TRUE) {
+                         parallel = FALSE, msg = TRUE) {
   checkmate::assert_file_exists(path)
   checkmate::assert_string(method)
   method %<>% filesstrings::match_arg(c("boxcar", "exponential", "polynomial"),
@@ -107,13 +104,13 @@ file_detrend <- function(path, method, parameter,
   }
   if (method == "boxcar")
     img %<>% img_detrend_boxcar(l = parameter, purpose = purpose,
-                                seed = seed, parallel = parallel)
+                                parallel = parallel)
   if (method == "exponential")
     img %<>% img_detrend_exp(tau = parameter, purpose = purpose,
-                             seed = seed, parallel = parallel)
+                             parallel = parallel)
   if (method == "polynomial") {
     img %<>% img_detrend_polynom(degree = parameter, purpose = purpose,
-                                 seed = seed, parallel = parallel)
+                                 parallel = parallel)
   }
   if (msg) message("\b Done.")
   if (!is.null(thresh)) attr(img, "thresh") <- thresh

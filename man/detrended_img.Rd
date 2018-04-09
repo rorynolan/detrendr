@@ -4,7 +4,7 @@
 \alias{detrended_img}
 \title{Detrended image class.}
 \usage{
-detrended_img(img, method, parameter, auto, purpose = c("FCS", "FFS"))
+detrended_img(img, method, parameter, auto, purpose = NULL)
 }
 \arguments{
 \item{img}{The detrended image series. A 4-dimensional array of non-negative
@@ -13,15 +13,16 @@ integers in the style of an \link[ijtiff:ijtiff_img]{ijtiff_img}, or a
 channel of an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array (indexed by
 \code{img[y, x, frame]}).}
 
-\item{method}{The method used. One of \code{"boxcar"}, \code{"exponential"} or
-\code{"polynomial"}.}
+\item{method}{The method used. One of \code{"robinhood"},\code{"boxcar"},
+\code{"exponential"} or \code{"polynomial"}.}
 
 \item{parameter}{A number. The detrend parameter used. One per channel.}
 
 \item{auto}{Logical. Was automatic detrending used? One per channel.}
 
-\item{purpose}{Was the image detrended for the purpose of doing FCS or FFS
-calculations? See \link{detrending}.}
+\item{purpose}{Either \code{"FCS"} or \code{"FFS"}. Was the image detrended for the
+purpose of doing FCS or FFS calculations? See \link{detrending}. `purpose`` is
+not required for \emph{Robin Hood} detrending.}
 }
 \value{
 An object of class \code{detrended_img}.

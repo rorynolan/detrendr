@@ -16,6 +16,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// brightness_cols_given_mean_
+NumericVector brightness_cols_given_mean_(IntegerMatrix cols, NumericVector means);
+RcppExport SEXP _detrendr_brightness_cols_given_mean_(SEXP colsSEXP, SEXP meansSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type means(meansSEXP);
+    rcpp_result_gen = Rcpp::wrap(brightness_cols_given_mean_(cols, means));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mean_cols_
 NumericVector mean_cols_(IntegerMatrix cols);
 RcppExport SEXP _detrendr_mean_cols_(SEXP colsSEXP) {
@@ -24,6 +36,62 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type cols(colsSEXP);
     rcpp_result_gen = Rcpp::wrap(mean_cols_(cols));
+    return rcpp_result_gen;
+END_RCPP
+}
+// var_cols_given_mean_
+NumericVector var_cols_given_mean_(IntegerMatrix cols, NumericVector means);
+RcppExport SEXP _detrendr_var_cols_given_mean_(SEXP colsSEXP, SEXP meansSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type cols(colsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type means(meansSEXP);
+    rcpp_result_gen = Rcpp::wrap(var_cols_given_mean_(cols, means));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sum_cols_
+NumericVector sum_cols_(IntegerMatrix cols);
+RcppExport SEXP _detrendr_sum_cols_(SEXP colsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type cols(colsSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_cols_(cols));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mean_frames_
+NumericVector mean_frames_(NumericVector arr3d);
+RcppExport SEXP _detrendr_mean_frames_(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(mean_frames_(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sum_frames_
+NumericVector sum_frames_(NumericVector arr3d);
+RcppExport SEXP _detrendr_sum_frames_(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_frames_(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sum_pillars_
+NumericMatrix sum_pillars_(NumericVector arr3d);
+RcppExport SEXP _detrendr_sum_pillars_(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_pillars_(arr3d));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -106,6 +174,64 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rfromboxes_
+IntegerVector rfromboxes_(double n, IntegerVector balls, NumericVector weights, int seed, LogicalVector quick);
+RcppExport SEXP _detrendr_rfromboxes_(SEXP nSEXP, SEXP ballsSEXP, SEXP weightsSEXP, SEXP seedSEXP, SEXP quickSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type n(nSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type balls(ballsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< LogicalVector >::type quick(quickSEXP);
+    rcpp_result_gen = Rcpp::wrap(rfromboxes_(n, balls, weights, seed, quick));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rtoboxes_
+IntegerVector rtoboxes_(double n, double boxes, NumericVector weights, IntegerVector capacities, int seed, LogicalVector quick);
+RcppExport SEXP _detrendr_rtoboxes_(SEXP nSEXP, SEXP boxesSEXP, SEXP weightsSEXP, SEXP capacitiesSEXP, SEXP seedSEXP, SEXP quickSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type boxes(boxesSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type capacities(capacitiesSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< LogicalVector >::type quick(quickSEXP);
+    rcpp_result_gen = Rcpp::wrap(rtoboxes_(n, boxes, weights, capacities, seed, quick));
+    return rcpp_result_gen;
+END_RCPP
+}
+// px_take_arr3d
+IntegerVector px_take_arr3d(IntegerVector arr3d, IntegerVector frames_losing, int seed);
+RcppExport SEXP _detrendr_px_take_arr3d(SEXP arr3dSEXP, SEXP frames_losingSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type arr3d(arr3dSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type frames_losing(frames_losingSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(px_take_arr3d(arr3d, frames_losing, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
+// px_take_mat
+NumericVector px_take_mat(NumericMatrix mat, NumericMatrix mat_orig, NumericVector frames_losing, int seed);
+RcppExport SEXP _detrendr_px_take_mat(SEXP matSEXP, SEXP mat_origSEXP, SEXP frames_losingSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type mat_orig(mat_origSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type frames_losing(frames_losingSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(px_take_mat(mat, mat_orig, frames_losing, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
 // brightness_rows_
 NumericVector brightness_rows_(IntegerMatrix rows);
 RcppExport SEXP _detrendr_brightness_rows_(SEXP rowsSEXP) {
@@ -117,6 +243,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// brightness_rows_given_mean_
+NumericVector brightness_rows_given_mean_(IntegerMatrix rows, NumericVector means);
+RcppExport SEXP _detrendr_brightness_rows_given_mean_(SEXP rowsSEXP, SEXP meansSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type rows(rowsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type means(meansSEXP);
+    rcpp_result_gen = Rcpp::wrap(brightness_rows_given_mean_(rows, means));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mean_rows_
 NumericVector mean_rows_(IntegerMatrix rows);
 RcppExport SEXP _detrendr_mean_rows_(SEXP rowsSEXP) {
@@ -125,6 +263,29 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type rows(rowsSEXP);
     rcpp_result_gen = Rcpp::wrap(mean_rows_(rows));
+    return rcpp_result_gen;
+END_RCPP
+}
+// var_rows_given_mean_
+NumericVector var_rows_given_mean_(IntegerMatrix rows, NumericVector means);
+RcppExport SEXP _detrendr_var_rows_given_mean_(SEXP rowsSEXP, SEXP meansSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type rows(rowsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type means(meansSEXP);
+    rcpp_result_gen = Rcpp::wrap(var_rows_given_mean_(rows, means));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sum_rows_
+NumericVector sum_rows_(IntegerMatrix rows);
+RcppExport SEXP _detrendr_sum_rows_(SEXP rowsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type rows(rowsSEXP);
+    rcpp_result_gen = Rcpp::wrap(sum_rows_(rows));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -264,10 +425,40 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// mat_add1s
+IntegerMatrix mat_add1s(IntegerMatrix mat, IntegerMatrix add_pos);
+RcppExport SEXP _detrendr_mat_add1s(SEXP matSEXP, SEXP add_posSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type add_pos(add_posSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_add1s(mat, add_pos));
+    return rcpp_result_gen;
+END_RCPP
+}
+// vec_add1s
+IntegerVector vec_add1s(IntegerVector vec, IntegerVector add_pos);
+RcppExport SEXP _detrendr_vec_add1s(SEXP vecSEXP, SEXP add_posSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type add_pos(add_posSEXP);
+    rcpp_result_gen = Rcpp::wrap(vec_add1s(vec, add_pos));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_brightness_cols_", (DL_FUNC) &_detrendr_brightness_cols_, 1},
+    {"_detrendr_brightness_cols_given_mean_", (DL_FUNC) &_detrendr_brightness_cols_given_mean_, 2},
     {"_detrendr_mean_cols_", (DL_FUNC) &_detrendr_mean_cols_, 1},
+    {"_detrendr_var_cols_given_mean_", (DL_FUNC) &_detrendr_var_cols_given_mean_, 2},
+    {"_detrendr_sum_cols_", (DL_FUNC) &_detrendr_sum_cols_, 1},
+    {"_detrendr_mean_frames_", (DL_FUNC) &_detrendr_mean_frames_, 1},
+    {"_detrendr_sum_frames_", (DL_FUNC) &_detrendr_sum_frames_, 1},
+    {"_detrendr_sum_pillars_", (DL_FUNC) &_detrendr_sum_pillars_, 1},
     {"_detrendr_mean_pillars_", (DL_FUNC) &_detrendr_mean_pillars_, 1},
     {"_detrendr_var_pillars_", (DL_FUNC) &_detrendr_var_pillars_, 1},
     {"_detrendr_median_pillars_", (DL_FUNC) &_detrendr_median_pillars_, 1},
@@ -275,8 +466,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_pillars_to_cols_", (DL_FUNC) &_detrendr_pillars_to_cols_, 1},
     {"_detrendr_cols_to_pillars_", (DL_FUNC) &_detrendr_cols_to_pillars_, 2},
     {"_detrendr_myrbernoulli_", (DL_FUNC) &_detrendr_myrbernoulli_, 2},
+    {"_detrendr_rfromboxes_", (DL_FUNC) &_detrendr_rfromboxes_, 5},
+    {"_detrendr_rtoboxes_", (DL_FUNC) &_detrendr_rtoboxes_, 6},
+    {"_detrendr_px_take_arr3d", (DL_FUNC) &_detrendr_px_take_arr3d, 3},
+    {"_detrendr_px_take_mat", (DL_FUNC) &_detrendr_px_take_mat, 4},
     {"_detrendr_brightness_rows_", (DL_FUNC) &_detrendr_brightness_rows_, 1},
+    {"_detrendr_brightness_rows_given_mean_", (DL_FUNC) &_detrendr_brightness_rows_given_mean_, 2},
     {"_detrendr_mean_rows_", (DL_FUNC) &_detrendr_mean_rows_, 1},
+    {"_detrendr_var_rows_given_mean_", (DL_FUNC) &_detrendr_var_rows_given_mean_, 2},
+    {"_detrendr_sum_rows_", (DL_FUNC) &_detrendr_sum_rows_, 1},
     {"_detrendr_myrpois_", (DL_FUNC) &_detrendr_myrpois_, 2},
     {"_detrendr_myrpois_frames_", (DL_FUNC) &_detrendr_myrpois_frames_, 3},
     {"_detrendr_myrpois_frames_t_", (DL_FUNC) &_detrendr_myrpois_frames_t_, 3},
@@ -288,6 +486,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_weighted_smooth", (DL_FUNC) &_detrendr_weighted_smooth, 2},
     {"_detrendr_exp_smooth", (DL_FUNC) &_detrendr_exp_smooth, 3},
     {"_detrendr_square_root_", (DL_FUNC) &_detrendr_square_root_, 1},
+    {"_detrendr_mat_add1s", (DL_FUNC) &_detrendr_mat_add1s, 2},
+    {"_detrendr_vec_add1s", (DL_FUNC) &_detrendr_vec_add1s, 2},
     {NULL, NULL, 0}
 };
 

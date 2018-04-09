@@ -4,7 +4,7 @@
 \alias{best_tau}
 \title{Find the best tau parameter for exponential smoothing detrending.}
 \usage{
-best_tau(img, cutoff = 0.05, seed = NULL, parallel = FALSE)
+best_tau(img, cutoff = 0.05, parallel = FALSE)
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
@@ -20,10 +20,6 @@ times the maximum weight may be ignored; so with \code{cutoff = 0.05}, any
 weight less than 5\% of the maximum weight may be ignored. The default
 value of this parameter is sensible and its value should not be set to
 anything else without good reason.}
-
-\item{seed}{Random numbers may be generated during the detrending process.
-For reproducibility, you can set a seed for this random number generation
-here.}
 
 \item{parallel}{Would you like to use multiple cores to speed up this
 function? If so, set the number of cores here, or to use all available
@@ -43,7 +39,7 @@ smoothing detrending.
 \examples{
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))[, , 1, ]
-best_tau(img, seed = 0, parallel = 2)
+best_tau(img, parallel = 2)
 
 }
 \references{

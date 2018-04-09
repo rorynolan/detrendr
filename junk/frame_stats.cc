@@ -17,3 +17,19 @@ NumericVector mean_frames(NumericVector arr3d) {
   }
   return frame_means;
 }
+
+// [[Rcpp::export]]
+NumericMatrix mat_add_1s(NumericMatrix mat,
+                         NumericVector row_adds, NumericVector col_add) {
+  // beware that this function may modify mat
+  std::size_t nr = mat.nrow();
+  std::size_t col_add_pos = 0;
+  Rcout << col_add << std::endl;
+  Rcout << col_add[col_add_pos] << std::endl;
+  for (std::size_t i = 0; i!= nr; ++i) {
+    for (std::size_t j = 0; j!= row_adds[i]; ++j)
+      Rcout << i << " " << col_add_pos << " " << col_add[col_add_pos] << std::endl;
+    ++mat(i, col_add[col_add_pos++]);
+  }
+  return mat;
+}

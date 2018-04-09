@@ -4,17 +4,13 @@
 \alias{best_l}
 \title{Find the best length parameter for boxcar detrending.}
 \usage{
-best_l(img, seed = NULL, parallel = FALSE)
+best_l(img, parallel = FALSE)
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
 or a 3-dimensional array which is a single channel of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
-
-\item{seed}{Random numbers may be generated during the detrending process.
-For reproducibility, you can set a seed for this random number generation
-here.}
 
 \item{parallel}{Would you like to use multiple cores to speed up this
 function? If so, set the number of cores here, or to use all available
@@ -32,10 +28,10 @@ detrending. Boxcar detrending is also referred to as 'running average'.
 }
 \examples{
 ## These examples are not run on CRAN because they take too long.
-## You should still try them for yourself.
+## You can still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))
-best_l(img, seed = 0, parallel = 2)
+best_l(img, parallel = 2)
 
 }
 \references{

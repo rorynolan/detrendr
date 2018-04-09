@@ -11,7 +11,7 @@ translate_parallel <- function(parallel) {
   n_cores
 }
 
-rand_seed <- function() sample.int(2 ^ 30, 1)
+get_seed <- function() sample.int(.Machine$integer.max, 1)
 
 #' Apply a function to each pillar of a 3-dimensional array.
 #'
@@ -36,4 +36,34 @@ apply_on_pillars <- function(arr3d, FUN) {
       .
     }
   }
+}
+
+
+myarray2vec <- function (iarr, dim) {
+ if (!is.matrix(iarr))
+    dim(iarr) <- c(1, length(iarr))
+  if (ncol(iarr) != length(dim))
+    stop("Number of columns in iarr and number of dimensions differ.")
+  if (any(sweep(iarr, 2, dim) > 0))
+    stop("array index > dim")
+  pdim <- c(1, cumprod(dim[-length(dim)]))
+  iarr <- iarr - 1
+  rowSums(sweep(iarr, 2, pdim, "*")) + 1
+}
+
+get_os <- function() {
+  sysinf <- Sys.info()
+  if (!is.null(sysinf)){
+    os <- sysinf['sysname']
+    if (os == 'Darwin')
+      os <- "osx"
+  } else { ## mystery machine
+    os <- .Platform$OS.type
+    if (grepl("^darwin", R.version$os))
+      os <- "osx"
+    if (grepl("linux-gnu", R.version$os))
+      os <- "linux"
+  }
+  if (os == "osx") os <- "mac"
+  tolower(os)
 }

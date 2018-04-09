@@ -1,7 +1,6 @@
 context("class_constructors")
 
 test_that("detrended_img works", {
-  library(magrittr)
   three_d <- array(runif(8), dim = rep(2, 3))
   expect_error(detrended_img(array(runif(8), dim = rep(2, 3)), "box", 5, TRUE,
                              purpose = "ff"),
@@ -11,4 +10,9 @@ test_that("detrended_img works", {
   dim(four_d) <- c(dim(three_d)[1:2], 1, dim(three_d)[3])
   expect_equal(detrended_img(three_d, "exp", 9, FALSE, purpose = "ff"),
                detrended_img(four_d, "exp", 9, FALSE, purpose = "ff"))
+  expect_error(detrended_img(three_d, "rh", 8:9, TRUE),
+               paste0("The length of the `parameter` argument must be ",
+                      "equal to 1 or equal to the number of channels in `img`.",
+                      ".* Your `img` has 1 channel and your ",
+                      "`parameter` argument is of length 2."))
 })

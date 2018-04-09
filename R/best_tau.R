@@ -1,13 +1,13 @@
-rows_detrend_tau_specified <- function(mat, tau, l, purpose, seed, parallel) {
+rows_detrend_tau_specified <- function(mat, tau, l, purpose, parallel) {
   smoothed <- exp_smooth_rows(mat, tau, l, parallel = parallel)
   rows_detrend_smoothed(mat, smoothed, purpose = purpose,
-                        seed = seed, parallel = parallel)
+                        parallel = parallel)
 }
 
 rows_detrend_tau_specified_mean_b <- function(mat, tau, l, purpose,
-                                              seed, parallel) {
+                                              parallel) {
   rows_detrend_tau_specified(mat, tau, l, purpose = purpose,
-                             seed = seed, parallel = parallel) %>%
+                             parallel = parallel) %>%
     brightness_rows(parallel = parallel) %>%
     mean(na.rm = TRUE)
 }
@@ -34,10 +34,10 @@ rows_detrend_tau_specified_mean_b <- function(mat, tau, l, purpose,
 #' @examples
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))[, , 1, ]
-#' best_tau(img, seed = 0, parallel = 2)
+#' best_tau(img, parallel = 2)
 #'
 #' @export
-best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
+best_tau <- function(img, cutoff = 0.05, parallel = FALSE) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
@@ -46,13 +46,12 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
   }
   d <- dim(img)
   if (length(d) == 3) {
-    if (is.null(seed)) seed <- rand_seed()
     frame_length <- sum(!is.na(img[, , 1]))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_brightness <- NA
     for (i in 0:9) {
       if (is.na(sim_brightness)) {
-        sim_mat <- myrpois_frames(frame_means, frame_length, seed + i, parallel)
+        sim_mat <- myrpois_frames(frame_means, frame_length, parallel)
         if (!filesstrings::all_equal(sim_mat)) {
           sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
             mean(na.rm = TRUE)
@@ -60,7 +59,8 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
       }
     }
     msg <- paste("Your image is too close to zero. Can't detrend an image with",
-                 "so few nonzero values. \n* img has", length(img), "elements",
+                 "so few nonzero values. \n* `img` has",
+                 length(img), "elements",
                  "and just", sum(img > 0), "of them are greater than zero.")
     if (is.na(sim_brightness)) stop(msg)
     if (sim_brightness <= 1) return(NA)
@@ -69,7 +69,7 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
     max_l <- ncol(sim_mat) %>% {(. - 1) + (. - 2)}
     l <- min(floor(- big_tau * log(cutoff)), max_l)
     mean_brightness_big_tau <- rows_detrend_tau_specified_mean_b(
-      sim_mat, big_tau, l, purpose = "ffs", seed, parallel = parallel)
+      sim_mat, big_tau, l, purpose = "ffs", parallel = parallel)
     if (is.na(mean_brightness_big_tau)) stop(msg)
     mean_brightness_big_tau_old <- mean_brightness_big_tau
     while (mean_brightness_big_tau <= 1) {
@@ -77,8 +77,7 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
       big_tau <- 2 * big_tau
       l <- min(floor(- big_tau * log(cutoff)), max_l)
       mean_brightness_big_tau <- rows_detrend_tau_specified_mean_b(
-        sim_mat, big_tau, l, purpose = "ffs",
-        seed = seed, parallel = parallel)
+        sim_mat, big_tau, l, purpose = "ffs", parallel = parallel)
       if (is.na(mean_brightness_big_tau)) stop(msg)
     }
     if (big_tau_old == big_tau) {
@@ -86,8 +85,7 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
         big_tau_old <- big_tau_old / 2
         l <- min(floor(- big_tau_old * log(cutoff)), max_l)
         mean_brightness_big_tau_old <- rows_detrend_tau_specified_mean_b(
-          sim_mat, big_tau_old, l, purpose = "ffs",
-          seed = seed, parallel = parallel)
+          sim_mat, big_tau_old, l, purpose = "ffs", parallel = parallel)
         if (is.na(mean_brightness_big_tau_old)) stop(msg)
       }
     }
@@ -100,8 +98,7 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
       middle_tau <- mean(c(tau_lower, tau_upper))
       l <- min(floor(- middle_tau * log(cutoff)), max_l)
       middle_brightness_mean <- rows_detrend_tau_specified_mean_b(
-        sim_mat, middle_tau, l, purpose = "ffs",
-        seed = seed, parallel = parallel)
+        sim_mat, middle_tau, l, purpose = "ffs", parallel = parallel)
       if (is.na(middle_brightness_mean)) stop(msg)
       if (middle_brightness_mean < 1) {
         tau_lower <- middle_tau
@@ -119,6 +116,6 @@ best_tau <- function(img, cutoff = 0.05, seed = NULL, parallel = FALSE) {
   } else {
     purrr::map_dbl(seq_len(d[3]),
                    ~ best_tau(img[, , ., ], cutoff = cutoff,
-                              seed = seed, parallel = parallel))
+                              parallel = parallel))
   }
 }

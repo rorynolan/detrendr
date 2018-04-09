@@ -17,8 +17,10 @@ ReturnVec weighted_smooth(const Vec& vec,
                           const Vec& weights) {
   const std::size_t vec_size = vec.size();
   const std::size_t weights_size = weights.size();
-  if (weights_size % 2 == 0)
-    throw std::domain_error("The number of elements in weights must be odd.");
+  if (weights_size % 2 == 0) {
+    throw std::invalid_argument("The number of elements in weights "
+                                "must be odd.");
+  }
   const std::size_t l = weights_size / 2;
   if (l >= vec_size) {
     std::size_t l_ = vec_size - 1;

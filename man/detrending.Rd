@@ -2,18 +2,23 @@
 % Please edit documentation in R/detrend.R
 \name{detrending}
 \alias{detrending}
+\alias{img_detrend_robinhood}
+\alias{img_detrend_rh}
 \alias{img_detrend_boxcar}
 \alias{img_detrend_exp}
 \alias{img_detrend_polynom}
 \title{Detrend images.}
 \usage{
-img_detrend_boxcar(img, l, purpose = c("FCS", "FFS"), seed = NULL,
-  parallel = FALSE)
+img_detrend_robinhood(img, swaps = "auto")
+
+img_detrend_rh(img, swaps = "auto")
+
+img_detrend_boxcar(img, l, purpose = c("FCS", "FFS"), parallel = FALSE)
 
 img_detrend_exp(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
-  seed = NULL, parallel = FALSE)
+  parallel = FALSE)
 
-img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"), seed = NULL,
+img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"),
   parallel = FALSE)
 }
 \arguments{
@@ -21,6 +26,13 @@ img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"), seed = NULL,
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
 or a 3-dimensional array which is a single channel of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
+
+\item{swaps}{The number of swaps (giving of one count from rich to poor) to
+perform during the \emph{Robin Hood} detrending. Set this to "auto" (the
+default) to use Nolan's algorithm to automatically find a suitable value
+for this parameter (recommended). For multi-channel images, it is possible
+to have a different \code{swaps} for each channel by specifying \code{swaps} as a
+vector or list.}
 
 \item{l}{The length parameter for \emph{boxcar} detrending. The size of the
 sliding window will be \code{2 * l + 1}. This must be a positive integer. Set
@@ -37,10 +49,6 @@ number and brightness or autocorrelation), choose 'FCS'. The difference is
 that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
 mean and variance, whereas if \code{purpose} is 'FCS', the time series is
 corrected for non-stationary mean only.}
-
-\item{seed}{Random numbers may be generated during the detrending process.
-For reproducibility, you can set a seed for this random number generation
-here.}
 
 \item{parallel}{Would you like to use multiple cores to speed up this
 function? If so, set the number of cores here, or to use all available
@@ -75,38 +83,35 @@ Correct images for bleaching (or any other effect that introduces an unwanted
 trend) by \emph{detrending}.
 }
 \details{
-There are 3 detrending methods available: \emph{boxcar}, \emph{exponential filtering}
-and \emph{polynomial}. These are described in detail in Nolan et al., 2017.
-\itemize{\item \emph{Boxcar} detrending with parameter \eqn{l} is a moving average
-detrending method using a sliding window of size \eqn{2l + 1}. \item
-\emph{Exponential filtering} detrending is a moving weighted average method where
-for parameter \eqn{tau} the weights are calculated as exp\eqn{(- t / tau)}
-where \eqn{t} is the distance from the point of interest. \item \emph{Polynomial}
-detrending works by fitting a polynomial line to a series of points and then
-correcting the series to remove the trend detailed by this polynomial fit.}
+There are 4 detrending methods available: \emph{Robin Hood}, \emph{boxcar},
+\emph{exponential filtering} and \emph{polynomial}. \emph{Robin Hood} is described in Nolan
+et al., 2018. The others are described in Nolan et al., 2017. \itemize{\item
+\emph{Robin Hood} is a method whereby counts are taken from frames with higher
+mean intensity and given directly to frames of lower intensity. \item
+\emph{Boxcar} detrending with parameter \eqn{l} is a moving average detrending
+method using a sliding window of size \eqn{2l + 1}. \item \emph{Exponential
+filtering} detrending is a moving weighted average method where for parameter
+\eqn{tau} the weights are calculated as exp\eqn{(- t / tau)} where \eqn{t} is
+the distance from the point of interest. \item \emph{Polynomial} detrending works
+by fitting a polynomial line to a series of points and then correcting the
+series to remove the trend detailed by this polynomial fit.}
 }
 \examples{
-\dontrun{
-## These examples are not run on CRAN because they take too long.
-## You should still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))
-corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs",
-                                seed = 0, parallel = 2)
-corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs",
-                                  seed = 0, parallel = 2)
-corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs",
-                                  seed = 0, parallel = 2)
-corrected <- img_detrend_exp(img, "auto", purpose = "ffs",
-                             seed = 0, parallel = 2)
-corrected10 <- img_detrend_exp(img, 10, purpose = "ffs",
-                               seed = 0, parallel = 2)
-corrected50 <- img_detrend_exp(img, 50, purpose = "fcs",
-                               seed = 0, parallel = 2)
-corrected <- img_detrend_polynom(img, "auto", purpose = "ffs",
-                                 seed = 0, parallel = 2)
-corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs",
-                                  seed = 0, parallel = 2)}
+corrected <- img_detrend_rh(img)
+\dontrun{
+## These examples are not run on CRAN because they take too long.
+## You can still try them for yourself.
+
+corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs", parallel = 2)
+corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs", parallel = 2)
+corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs", parallel = 2)
+corrected <- img_detrend_exp(img, "auto", purpose = "ffs", parallel = 2)
+corrected10 <- img_detrend_exp(img, 10, purpose = "ffs", parallel = 2)
+corrected50 <- img_detrend_exp(img, 50, purpose = "fcs", parallel = 2)
+corrected <- img_detrend_polynom(img, "auto", purpose = "ffs", parallel = 2)
+corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs", parallel = 2)}
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro
