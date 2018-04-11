@@ -2,11 +2,19 @@
 % Please edit documentation in R/dir_detrend.R
 \name{detrend-directory}
 \alias{detrend-directory}
+\alias{dir_detrend_robinhood}
+\alias{dir_detrend_rh}
 \alias{dir_detrend_boxcar}
 \alias{dir_detrend_exp}
 \alias{dir_detrend_polynom}
 \title{Detrend all TIFF images in an entire folder.}
 \usage{
+dir_detrend_robinhood(folder_path = ".", swaps = "auto", thresh = NULL,
+  msg = TRUE)
+
+dir_detrend_rh(folder_path = ".", swaps = "auto", thresh = NULL,
+  msg = TRUE)
+
 dir_detrend_boxcar(folder_path = ".", l, purpose = c("FCS", "FFS"),
   thresh = NULL, parallel = FALSE, msg = TRUE)
 
@@ -19,6 +27,20 @@ dir_detrend_polynom(folder_path = ".", degree, purpose = c("FCS", "FFS"),
 \arguments{
 \item{folder_path}{The path (relative or absolute) to the folder you wish to
 process.}
+
+\item{swaps}{The number of swaps (giving of one count from rich to poor) to
+perform during the \emph{Robin Hood} detrending. Set this to "auto" (the
+default) to use Nolan's algorithm to automatically find a suitable value
+for this parameter (recommended). For multi-channel images, it is possible
+to have a different \code{swaps} for each channel by specifying \code{swaps} as a
+vector or list.}
+
+\item{thresh}{The threshold or thresholding method (see
+\code{\link[autothresholdr:mean_stack_thresh]{autothresholdr::mean_stack_thresh()}}) to use on the image prior to
+detrending.}
+
+\item{msg}{Receive messages to tell you how the processing of the directory
+is going? Default is yes.}
 
 \item{l}{The length parameter for \emph{boxcar} detrending. The size of the
 sliding window will be \code{2 * l + 1}. This must be a positive integer. Set
@@ -34,18 +56,12 @@ calculation (like number and brightness), choose 'FFS'. If it is an FCS
 number and brightness or autocorrelation), choose 'FCS'. The difference is
 that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
 mean and variance, whereas if \code{purpose} is 'FCS', the time series is
-corrected for non-stationary mean only.}
-
-\item{thresh}{The threshold or thresholding method (see
-\code{\link[autothresholdr:mean_stack_thresh]{autothresholdr::mean_stack_thresh()}}) to use on the image prior to
-detrending.}
+corrected for non-stationary mean only. `purpose`` is not required for
+\emph{Robin Hood} detrending.}
 
 \item{parallel}{Would you like to use multiple cores to speed up this
 function? If so, set the number of cores here, or to use all available
 cores, use \code{parallel = TRUE}.}
-
-\item{msg}{Receive messages to tell you how the processing of the directory
-is going? Default is yes.}
 
 \item{tau}{The \eqn{tau} parameter for \emph{exponential filtering} detrending.
 This must be a positive number. Set this to "auto" to use Nolan's algorithm
@@ -81,6 +97,7 @@ setwd(tempdir())
 file.copy(c(system.file("extdata", "bleached.tif", package = "detrendr"),
             system.file("img", "2ch_ij.tif", package = "ijtiff")),
           ".")
+dir_detrend_robinhood(thresh = "huang")
 dir_detrend_boxcar(l = "auto", thresh = "tri", purpose = "FFS")
 dir_detrend_exp(tau = "auto", thresh = "tri", purpose = "FCS")
 dir_detrend_polynom(degree = "auto", thresh = "huang", purpose = "FFS")}

@@ -15,3 +15,14 @@ sum_frames <- function(arr3d, parallel = FALSE) {
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
   sum_frames_(arr3d)
 }
+
+sum_frames_na_omit <- function(arr3d) {
+  checkmate::assert_array(arr3d, d = 3)
+  checkmate::assert(checkmate::check_integer(arr3d),
+                    checkmate::check_numeric(arr3d))
+  if (isTRUE(checkmate::check_integer(arr3d))) {
+    int_sum_frames_na_omit(arr3d)
+  } else {
+    dbl_sum_frames_na_omit(arr3d)
+  }
+}

@@ -55,7 +55,7 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
   checkmate::assert_numeric(arr3d, lower = 0, upper = .Machine$integer.max)
   checkmate::assert_integerish(arr3d)
   d <- dim(arr3d)
-  frame_sums <- sum_frames(arr3d)
+  frame_sums <- sum_frames_na_omit(arr3d)
   frame_sum_mean <- mean(frame_sums)
   frame_weights <- frame_sums - frame_sum_mean
   frame_balls <- frame_weights %T>%
@@ -163,7 +163,8 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
 #'   number and brightness or autocorrelation), choose 'FCS'. The difference is
 #'   that if `purpose` is 'FFS', the time series is corrected for non-stationary
 #'   mean and variance, whereas if `purpose` is 'FCS', the time series is
-#'   corrected for non-stationary mean only.
+#'   corrected for non-stationary mean only. `purpose`` is not required for
+#'   _Robin Hood_ detrending.
 #' @param parallel Would you like to use multiple cores to speed up this
 #'   function? If so, set the number of cores here, or to use all available
 #'   cores, use `parallel = TRUE`.
@@ -202,8 +203,7 @@ NULL
 #' @export
 img_detrend_robinhood <- function(img, swaps = "auto") {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
-  checkmate::assert_numeric(img, lower = 0, upper = .Machine$integer.max)
-  checkmate::assert_integerish(img)
+  checkmate::assert_integerish(img, lower = 0)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
   n_ch <- dim(img)[3]
   out <- array(0, dim = dim(img))

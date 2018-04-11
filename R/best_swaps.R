@@ -43,7 +43,7 @@ mat_swap_n_more <- function(mat, mat_orig, n, frame_weights, frame_balls,
 #'
 #' @export
 best_swaps <- function(img) {
-  checkmate::assert_numeric(img, lower = 0, upper = .Machine$integer.max)
+  checkmate::assert_integerish(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
     stop("Your image is constant: all pixel values are equal to ",
@@ -54,7 +54,7 @@ best_swaps <- function(img) {
     if (filesstrings::all_equal(img))
       stop("All elements of img are equal; img is not fit for detrending.")
     n_frames <- d[3]
-    frame_length <- sum(!is.na(img[, , 1]))
+    frame_length <- sum(!anyNA_pillars(img))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_mean_b <- NA
     for (i in seq_len(9)) {

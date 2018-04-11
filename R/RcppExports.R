@@ -29,6 +29,14 @@ sum_frames_ <- function(arr3d) {
     .Call(`_detrendr_sum_frames_`, arr3d)
 }
 
+int_sum_frames_na_omit <- function(arr3d) {
+    .Call(`_detrendr_int_sum_frames_na_omit`, arr3d)
+}
+
+dbl_sum_frames_na_omit <- function(arr3d) {
+    .Call(`_detrendr_dbl_sum_frames_na_omit`, arr3d)
+}
+
 sum_pillars_ <- function(arr3d) {
     .Call(`_detrendr_sum_pillars_`, arr3d)
 }
@@ -47,6 +55,14 @@ median_pillars_ <- function(arr3d) {
 
 brightness_pillars_ <- function(arr3d) {
     .Call(`_detrendr_brightness_pillars_`, arr3d)
+}
+
+int_anyNA_pillars <- function(arr3d) {
+    .Call(`_detrendr_int_anyNA_pillars`, arr3d)
+}
+
+dbl_anyNA_pillars <- function(arr3d) {
+    .Call(`_detrendr_dbl_anyNA_pillars`, arr3d)
 }
 
 pillars_to_cols_ <- function(arr3d) {

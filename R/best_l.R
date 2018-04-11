@@ -71,7 +71,7 @@ best_l <- function(img, parallel = FALSE) {
   if (length(d) == 3) {
     if (filesstrings::all_equal(img))
       stop("All elements of img are equal; img is not fit for detrending.")
-    frame_length <- sum(!is.na(img[, , 1]))
+    frame_length <- sum(!anyNA_pillars(img))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_brightness <- NA
     for (i in 0:9) {

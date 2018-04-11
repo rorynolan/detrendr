@@ -84,6 +84,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// int_sum_frames_na_omit
+NumericVector int_sum_frames_na_omit(IntegerVector arr3d);
+RcppExport SEXP _detrendr_int_sum_frames_na_omit(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(int_sum_frames_na_omit(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dbl_sum_frames_na_omit
+NumericVector dbl_sum_frames_na_omit(NumericVector arr3d);
+RcppExport SEXP _detrendr_dbl_sum_frames_na_omit(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(dbl_sum_frames_na_omit(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sum_pillars_
 NumericMatrix sum_pillars_(NumericVector arr3d);
 RcppExport SEXP _detrendr_sum_pillars_(SEXP arr3dSEXP) {
@@ -136,6 +158,28 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
     rcpp_result_gen = Rcpp::wrap(brightness_pillars_(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
+// int_anyNA_pillars
+LogicalMatrix int_anyNA_pillars(IntegerVector arr3d);
+RcppExport SEXP _detrendr_int_anyNA_pillars(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(int_anyNA_pillars(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dbl_anyNA_pillars
+LogicalMatrix dbl_anyNA_pillars(NumericVector arr3d);
+RcppExport SEXP _detrendr_dbl_anyNA_pillars(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(dbl_anyNA_pillars(arr3d));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -458,11 +502,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_sum_cols_", (DL_FUNC) &_detrendr_sum_cols_, 1},
     {"_detrendr_mean_frames_", (DL_FUNC) &_detrendr_mean_frames_, 1},
     {"_detrendr_sum_frames_", (DL_FUNC) &_detrendr_sum_frames_, 1},
+    {"_detrendr_int_sum_frames_na_omit", (DL_FUNC) &_detrendr_int_sum_frames_na_omit, 1},
+    {"_detrendr_dbl_sum_frames_na_omit", (DL_FUNC) &_detrendr_dbl_sum_frames_na_omit, 1},
     {"_detrendr_sum_pillars_", (DL_FUNC) &_detrendr_sum_pillars_, 1},
     {"_detrendr_mean_pillars_", (DL_FUNC) &_detrendr_mean_pillars_, 1},
     {"_detrendr_var_pillars_", (DL_FUNC) &_detrendr_var_pillars_, 1},
     {"_detrendr_median_pillars_", (DL_FUNC) &_detrendr_median_pillars_, 1},
     {"_detrendr_brightness_pillars_", (DL_FUNC) &_detrendr_brightness_pillars_, 1},
+    {"_detrendr_int_anyNA_pillars", (DL_FUNC) &_detrendr_int_anyNA_pillars, 1},
+    {"_detrendr_dbl_anyNA_pillars", (DL_FUNC) &_detrendr_dbl_anyNA_pillars, 1},
     {"_detrendr_pillars_to_cols_", (DL_FUNC) &_detrendr_pillars_to_cols_, 1},
     {"_detrendr_cols_to_pillars_", (DL_FUNC) &_detrendr_cols_to_pillars_, 2},
     {"_detrendr_myrbernoulli_", (DL_FUNC) &_detrendr_myrbernoulli_, 2},

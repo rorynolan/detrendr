@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #include "rboxes.h"
+#include "summary_stats.h"
 
 #include <Rcpp.h>
 using namespace Rcpp;
@@ -53,6 +54,10 @@ IntegerVector px_take_arr3d(IntegerVector arr3d, IntegerVector frames_losing,
     if (frames_losing[i]) {
       IntegerVector frame_i(arr3d.begin() + (i * frame_length),
                             arr3d.begin() + ((i + 1) * frame_length));
+      for (std::size_t j = 0; j != frame_length; ++j) {
+        if (IntegerVector::is_na(frame_i[j]))
+          frame_i[j] = 0;
+      }
       NumericVector weights_i(frame_i.begin(), frame_i.end());
       IntegerVector frame_i_pixels = rfromboxes(
         frames_losing[i], frame_i, weights_i, seed + i);

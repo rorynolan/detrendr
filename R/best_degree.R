@@ -57,7 +57,7 @@ best_degree <- function(img, parallel = FALSE) {
   }
   d <- dim(img)
   if (length(d) == 3) {
-    frame_length <- sum(!is.na(img[, , 1]))
+    frame_length <- sum(!anyNA_pillars(img))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_brightness <- NA
     for (i in 0:9) {

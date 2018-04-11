@@ -137,3 +137,14 @@ brightness_pillars <- function(img, parallel = FALSE) {
     out
   }
 }
+
+anyNA_pillars <- function(arr3d) {
+  checkmate::assert_array(arr3d, d = 3)
+  checkmate::assert(checkmate::check_integer(arr3d),
+                    checkmate::check_numeric(arr3d))
+  if (isTRUE(checkmate::check_integer(arr3d))) {
+    int_anyNA_pillars(arr3d)
+  } else {
+    dbl_anyNA_pillars(arr3d)
+  }
+}

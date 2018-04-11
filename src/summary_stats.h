@@ -10,6 +10,8 @@
 #include <functional>
 #include <iterator>
 
+#include <Rcpp.h>
+
 template <class Vec>
 int myprod(const Vec& vec) {
   return std::accumulate(vec.begin(), vec.end(), 1.0, std::multiplies<int>());
@@ -74,5 +76,8 @@ double mymedian(std::vector<T>& vec) {
   }
   return med;
 }
+
+bool int_anyNA(Rcpp::IntegerVector x);
+bool dbl_anyNA(Rcpp::NumericVector x);
 
 #endif  // DETRENDR_SUMMARY_STATS_
