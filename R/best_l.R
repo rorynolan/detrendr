@@ -53,11 +53,12 @@ rows_detrend_l_specified_mean_b <- function(mat, l, purpose, parallel) {
 #'   https://doi.org/10.1093/bioinformatics/btx434.
 #'
 #' @examples
+#' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You can still try them for yourself.
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))
-#' best_l(img, parallel = 2)
+#' best_l(img, parallel = 2)}
 #'
 #' @export
 best_l <- function(img, parallel = FALSE) {

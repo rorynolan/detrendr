@@ -22,8 +22,11 @@ Use Nolan's algorithm to find the ideal \code{swaps} parameter for \emph{Robin H
 detrending.
 }
 \examples{
+\dontrun{
+## These examples are not run on CRAN because they take too long.
+## You can still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))
-best_swaps(img)
+best_swaps(img)}
 
 }

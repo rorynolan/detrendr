@@ -5,10 +5,16 @@ test_that("myrpois works on mac", {
   set.seed(1)
   expect_equal(myrpois(-5:5), c(-4, -2, -3, -3, -2, 0, 0, 1, 5, 1, 6))
 })
+
 test_that("myrpois works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
-  expect_equal(myrpois(-5:5), c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))
+  x <- myrpois(-5:5)
+  if (filesstrings::all_equal(x, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))) {
+    expect_equal(x, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))
+  } else {  # fedora
+    expect_equal(x, c(-9, -2, -1, -2, -2, 0, 1, 2, 2, 3, 8))
+  }
 })
 test_that("myrpois works on windows", {
   skip_if_not(get_os() == "windows")
@@ -25,8 +31,12 @@ test_that("myrbern works on mac", {
 test_that("myrbern works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
-  expect_equal(myrbern(seq(0.1, 0.9, length.out = 7)),
-               c(0, 0, 1, 1, 0, 0, 1))
+  x <- myrbern(seq(0.1, 0.9, length.out = 7))
+  if (filesstrings::all_equal(x, c(0, 0, 1, 1, 0, 0, 1))) {
+    expect_equal(x, c(0, 0, 1, 1, 0, 0, 1))
+  } else {  # fedora
+    expect_equal(x, c(0, 1, 1, 0, 0, 1, 1))
+  }
 })
 test_that("myrbern works on windows", {
   skip_if_not(get_os() == "windows")
@@ -43,7 +53,12 @@ test_that("rfromboxes works on mac", {
 test_that("rfromboxes works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
-  expect_equal(rfromboxes(10, 1:5), c(0, 2, 2, 1, 5))
+  x <- rfromboxes(10, 1:5)
+  if (filesstrings::all_equal(x, c(0, 2, 2, 1, 5))) {
+    expect_equal(x, c(0, 2, 2, 1, 5))
+  } else {  # fedora
+    expect_equal(x, c(1, 2, 2, 3, 2))
+  }
 })
 test_that("rfromboxes works on windows", {
   skip_if_not(get_os() == "windows")
@@ -70,7 +85,12 @@ test_that("rtoboxes works on mac", {
 test_that("rtoboxes works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
-  expect_equal(rtoboxes(10, 4), c(0, 4, 1, 5))
+  x <- rtoboxes(10, 4)
+  if (filesstrings::all_equal(x, c(0, 4, 1, 5))) {
+    expect_equal(x, c(0, 4, 1, 5))
+  } else {  # fedora
+    expect_equal(x, c(2, 6, 0, 2))
+  }
 })
 test_that("rtoboxes works on windows", {
   skip_if_not(get_os() == "windows")

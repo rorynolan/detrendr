@@ -37,9 +37,12 @@ mat_swap_n_more <- function(mat, mat_orig, n, frame_weights, frame_balls,
 #'   parameter for each channel.
 #'
 #' @examples
+#' \dontrun{
+#' ## These examples are not run on CRAN because they take too long.
+#' ## You can still try them for yourself.
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))
-#' best_swaps(img)
+#' best_swaps(img)}
 #'
 #' @export
 best_swaps <- function(img) {
@@ -127,7 +130,7 @@ best_swaps <- function(img) {
       if (max_swaps_remaining == 0) break
     }
     if (sim_mat_swapped_more_mean_b <= 1) {
-      # message("using brightness")
+      message("using brightness")
       while (TRUE) {
         n_swapped_middle <- round(mean(c(n_swapped_fewer, n_swapped_more)))
         if (n_swapped_middle %in% c(n_swapped_fewer, n_swapped_more)) {

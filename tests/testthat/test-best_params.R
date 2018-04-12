@@ -55,4 +55,9 @@ test_that("best_swaps() works", {
   expect_error(best_swaps(array(7, dim = rep(1, 4))),
                paste("Your image is constant: all pixel values are equal to 7.",
                      "This type of image is not detrendable."))
+  for (i in 1:99) {
+    set.seed(i)
+    sim_img <- array(rpois(16 ^ 3, 16), dim = rep(16, 3))
+    expect_lt(best_swaps(sim_img), sum(sim_img))
+  }
 })

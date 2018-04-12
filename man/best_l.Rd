@@ -27,11 +27,12 @@ Use Nolan's algorithm to find the ideal length parameter for boxcar
 detrending. Boxcar detrending is also referred to as 'running average'.
 }
 \examples{
+\dontrun{
 ## These examples are not run on CRAN because they take too long.
 ## You can still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))
-best_l(img, parallel = 2)
+best_l(img, parallel = 2)}
 
 }
 \references{
