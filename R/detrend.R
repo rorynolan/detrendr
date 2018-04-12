@@ -199,7 +199,8 @@ NULL
 #' corrected10 <- img_detrend_exp(img, 10, purpose = "ffs", parallel = 2)
 #' corrected50 <- img_detrend_exp(img, 50, purpose = "fcs", parallel = 2)
 #' corrected <- img_detrend_polynom(img, "auto", purpose = "ffs", parallel = 2)
-#' corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs", parallel = 2)}
+#' corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs", parallel = 2)
+#' }
 #' @export
 img_detrend_robinhood <- function(img, swaps = "auto") {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
@@ -261,7 +262,7 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   checkmate::assert_numeric(img, lower = 0)
   if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
-    stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
+    stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
   checkmate::assert_string(purpose)
   purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
@@ -298,7 +299,7 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
       l[[i]] %<>% tolower()
       if (startsWith("auto", l[[i]])) {
         auto[[i]] <- TRUE
-        l[[i]] <- best_l(img[, , i, ], parallel = parallel)
+        l[[i]] <- best_l(img[, , i, ], parallel = parallel, purpose = purpose)
         out[, , i, ] <- img_detrend_l_specified(img[, , i, ], l[[i]],
                                                 purpose = purpose,
                                                 parallel = parallel)
@@ -320,7 +321,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
                             parallel = FALSE) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
-    stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
+    stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
   checkmate::assert_string(purpose)
   purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
@@ -354,7 +355,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
       tau[[i]] %<>% tolower()
       if (startsWith("auto", tau[[i]])) {
         auto[[i]] <- TRUE
-        tau[[i]] <- best_tau(img[, , i, ], cutoff = cutoff,
+        tau[[i]] <- best_tau(img[, , i, ], cutoff = cutoff, purpose = purpose,
                              parallel = parallel)
         out[, , i, ] <- img_detrend_tau_specified(img[, , i, ],
                                                   tau[[i]], cutoff,
@@ -379,7 +380,7 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
                                 parallel = FALSE) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
-    stop("You must choose *either* 'FCS' or 'FFS' for `purpose`.")
+    stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
   checkmate::assert_string(purpose)
   purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
@@ -416,7 +417,8 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
     } else if (is.character(degree[[i]])) {
       degree[[i]] %<>% tolower()
       if (startsWith("auto", degree[[i]])) {
-        degree[[i]] <- best_degree(img[, , i, ], parallel = parallel)
+        degree[[i]] <- best_degree(img[, , i, ], purpose = purpose,
+                                   parallel = parallel)
         out[, , i, ] <- img_detrend_degree_specified(img[, , i, ],
                                                      degree[[i]],
                                                      purpose = purpose,

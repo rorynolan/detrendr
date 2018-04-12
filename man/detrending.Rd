@@ -112,7 +112,8 @@ corrected <- img_detrend_exp(img, "auto", purpose = "ffs", parallel = 2)
 corrected10 <- img_detrend_exp(img, 10, purpose = "ffs", parallel = 2)
 corrected50 <- img_detrend_exp(img, 50, purpose = "fcs", parallel = 2)
 corrected <- img_detrend_polynom(img, "auto", purpose = "ffs", parallel = 2)
-corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs", parallel = 2)}
+corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs", parallel = 2)
+}
 }
 \references{
 Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro

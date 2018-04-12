@@ -4,7 +4,7 @@
 \alias{best_l}
 \title{Find the best length parameter for boxcar detrending.}
 \usage{
-best_l(img, parallel = FALSE)
+best_l(img, parallel = FALSE, purpose = c("FCS", "FFS"))
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
@@ -15,6 +15,16 @@ or a 3-dimensional array which is a single channel of an
 \item{parallel}{Would you like to use multiple cores to speed up this
 function? If so, set the number of cores here, or to use all available
 cores, use \code{parallel = TRUE}.}
+
+\item{purpose}{What type of calculation do you intend to perform on the
+detrended image? If it is an FFS (fluorescence fluctuation spectroscopy)
+calculation (like number and brightness), choose 'FFS'. If it is an FCS
+(fluorescence correlation spectroscopy) calculation (like cross-correlated
+number and brightness or autocorrelation), choose 'FCS'. The difference is
+that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
+mean and variance, whereas if \code{purpose} is 'FCS', the time series is
+corrected for non-stationary mean only. `purpose`` is not required for
+\emph{Robin Hood} detrending.}
 }
 \value{
 If no detrend is necessary, this function returns \code{NA}. If a detrend
@@ -32,7 +42,8 @@ detrending. Boxcar detrending is also referred to as 'running average'.
 ## You can still try them for yourself.
 img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
                                     package = 'detrendr'))
-best_l(img, parallel = 2)}
+best_l(img, parallel = 2, purpose = "FFS")
+}
 
 }
 \references{

@@ -32,18 +32,28 @@ rows_detrend_tau_specified_mean_b <- function(mat, tau, l, purpose,
 #'   https://doi.org/10.1093/bioinformatics/btx434.
 #'
 #' @examples
+#' \dontrun{
+#' ## These examples are not run on CRAN because they take too long.
+#' ## You can still try them for yourself.
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))[, , 1, ]
 #' best_tau(img, parallel = 2)
+#' }
 #'
 #' @export
-best_tau <- function(img, cutoff = 0.05, parallel = FALSE) {
+best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
+                     purpose = c("FCS", "FFS")) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
     stop("Your image is constant: all pixel values are equal to ",
          img[[1]], ". This type of image is not detrendable.")
   }
+  if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
+    stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
+  purpose %<>% filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
+  checkmate::assert(checkmate::check_flag(parallel),
+                    checkmate::check_count(parallel))
   d <- dim(img)
   if (length(d) == 3) {
     frame_length <- sum(!anyNA_pillars(img))
@@ -115,7 +125,7 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE) {
     dplyr::if_else(upper_closer, tau_upper, tau_lower)
   } else {
     purrr::map_dbl(seq_len(d[3]),
-                   ~ best_tau(img[, , ., ], cutoff = cutoff,
+                   ~ best_tau(img[, , ., ], cutoff = cutoff, purpose = purpose,
                               parallel = parallel))
   }
 }

@@ -48,13 +48,18 @@ cols_detrend_degree_specified_mean_b <- function(mat, degree, purpose,
 #' best_degree(img, parallel = 2)
 #' }
 #' @export
-best_degree <- function(img, parallel = FALSE) {
+best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
     stop("Your image is constant: all pixel values are equal to ",
          img[[1]], ". This type of image is not detrendable.")
   }
+  if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
+    stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
+  purpose %<>% filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
+  checkmate::assert(checkmate::check_flag(parallel),
+                    checkmate::check_count(parallel))
   d <- dim(img)
   if (length(d) == 3) {
     frame_length <- sum(!anyNA_pillars(img))
@@ -79,7 +84,7 @@ best_degree <- function(img, parallel = FALSE) {
     lower_degree_brightness <- sim_brightness
     upper_degree <- 1
     upper_degree_brightness <- cols_detrend_degree_specified_mean_b(
-      sim_mat, upper_degree, purpose = "ffs", parallel = parallel)
+      sim_mat, upper_degree, purpose = purpose, parallel = parallel)
     if (is.na(upper_degree_brightness)) stop(msg)
     if (upper_degree_brightness < 1) {
       return(ifelse(1 - upper_degree_brightness < lower_degree_brightness - 1,
@@ -90,7 +95,7 @@ best_degree <- function(img, parallel = FALSE) {
       lower_degree_brightness <- upper_degree_brightness
       upper_degree <- upper_degree + 1
       upper_degree_brightness <- cols_detrend_degree_specified_mean_b(
-        sim_mat, upper_degree, purpose = "ffs", parallel = parallel)
+        sim_mat, upper_degree, purpose = purpose, parallel = parallel)
       if (is.na(upper_degree_brightness)) stop(msg)
     }
     out <- ifelse(1 - upper_degree_brightness < lower_degree_brightness - 1,
@@ -104,6 +109,7 @@ best_degree <- function(img, parallel = FALSE) {
     as.integer(out)
   } else {
     purrr::map_int(seq_len(d[3]),
-                   ~ best_degree(img[, , ., ], parallel = parallel))
+                   ~ best_degree(img[, , ., ], purpose = purpose,
+                                 parallel = parallel))
   }
 }

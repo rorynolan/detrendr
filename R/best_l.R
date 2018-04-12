@@ -1,5 +1,6 @@
 rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
   checkmate::assert_string(purpose)
+  purpose %<>% stringr::str_to_lower()
   stopifnot(purpose %in% c("fcs", "ffs"))
   deviations_from_smoothed <- mat - mat_smoothed
   row_means <- mean_rows(mat, parallel = parallel)
@@ -58,16 +59,22 @@ rows_detrend_l_specified_mean_b <- function(mat, l, purpose, parallel) {
 #' ## You can still try them for yourself.
 #' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
 #'                                     package = 'detrendr'))
-#' best_l(img, parallel = 2)}
+#' best_l(img, parallel = 2, purpose = "FFS")
+#' }
 #'
 #' @export
-best_l <- function(img, parallel = FALSE) {
+best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
     stop("Your image is constant: all pixel values are equal to ",
          img[[1]], ". This type of image is not detrendable.")
   }
+  if (filesstrings::all_equal(purpose, c("FCS", "FFS")))
+    stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
+  purpose %<>% filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
+  checkmate::assert(checkmate::check_flag(parallel),
+                    checkmate::check_count(parallel))
   d <- dim(img)
   if (length(d) == 3) {
     if (filesstrings::all_equal(img))
@@ -144,6 +151,7 @@ best_l <- function(img, parallel = FALSE) {
       as.integer()
   } else {
     purrr::map_int(seq_len(d[3]),
-                   ~ best_l(img[, , ., ], parallel = parallel))
+                   ~ best_l(img[, , ., ], purpose = purpose,
+                            parallel = parallel))
   }
 }
