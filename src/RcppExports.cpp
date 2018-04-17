@@ -106,6 +106,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// int_mean_frames_na_omit
+NumericVector int_mean_frames_na_omit(IntegerVector arr3d);
+RcppExport SEXP _detrendr_int_mean_frames_na_omit(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(int_mean_frames_na_omit(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dbl_mean_frames_na_omit
+NumericVector dbl_mean_frames_na_omit(NumericVector arr3d);
+RcppExport SEXP _detrendr_dbl_mean_frames_na_omit(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(dbl_mean_frames_na_omit(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sum_pillars_
 NumericMatrix sum_pillars_(NumericVector arr3d);
 RcppExport SEXP _detrendr_sum_pillars_(SEXP arr3dSEXP) {
@@ -504,6 +526,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_sum_frames_", (DL_FUNC) &_detrendr_sum_frames_, 1},
     {"_detrendr_int_sum_frames_na_omit", (DL_FUNC) &_detrendr_int_sum_frames_na_omit, 1},
     {"_detrendr_dbl_sum_frames_na_omit", (DL_FUNC) &_detrendr_dbl_sum_frames_na_omit, 1},
+    {"_detrendr_int_mean_frames_na_omit", (DL_FUNC) &_detrendr_int_mean_frames_na_omit, 1},
+    {"_detrendr_dbl_mean_frames_na_omit", (DL_FUNC) &_detrendr_dbl_mean_frames_na_omit, 1},
     {"_detrendr_sum_pillars_", (DL_FUNC) &_detrendr_sum_pillars_, 1},
     {"_detrendr_mean_pillars_", (DL_FUNC) &_detrendr_mean_pillars_, 1},
     {"_detrendr_var_pillars_", (DL_FUNC) &_detrendr_var_pillars_, 1},

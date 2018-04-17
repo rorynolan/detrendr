@@ -77,7 +77,6 @@ best_swaps <- function(img) {
     if (sim_mean_b <= 1) return(0L)
     sim_px_sums <- sum_rows(sim_mat)
     sim_px_means <- sim_px_sums / ncol(sim_mat)
-    sim_bs <- brightness_rows_given_mean(sim_mat, sim_px_means)
     sim_frame_sums <- sum_cols(sim_mat)
     sim_frame_sum_mean <- mean(sim_frame_sums)
     frame_weights <- sim_frame_sums - sim_frame_sum_mean

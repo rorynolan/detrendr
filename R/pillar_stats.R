@@ -32,14 +32,15 @@ sum_pillars <- function(img, parallel = FALSE) {
     n_cores <- translate_parallel(parallel)
     RcppParallel::setThreadOptions(n_cores)
     on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
-    sum_pillars_(img)
+    out <- sum_pillars_(img)
+    d[3:4] <- 1
   } else {
     out <- purrr::map(seq_len(d[3]), ~ sum_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
-    dim(out) <- d
-    out
   }
+  dim(out) <- d
+  out
 }
 
 #' @rdname pillar-stats
@@ -52,14 +53,15 @@ mean_pillars <- function(img, parallel = FALSE) {
     n_cores <- translate_parallel(parallel)
     RcppParallel::setThreadOptions(n_cores)
     on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
-    mean_pillars_(img)
+    out <- mean_pillars_(img)
+    d[3:4] <- 1
   } else {
     out <- purrr::map(seq_len(d[3]), ~ mean_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
-    dim(out) <- d
-    out
   }
+  dim(out) <- d
+  out
 }
 
 #' @rdname pillar-stats
@@ -72,14 +74,15 @@ median_pillars <- function(img, parallel = FALSE) {
     n_cores <- translate_parallel(parallel)
     RcppParallel::setThreadOptions(n_cores)
     on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
-    median_pillars_(img)
+    out <- median_pillars_(img)
+    d[3:4] <- 1
   } else {
     out <- purrr::map(seq_len(d[3]), ~ median_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
-    dim(out) <- d
-    out
   }
+  dim(out) <- d
+  out
 }
 
 #' @rdname pillar-stats
@@ -92,14 +95,15 @@ var_pillars <- function(img, parallel = FALSE) {
     n_cores <- translate_parallel(parallel)
     RcppParallel::setThreadOptions(n_cores)
     on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
-    var_pillars_(img)
+    out <- var_pillars_(img)
+    d[3:4] <- 1
   } else {
     out <- purrr::map(seq_len(d[3]), ~ var_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
-    dim(out) <- d
-    out
   }
+  dim(out) <- d
+  out
 }
 
 #' Get the brightness of pillars of a 3d array.
@@ -128,14 +132,15 @@ brightness_pillars <- function(img, parallel = FALSE) {
     n_cores <- translate_parallel(parallel)
     RcppParallel::setThreadOptions(n_cores)
     on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
-    brightness_pillars_(img)
+    out <- brightness_pillars_(img)
+    d[3:4] <- 1
   } else {
     out <- purrr::map(seq_len(d[3]), ~ brightness_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
-    dim(out) <- d
-    out
   }
+  dim(out) <- d
+  out
 }
 
 anyNA_pillars <- function(arr3d) {

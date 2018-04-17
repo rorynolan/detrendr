@@ -23,6 +23,9 @@ test_that("sum_frames() and mean_frames() work", {
     ijtiff::read_tif(msg = FALSE) %>%
     {.[, , 1, ]}
   expect_equal(mean_frames(arr3d), sum_frames(arr3d) / prod(dim(arr3d)[1:2]))
+  arr3d[1, 1, ] <- NA
+  expect_equal(mean_frames(arr3d, na_rm = TRUE),
+               sum_frames(arr3d, na_rm = TRUE) / (prod(dim(arr3d)[1:2]) - 1))
 })
 
 test_that("brightness_cols_given_mean() works", {

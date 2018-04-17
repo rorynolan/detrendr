@@ -55,7 +55,7 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
   checkmate::assert_numeric(arr3d, lower = 0, upper = .Machine$integer.max)
   checkmate::assert_integerish(arr3d)
   d <- dim(arr3d)
-  frame_sums <- sum_frames_na_omit(arr3d)
+  frame_sums <- sum_frames(arr3d, na_rm = TRUE)
   frame_sum_mean <- mean(frame_sums)
   frame_weights <- frame_sums - frame_sum_mean
   frame_balls <- frame_weights %T>%

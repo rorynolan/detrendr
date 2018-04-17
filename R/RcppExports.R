@@ -37,6 +37,14 @@ dbl_sum_frames_na_omit <- function(arr3d) {
     .Call(`_detrendr_dbl_sum_frames_na_omit`, arr3d)
 }
 
+int_mean_frames_na_omit <- function(arr3d) {
+    .Call(`_detrendr_int_mean_frames_na_omit`, arr3d)
+}
+
+dbl_mean_frames_na_omit <- function(arr3d) {
+    .Call(`_detrendr_dbl_mean_frames_na_omit`, arr3d)
+}
+
 sum_pillars_ <- function(arr3d) {
     .Call(`_detrendr_sum_pillars_`, arr3d)
 }

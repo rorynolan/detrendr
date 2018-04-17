@@ -84,8 +84,36 @@ NumericVector sum_frames_(NumericVector arr3d) {
 
 
 double sum_na_omit(NumericVector x) {
+  NumericVector x_noNA = na_omit(x);
+  if (x_noNA.size() > 0) {
+    return sum(x_noNA);
+  } else {
+    return NA_REAL;
+  }
+}
+double mean_na_omit(NumericVector x) {
   NumericVector x_noNA = wrap(na_omit(x));
-  return sum(x_noNA);
+  if (x_noNA.size() > 0) {
+    return mean(x_noNA);
+  } else {
+    return NA_REAL;
+  }
+}
+double sum_na_omit(IntegerVector x) {
+  IntegerVector x_noNA = wrap(na_omit(x));
+  if (x_noNA.size() > 0) {
+    return sum(x_noNA);
+  } else {
+    return NA_REAL;
+  }
+}
+double mean_na_omit(IntegerVector x) {
+  IntegerVector x_noNA = na_omit(x);
+  if (x_noNA.size() > 0) {
+    return mean(x_noNA);
+  } else {
+    return NA_REAL;
+  }
 }
 
 // [[Rcpp::export]]
@@ -95,7 +123,7 @@ NumericVector int_sum_frames_na_omit(IntegerVector arr3d) {
   NumericVector out(n_frames);
   std::size_t frame_size = nrow * ncol;
   for (std::size_t i = 0; i != n_frames; ++i) {
-    NumericVector frame_i(arr3d.begin() + (i * frame_size),
+    IntegerVector frame_i(arr3d.begin() + (i * frame_size),
                           arr3d.begin() + ((i + 1) * frame_size));
     out[i] = sum_na_omit(frame_i);
   }
@@ -115,3 +143,32 @@ NumericVector dbl_sum_frames_na_omit(NumericVector arr3d) {
   }
   return out;
 }
+
+// [[Rcpp::export]]
+NumericVector int_mean_frames_na_omit(IntegerVector arr3d) {
+  Dimension d = arr3d.attr("dim");
+  std::size_t nrow = d[0], ncol = d[1], n_frames = d[2];
+  NumericVector out(n_frames);
+  std::size_t frame_size = nrow * ncol;
+  for (std::size_t i = 0; i != n_frames; ++i) {
+    IntegerVector frame_i(arr3d.begin() + (i * frame_size),
+                          arr3d.begin() + ((i + 1) * frame_size));
+    out[i] = mean_na_omit(frame_i);
+  }
+  return out;
+}
+
+// [[Rcpp::export]]
+NumericVector dbl_mean_frames_na_omit(NumericVector arr3d) {
+  Dimension d = arr3d.attr("dim");
+  std::size_t nrow = d[0], ncol = d[1], n_frames = d[2];
+  NumericVector out(n_frames);
+  std::size_t frame_size = nrow * ncol;
+  for (std::size_t i = 0; i != n_frames; ++i) {
+    NumericVector frame_i(arr3d.begin() + (i * frame_size),
+                          arr3d.begin() + ((i + 1) * frame_size));
+    out[i] = mean_na_omit(frame_i);
+  }
+  return out;
+}
+
