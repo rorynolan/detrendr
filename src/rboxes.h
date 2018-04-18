@@ -17,7 +17,7 @@ IntVec rfromboxes(IntType n, IntVec& balls, NumVec& weights, int seed) {
   IntVec out(balls_sz);
   typedef std::discrete_distribution<std::size_t> ddIT;
   ddIT distribution(weights.begin(), weights.end());
-  for (std::size_t i = 0; i != n; ++i) {
+  for (IntType i = 0; i != n; ++i) {
     std::size_t draw = distribution(generator);
     out[draw]++;
     balls[draw]--;

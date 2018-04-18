@@ -19,7 +19,12 @@ test_that("myrpois works on linux", {
 test_that("myrpois works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
-  expect_equal(myrpois(-5:5), c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))
+  myrp <- myrpois(-5:5)
+  if (filesstrings::all_equal(myrp, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))) {
+    expect_equal(myrp, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))
+  } else {  # R 3.5.0 on win-builder
+    expect_equal(myrp, c(-6, -4, -2, -1, -1, 0, 1, 6, 4, 6, 7))
+  }
 })
 
 test_that("myrbern works on mac", {
@@ -41,8 +46,13 @@ test_that("myrbern works on linux", {
 test_that("myrbern works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
-  expect_equal(myrbern(seq(0.1, 0.9, length.out = 7)),
-               c(0, 0, 1, 1, 0, 0, 1))
+  myrb <- myrbern(seq(0.1, 0.9, length.out = 7))
+  if (filesstrings::all_equal(myrb, c(0, 0, 1, 1, 0, 0, 1))) {
+    expect_equal(myrb, c(0, 0, 1, 1, 0, 0, 1))
+  } else {  # R 3.5.0 on win-builder
+    expect_equal(myrb, c(0, 0, 0, 0, 1, 1, 1))
+  }
+
 })
 
 test_that("rfromboxes works on mac", {
@@ -63,8 +73,14 @@ test_that("rfromboxes works on linux", {
 test_that("rfromboxes works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
-  expect_equal(rfromboxes(10, 1:5), c(0, 2, 2, 1, 5))
+  rfb <- rfromboxes(10, 1:5)
+  if (filesstrings::all_equal(rfb, c(0, 2, 2, 1, 5))) {
+    expect_equal(rfb, c(0, 2, 2, 1, 5))
+  } else {  # R 3.5.0 on win-builder
+    expect_equal(rfb, c(1, 2, 2, 3, 2))
+  }
 })
+
 test_that("rfromboxes errors correctly", {
   expect_error(rfromboxes(10, 1:3),
                paste0("`n` must be less than or equal to the total ",
@@ -95,8 +111,14 @@ test_that("rtoboxes works on linux", {
 test_that("rtoboxes works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
-  expect_equal(rtoboxes(10, 4), c(0, 4, 1, 5))
+  rtb <- rtoboxes(10, 4)
+  if (filesstrings::all_equal(rtb, c(0, 4, 1, 5))) {
+    expect_equal(rtb, c(0, 4, 1, 5))
+  } else {  # R 3.5.0 on win-builder
+    expect_equal(rtb, c(2, 6, 0, 2))
+  }
 })
+
 test_that("rtoboxes errors correctly", {
   expect_error(rtoboxes(10, 4, capacities = 1:5),
                paste0("The length of `capacities` must be equal to ",

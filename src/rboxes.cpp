@@ -45,8 +45,8 @@ IntegerVector px_take_arr3d(IntegerVector arr3d, IntegerVector frames_losing,
   IntegerVector out(arr3d.size());
   Dimension d = arr3d.attr("dim");
   std::size_t nr = d[0], nc = d[1], n_frames = d[2];
-  std::size_t frame_length = nr * nc;
-  if (n_frames != frames_losing.size()) {
+  std::size_t frame_length = nr * nc, frames_losing_sz = frames_losing.size();
+  if (n_frames != frames_losing_sz) {
     throw std::invalid_argument("The length of `frames_losing` must be the "
                                 "same as the number of frames in `arr3d`.");
   }
@@ -74,8 +74,9 @@ NumericVector px_take_mat(NumericMatrix mat, NumericMatrix mat_orig,
                           NumericVector frames_losing,
                           int seed) {
   std::size_t n_frames = mat.ncol(), frame_length = mat.nrow();
+  std::size_t frames_losing_sz = frames_losing.size();
   NumericMatrix out(frame_length, n_frames);
-  if (n_frames != frames_losing.size()) {
+  if (n_frames != frames_losing_sz) {
     throw std::invalid_argument("The length of `frames_losing` must be the "
                                   "same as the number of frames in `arr3d`.");
   }
