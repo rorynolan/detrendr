@@ -32,7 +32,6 @@ Imports: Rcpp,
     rlang,
     stringr,
     filesstrings (>= 2.1.0),
-    tibble,
     plyr
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues

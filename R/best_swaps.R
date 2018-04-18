@@ -3,7 +3,7 @@ mat_swap_n_more <- function(mat, mat_orig, n, frame_weights, frame_balls,
   weights <- frame_weights %T>% {.[. < 0] <- 0}
   frames_losing <- rfromboxes(n = n, balls = frame_balls,
                               weights = weights)
-  loser_frames <- tibble::tibble(frame = which(as.logical(frames_losing)),
+  loser_frames <- dplyr::tibble(frame = which(as.logical(frames_losing)),
                                  amount = frames_losing[frame])
   px_losing <- px_take_mat(mat, mat_orig, frames_losing = frames_losing,
                            seed = get_seed())
