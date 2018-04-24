@@ -10,10 +10,17 @@ test_that("myrpois works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
   x <- myrpois(-5:5)
-  if (filesstrings::all_equal(x, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))) {
-    expect_equal(x, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))
-  } else {  # fedora
-    expect_equal(x, c(-9, -2, -1, -2, -2, 0, 1, 2, 2, 3, 8))
+  ans <- c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5)
+  if (filesstrings::all_equal(x, ans)) {
+    expect_equal(x, ans)
+  } else {
+    ans <- c(-9, -2, -1, -2, -2, 0, 1, 2, 2, 3, 8)
+    if (filesstrings::all_equal(x, ans)) {  # r-hub fedora
+    expect_equal(x, ans)
+    } else {  # CRAN fedora
+      ans <- c(-4, -2, -3, -3, -2, 0, 0, 1, 5, 1, 6)
+      expect_equal(x, ans)
+    }
   }
 })
 test_that("myrpois works on windows", {

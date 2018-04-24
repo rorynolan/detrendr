@@ -1,3 +1,9 @@
+### 0.5.1
+
+#### BUG FIXES
+* Fix tests for CRAN fedora and mac.
+
+
 ### 0.5.0
 
 #### NEW FEATURES
@@ -32,5 +38,5 @@
 * This package no longer exports functions for TIFF I/O nor image display.
 
 
-# detrendr 0.1.0
+### detrendr 0.1.0
 * The first CRAN-worthy version.

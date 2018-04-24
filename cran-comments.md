@@ -1,4 +1,7 @@
+
+
 ## Test environments
+
 * local mac OS X install, R 3.4.4
 * local Ubuntu 16.04 install with valgrind, R 3.4.4
 * ubuntu 14.04 (on travis-ci), R 3.4.4
@@ -11,11 +14,18 @@
 * solaris (on r-hub), R 3.4.4
 * win-builder (devel and release)
 
+
 # R CMD check results
 
 0 errors | 0 warnings | 1 note
 
 * Note 1. GNU make is a system requirement. This is needed to use RcppParallel.
+
+
+## Fix
+
+* This is a fix for current errors on CRAN which are due to test failures on fedora and mac.
+
 
 ## Reverse dependencies
 There are no reverse dependencies.
