@@ -1,7 +1,5 @@
-detrendr
-================
 
-Detrend image series.
+# `detrendr` <img src="junk/sticker.png" height="200" align="right">
 
 [![Travis-CI Build
 Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://travis-ci.org/rorynolan/detrendr)
@@ -69,11 +67,11 @@ this.
 
 ``` r
 system.time(corrected_exp <- img_detrend_exp(img, "auto", purpose = "FFS",
-                                             seed = 0, parallel = 2))["elapsed"]
+                                             parallel = 2))["elapsed"]
 ```
 
     #> elapsed 
-    #>   2.583
+    #>    2.52
 
 ``` r
 every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 

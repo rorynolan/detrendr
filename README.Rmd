@@ -1,5 +1,4 @@
 ---
-title: "detrendr"
 output: github_document
 ---
 
@@ -7,7 +6,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE, comment = "#>")
 ```
 
-Detrend image series.
+# `detrendr`  <img src="junk/sticker.png" height="200" align="right">
 
 [![Travis-CI Build Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://travis-ci.org/rorynolan/detrendr)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rorynolan/detrendr?branch=master&svg=true)](https://ci.appveyor.com/project/rorynolan/detrendr)
@@ -53,7 +52,7 @@ We see that the intensity is much lower for the last frame, this is because the 
 
 ```{r detrend, fig.height=3.3, fig.width=11}
 system.time(corrected_exp <- img_detrend_exp(img, "auto", purpose = "FFS",
-                                             seed = 0, parallel = 2))["elapsed"]
+                                             parallel = 2))["elapsed"]
 every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 
                          ~ corrected_exp[, , 1, .]) %>% 
   purrr::reduce(~ cbind(.x, max(img), .y))
