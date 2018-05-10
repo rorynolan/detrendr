@@ -129,7 +129,7 @@ best_swaps <- function(img) {
       if (max_swaps_remaining == 0) break
     }
     if (sim_mat_swapped_more_mean_b <= 1) {
-      message("using brightness")
+      # message("using brightness")
       while (TRUE) {
         n_swapped_middle <- round(mean(c(n_swapped_fewer, n_swapped_more)))
         if (n_swapped_middle %in% c(n_swapped_fewer, n_swapped_more)) {
