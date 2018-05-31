@@ -53,6 +53,10 @@ best_swaps <- function(img) {
          img[[1]], ". This type of image is not detrendable.")
   }
   d <- dim(img)
+  if (length(d) == 4 && d[3] == 1) {
+    d <- d[-3]
+    dim(img) <- d
+  }
   if (length(d) == 3) {
     if (filesstrings::all_equal(img))
       stop("All elements of img are equal; img is not fit for detrending.")
@@ -177,7 +181,7 @@ best_swaps <- function(img) {
     }
     as.integer(out)
   } else {
-    purrr::map_int(seq_len(d[3]), ~ best_swaps(img[, , ., ]))
+    purrr::map_int(seq_len(d[3]), ~ best_swaps(img[, , ., , drop = FALSE]))
   }
 }
 

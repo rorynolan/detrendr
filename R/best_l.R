@@ -76,6 +76,10 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
   checkmate::assert(checkmate::check_flag(parallel),
                     checkmate::check_count(parallel))
   d <- dim(img)
+  if (length(d) == 4 && d[3] == 1) {
+    d <- d[-3]
+    dim(img) <- d
+  }
   if (length(d) == 3) {
     if (filesstrings::all_equal(img))
       stop("All elements of img are equal; img is not fit for detrending.")
@@ -151,7 +155,7 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
       as.integer()
   } else {
     purrr::map_int(seq_len(d[3]),
-                   ~ best_l(img[, , ., ], purpose = purpose,
+                   ~ best_l(img[, , ., , drop = FALSE], purpose = purpose,
                             parallel = parallel))
   }
 }

@@ -55,6 +55,10 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
   checkmate::assert(checkmate::check_flag(parallel),
                     checkmate::check_count(parallel))
   d <- dim(img)
+  if (length(d) == 4 && d[3] == 1) {
+    d <- d[-3]
+    dim(img) <- d
+  }
   if (length(d) == 3) {
     frame_length <- sum(!anyNA_pillars(img))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
@@ -125,7 +129,8 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
     dplyr::if_else(upper_closer, tau_upper, tau_lower)
   } else {
     purrr::map_dbl(seq_len(d[3]),
-                   ~ best_tau(img[, , ., ], cutoff = cutoff, purpose = purpose,
+                   ~ best_tau(img[, , ., , drop = FALSE],
+                              cutoff = cutoff, purpose = purpose,
                               parallel = parallel))
   }
 }

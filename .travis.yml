@@ -9,6 +9,9 @@ apt_packages:
 
 r_github_packages:
   - rorynolan/filesstrings
+  - rorynolan/ijtiff
+  - rorynolan/autothresholdr
+  - mllg/checkmate
 
 after_success:
   - travis_wait 50 Rscript -e 'covr::codecov()'

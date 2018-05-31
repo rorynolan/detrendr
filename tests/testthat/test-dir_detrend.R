@@ -1,9 +1,8 @@
 context("Detrend directories")
 
 test_that("detrending entire derectories works", {
-  cwd <- getwd()
+  cwd <- setwd(tempdir())
   on.exit(setwd(cwd))
-  setwd(tempdir())
   orig_files <- c(system.file("img", "2ch_ij.tif", package = "ijtiff"),
                   system.file("extdata", "bleached.tif", package = "detrendr"))
   file.copy(orig_files, ".")

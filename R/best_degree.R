@@ -61,6 +61,10 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
   checkmate::assert(checkmate::check_flag(parallel),
                     checkmate::check_count(parallel))
   d <- dim(img)
+  if (length(d) == 4 && d[3] == 1) {
+    d <- d[-3]
+    dim(img) <- d
+  }
   if (length(d) == 3) {
     frame_length <- sum(!anyNA_pillars(img))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
@@ -109,7 +113,7 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
     as.integer(out)
   } else {
     purrr::map_int(seq_len(d[3]),
-                   ~ best_degree(img[, , ., ], purpose = purpose,
+                   ~ best_degree(img[, , ., , drop = FALSE], purpose = purpose,
                                  parallel = parallel))
   }
 }
