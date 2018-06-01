@@ -20,7 +20,7 @@ test_that("detrending entire derectories works", {
                              err_msg <- conditionMessage(e)
                              if (!stringr::str_detect(err_msg,
                                                       "Even.*most severe d")) {
-                               stop("unexpected error")
+                               stop(err_msg)
                              } else {
                                structure(err_msg, class = "try-error")
                              }

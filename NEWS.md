@@ -1,3 +1,9 @@
+### 0.5.2
+
+#### BUG FIXES
+* Detrending was not working well for images which had dimension 1 in x or y.
+
+
 ### 0.5.1
 
 #### BUG FIXES

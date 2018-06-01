@@ -24,6 +24,9 @@ img_detrend_smoothed <- function(arr3d, arr3d_smoothed, purpose, parallel) {
 
 img_detrend_tau_specified <- function(arr3d, tau, cutoff, purpose,
                                       parallel) {
+  checkmate::assert_array(arr3d)
+  if (length(dim(arr3d)) == 4 && dim(arr3d)[3] == 1) dim(arr3d) %<>% {.[-3]}
+  checkmate::assert_array(arr3d, d = 3)
   if (is.na(tau)) return(arr3d)
   d <- dim(arr3d)
   l <- min(floor(- tau * log(cutoff)), d[3] %>% {(. - 1) + (. - 2)})
@@ -33,6 +36,9 @@ img_detrend_tau_specified <- function(arr3d, tau, cutoff, purpose,
 }
 
 img_detrend_l_specified <- function(arr3d, l, purpose, parallel) {
+  checkmate::assert_array(arr3d)
+  if (length(dim(arr3d)) == 4 && dim(arr3d)[3] == 1) dim(arr3d) %<>% {.[-3]}
+  checkmate::assert_array(arr3d, d = 3)
   if (is.na(l)) return(arr3d)
   d <- dim(arr3d)
   l <- min(l, d[3] %>% {(. - 1) + (. - 2)})
@@ -43,6 +49,9 @@ img_detrend_l_specified <- function(arr3d, l, purpose, parallel) {
 
 img_detrend_degree_specified <- function(arr3d, degree, purpose,
                                          parallel) {
+  checkmate::assert_array(arr3d)
+  if (length(dim(arr3d)) == 4 && dim(arr3d)[3] == 1) dim(arr3d) %<>% {.[-3]}
+  checkmate::assert_array(arr3d, d = 3)
   if (is.na(degree)) return(arr3d)
   d <- dim(arr3d)
   smoothed <- poly_fit_pillars(arr3d, degree, parallel = parallel)
@@ -51,6 +60,8 @@ img_detrend_degree_specified <- function(arr3d, degree, purpose,
 }
 
 img_detrend_swaps_specified <- function(arr3d, swaps) {
+  checkmate::assert_array(arr3d)
+  if (length(dim(arr3d)) == 4 && dim(arr3d)[3] == 1) dim(arr3d) %<>% {.[-3]}
   checkmate::assert_array(arr3d, d = 3)
   checkmate::assert_numeric(arr3d, lower = 0, upper = .Machine$integer.max)
   checkmate::assert_integerish(arr3d)
@@ -231,14 +242,18 @@ img_detrend_robinhood <- function(img, swaps = "auto") {
           stop("`swaps` must be greater than or equal to zero.", "\n",
                "    * You have `swaps` equal to ", swaps[[i]], ".")
         }
-        out[, , i, ] <- img_detrend_swaps_specified(img[, , i, ], swaps[[i]])
+        out[, , i, ] <- img_detrend_swaps_specified(img[, , i, , drop = FALSE],
+                                                    swaps[[i]]) %>%
+          as.vector()
       }
     } else if (is.character(swaps[[i]])) {
       swaps[[i]] %<>% tolower()
       if (startsWith("auto", swaps[[i]])) {
         auto[[i]] <- TRUE
-        swaps[[i]] <- best_swaps(img[, , i, ])
-        out[, , i, ] <- img_detrend_swaps_specified(img[, , i, ], swaps[[i]])
+        swaps[[i]] <- best_swaps(img[, , i, , drop = FALSE])
+        out[, , i, ] <- img_detrend_swaps_specified(img[, , i, , drop = FALSE],
+                                                    swaps[[i]]) %>%
+          as.vector()
       } else {
         stop("If `swaps` is a string, the only permissible value is 'auto'.",
              "\n", "    * You have used '", swaps[[i]], "'.")
@@ -292,17 +307,20 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
         stop("`l` must be greater than zero.", "\n",
              "    * You have `l` equal to ", l[[i]], ".")
       }
-      out[, , i, ] <- img_detrend_l_specified(img[, , i, ], l[[i]],
-                                              purpose = purpose,
-                                              parallel = parallel)
+      out[, , i, ] <- img_detrend_l_specified(img[, , i, , drop = FALSE],
+                                              l[[i]], purpose = purpose,
+                                              parallel = parallel) %>%
+        as.vector()
     } else if (is.character(l[[i]])) {
       l[[i]] %<>% tolower()
       if (startsWith("auto", l[[i]])) {
         auto[[i]] <- TRUE
-        l[[i]] <- best_l(img[, , i, ], parallel = parallel, purpose = purpose)
+        l[[i]] <- best_l(img[, , i, , drop = FALSE],
+                         parallel = parallel, purpose = purpose)
         out[, , i, ] <- img_detrend_l_specified(img[, , i, ], l[[i]],
                                                 purpose = purpose,
-                                                parallel = parallel)
+                                                parallel = parallel) %>%
+          as.vector()
       } else {
         stop("If `l` is a string, the only permissible value is 'auto'.", "\n",
              "    * You have used '", l[[i]], "'.")
@@ -347,20 +365,23 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
         stop("`tau` must be greater than zero.", "\n",
              "    * You have `tau` equal to ", tau[[i]], ".")
       }
-      out[, , i, ] <- img_detrend_tau_specified(img[, , i, ],
+      out[, , i, ] <- img_detrend_tau_specified(img[, , i, , drop = FALSE],
                                                 tau[[i]], cutoff,
                                                 purpose = purpose,
-                                                parallel = parallel)
+                                                parallel = parallel) %>%
+        as.vector()
     } else if (is.character(tau[[i]])) {
       tau[[i]] %<>% tolower()
       if (startsWith("auto", tau[[i]])) {
         auto[[i]] <- TRUE
-        tau[[i]] <- best_tau(img[, , i, ], cutoff = cutoff, purpose = purpose,
+        tau[[i]] <- best_tau(img[, , i, , drop = FALSE],
+                             cutoff = cutoff, purpose = purpose,
                              parallel = parallel)
-        out[, , i, ] <- img_detrend_tau_specified(img[, , i, ],
+        out[, , i, ] <- img_detrend_tau_specified(img[, , i, , drop = FALSE],
                                                   tau[[i]], cutoff,
                                                   purpose = purpose,
-                                                  parallel = parallel)
+                                                  parallel = parallel) %>%
+          as.vector()
       } else {
         stop("If `tau` is a string, the only permissible value is 'auto'.",
              "\n", "    * You have used '", tau[[i]], "'.")
@@ -410,19 +431,21 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
         stop("`degree` must be greater than zero.", "\n",
              "    * You have `degree` equal to ", degree[[i]], ".")
       }
-      out[, , i, ] <- img_detrend_degree_specified(img[, , i, ],
+      out[, , i, ] <- img_detrend_degree_specified(img[, , i, , drop = FALSE],
                                                    degree[[i]],
                                                    purpose = purpose,
-                                                   parallel = parallel)
+                                                   parallel = parallel) %>%
+        as.vector()
     } else if (is.character(degree[[i]])) {
       degree[[i]] %<>% tolower()
       if (startsWith("auto", degree[[i]])) {
-        degree[[i]] <- best_degree(img[, , i, ], purpose = purpose,
-                                   parallel = parallel)
-        out[, , i, ] <- img_detrend_degree_specified(img[, , i, ],
+        degree[[i]] <- best_degree(img[, , i, , drop = FALSE],
+                                   purpose = purpose, parallel = parallel)
+        out[, , i, ] <- img_detrend_degree_specified(img[, , i, , drop = FALSE],
                                                      degree[[i]],
                                                      purpose = purpose,
-                                                     parallel = parallel)
+                                                     parallel = parallel) %>%
+          as.vector()
       } else {
         stop("If `degree` is a string, the only permissible value is 'auto'.",
              "\n", "    * You have used '", degree[[i]], "'.")
