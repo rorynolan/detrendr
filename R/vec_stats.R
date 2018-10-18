@@ -4,4 +4,3 @@ square_root <- function(vec, parallel = FALSE) {
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
   square_root_(vec)
 }
-

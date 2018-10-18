@@ -9,9 +9,9 @@
 \alias{img_detrend_polynom}
 \title{Detrend images.}
 \usage{
-img_detrend_robinhood(img, swaps = "auto")
+img_detrend_robinhood(img, swaps = "auto", quick = FALSE)
 
-img_detrend_rh(img, swaps = "auto")
+img_detrend_rh(img, swaps = "auto", quick = FALSE)
 
 img_detrend_boxcar(img, l, purpose = c("FCS", "FFS"), parallel = FALSE)
 
@@ -33,6 +33,10 @@ default) to use Nolan's algorithm to automatically find a suitable value
 for this parameter (recommended). For multi-channel images, it is possible
 to have a different \code{swaps} for each channel by specifying \code{swaps} as a
 vector or list.}
+
+\item{quick}{If \code{FALSE} (the default), the swap finding routine is run
+several times to get a consensus for the best parameter. If \code{TRUE}, the
+swap finding routine is run only once.}
 
 \item{l}{The length parameter for \emph{boxcar} detrending. The size of the
 sliding window will be \code{2 * l + 1}. This must be a positive integer. Set
@@ -98,13 +102,13 @@ by fitting a polynomial line to a series of points and then correcting the
 series to remove the trend detailed by this polynomial fit.}
 }
 \examples{
-img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-                                    package = 'detrendr'))
-corrected <- img_detrend_rh(img)
 \dontrun{
 ## These examples are not run on CRAN because they take too long.
 ## You can still try them for yourself.
 
+img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
+                                    package = 'detrendr'))
+corrected <- img_detrend_rh(img)
 corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs", parallel = 2)
 corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs", parallel = 2)
 corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs", parallel = 2)

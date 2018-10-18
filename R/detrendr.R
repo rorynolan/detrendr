@@ -10,7 +10,7 @@ if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(".", "var", "maxl", "l", "seed", "frame"))
 }
 
-.onUnload <- function (libpath) {
+.onUnload <- function(libpath) {
   library.dynam.unload("detrendr", libpath)
 }
 

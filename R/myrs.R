@@ -44,6 +44,8 @@ myrbern <- function(p, parallel = FALSE) {
 #' @return A vector of natural numbers with the same length as `balls`. The
 #'   number of balls drawn from each box.
 #'
+#' @seealso rtoboxes
+#'
 #' @examples
 #' balls <- 1:10
 #' rfromboxes(40, balls)
@@ -60,16 +62,22 @@ rfromboxes <- function(n, balls, weights = NULL) {
   if (floor(n) == 0) return(rep(0, length(balls)))
   checkmate::assert_number(n, lower = 1)
   if (n > sum(balls)) {
-    stop("`n` must be less than or equal to the total number of balls.", "\n",
-         "    * You have `n = ", n, "` and you have ", sum(balls), " balls.")
+    stop(
+      "`n` must be less than or equal to the total number of balls.", "\n",
+      "    * You have `n = ", n, "` and you have ", sum(balls), " balls."
+    )
   }
   if (length(weights) != length(balls)) {
-    stop("The length of `weights` must be equal to the length of `balls`.",
-         "\n", "    * You have ", length(balls), " elements in `balls` and ",
-         length(weights), " elements in `weights`.")
+    stop(
+      "The length of `weights` must be equal to the length of `balls`.",
+      "\n", "    * You have ", length(balls), " elements in `balls` and ",
+      length(weights), " elements in `weights`."
+    )
   }
-  rfromboxes_(n = n, balls = balls, weights = weights,
-              seed = get_seed(), quick = quick)
+  rfromboxes_(
+    n = n, balls = balls, weights = weights,
+    seed = get_seed(), quick = quick
+  )
 }
 
 #' Randomly place balls in boxes.
@@ -85,6 +93,8 @@ rfromboxes <- function(n, balls, weights = NULL) {
 #'
 #' @return A vector of natural numbers with the same length as `boxes`. The
 #'   number of balls placed in each box.
+#'
+#' @seealso rfromboxes
 #'
 #' @examples
 #' rtoboxes(30, 7)
@@ -102,27 +112,35 @@ rtoboxes <- function(n, boxes, weights = NULL, capacities = NULL) {
   if (is.null(weights)) weights <- rep(1, boxes)
   checkmate::assert_numeric(weights, lower = 0, any.missing = FALSE)
   if (length(weights) != boxes) {
-    stop("The length of `weights` must be equal to the number of boxes.",
-         "\n", "    * You have ", boxes, " boxes and ",
-         length(weights), " elements in `weights`.")
+    stop(
+      "The length of `weights` must be equal to the number of boxes.",
+      "\n", "    * You have ", boxes, " boxes and ",
+      length(weights), " elements in `weights`."
+    )
   }
   if (is.null(capacities)) {
     capacities <- rep(-1, boxes)
   } else {
     if (length(capacities) != boxes) {
-      stop("The length of `capacities` must be equal to the number of boxes.",
-           "\n", "    * You have ", boxes, " boxes and ",
-           length(capacities), " elements in `capacities`.")
+      stop(
+        "The length of `capacities` must be equal to the number of boxes.",
+        "\n", "    * You have ", boxes, " boxes and ",
+        length(capacities), " elements in `capacities`."
+      )
     }
     checkmate::assert_numeric(capacities, lower = 0, any.missing = FALSE)
     if (sum(capacities) < n) {
-      stop("Your boxes don't have enough capacity for `n` balls.", "\n",
-           "    * You have `n = ", n, "` balls but your ", boxes, " boxes ",
-           "only have the capacity for a total of ", sum(capacities), " balls.")
+      stop(
+        "Your boxes don't have enough capacity for `n` balls.", "\n",
+        "    * You have `n = ", n, "` balls but your ", boxes, " boxes ",
+        "only have the capacity for a total of ", sum(capacities), " balls."
+      )
     }
   }
   if (n == 0) return(rep(0, boxes))
-  capacities[is.infinite(capacities)] <- -1  # infinite capacity allowed
-  rtoboxes_(n = n, boxes = boxes, weights = weights, capacities = capacities,
-            seed = get_seed(), quick = quick)
+  capacities[is.infinite(capacities)] <- -1 # infinite capacity allowed
+  rtoboxes_(
+    n = n, boxes = boxes, weights = weights, capacities = capacities,
+    seed = get_seed(), quick = quick
+  )
 }

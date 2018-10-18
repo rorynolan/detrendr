@@ -12,10 +12,10 @@ iter_mat_col_sets <- function(mat, n_sets) {
   set <- 0
   nextEl <- function() {
     set <<- set + 1
-    if (set > n_sets) stop('StopIteration')
+    if (set > n_sets) stop("StopIteration")
     mat[, seq(start_end["start", set], start_end["end", set])]
   }
   obj <- list(nextElem = nextEl)
-  class(obj) <- c('irep', 'abstractiter', 'iter')
+  class(obj) <- c("irep", "abstractiter", "iter")
   obj
 }

@@ -31,3 +31,6 @@ rfromboxes(40, balls)
 rfromboxes(40, balls, weights = c(rep(1, 9), 0))
 
 }
+\seealso{
+rtoboxes
+}

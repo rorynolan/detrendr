@@ -1,7 +1,7 @@
 Package: detrendr
 Type: Package
 Title: Detrend Images
-Version: 0.5.2
+Version: 0.6.0
 Authors@R: c(
     person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
            role = c("aut", "cre", "trl"), 
@@ -23,7 +23,8 @@ LazyData: true
 LinkingTo: Rcpp,
     RcppParallel
 SystemRequirements: GNU make
-Imports: Rcpp,
+Imports: 
+    Rcpp,
     RcppParallel,
     parallel,
     checkmate,
@@ -33,20 +34,24 @@ Imports: Rcpp,
     doParallel,
     iterators,
     purrr,
-    ijtiff (>= 1.1.0),
-    autothresholdr (>= 1.2.0),
+    ijtiff (>= 1.5.0),
+    autothresholdr (>= 1.2.1),
     rlang,
     stringr,
-    filesstrings (>= 2.2.0),
-    plyr
+    filesstrings (>= 3.0.0),
+    plyr,
+    glue,
+    sigmoid
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
-Suggests: testthat,
+Suggests: 
+    testthat,
     knitr,
     rmarkdown,
     covr,
     abind,
-    matrixStats
+    matrixStats,
+    lattice
 VignetteBuilder: knitr

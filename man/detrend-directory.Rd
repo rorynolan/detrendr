@@ -9,11 +9,11 @@
 \alias{dir_detrend_polynom}
 \title{Detrend all TIFF images in an entire folder.}
 \usage{
-dir_detrend_robinhood(folder_path = ".", swaps = "auto", thresh = NULL,
-  msg = TRUE)
+dir_detrend_robinhood(folder_path = ".", swaps = "auto",
+  thresh = NULL, quick = FALSE, msg = TRUE)
 
 dir_detrend_rh(folder_path = ".", swaps = "auto", thresh = NULL,
-  msg = TRUE)
+  quick = FALSE, msg = TRUE)
 
 dir_detrend_boxcar(folder_path = ".", l, purpose = c("FCS", "FFS"),
   thresh = NULL, parallel = FALSE, msg = TRUE)
@@ -21,8 +21,8 @@ dir_detrend_boxcar(folder_path = ".", l, purpose = c("FCS", "FFS"),
 dir_detrend_exp(folder_path = ".", tau, purpose = c("FCS", "FFS"),
   thresh = NULL, parallel = FALSE, msg = TRUE)
 
-dir_detrend_polynom(folder_path = ".", degree, purpose = c("FCS", "FFS"),
-  thresh = NULL, parallel = FALSE, msg = TRUE)
+dir_detrend_polynom(folder_path = ".", degree, purpose = c("FCS",
+  "FFS"), thresh = NULL, parallel = FALSE, msg = TRUE)
 }
 \arguments{
 \item{folder_path}{The path (relative or absolute) to the folder you wish to
@@ -38,6 +38,10 @@ vector or list.}
 \item{thresh}{The threshold or thresholding method (see
 \code{\link[autothresholdr:mean_stack_thresh]{autothresholdr::mean_stack_thresh()}}) to use on the image prior to
 detrending.}
+
+\item{quick}{If \code{FALSE} (the default), the swap finding routine is run
+several times to get a consensus for the best parameter. If \code{TRUE}, the
+swap finding routine is run only once.}
 
 \item{msg}{Receive messages to tell you how the processing of the directory
 is going? Default is yes.}

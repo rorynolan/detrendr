@@ -31,3 +31,6 @@ rtoboxes(30, 7, capacities = c(rep(1, 3), rep(70, 4)),
          weights = c(rep(0.1, 6), 1))
 
 }
+\seealso{
+rfromboxes
+}

@@ -4,7 +4,8 @@
 \alias{best_tau}
 \title{Find the best tau parameter for exponential smoothing detrending.}
 \usage{
-best_tau(img, cutoff = 0.05, parallel = FALSE, purpose = c("FCS", "FFS"))
+best_tau(img, cutoff = 0.05, parallel = FALSE, purpose = c("FCS",
+  "FFS"))
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an

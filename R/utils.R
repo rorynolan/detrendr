@@ -1,6 +1,8 @@
 translate_parallel <- function(parallel) {
-  checkmate::assert(checkmate::check_int(parallel),
-                    checkmate::check_logical(parallel, len = 1))
+  checkmate::assert(
+    checkmate::check_int(parallel),
+    checkmate::check_logical(parallel, len = 1)
+  )
   n_cores <- 1
   if (isTRUE(parallel)) {
     n_cores <- parallel::detectCores()
@@ -39,13 +41,16 @@ apply_on_pillars <- function(arr3d, FUN) {
 }
 
 
-myarray2vec <- function (iarr, dim) {
- if (!is.matrix(iarr))
+myarray2vec <- function(iarr, dim) {
+  if (!is.matrix(iarr)) {
     dim(iarr) <- c(1, length(iarr))
-  if (ncol(iarr) != length(dim))
+  }
+  if (ncol(iarr) != length(dim)) {
     stop("Number of columns in iarr and number of dimensions differ.")
-  if (any(sweep(iarr, 2, dim) > 0))
+  }
+  if (any(sweep(iarr, 2, dim) > 0)) {
     stop("array index > dim")
+  }
   pdim <- c(1, cumprod(dim[-length(dim)]))
   iarr <- iarr - 1
   rowSums(sweep(iarr, 2, pdim, "*")) + 1
@@ -53,17 +58,71 @@ myarray2vec <- function (iarr, dim) {
 
 get_os <- function() {
   sysinf <- Sys.info()
-  if (!is.null(sysinf)){
-    os <- sysinf['sysname']
-    if (os == 'Darwin')
+  if (!is.null(sysinf)) {
+    os <- sysinf["sysname"]
+    if (os == "Darwin") {
       os <- "osx"
+    }
   } else { ## mystery machine
     os <- .Platform$OS.type
-    if (grepl("^darwin", R.version$os))
+    if (grepl("^darwin", R.version$os)) {
       os <- "osx"
-    if (grepl("linux-gnu", R.version$os))
+    }
+    if (grepl("linux-gnu", R.version$os)) {
       os <- "linux"
+    }
   }
   if (os == "osx") os <- "mac"
   tolower(os)
+}
+
+#' Construct the bullet point bits for `custom_stop()`.
+#'
+#' @param string The message for the bullet point.
+#'
+#' @return A string with the bullet-pointed message nicely formatted for the
+#'   console.
+#'
+#' @noRd
+custom_stop_bullet <- function(string) {
+  checkmate::assert_string(string)
+  string %<>% strwrap(width = 57)
+  string[1] %<>% {
+    glue::glue("    * {.}")
+  }
+  if (length(string) > 1) {
+    string[-1] %<>% {
+      glue::glue("      {.}")
+    }
+  }
+  glue::glue_collapse(string, sep = "\n")
+}
+
+#' Nicely formatted error message.
+#'
+#' Format an error message with bullet-pointed sub-messages with nice
+#' line-breaks.
+#'
+#' Arguments should be entered as `glue`-style strings.
+#'
+#' @param main_message The main error message.
+#' @param ... Bullet-pointed sub-messages.
+#'
+#' @noRd
+custom_stop <- function(main_message, ..., .envir = parent.frame()) {
+  checkmate::assert_string(main_message)
+  main_message %<>% glue::glue(.envir = .envir)
+  out <- strwrap(main_message, width = 63)
+  dots <- unlist(list(...))
+  if (length(dots)) {
+    if (!is.character(dots)) {
+      stop("\nThe arguments in ... must all be of character type.")
+    }
+    dots %<>% purrr::map_chr(glue::glue, .envir = .envir) %>%
+      purrr::map_chr(custom_stop_bullet)
+    out %<>% {
+      glue::glue_collapse(c(., dots), sep = "\n")
+    }
+  }
+  rlang::abort(glue::glue("{out}"))
 }

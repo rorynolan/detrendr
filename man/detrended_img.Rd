@@ -13,7 +13,7 @@ integers in the style of an \link[ijtiff:ijtiff_img]{ijtiff_img}, or a
 channel of an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array (indexed by
 \code{img[y, x, frame]}).}
 
-\item{method}{The method used. One of \code{"robinhood"},\code{"boxcar"},
+\item{method}{The method used. One of \code{"robinhood"},\code{ "boxcar"},
 \code{"exponential"} or \code{"polynomial"}.}
 
 \item{parameter}{A number. The detrend parameter used. One per channel.}

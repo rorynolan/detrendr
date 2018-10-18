@@ -1,3 +1,10 @@
+### 0.6.0 
+
+#### MINOR IMPROVEMENTS
+* Robin Hood parameter finding is now repeated several (at least 9) times to find a sensible consensus value.
+* Robin Hood parameter finding includes an adjustment step to avoid over-estimating the number of swaps required.
+
+
 ### 0.5.2
 
 #### BUG FIXES

@@ -56,4 +56,3 @@ mean_frames_na_omit_ <- function(arr3d) {
     dbl_mean_frames_na_omit(arr3d)
   }
 }
-

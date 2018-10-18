@@ -4,13 +4,17 @@
 \alias{best_swaps}
 \title{Find the best \code{swaps} parameter for \emph{Robin Hood} detrending.}
 \usage{
-best_swaps(img)
+best_swaps(img, quick = FALSE)
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
 or a 3-dimensional array which is a single channel of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
+
+\item{quick}{If \code{FALSE} (the default), the swap finding routine is run
+several times to get a consensus for the best parameter. If \code{TRUE}, the
+swap finding routine is run only once.}
 }
 \value{
 A natural number. The ideal \code{swaps} parameter for boxcar detrending.

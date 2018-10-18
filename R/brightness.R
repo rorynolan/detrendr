@@ -8,4 +8,3 @@ brightness_rows <- function(mat, parallel = FALSE) {
   on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
   brightness_rows_(mat)
 }
-

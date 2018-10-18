@@ -4,7 +4,6 @@
 \name{detrendr}
 \alias{detrendr}
 \alias{detrendr-package}
-\alias{detrendr-package}
 \title{detrendr: Image detrending in R.}
 \description{
 The \code{detrendr} package gives functions for detrending images, most often used

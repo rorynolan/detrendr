@@ -35,7 +35,7 @@ sum_pillars <- function(img, parallel = FALSE) {
     out <- sum_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~ sum_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~sum_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -56,7 +56,7 @@ mean_pillars <- function(img, parallel = FALSE) {
     out <- mean_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~ mean_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~mean_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -77,7 +77,7 @@ median_pillars <- function(img, parallel = FALSE) {
     out <- median_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~ median_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~median_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -98,7 +98,7 @@ var_pillars <- function(img, parallel = FALSE) {
     out <- var_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~ var_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~var_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -135,7 +135,7 @@ brightness_pillars <- function(img, parallel = FALSE) {
     out <- brightness_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~ brightness_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~brightness_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -145,8 +145,10 @@ brightness_pillars <- function(img, parallel = FALSE) {
 
 anyNA_pillars <- function(arr3d) {
   checkmate::assert_array(arr3d, d = 3)
-  checkmate::assert(checkmate::check_integer(arr3d),
-                    checkmate::check_numeric(arr3d))
+  checkmate::assert(
+    checkmate::check_integer(arr3d),
+    checkmate::check_numeric(arr3d)
+  )
   if (isTRUE(checkmate::check_integer(arr3d))) {
     int_anyNA_pillars(arr3d)
   } else {

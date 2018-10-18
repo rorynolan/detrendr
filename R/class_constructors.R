@@ -37,33 +37,46 @@ detrended_img <- function(img, method, parameter, auto, purpose = NULL) {
   checkmate::assert_numeric(img)
   checkmate::assert_string(method)
   if (startsWith("robinhood", method)) method <- "robinhood"
-  method %<>% filesstrings::match_arg(c("boxcar", "exponential", "polynomial",
-                                        "rh", "robinhood"),
-                                      ignore_case = TRUE)
+  method %<>% filesstrings::match_arg(c(
+    "boxcar", "exponential", "polynomial",
+    "rh", "robinhood"
+  ),
+  ignore_case = TRUE
+  )
   if (method == "rh") method <- "robinhood"
   if (method != "robinhood") {
     checkmate::assert_string(purpose)
     purpose %<>%
       filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
   }
-  if (!filesstrings::all_equal(floor(img), img))
+  if (!filesstrings::all_equal(floor(img), img)) {
     stop("Elements of a detrended_img must all be integers.")
-  if (length(dim(img)) == 3) dim(img) %<>% {c(.[1:2], 1, .[3])}
+  }
+  if (length(dim(img)) == 3) {
+    dim(img) %<>% {
+      c(.[1:2], 1, .[3])
+    }
+  }
   n_ch <- dim(img)[3]
   if (length(parameter) == 1) parameter %<>% rep(n_ch)
   if (length(parameter) != n_ch) {
-    stop("The length of the `parameter` argument must be equal to 1 or ",
-         "equal to the number of channels in `img`.", "\n",
-         "    * Your `img` has ", n_ch, " channel",
-         dplyr::if_else(n_ch == 1, "", "s"),
-         " and your `parameter` ",
-         "argument is of length ", length(parameter), ".")
+    custom_stop("
+      The length of the `parameter` argument must be equal to 1 or
+      equal to the number of channels in `img`.
+      ", "
+      Your `img` has {n_ch} channel{dplyr::if_else(n_ch == 1, '', 's')}
+      and your `parameter` argument is of length {length(parameter)}.
+      "
+    )
   }
-  if (method == "robinhood")
+  if (method == "robinhood") {
     parameter[is.na(parameter)] <- 0
+  }
   img[img < 0] <- 0
-  img %<>% structure(method = method, parameter = parameter, auto = auto,
-                     purpose = purpose)
+  img %<>% structure(
+    method = method, parameter = parameter, auto = auto,
+    purpose = purpose
+  )
   class(img) %<>% c("detrended_img", .)
   img
 }
