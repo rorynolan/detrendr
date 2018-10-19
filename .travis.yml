@@ -10,7 +10,7 @@ apt_packages:
 r_github_packages:
   - rorynolan/strex
   - rorynolan/filesstrings
-  - rorynolan/ijtiff
+  - ropensci/ijtiff
   - rorynolan/autothresholdr
   - mllg/checkmate
 
