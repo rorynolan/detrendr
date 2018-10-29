@@ -14,7 +14,7 @@ In this vignette, we will look at detrending single images interactively in an R
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, comment = "#>", 
                       fig.width = 7, fig.height = 6)
-pacman::p_load(dplyr, tidyr, ggplot2, gridExtra)
+pacman::p_load(dplyr, tidyr, MASS, mgcv, ggplot2, gridExtra)
 set.seed(1)
 ```
 

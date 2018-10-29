@@ -61,5 +61,7 @@ Suggests:
     arrayhelpers,
     ore (>= 1.4.0),
     clipr,
-    styler
+    styler,
+    MASS,
+    mgcv
 VignetteBuilder: knitr
