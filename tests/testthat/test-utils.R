@@ -5,6 +5,8 @@ test_that("translate_parallel() works", {
   max_cores <- parallel::detectCores()
   expect_equal(translate_parallel(2), min(2, max_cores))
   expect_equal(translate_parallel(TRUE), max_cores)
+  expect_lt(translate_parallel(.Machine$integer.max),
+            .Machine$integer.max)
 })
 
 test_that("apply_on_pillars works(", {
@@ -108,4 +110,42 @@ test_that("rboxes derivatives error correctly", {
       )
     )
   }
+})
+
+test_that("`myarray2vec()` works", {
+  skip_if_not_installed("arrayhelpers")
+  mat <- matrix(sample.int(4 * 4), nrow = 4)
+  d <- rep(99, 4)
+  expect_equal(myarray2vec(mat, d), arrayhelpers::array2vec(mat, d))
+  expect_error(myarray2vec(mat, rep(2, 2)),
+               paste0(
+                 "Number of columns in `iarr` and number of dimensions\\s?",
+                 "must be.+the same.+There are 4 columns in `iarr` and\\s?",
+                 "you have specified 2.+dimensions."
+               ))
+  set.seed(2)
+  expect_error(myarray2vec(matrix(sample.int(5, 100, replace = TRUE), ncol = 4),
+                           dim = rep(4, 4)),
+               paste0(
+                 "You are requesting an array index outside the\\s?",
+                 "dimension of.+your array.+Row 3 of `iarr` is `c\\(3, 2,\\s?",
+                 "4, 5\\)` and `dim` is `c\\(4, 4,.+4, 4\\)`, so element 4\\s?",
+                 "of that row, 5, is too big as it is.+bigger than\\s?",
+                 "element 4 of `dim`, 4."
+               )
+  )
+  vec <- sample.int(max(d), length(d))
+  expect_equal(myarray2vec(vec, d), myarray2vec(matrix(vec, nrow = 1), d))
+})
+
+test_that("`ptem()` works", {
+  ptem_pkgs <- c("clipr", "styler", "ore")
+  for (p in ptem_pkgs) {
+    skip_if_not_installed(p)
+  }
+  clipr::write_clip("err_fun()")
+  expect_equal(
+    as.character(ptem()),
+    "\"An error message to give ptem\\\\(\\\\) full coverage.\""
+  )
 })

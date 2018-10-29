@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+// [[Rcpp::export]]
 bool int_anyNA(IntegerVector x) {
   bool out = false;
   std::size_t n = x.size();
@@ -13,6 +14,7 @@ bool int_anyNA(IntegerVector x) {
   return out;
 }
 
+// [[Rcpp::export]]
 bool dbl_anyNA(NumericVector x) {
   bool out = false;
   std::size_t n = x.size();

@@ -1,5 +1,12 @@
 
-# `detrendr` <img src="junk/sticker.png" height="200" align="right">
+# detrendr <img src="man/figures/logo.png" align="right" height=140/>
+
+Detrend fluorescence microscopy image series for fluorescence
+fluctuation and correlation spectroscopy (FCS and FFS) analysis. This
+package contains functionality published in a 2016 paper
+<https://doi.org/10.1093/bioinformatics/btx434> but it has been extended
+since then with the *Robin Hood* algorithm and thus contains unpublished
+work.
 
 [![Travis-CI Build
 Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://travis-ci.org/rorynolan/detrendr)
@@ -7,90 +14,43 @@ Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://tra
 Status](https://ci.appveyor.com/api/projects/status/github/rorynolan/detrendr?branch=master&svg=true)](https://ci.appveyor.com/project/rorynolan/detrendr)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/rorynolan/detrendr/master.svg)](https://codecov.io/github/rorynolan/detrendr?branch=master)
+
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
 ![RStudio CRAN
 downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr)
 ![RStudio CRAN monthly
 downloads](http://cranlogs.r-pkg.org/badges/detrendr)
 [![Rdocumentation](http://www.rdocumentation.org/badges/version/detrendr)](http://www.rdocumentation.org/packages/detrendr)
+
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
-# Installation
+## Installation
 
-To install the release version (recommended) from CRAN, in R, enter
+You can install the release version of `detrendr` from
+[CRAN](https://CRAN.R-project.org/package=detrendr) with:
 
 ``` r
 install.packages("detrendr")
 ```
 
-To install the development version, in R, first install `devtools` via
-`install.packages("devtools")`. Then enter
+You can install the (unstable) development version of `detrendr` from
+[GitHub](https://github.com/rorynolan/detrendr/) with:
 
 ``` r
 devtools::install_github("rorynolan/detrendr")
 ```
 
-# Use
+I highly recommend using the release version. The dev version is just
+for the ultra-curious and should be thought of as unreliable.
 
-First let’s load the library:
+## How to use the package
 
-``` r
-library(detrendr)
-```
+See the package website at <https://rorynolan.github.io/detrendr>.
 
-## An image in need of detrending
-
-The package contains a sample image series which can be found at  
-`system.file("extdata", "bleached.tif", package = "detrendr")`. It’s 500
-frames of diffusing fluorescent particles which are bleaching over the
-course of the acquisition. We can see they’re bleaching by displaying
-every 99th frame.
-
-``` r
-library(magrittr)
-path <- system.file("extdata", "bleached.tif", package = "detrendr")
-img <- ijtiff::read_tif(path, msg = FALSE)
-every100th <- purrr::map(seq(1, dim(img)[4], by = 99), ~ img[, , 1, .]) %>% 
-  purrr::reduce(~ cbind(.x, max(img), .y))
-ijtiff::display(every100th)
-```
-
-![](README_files/figure-gfm/visualize%20bleaching-1.png)<!-- -->
-
-## Detrending
-
-We see that the intensity is much lower for the last frame, this is
-because the image series has been bleached. We can correct for
-this.
-
-``` r
-system.time(corrected_exp <- img_detrend_exp(img, "auto", purpose = "FFS",
-                                             parallel = 2))["elapsed"]
-```
-
-    #> elapsed 
-    #>    2.52
-
-``` r
-every100th <- purrr::map(seq(1, dim(img)[4], by = 99), 
-                         ~ corrected_exp[, , 1, .]) %>% 
-  purrr::reduce(~ cbind(.x, max(img), .y))
-ijtiff::display(every100th)
-```
-
-![](README_files/figure-gfm/detrend-1.png)<!-- -->
-
-So we see that the corrected series does not have this drop-off in
-intensity.
-
-# Vignette
-
-For more detailed instruction on how to use the package, see the package
-[vignette](https://cran.r-project.org/web/packages/detrendr/vignettes/detrendr.html).
-
-# Contribution
+## Contribution
 
 Contributions to this package are welcome. The preferred method of
 contribution is through a github pull request. Feel free to contact me

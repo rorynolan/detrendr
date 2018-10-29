@@ -21,7 +21,7 @@ channel of an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array (indexed by
 \item{auto}{Logical. Was automatic detrending used? One per channel.}
 
 \item{purpose}{Either \code{"FCS"} or \code{"FFS"}. Was the image detrended for the
-purpose of doing FCS or FFS calculations? See \link{detrending}. `purpose`` is
+purpose of doing FCS or FFS calculations? See \link{detrending}. \code{purpose} is
 not required for \emph{Robin Hood} detrending.}
 }
 \value{
@@ -35,9 +35,10 @@ of an \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, 
 of the parameter used. This will be the \code{l}, \code{tau} or \code{degree} parameter for
 the respective methods.} \item{\code{auto}}{A boolean that is \code{TRUE} if the
 parameter was found automatically or \code{FALSE} if it was manually selected. }
-\item{\code{purpose}}{Either "FCS" or "FFS" to denote whether the detrending was
-done for the purpose of fluorescence correlation spectroscopy or fluorescence
-fluctuation spectroscopy calculations respectively.}}
+\item{\code{purpose}}{Either \code{"FCS"} or \code{"FFS"} to denote whether the detrending
+was done for the purpose of fluorescence correlation spectroscopy or
+fluorescence fluctuation spectroscopy calculations respectively. \code{purpose} is
+not required for \emph{Robin Hood} detrending.}}
 }
 \details{
 Sometimes when detrending, you can get slight negative values in the

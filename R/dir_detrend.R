@@ -47,7 +47,7 @@ dir_detrend_robinhood <- function(folder_path = ".", swaps = "auto",
   on.exit(setwd(cwd))
   setwd(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
-  purrr::map_chr(tiffs, file_detrend, "robin",
+  purrr::map_chr(tiffs, file_detrend, method = "R",
     parameter = swaps, quick = quick,
     thresh = thresh, msg = msg
   ) %>%
@@ -114,12 +114,12 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
                          quick = FALSE, parallel = FALSE, msg = TRUE) {
   checkmate::assert_file_exists(path)
   checkmate::assert_string(method)
-  if (startsWith("robinhood", method)) method <- "robinhood"
+  if (startsWith("robinhood", tolower(method))) method <- "robinhood"
   method %<>% filesstrings::match_arg(c(
     "boxcar", "exponential", "polynomial",
     "rh", "robinhood"
-  ),
-  ignore_case = TRUE
+    ),
+    ignore_case = TRUE
   )
   if (method == "rh") method <- "robinhood"
   if (method != "robinhood") {

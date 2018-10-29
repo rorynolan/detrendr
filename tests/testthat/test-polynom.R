@@ -14,4 +14,9 @@ test_that("poly_fits work works", {
     },
     check.attributes = FALSE
   )
+  x <- matrix(sample(1:100, 20), ncol = 2)
+  x[1, 1] <- NA
+  y <- x
+  y[3, 1] <- NA
+  expect_equal(poly_fit_cols(x, 3), poly_fit_cols(y, 3))
 })

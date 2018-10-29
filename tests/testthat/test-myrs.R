@@ -109,6 +109,10 @@ test_that("rfromboxes errors correctly", {
   )
 })
 
+test_that("`rfromboxes()` edge cases work correctly", {
+  expect_equal(rfromboxes(0, 1:3), rep(0, 3))
+})
+
 test_that("rtoboxes works on mac", {
   skip_if_not(get_os() == "mac")
   set.seed(1)

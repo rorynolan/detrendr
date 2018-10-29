@@ -1,6 +1,6 @@
 img_detrend_smoothed <- function(arr3d, arr3d_smoothed, purpose, parallel) {
   checkmate::assert_string(purpose)
-  stopifnot(purpose %in% c("fcs", "ffs"))
+  purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   arr3d_smoothed[arr3d_smoothed < 0] <- 0
   deviations_from_smoothed <- arr3d - arr3d_smoothed
   pillar_means <- as.vector(mean_pillars(arr3d, parallel = parallel))
@@ -118,13 +118,16 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
     )
   }
   max_swaps <- min(sum(frame_balls), sum(frame_capacities))
-  msg <- paste(
-    "Your image is too close to zero. Can't detrend an image with",
-    "so few nonzero values. \n* `img` has",
-    length(arr3d), "elements",
-    "and just", sum(arr3d > 0), "of them are greater than zero."
-  )
-  if (max_swaps == 0) stop(msg)
+  if (max_swaps == 0) {
+    custom_stop(
+      "Your image is too close to zero.",
+      "Can't detrend an image with so few nonzero values.",
+      "
+      `img` has {length(arr3d)} elements and just {sum(arr3d > 0)}
+      of them are greater than zero.
+      "
+    )
+  }
   swaps %<>% min(max_swaps)
   weights <- frame_weights %T>% {
     .[. < 0] <- 0

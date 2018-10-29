@@ -141,7 +141,7 @@ test_that("detrending entire derectories works", {
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
     method = "tri"
   ) %>%
-    purrr::map(~img_detrend_rh(., swaps = 222))
+    purrr::map(img_detrend_rh, swaps = 222)
   set.seed(1)
   dir_detrend_rh(swaps = 222, thresh = "tri", msg = FALSE)
   detrendeds_dir <- dir(pattern = "detrended.*tif$", recursive = TRUE) %>%
@@ -177,4 +177,9 @@ test_that("file_detrend() deals with other directories correctly", {
     method = "exp", parameter = 5,
     purpose = "ff"
   )
+})
+
+test_that("`make_thresh_filename_part()` works", {
+  expect_equal(make_thresh_filename_part(rlang::set_attrs(0, thresh = 1)),
+               "thresh=1_")
 })

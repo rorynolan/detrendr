@@ -15,6 +15,10 @@ test_that("detrended_img works", {
     detrended_img(three_d, "exp", 9, FALSE, purpose = "ff"),
     detrended_img(four_d, "exp", 9, FALSE, purpose = "ff")
   )
+  expect_equal(
+    detrended_img(three_d, "rh", 9, FALSE),
+    detrended_img(four_d, "robin", 9, FALSE)
+  )
   expect_error(
     detrended_img(three_d, "rh", 8:9, TRUE),
     paste0(

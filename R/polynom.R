@@ -16,10 +16,12 @@ poly_fit_cols <- function(mat, degree, parallel = FALSE) {
   degree <- floor(degree)
   nr <- nrow(mat)
   if (degree >= nr) {
-    stop(
-      "Your columns are of length ", nr, ". This is too short. ",
-      "To fit a polynomial of degree ", degree, ", your pillars must be ",
-      "of length at least ", nr + 1, "."
+    custom_stop(
+      "Your columns are of length {nr}. This is too short. ",
+      "
+      To fit a polynomial of degree {degree}, your pillars must be
+      of length at least {degree + 1}.
+      "
     )
   }
   x1 <- seq_len(nr)
@@ -27,14 +29,13 @@ poly_fit_cols <- function(mat, degree, parallel = FALSE) {
   n_cores <- translate_parallel(parallel)
   na_cols <- apply(mat, 2, anyNA)
   any_na_cols <- any(na_cols)
+  out <- mat %T>% {
+    .[] <- NA
+  }
   if (any_na_cols) {
     non_na_cols <- !na_cols
-    out <- mat %T>% {
-      .[] <- NA
-    }
-    mat <- mat[, non_na_cols]
+    mat <- mat[, non_na_cols, drop = FALSE]
   }
-  if (!is.matrix(mat)) mat <- matrix(mat, nrow = nrow(out))
   if (n_cores == 1) {
     fits <- stats::fitted(stats::lm(mat ~ x))
   } else {

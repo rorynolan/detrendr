@@ -8,9 +8,10 @@
 #' of the parameter used. This will be the `l`, `tau` or `degree` parameter for
 #' the respective methods.} \item{`auto`}{A boolean that is `TRUE` if the
 #' parameter was found automatically or `FALSE` if it was manually selected. }
-#' \item{`purpose`}{Either "FCS" or "FFS" to denote whether the detrending was
-#' done for the purpose of fluorescence correlation spectroscopy or fluorescence
-#' fluctuation spectroscopy calculations respectively.}}
+#' \item{`purpose`}{Either `"FCS"` or `"FFS"` to denote whether the detrending
+#' was done for the purpose of fluorescence correlation spectroscopy or
+#' fluorescence fluctuation spectroscopy calculations respectively. `purpose` is
+#' not required for _Robin Hood_ detrending.}}
 #'
 #' Sometimes when detrending, you can get slight negative values in the
 #' detrended image. These values should really just be zero, so this constructor
@@ -26,7 +27,7 @@
 #' @param parameter A number. The detrend parameter used. One per channel.
 #' @param auto Logical. Was automatic detrending used? One per channel.
 #' @param purpose Either `"FCS"` or `"FFS"`. Was the image detrended for the
-#'   purpose of doing FCS or FFS calculations? See [detrending]. `purpose`` is
+#'   purpose of doing FCS or FFS calculations? See [detrending]. `purpose` is
 #'   not required for _Robin Hood_ detrending.
 #'
 #' @return An object of class `detrended_img`.

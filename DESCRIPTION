@@ -4,7 +4,7 @@ Title: Detrend Images
 Version: 0.6.0
 Authors@R: c(
     person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
-           role = c("aut", "cre", "trl"), 
+           role = c("aut", "cre"), 
            comment = c(ORCID = "0000-0002-5239-4043")),
     person("Luis", "Alvarez", email = "lalvarez@well.ox.ac.uk",
            role = c("ctb", "cph"), comment = c(ORCID = "0000-0003-1316-1906")),
@@ -41,7 +41,8 @@ Imports:
     filesstrings (>= 3.0.0),
     plyr,
     glue,
-    sigmoid
+    sigmoid,
+    matrixStats
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.1.0
@@ -52,6 +53,13 @@ Suggests:
     rmarkdown,
     covr,
     abind,
-    matrixStats,
-    lattice
+    lattice,
+    pacman,
+    tidyr,
+    graphics,
+    gridExtra,
+    arrayhelpers,
+    ore (>= 1.4.0),
+    clipr,
+    styler
 VignetteBuilder: knitr
