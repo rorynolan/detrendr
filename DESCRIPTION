@@ -36,7 +36,7 @@ Imports:
     iterators,
     purrr,
     ijtiff (>= 1.5.0),
-    autothresholdr (>= 1.2.1),
+    autothresholdr (>= 1.3.0),
     rlang,
     stringr,
     filesstrings (>= 3.0.0),
