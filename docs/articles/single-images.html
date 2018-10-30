@@ -79,7 +79,7 @@
       <h1>Detrending single images</h1>
                         <h4 class="author">Rory Nolan</h4>
             
-            <h4 class="date">2018-10-29</h4>
+            <h4 class="date">2018-10-30</h4>
       
       
       <div class="hidden name"><code>single-images.Rmd</code></div>
@@ -107,10 +107,8 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">dim</span>(my_img)</a></code></pre></div>
 <pre><code>#&gt; [1]  30  28   2 100</code></pre>
 <p>Plotting the mean intensities of the frames in the two channels, we can see that the second channel has more obvious bleaching.</p>
-<pre><code>#&gt; Warning in min(x): no non-missing arguments to min; returning Inf</code></pre>
-<pre><code>#&gt; Warning in max(x): no non-missing arguments to max; returning -Inf</code></pre>
 <p><img src="single-images_files/figure-html/plot-mean-profile-1.png" width="672"></p>
-<p>However, notice that channel 2 bleaches from - to  which is approximately NaN%. That’s not much, so little correction will be necessary. This is good, you should always endeavour to keep bleaching below 20% and bleaching correction (detrending) should be viewed as a necessary evil.</p>
+<p>However, notice that channel 2 bleaches from 29 to 27 which is approximately 7%. That’s not much, so little correction will be necessary. This is good, you should always endeavour to keep bleaching below 20% and bleaching correction (detrending) should be viewed as a necessary evil.</p>
 <p>The mean intensity of channel 1 is 0.81 and the mean intensity of channel 2 is 25.13. Let’s view the mean intensity images of channels 1 and 2.</p>
 <p><img src="single-images_files/figure-html/display-mean-1.png" width="672"></p>
 </div>
@@ -121,8 +119,8 @@
 <p><img src="single-images_files/figure-html/display-thresholded-mean-1.png" width="672"></p>
 <p>That seems to have worked: the background region in the top left is now greyed out, indicating that it has been set to <code>NA</code>. <em>Huang</em> thresholding can be slow, so if you want something similar but faster, try <em>Triangle</em>. Always check that your thresholding <em>looks right</em> afterwards.</p>
 <p>Thresholding of images is done with the <code>autothresholdr</code> package. Thresholding of a stack is preformed with <code>mean_stack_thresh()</code> which thresholds away pixels in the stack whose mean intensity is less than a certain threshold value.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pacman<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/pacman/topics/p_load">p_load</a></span>(autothresholdr)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">my_img_threshed &lt;-<span class="st"> </span><span class="kw">mean_stack_thresh</span>(my_img, <span class="st">"Huang"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">pacman<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/pacman/topics/p_load">p_load</a></span>(autothresholdr)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">my_img_threshed &lt;-<span class="st"> </span><span class="kw">mean_stack_thresh</span>(my_img, <span class="st">"Huang"</span>)</a></code></pre></div>
 <p>Note that if all of the image is of interest, detrending is not necessary and should not be done.</p>
 </div>
 <div id="detrending" class="section level2">
@@ -130,7 +128,7 @@
 <a href="#detrending" class="anchor"></a>Detrending</h2>
 <p>The best detrending method is <em>Robin Hood</em>, so I’ll be using that here. Other detrending methods provided in this package are there for legacy reasons.</p>
 <p>To detrend the above thresholded with the <em>Robin Hood</em> algorithm, run</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">my_detrended_img &lt;-<span class="st"> </span><span class="kw"><a href="../reference/detrending.html">img_detrend_robinhood</a></span>(my_img_threshed)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">my_detrended_img &lt;-<span class="st"> </span><span class="kw"><a href="../reference/detrending.html">img_detrend_robinhood</a></span>(my_img_threshed)</a></code></pre></div>
 <p>Let’s check out the mean intensity profiles of this detrended image.</p>
 <p><img src="single-images_files/figure-html/plot-detrended-mean-profile-1.png" width="672"></p>
 <p>These mean intensity profiles neatly show that the image series has been detrended. Beware, however, that these mean intensity profiles are not a great way to compare detrending routines. There is the temptation to say whichever detrending routine finishes with the flattest mean intensity profile is the best, but this is not true because it is possible to over-detrend (which will over-flatten the mean intensity progile). More rigorous procedures are needed to compare detrending routines, for example using images with simulated photobleaching or other trend-inducing phenomena introduced.</p>

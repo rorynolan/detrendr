@@ -1,7 +1,7 @@
 
 <!-- index.md is generated from index.Rmd. Please edit that file -->
 
-# detrendr <img src="man/figures/logo.png" align="right" height=140/>
+# `detrendr` <img src="man/figures/logo.png" align="right" height=140/>
 
 *Detrending* is a technique to remove unwanted trends from time-series
 data. Image series (videos) may be viewed as a collection of time
@@ -48,10 +48,11 @@ There are two ways to use `detrendr`.
 
 1.  Interactively in the R session, playing with the image as a numeric
     array, dealing with one image at a time.
-2.  In *batch* mode, having the detrending read TIFFs and write the
-    detrended TIFFs to disk when detrending is over. This method permits
-    the user to use R as little as possible and is better for those who
-    don’t intend to become bon a fide R users.
+2.  In *batch* mode, having the software read TIFFs, perform the
+    detrending and then write the detrended TIFFs to disk when
+    detrending is over. This method permits the user to use R as little
+    as possible and is better for those who don’t intend to become bon a
+    fide R users.
 
 These are discussed in two articles.
 

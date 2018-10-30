@@ -54,7 +54,7 @@ plot_tbl <- tibble(
   ) %>% 
   gather(ch, mean, -frame)
 ch2range <- plot_tbl %>% 
-  filter(ch == "channel 2") %>% 
+  filter(ch == "channel2") %>% 
   pull(mean) %>% 
   range() %>% 
   round()

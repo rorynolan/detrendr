@@ -13,10 +13,11 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-8010-9481"))
     )
 Maintainer: Rory Nolan <rorynoolan@gmail.com>
-Description: Image series affected by bleaching must be corrected by 
-    'detrending' prior to the performance of quantitative analysis. 
-    'detrendr' is for correctly detrending images. It uses Nolan's algorithm
-    (Nolan et al., 2017 <doi:10.1093/bioinformatics/btx434>).
+Description: Detrend fluorescence microscopy image series for fluorescence 
+    fluctuation and correlation spectroscopy (FCS and FFS) analysis. This 
+    package contains functionality published in a 2016 paper 
+    <doi:10.1093/bioinformatics/btx434> but it has been extended since then with
+    the Robin Hood algorithm and thus contains unpublished work.
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
