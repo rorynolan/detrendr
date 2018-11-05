@@ -131,7 +131,9 @@ custom_stop <- function(main_message, ..., .envir = parent.frame()) {
   checkmate::assert_string(main_message)
   main_message %<>% glue::glue(.envir = .envir)
   out <- strwrap(main_message, width = 63)
-  dots <- unlist(list(...))
+  dots <- list(...) %>%
+    unlist() %>%
+    purrr::map_chr(toString)
   if (length(dots)) {
     if (!is.character(dots)) {
       stop("\nThe arguments in ... must all be of character type.")

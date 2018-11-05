@@ -139,6 +139,7 @@ test_that("`myarray2vec()` works", {
 })
 
 test_that("`ptem()` works", {
+  skip_if_not(identical(Sys.getenv("TRAVIS"), "true"))
   ptem_pkgs <- c("clipr", "styler", "ore")
   for (p in ptem_pkgs) {
     skip_if_not_installed(p)
