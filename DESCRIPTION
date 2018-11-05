@@ -43,7 +43,8 @@ Imports:
     plyr,
     glue,
     sigmoid,
-    matrixStats
+    matrixStats,
+    stringi
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.1.0

@@ -114,7 +114,9 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
                          quick = FALSE, parallel = FALSE, msg = TRUE) {
   checkmate::assert_file_exists(path)
   checkmate::assert_string(method)
-  if (startsWith("robinhood", tolower(method))) method <- "robinhood"
+  if (stringi::stri_startswith_coll("robinhood", tolower(method))) {
+    method <- "robinhood"
+  }
   method %<>% filesstrings::match_arg(c(
     "boxcar", "exponential", "polynomial",
     "rh", "robinhood"

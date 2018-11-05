@@ -306,7 +306,7 @@ img_detrend_robinhood <- function(img, swaps = "auto", quick = FALSE) {
       }
     } else if (is.character(swaps[[i]])) {
       swaps[[i]] %<>% tolower()
-      if (startsWith("auto", swaps[[i]])) {
+      if (stringi::stri_startswith_coll("auto", swaps[[i]])) {
         auto[[i]] <- TRUE
         swaps[[i]] <- best_swaps(img[, , i, , drop = FALSE], quick = quick)
         out[, , i, ] <- img_detrend_swaps_specified(
@@ -386,7 +386,7 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
         as.vector()
     } else if (is.character(l[[i]])) {
       l[[i]] %<>% tolower()
-      if (startsWith("auto", l[[i]])) {
+      if (stringi::stri_startswith_coll("auto", l[[i]])) {
         auto[[i]] <- TRUE
         l[[i]] <- best_l(img[, , i, , drop = FALSE],
           parallel = parallel, purpose = purpose
@@ -459,7 +459,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
         as.vector()
     } else if (is.character(tau[[i]])) {
       tau[[i]] %<>% tolower()
-      if (startsWith("auto", tau[[i]])) {
+      if (stringi::stri_startswith_coll("auto", tau[[i]])) {
         auto[[i]] <- TRUE
         tau[[i]] <- best_tau(img[, , i, , drop = FALSE],
           cutoff = cutoff, purpose = purpose,
@@ -542,7 +542,7 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
         as.vector()
     } else if (is.character(degree[[i]])) {
       degree[[i]] %<>% tolower()
-      if (startsWith("auto", degree[[i]])) {
+      if (stringi::stri_startswith_coll("auto", degree[[i]])) {
         degree[[i]] <- best_degree(img[, , i, , drop = FALSE],
           purpose = purpose, parallel = parallel
         )
