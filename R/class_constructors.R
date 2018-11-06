@@ -67,8 +67,7 @@ detrended_img <- function(img, method, parameter, auto, purpose = NULL) {
       ", "
       Your `img` has {n_ch} channel{dplyr::if_else(n_ch == 1, '', 's')}
       and your `parameter` argument is of length {length(parameter)}.
-      "
-    )
+      ")
   }
   if (method == "robinhood") {
     parameter[is.na(parameter)] <- 0

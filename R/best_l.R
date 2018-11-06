@@ -1,7 +1,7 @@
 rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
   checkmate::assert_string(purpose)
   purpose %<>% stringr::str_to_lower()
-  stopifnot(purpose %in% c("fcs", "ffs"))
+  assertthat::assert_that(purpose %in% c("fcs", "ffs"))
   deviations_from_smoothed <- mat - mat_smoothed
   row_means <- mean_rows(mat, parallel = parallel)
   if (purpose == "ffs") {
@@ -76,7 +76,7 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
     custom_stop(
-      "Your image is constant: all pixel values are equal to {img[[1]]}." ,
+      "Your image is constant: all pixel values are equal to {img[[1]]}.",
       "This type of image is not detrendable."
     )
   }
@@ -139,7 +139,8 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
       while (mean_brightness_big_l_old > 1) {
         big_l_old <- big_l_old %/% 2
         if (big_l_old == 0) {
-          custom_stop("
+          custom_stop(
+            "
             Even with box size `l = 1` (the most severe detrend),
             the brightness B was still above 1.
             ",

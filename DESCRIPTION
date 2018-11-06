@@ -14,7 +14,7 @@ Authors@R: c(
     )
 Maintainer: Rory Nolan <rorynoolan@gmail.com>
 Description: Detrend fluorescence microscopy image series for fluorescence 
-    fluctuation and correlation spectroscopy (FCS and FFS) analysis. This 
+    fluctuation and correlation spectroscopy ('FCS' and 'FFS') analysis. This 
     package contains functionality published in a 2016 paper 
     <doi:10.1093/bioinformatics/btx434> but it has been extended since then with
     the Robin Hood algorithm and thus contains unpublished work.
@@ -44,7 +44,8 @@ Imports:
     glue,
     sigmoid,
     matrixStats,
-    stringi
+    stringi,
+    assertthat
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.1.0

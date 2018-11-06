@@ -5,11 +5,13 @@ test_that("best_tau works", {
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
   ), msg = FALSE)
-  expect_error(best_tau(img),
-               paste0(
-                 "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
-                 "`purpose`."
-               ))
+  expect_error(
+    best_tau(img),
+    paste0(
+      "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
+      "`purpose`."
+    )
+  )
   set.seed(1)
   expect_equal(round(best_tau(img, purpose = "ffs", parallel = 2)),
     34,
@@ -28,8 +30,10 @@ test_that("best_tau works", {
     expect_equal(bt, 6618, tolerance = 6400)
   }
   img[] <- 0
-  expect_error(best_tau(img, purpose = "fcs"),
-               "all pixel values are equal to 0")
+  expect_error(
+    best_tau(img, purpose = "fcs"),
+    "all pixel values are equal to 0"
+  )
 })
 
 test_that("best_l works", {
@@ -37,11 +41,13 @@ test_that("best_l works", {
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
   ), msg = FALSE)
-  expect_error(best_l(img),
-               paste0(
-                 "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
-                 "`purpose`."
-               ))
+  expect_error(
+    best_l(img),
+    paste0(
+      "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
+      "`purpose`."
+    )
+  )
   set.seed(1)
   expect_equal(round(best_l(img, parallel = 2, purpose = "ffs")),
     17,
@@ -76,11 +82,13 @@ test_that("best_degree works", {
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
   ), msg = FALSE)
-  expect_error(best_degree(img),
-               paste0(
-                 "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
-                 "`purpose`."
-               ))
+  expect_error(
+    best_degree(img),
+    paste0(
+      "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
+      "`purpose`."
+    )
+  )
   set.seed(1)
   best_degree <- suppressWarnings(round(best_degree(img, purpose = "ffs")))
   expect_equal(best_degree, 17, tolerance = 2)
@@ -118,7 +126,9 @@ test_that("best_swaps() works", {
   for (i in seq_len(77)) { # ensure covering brightness part of `best_swaps()`
     set.seed(i)
     sim_img <- array(rpois(6^4, 8), dim = rep(6, 4))
-    expect_lt(sum(best_swaps(sim_img, quick = TRUE)),
-              sum(sim_img) * dim(sim_img)[3])
+    expect_lt(
+      sum(best_swaps(sim_img, quick = TRUE)),
+      sum(sim_img) * dim(sim_img)[3]
+    )
   }
 })

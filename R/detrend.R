@@ -278,8 +278,7 @@ img_detrend_robinhood <- function(img, swaps = "auto", quick = FALSE) {
       ", "
       Your `swaps` argument has length {length(swaps)} and your
       image has {n_ch} channels.
-      "
-    )
+      ")
   }
   auto <- rep(FALSE, n_ch)
   for (i in seq_len(n_ch)) {
@@ -355,8 +354,7 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
       Argument `l` must have length 1 or length equal to the number of channels.
       ", "
       Your l argument has length {length(l)} and your image has
-      {n_ch} channels."
-    )
+      {n_ch} channels.")
   }
   auto <- rep(FALSE, n_ch)
   for (i in seq_len(n_ch)) {
@@ -434,8 +432,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
       ", "
       Your `tau` argument has length {length(tau)} and your
       image has {n_ch} channels.
-      "
-    )
+      ")
   }
   auto <- rep(FALSE, n_ch)
   for (i in seq_len(n_ch)) {
@@ -511,8 +508,7 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
       ", "
       Your degree argument has length {length(degree)} and your
       image has {n_ch} channels.
-      "
-    )
+      ")
   }
   auto <- rep(FALSE, n_ch)
   for (i in seq_len(n_ch)) {

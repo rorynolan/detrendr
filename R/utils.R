@@ -52,7 +52,8 @@ myarray2vec <- function(iarr, dim) {
       "
       There are {ncol(iarr)} columns in `iarr` and you have specified
       {length(dim)} dimensions.
-      ")
+      "
+    )
   }
   if (any(sweep(iarr, 2, dim) > 0)) {
     bad <- iarr > dim
@@ -67,7 +68,7 @@ myarray2vec <- function(iarr, dim) {
       that row, {iarr[row, col]}, is too big as it is bigger than element
       {col} of `dim`, {dim[col]}.
       "
-      )
+    )
   }
   pdim <- c(1, cumprod(dim[-length(dim)]))
   iarr <- iarr - 1
@@ -158,14 +159,14 @@ custom_stop <- function(main_message, ..., .envir = parent.frame()) {
 ptem <- function() {
   out <- character(0)
   if (all(c("ore", "clipr", "styler") %in%
-          rownames(utils::installed.packages()))) {
+    rownames(utils::installed.packages()))) {
     cmd <- clipr::read_clip() %>%
       paste(collapse = " ") %>%
       rlang::parse_expr()
     out <- tryCatch(eval(cmd),
-                    error = function(e) {
-                      conditionMessage(e)
-                    }
+      error = function(e) {
+        conditionMessage(e)
+      }
     )
     ends_with_period <- out %>%
       stringr::str_trim() %>%
@@ -191,8 +192,10 @@ ptem <- function() {
       styler::style_text() %>%
       as.character()
     if (length(out) == 1) {
-      out %<>% stringr::str_sub(nchar("paste0(") + 1,
-                                nchar(.) - nchar(")"))
+      out %<>% stringr::str_sub(
+        nchar("paste0(") + 1,
+        nchar(.) - nchar(")")
+      )
     }
     clipr::write_clip(out)
   }

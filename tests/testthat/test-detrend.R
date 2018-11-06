@@ -24,11 +24,13 @@ test_that("detrending works", {
     list(dim(correctedNA), as.vector(correctedNA)),
     list(dim(img), as.vector(img))
   )
-  expect_error(img_detrend_boxcar(img, 4),
-               paste0(
-                 "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
-                 "`purpose`."
-               ))
+  expect_error(
+    img_detrend_boxcar(img, 4),
+    paste0(
+      "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
+      "`purpose`."
+    )
+  )
   context("Exponential filtering detrending")
   corrected <- img_detrend_exp(img[, , 1, ], "auto",
     parallel = 2,
@@ -50,18 +52,22 @@ test_that("detrending works", {
     list(dim(correctedNA), as.vector(correctedNA)),
     list(dim(img), as.vector(img))
   )
-  expect_error(img_detrend_exp(img, 4),
-               paste0(
-                 "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
-                 "`purpose`."
-               ))
+  expect_error(
+    img_detrend_exp(img, 4),
+    paste0(
+      "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
+      "`purpose`."
+    )
+  )
   context("Polynomial detrending")
   expect_warning(
     img_detrend_polynom(img, "auto", parallel = 2, purpose = "ff"),
     "polynomial degree"
   )
   expect_equal(img_detrend_degree_specified(img, NA, "ff", FALSE),
-               img, check.attributes = FALSE)
+    img,
+    check.attributes = FALSE
+  )
   corrected <- suppressWarnings(img_detrend_polynom(img, "auto",
     purpose = "ff",
     parallel = 2
@@ -94,11 +100,13 @@ test_that("detrending works", {
     list(dim(correctedNA), as.vector(correctedNA)),
     list(dim(img), as.vector(img))
   )
-  expect_error(img_detrend_polynom(img, 4),
-               paste0(
-                 "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
-                 "`purpose`."
-               ))
+  expect_error(
+    img_detrend_polynom(img, 4),
+    paste0(
+      "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
+      "`purpose`."
+    )
+  )
   context("Robin Hood detrending")
   corrected <- img_detrend_rh(img)
   expect_equal(mean(brightness_pillars(corrected)), 4.38, tolerance = 0.01)
@@ -147,12 +155,14 @@ test_that("detrending works", {
   arr3d <- array(0, dim = rep(3, 3)) %T>% {
     .[5] <- 1
   }
-  expect_error(img_detrend_swaps_specified(arr3d, 2),
-               paste0(
-                 "Your image is too close to zero.+Can't detrend an\\s?",
-                 "image with so few nonzero values.+`img` has 27\\s?",
-                 "elements and just 1 of them are greater.+than zero."
-               ))
+  expect_error(
+    img_detrend_swaps_specified(arr3d, 2),
+    paste0(
+      "Your image is too close to zero.+Can't detrend an\\s?",
+      "image with so few nonzero values.+`img` has 27\\s?",
+      "elements and just 1 of them are greater.+than zero."
+    )
+  )
 })
 
 context("Detrending errors")

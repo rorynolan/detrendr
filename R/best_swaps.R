@@ -96,15 +96,18 @@ best_swaps <- function(img, quick = FALSE) {
       mean_b_epss %<>% c(mean_b_eps(img, new_best_swaps_naive))
       mean_b_epss_std_mad_rel <- std_mad_rel(mean_b_epss)
     }
-    overestimates <- purrr::rerun(length(newest),
-                                  best_swaps_naive(pois_mean_img(img))) %>%
+    overestimates <- purrr::rerun(
+      length(newest),
+      best_swaps_naive(pois_mean_img(img))
+    ) %>%
       purrr::map_int(1)
     (stats::median(newest) - stats::median(overestimates)) %>%
       sigmoid::relu() %>%
       as.integer()
   } else {
     purrr::map_int(seq_len(d[3]), ~best_swaps(img[, , ., , drop = FALSE],
-                                              quick = quick))
+      quick = quick
+    ))
   }
 }
 
@@ -113,7 +116,8 @@ mean_b_eps <- function(img, swaps) {
   checkmate::assert_int(swaps, lower = 0)
   img_detrend_swaps_specified(img, swaps) %>%
     brightness_pillars() %>%
-    mean(na.rm = TRUE) %>% {
+    mean(na.rm = TRUE) %>%
+    {
       . - 1
     }
 }
@@ -123,7 +127,7 @@ std_mad_rel <- function(x) {
   stats::mad(x) / abs(stats::median(x)) / length(x)
 }
 
-pois_mean_img <- function(img){
+pois_mean_img <- function(img) {
   img %T>% {
     nas <- is.na(as.vector(img))
     .[!nas] <- stats::rpois(sum(!nas), mean(img, na.rm = TRUE))
@@ -223,7 +227,7 @@ best_swaps_naive <- function(img) {
     }
     if (max_swaps_remaining == 0) break
   }
-  if (sim_mat_swapped_more_mean_b <= 1) {  # using brightness
+  if (sim_mat_swapped_more_mean_b <= 1) { # using brightness
     while (TRUE) {
       n_swapped_middle <- round(mean(c(n_swapped_fewer, n_swapped_more)))
       if (n_swapped_middle %in% c(n_swapped_fewer, n_swapped_more)) {
