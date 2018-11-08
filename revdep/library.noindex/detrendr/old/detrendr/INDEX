@@ -1,0 +1,21 @@
+apply_on_pillars        Apply a function to each pillar of a
+                        3-dimensional array.
+best_degree             Find the best polynomial degree for polynomial
+                        detrending.
+best_l                  Find the best length parameter for boxcar
+                        detrending.
+best_swaps              Find the best 'swaps' parameter for _Robin
+                        Hood_ detrending.
+best_tau                Find the best tau parameter for exponential
+                        smoothing detrending.
+brightness_pillars      Get the brightness of pillars of a 3d array.
+detrend-directory       Detrend all TIFF images in an entire folder.
+detrended_img           Detrended image class.
+detrending              Detrend images.
+detrendr                detrendr: Image detrending in R.
+mean_frames             Get the sums/means of frames in a 3-dimensional
+                        array.
+pillar-stats            Get the sums/means/medians/variances of pillars
+                        of an ijtiff_img-style array.
+rfromboxes              Randomly draw balls from boxes.
+rtoboxes                Randomly place balls in boxes.

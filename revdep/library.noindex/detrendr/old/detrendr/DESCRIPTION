@@ -1,0 +1,35 @@
+Package: detrendr
+Type: Package
+Title: Detrend Images
+Version: 0.5.1
+Authors@R: c(person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
+                    role = c("aut", "cre", "cph")),
+             person("Sergi", "Padilla-Parra", email = "spadilla@well.ox.ac.uk",
+                    role = c("ths", "cph")))
+Maintainer: Rory Nolan <rorynoolan@gmail.com>
+Description: Image series affected by bleaching must be corrected by 
+    'detrending' prior to the performance of quantitative analysis. 
+    'detrendr' is for correctly detrending images. It uses Nolan's algorithm
+    (Nolan et al., 2017 <doi:10.1093/bioinformatics/btx434>).
+License: BSD_3_clause + file LICENSE
+Encoding: UTF-8
+LazyData: true
+LinkingTo: Rcpp, RcppParallel
+SystemRequirements: GNU make
+Imports: Rcpp, RcppParallel, parallel, checkmate, magrittr, dplyr,
+        foreach, doParallel, iterators, purrr, ijtiff (>= 1.1.0),
+        autothresholdr (>= 1.2.0), rlang, stringr, filesstrings (>=
+        2.2.0), plyr
+URL: https://www.github.com/rorynolan/detrendr
+BugReports: https://www.github.com/rorynolan/detrendr/issues
+RoxygenNote: 6.0.1
+Suggests: testthat, knitr, rmarkdown, covr, abind, matrixStats
+VignetteBuilder: knitr
+NeedsCompilation: yes
+Packaged: 2018-04-24 14:38:07 UTC; rnolan
+Author: Rory Nolan [aut, cre, cph],
+  Sergi Padilla-Parra [ths, cph]
+Repository: CRAN
+Date/Publication: 2018-04-24 15:47:16 UTC
+Built: R 3.5.0; x86_64-apple-darwin15.6.0; 2018-04-25 18:05:26 UTC; unix
+Archs: detrendr.so.dSYM
