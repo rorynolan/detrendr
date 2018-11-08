@@ -66,5 +66,7 @@ Suggests:
     clipr,
     styler,
     MASS,
-    mgcv
+    mgcv,
+    spelling
 VignetteBuilder: knitr
+Language: en-US
