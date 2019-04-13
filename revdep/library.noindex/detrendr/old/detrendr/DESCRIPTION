@@ -1,35 +1,47 @@
 Package: detrendr
 Type: Package
 Title: Detrend Images
-Version: 0.5.1
-Authors@R: c(person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
-                    role = c("aut", "cre", "cph")),
-             person("Sergi", "Padilla-Parra", email = "spadilla@well.ox.ac.uk",
-                    role = c("ths", "cph")))
+Version: 0.6.0
+Authors@R: c(
+    person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
+           role = c("aut", "cre"), 
+           comment = c(ORCID = "0000-0002-5239-4043")),
+    person("Luis", "Alvarez", email = "lalvarez@well.ox.ac.uk",
+           role = c("ctb", "cph"), comment = c(ORCID = "0000-0003-1316-1906")),
+    person("Sergi", "Padilla-Parra", email = "spadilla@well.ox.ac.uk", 
+           role = c("ctb", "ths", "cph"), 
+           comment = c(ORCID = "0000-0002-8010-9481"))
+    )
 Maintainer: Rory Nolan <rorynoolan@gmail.com>
-Description: Image series affected by bleaching must be corrected by 
-    'detrending' prior to the performance of quantitative analysis. 
-    'detrendr' is for correctly detrending images. It uses Nolan's algorithm
-    (Nolan et al., 2017 <doi:10.1093/bioinformatics/btx434>).
+Description: Detrend fluorescence microscopy image series for fluorescence 
+    fluctuation and correlation spectroscopy ('FCS' and 'FFS') analysis. This 
+    package contains functionality published in a 2016 paper 
+    <doi:10.1093/bioinformatics/btx434> but it has been extended since then with
+    the Robin Hood algorithm and thus contains unpublished work.
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
 LinkingTo: Rcpp, RcppParallel
 SystemRequirements: GNU make
 Imports: Rcpp, RcppParallel, parallel, checkmate, magrittr, dplyr,
-        foreach, doParallel, iterators, purrr, ijtiff (>= 1.1.0),
-        autothresholdr (>= 1.2.0), rlang, stringr, filesstrings (>=
-        2.2.0), plyr
+        foreach, doParallel, iterators, purrr, ijtiff (>= 1.5.0),
+        autothresholdr (>= 1.3.0), rlang, stringr, filesstrings (>=
+        3.0.0), plyr, glue, sigmoid, matrixStats, stringi, assertthat
 URL: https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
-RoxygenNote: 6.0.1
-Suggests: testthat, knitr, rmarkdown, covr, abind, matrixStats
+RoxygenNote: 6.1.0
+Suggests: testthat, knitr, rmarkdown, covr, abind, lattice, pacman,
+        tidyr, graphics, gridExtra, arrayhelpers, ore (>= 1.4.0),
+        clipr, styler, MASS, mgcv, spelling
 VignetteBuilder: knitr
+Language: en-US
 NeedsCompilation: yes
-Packaged: 2018-04-24 14:38:07 UTC; rnolan
-Author: Rory Nolan [aut, cre, cph],
-  Sergi Padilla-Parra [ths, cph]
+Packaged: 2018-11-08 16:08:22 UTC; rnolan
+Author: Rory Nolan [aut, cre] (<https://orcid.org/0000-0002-5239-4043>),
+  Luis Alvarez [ctb, cph] (<https://orcid.org/0000-0003-1316-1906>),
+  Sergi Padilla-Parra [ctb, ths, cph]
+    (<https://orcid.org/0000-0002-8010-9481>)
 Repository: CRAN
-Date/Publication: 2018-04-24 15:47:16 UTC
-Built: R 3.5.0; x86_64-apple-darwin15.6.0; 2018-04-25 18:05:26 UTC; unix
+Date/Publication: 2018-11-09 16:40:08 UTC
+Built: R 3.5.0; x86_64-apple-darwin15.6.0; 2018-11-10 17:30:19 UTC; unix
 Archs: detrendr.so.dSYM
