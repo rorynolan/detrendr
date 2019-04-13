@@ -51,7 +51,7 @@ There are two ways to use `detrendr`.
 2.  In *batch* mode, having the software read TIFFs, perform the
     detrending and then write the detrended TIFFs to disk when
     detrending is over. This method permits the user to use R as little
-    as possible and is better for those who don’t intend to become bon a
+    as possible and is better for those who don’t intend to become bona
     fide R users.
 
 These are discussed in two articles.

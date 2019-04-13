@@ -46,7 +46,7 @@ Imports:
     matrixStats,
     stringi,
     assertthat
-URL: https://www.github.com/rorynolan/detrendr
+URL: https://rorynolan.github.io/detrendr, https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

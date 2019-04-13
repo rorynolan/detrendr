@@ -151,16 +151,3 @@ test_that("`myarray2vec()` works", {
   vec <- sample.int(max(d), length(d))
   expect_equal(myarray2vec(vec, d), myarray2vec(matrix(vec, nrow = 1), d))
 })
-
-test_that("`ptem()` works", {
-  skip_if_not(identical(Sys.getenv("TRAVIS"), "true"))
-  ptem_pkgs <- c("clipr", "styler", "ore")
-  for (p in ptem_pkgs) {
-    skip_if_not_installed(p)
-  }
-  clipr::write_clip("err_fun()")
-  expect_equal(
-    as.character(ptem()),
-    "\"An error message to give ptem\\\\(\\\\) full coverage.\""
-  )
-})
