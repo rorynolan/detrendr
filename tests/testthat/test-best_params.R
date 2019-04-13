@@ -27,7 +27,7 @@ test_that("best_tau works", {
   img <- array(rpois(99^3, 99), dim = rep(99, 3))
   bt <- best_tau(img, purpose = "ffs")
   if (!is.na(bt)) {
-    expect_equal(bt, 6618, tolerance = 6400)
+    expect_gt(bt, 150)
   }
   img[] <- 0
   expect_error(

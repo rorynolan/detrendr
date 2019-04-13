@@ -181,7 +181,7 @@ test_that("file_detrend() deals with other directories correctly", {
 
 test_that("`make_thresh_filename_part()` works", {
   expect_equal(
-    make_thresh_filename_part(rlang::set_attrs(0, thresh = 1)),
+    make_thresh_filename_part(structure(0, thresh = 1)),
     "thresh=1_"
   )
 })

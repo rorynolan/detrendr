@@ -75,26 +75,6 @@ myarray2vec <- function(iarr, dim) {
   rowSums(sweep(iarr, 2, pdim, "*")) + 1
 }
 
-get_os <- function() {
-  sysinf <- Sys.info()
-  if (!is.null(sysinf)) {
-    os <- sysinf["sysname"]
-    if (os == "Darwin") {
-      os <- "osx"
-    }
-  } else { ## mystery machine
-    os <- .Platform$OS.type
-    if (grepl("^darwin", R.version$os)) {
-      os <- "osx"
-    }
-    if (grepl("linux-gnu", R.version$os)) {
-      os <- "linux"
-    }
-  }
-  if (os == "osx") os <- "mac"
-  tolower(os)
-}
-
 #' Construct the bullet point bits for `custom_stop()`.
 #'
 #' @param string The message for the bullet point.
@@ -148,60 +128,22 @@ custom_stop <- function(main_message, ..., .envir = parent.frame()) {
   rlang::abort(glue::glue("{out}"))
 }
 
-#' Prepare a Test Error Messsage.
-#'
-#' Take the command copied to the clipboard and prepare the error message that
-#' it outputs for expectation with [testthat::expect_error].
-#'
-#' @return The string that was copied to the clipboard (invisibly).
-#'
-#' @noRd
-ptem <- function() {
-  out <- character(0)
-  if (all(c("ore", "clipr", "styler") %in%
-    rownames(utils::installed.packages()))) {
-    cmd <- clipr::read_clip() %>%
-      paste(collapse = " ") %>%
-      rlang::parse_expr()
-    out <- tryCatch(eval(cmd),
-      error = function(e) {
-        conditionMessage(e)
-      }
-    )
-    ends_with_period <- out %>%
-      stringr::str_trim() %>%
-      filesstrings::str_elem(-1) %>%
-      filesstrings::all_equal(".")
-    out %<>%
-      stringr::str_replace_all("\\s+\\s+\\**\\s*", "heregoesdotplus") %>%
-      stringr::str_replace_all("[\\.\\n]+", "heregoesdotplus") %>%
-      ore::ore.escape() %>%
-      stringr::str_replace_all("heregoesdotplus", ".+") %>%
-      stringr::str_replace_all("(\\.\\+)+$", "") %>%
-      filesstrings::singleize(ore::ore.escape(".+")) %>%
-      stringr::str_replace("^Error: ", "") %>%
-      strwrap(width = 55)
-    if (ends_with_period) out[length(out)] %<>% paste0(".")
-    left <- rep("\"", length(out))
-    left[1] <- "paste0(\""
-    right <- rep("\\s?\",", length(out))
-    right[length(right)] <- "\")"
-    out %<>%
-      paste0(left, ., right) %>%
-      stringr::str_replace_all("\\\\", "\\\\\\\\") %>%
-      styler::style_text() %>%
-      as.character()
-    if (length(out) == 1) {
-      out %<>% stringr::str_sub(
-        nchar("paste0(") + 1,
-        nchar(.) - nchar(")")
-      )
+get_os <- function() {
+  sysinf <- Sys.info()
+  if (!is.null(sysinf)) {
+    os <- sysinf["sysname"]
+    if (os == "Darwin") {
+      os <- "osx"
     }
-    clipr::write_clip(out)
+  } else { ## mystery machine
+    os <- .Platform$OS.type
+    if (grepl("^darwin", R.version$os)) {
+      os <- "osx"
+    }
+    if (grepl("linux-gnu", R.version$os)) {
+      os <- "linux"
+    }
   }
-  out
-}
-
-err_fun <- function() {
-  stop("An error message to give ptem() full coverage.")
+  if (os == "osx") os <- "mac"
+  tolower(os)
 }

@@ -1,3 +1,9 @@
+## `detrendr` 0.6.1
+
+#### BUG FIXES
+* Require necessary version of `glue`.
+
+
 ## `detrendr` 0.6.0 
 
 #### NEW FEATURES 

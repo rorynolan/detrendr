@@ -34,7 +34,7 @@ mat_swap_n_more <- function(mat, mat_orig, n, frame_weights, frame_balls,
     dplyr::rename(frame = "x", amount = "freq")
   elems_getting <- cbind(px_getting, frames_getting)
   mat %<>% mat_add1s(elems_getting)
-  rlang::set_attrs(mat,
+  structure(mat,
     loser_frames = loser_frames, winner_frames = winner_frames
   )
 }

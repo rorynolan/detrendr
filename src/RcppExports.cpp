@@ -150,6 +150,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// int_anyNA_pillars
+LogicalMatrix int_anyNA_pillars(IntegerVector arr3d);
+RcppExport SEXP _detrendr_int_anyNA_pillars(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(int_anyNA_pillars(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dbl_anyNA_pillars
+LogicalMatrix dbl_anyNA_pillars(NumericVector arr3d);
+RcppExport SEXP _detrendr_dbl_anyNA_pillars(SEXP arr3dSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
+    rcpp_result_gen = Rcpp::wrap(dbl_anyNA_pillars(arr3d));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sum_pillars_
 NumericMatrix sum_pillars_(NumericVector arr3d);
 RcppExport SEXP _detrendr_sum_pillars_(SEXP arr3dSEXP) {
@@ -202,28 +224,6 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
     rcpp_result_gen = Rcpp::wrap(brightness_pillars_(arr3d));
-    return rcpp_result_gen;
-END_RCPP
-}
-// int_anyNA_pillars
-LogicalMatrix int_anyNA_pillars(IntegerVector arr3d);
-RcppExport SEXP _detrendr_int_anyNA_pillars(SEXP arr3dSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type arr3d(arr3dSEXP);
-    rcpp_result_gen = Rcpp::wrap(int_anyNA_pillars(arr3d));
-    return rcpp_result_gen;
-END_RCPP
-}
-// dbl_anyNA_pillars
-LogicalMatrix dbl_anyNA_pillars(NumericVector arr3d);
-RcppExport SEXP _detrendr_dbl_anyNA_pillars(SEXP arr3dSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type arr3d(arr3dSEXP);
-    rcpp_result_gen = Rcpp::wrap(dbl_anyNA_pillars(arr3d));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -415,6 +415,43 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// boxcar_smooth
+NumericVector boxcar_smooth(NumericVector vec, std::size_t l);
+RcppExport SEXP _detrendr_boxcar_smooth(SEXP vecSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(boxcar_smooth(vec, l));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_smooth
+NumericVector weighted_smooth(NumericVector vec, NumericVector weights);
+RcppExport SEXP _detrendr_weighted_smooth(SEXP vecSEXP, SEXP weightsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_smooth(vec, weights));
+    return rcpp_result_gen;
+END_RCPP
+}
+// exp_smooth
+NumericVector exp_smooth(NumericVector vec, double tau, std::size_t l);
+RcppExport SEXP _detrendr_exp_smooth(SEXP vecSEXP, SEXP tauSEXP, SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(exp_smooth(vec, tau, l));
+    return rcpp_result_gen;
+END_RCPP
+}
 // boxcar_smooth_rows_
 NumericMatrix boxcar_smooth_rows_(NumericMatrix mat, std::size_t l);
 RcppExport SEXP _detrendr_boxcar_smooth_rows_(SEXP matSEXP, SEXP lSEXP) {
@@ -462,43 +499,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
     Rcpp::traits::input_parameter< int >::type l(lSEXP);
     rcpp_result_gen = Rcpp::wrap(exp_smooth_pillars_(arr, tau, l));
-    return rcpp_result_gen;
-END_RCPP
-}
-// boxcar_smooth
-NumericVector boxcar_smooth(NumericVector vec, std::size_t l);
-RcppExport SEXP _detrendr_boxcar_smooth(SEXP vecSEXP, SEXP lSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
-    rcpp_result_gen = Rcpp::wrap(boxcar_smooth(vec, l));
-    return rcpp_result_gen;
-END_RCPP
-}
-// weighted_smooth
-NumericVector weighted_smooth(NumericVector vec, NumericVector weights);
-RcppExport SEXP _detrendr_weighted_smooth(SEXP vecSEXP, SEXP weightsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type weights(weightsSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_smooth(vec, weights));
-    return rcpp_result_gen;
-END_RCPP
-}
-// exp_smooth
-NumericVector exp_smooth(NumericVector vec, double tau, std::size_t l);
-RcppExport SEXP _detrendr_exp_smooth(SEXP vecSEXP, SEXP tauSEXP, SEXP lSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
-    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type l(lSEXP);
-    rcpp_result_gen = Rcpp::wrap(exp_smooth(vec, tau, l));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -552,13 +552,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_dbl_sum_frames_na_omit", (DL_FUNC) &_detrendr_dbl_sum_frames_na_omit, 1},
     {"_detrendr_int_mean_frames_na_omit", (DL_FUNC) &_detrendr_int_mean_frames_na_omit, 1},
     {"_detrendr_dbl_mean_frames_na_omit", (DL_FUNC) &_detrendr_dbl_mean_frames_na_omit, 1},
+    {"_detrendr_int_anyNA_pillars", (DL_FUNC) &_detrendr_int_anyNA_pillars, 1},
+    {"_detrendr_dbl_anyNA_pillars", (DL_FUNC) &_detrendr_dbl_anyNA_pillars, 1},
     {"_detrendr_sum_pillars_", (DL_FUNC) &_detrendr_sum_pillars_, 1},
     {"_detrendr_mean_pillars_", (DL_FUNC) &_detrendr_mean_pillars_, 1},
     {"_detrendr_var_pillars_", (DL_FUNC) &_detrendr_var_pillars_, 1},
     {"_detrendr_median_pillars_", (DL_FUNC) &_detrendr_median_pillars_, 1},
     {"_detrendr_brightness_pillars_", (DL_FUNC) &_detrendr_brightness_pillars_, 1},
-    {"_detrendr_int_anyNA_pillars", (DL_FUNC) &_detrendr_int_anyNA_pillars, 1},
-    {"_detrendr_dbl_anyNA_pillars", (DL_FUNC) &_detrendr_dbl_anyNA_pillars, 1},
     {"_detrendr_pillars_to_cols_", (DL_FUNC) &_detrendr_pillars_to_cols_, 1},
     {"_detrendr_cols_to_pillars_", (DL_FUNC) &_detrendr_cols_to_pillars_, 2},
     {"_detrendr_myrbernoulli_", (DL_FUNC) &_detrendr_myrbernoulli_, 2},
@@ -574,13 +574,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_detrendr_myrpois_", (DL_FUNC) &_detrendr_myrpois_, 2},
     {"_detrendr_myrpois_frames_", (DL_FUNC) &_detrendr_myrpois_frames_, 3},
     {"_detrendr_myrpois_frames_t_", (DL_FUNC) &_detrendr_myrpois_frames_t_, 3},
+    {"_detrendr_boxcar_smooth", (DL_FUNC) &_detrendr_boxcar_smooth, 2},
+    {"_detrendr_weighted_smooth", (DL_FUNC) &_detrendr_weighted_smooth, 2},
+    {"_detrendr_exp_smooth", (DL_FUNC) &_detrendr_exp_smooth, 3},
     {"_detrendr_boxcar_smooth_rows_", (DL_FUNC) &_detrendr_boxcar_smooth_rows_, 2},
     {"_detrendr_boxcar_smooth_pillars_", (DL_FUNC) &_detrendr_boxcar_smooth_pillars_, 2},
     {"_detrendr_exp_smooth_rows_", (DL_FUNC) &_detrendr_exp_smooth_rows_, 3},
     {"_detrendr_exp_smooth_pillars_", (DL_FUNC) &_detrendr_exp_smooth_pillars_, 3},
-    {"_detrendr_boxcar_smooth", (DL_FUNC) &_detrendr_boxcar_smooth, 2},
-    {"_detrendr_weighted_smooth", (DL_FUNC) &_detrendr_weighted_smooth, 2},
-    {"_detrendr_exp_smooth", (DL_FUNC) &_detrendr_exp_smooth, 3},
     {"_detrendr_square_root_", (DL_FUNC) &_detrendr_square_root_, 1},
     {"_detrendr_mat_add1s", (DL_FUNC) &_detrendr_mat_add1s, 2},
     {"_detrendr_vec_add1s", (DL_FUNC) &_detrendr_vec_add1s, 2},

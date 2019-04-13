@@ -189,7 +189,7 @@ make_thresh_filename_part <- function(img) {
         paste(collapse = ","), "_"
     )
   } else {
-    make_thresh_filename_part(rlang::set_attrs(0, thresh = list(thresh)))
+    make_thresh_filename_part(structure(0, thresh = list(thresh)))
   }
 }
 
