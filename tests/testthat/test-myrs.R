@@ -3,7 +3,7 @@ context("myrs")
 test_that("myrpois works on mac", {
   skip_if_not(get_os() == "mac")
   set.seed(1)
-  expect_equal(myrpois(-5:5), c(-4, -2, -3, -3, -2, 0, 0, 1, 5, 1, 6))
+  expect_equal(myrpois(-5:5), c(-7, -3, -7, -3, 0, 0, 1, 0, 3, 4, 3))
 })
 
 test_that("myrpois works on linux", {
@@ -23,6 +23,7 @@ test_that("myrpois works on linux", {
     }
   }
 })
+
 test_that("myrpois works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
@@ -39,9 +40,10 @@ test_that("myrbern works on mac", {
   set.seed(1)
   expect_equal(
     myrbern(seq(0.1, 0.9, length.out = 7)),
-    c(0, 0, 1, 1, 0, 0, 1)
+    c(0, 0, 0, 0, 1, 1, 1)
   )
 })
+
 test_that("myrbern works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
@@ -52,6 +54,7 @@ test_that("myrbern works on linux", {
     expect_equal(x, c(0, 1, 1, 0, 0, 1, 1))
   }
 })
+
 test_that("myrbern works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
@@ -68,6 +71,7 @@ test_that("rfromboxes works on mac", {
   set.seed(1)
   expect_equal(rfromboxes(10, 1:5), c(0, 2, 2, 1, 5))
 })
+
 test_that("rfromboxes works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
@@ -78,6 +82,7 @@ test_that("rfromboxes works on linux", {
     expect_equal(x, c(1, 2, 2, 3, 2))
   }
 })
+
 test_that("rfromboxes works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
