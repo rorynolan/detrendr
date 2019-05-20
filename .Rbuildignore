@@ -16,3 +16,4 @@
 ^codecov\.yml$
 ^revdep$
 ^pkgdown$
+^codemeta\.json$
