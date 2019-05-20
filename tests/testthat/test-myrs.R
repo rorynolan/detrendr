@@ -10,16 +10,18 @@ test_that("myrpois works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
   x <- myrpois(-5:5)
-  ans <- c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5)
-  if (filesstrings::all_equal(x, ans)) {
-    expect_equal(x, ans)
-  } else {
-    ans <- c(-9, -2, -1, -2, -2, 0, 1, 2, 2, 3, 8)
-    if (filesstrings::all_equal(x, ans)) { # r-hub fedora
+  if (getRversion() < "3.6") {
+    ans <- c(-6, -6, -5, -1, -3, 0, 1, 2, 4, 4, 5)  # travis
+    if (filesstrings::all_equal(x, ans)) {
       expect_equal(x, ans)
-    } else { # CRAN fedora
-      ans <- c(-4, -2, -3, -3, -2, 0, 0, 1, 5, 1, 6)
-      expect_equal(x, ans)
+    } else {
+      ans <- c(-9, -2, -1, -2, -2, 0, 1, 2, 2, 3, 8)
+      if (filesstrings::all_equal(x, ans)) { # r-hub fedora
+        expect_equal(x, ans)
+      } else { # CRAN fedora
+        ans <- c(-4, -2, -3, -3, -2, 0, 0, 1, 5, 1, 6)
+        expect_equal(x, ans)
+      }
     }
   }
 })
@@ -44,7 +46,8 @@ test_that("myrbern works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
   x <- myrbern(seq(0.1, 0.9, length.out = 7))
-  if (filesstrings::all_equal(x, c(0, 0, 1, 1, 0, 0, 1))) {
+  if (getRversion() < "3.6")
+  if (filesstrings::all_equal(x, c(0, 0, 0, 1, 0, 1, 1))) {  # travis
     expect_equal(x, c(0, 0, 1, 1, 0, 0, 1))
   } else { # fedora
     expect_equal(x, c(0, 1, 1, 0, 0, 1, 1))
@@ -65,17 +68,25 @@ test_that("myrbern works on windows", {
 test_that("rfromboxes works on mac", {
   skip_if_not(get_os() == "mac")
   set.seed(1)
-  expect_equal(rfromboxes(10, 1:5), c(0, 2, 2, 1, 5))
+  if (getRversion() >= "3.6") {
+    expect_equal(rfromboxes(10, 1:5), c(1, 1, 3, 2, 3))
+  } else {
+    expect_equal(rfromboxes(10, 1:5), c(0, 2, 2, 1, 5))
+  }
 })
 
 test_that("rfromboxes works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
   x <- rfromboxes(10, 1:5)
-  if (filesstrings::all_equal(x, c(0, 2, 2, 1, 5))) {
-    expect_equal(x, c(0, 2, 2, 1, 5))
-  } else { # fedora
-    expect_equal(x, c(1, 2, 2, 3, 2))
+  ans <- c(1, 2, 2, 2, 3)  # travis
+  if (getRversion() < "3.6") {
+    if (filesstrings::all_equal(x, ans)) {  # travis
+      expect_equal(x, ans)
+    } else { # fedora
+      ans <- c(1, 2, 2, 3, 2)
+      expect_equal(x, ans)
+    }
   }
 })
 
@@ -113,16 +124,24 @@ test_that("`rfromboxes()` edge cases work correctly", {
 test_that("rtoboxes works on mac", {
   skip_if_not(get_os() == "mac")
   set.seed(1)
-  expect_equal(rtoboxes(10, 4), c(0, 4, 1, 5))
+  if (getRversion() >= "3.6") {
+    expect_equal(rtoboxes(10, 4), c(1, 5, 0, 4))
+  } else {
+    expect_equal(rtoboxes(10, 4), c(0, 4, 1, 5))
+  }
 })
+
 test_that("rtoboxes works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
   x <- rtoboxes(10, 4)
-  if (filesstrings::all_equal(x, c(0, 4, 1, 5))) {
-    expect_equal(x, c(0, 4, 1, 5))
-  } else { # fedora
-    expect_equal(x, c(2, 6, 0, 2))
+  if (getRversion() < "3.6") {
+    ans <- c(2, 4, 2, 2)  # travis
+    if (filesstrings::all_equal(x, ans)) {
+      expect_equal(x, ans)
+    } else { # fedora
+      expect_equal(x, c(2, 6, 0, 2))
+    }
   }
 })
 test_that("rtoboxes works on windows", {
