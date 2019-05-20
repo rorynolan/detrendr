@@ -10,11 +10,16 @@ r:
 sudo: true
 cache: packages
 
-dist: xenial
+dist: trusty
 
-apt_packages:
-  - libtiff5-dev
-  - libgit2-dev
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-5
+      - libtiff5-dev
+      - libgit2-dev
 
 after_success:
   - travis_wait 50 Rscript -e 'covr::codecov()'
