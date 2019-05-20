@@ -28,11 +28,7 @@ test_that("myrpois works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
   myrp <- myrpois(-5:5)
-  if (filesstrings::all_equal(myrp, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))) {
-    expect_equal(myrp, c(-2, -5, -6, -2, 0, 0, 1, 0, 4, 6, 5))
-  } else { # R 3.5.0 on win-builder
-    expect_equal(myrp, c(-6, -4, -2, -1, -1, 0, 1, 6, 4, 6, 7))
-  }
+  expect_equal(myrp, c(-8, -7, -4, -3, 0, 0, 0, 1, 2, 6, 4))
 })
 
 test_that("myrbern works on mac", {
@@ -87,11 +83,7 @@ test_that("rfromboxes works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
   rfb <- rfromboxes(10, 1:5)
-  if (filesstrings::all_equal(rfb, c(0, 2, 2, 1, 5))) {
-    expect_equal(rfb, c(0, 2, 2, 1, 5))
-  } else { # R 3.5.0 on win-builder
-    expect_equal(rfb, c(1, 2, 2, 3, 2))
-  }
+  expect_equal(rfb, c(1, 2, 2, 2, 3))
 })
 
 test_that("rfromboxes errors correctly", {
@@ -137,11 +129,7 @@ test_that("rtoboxes works on windows", {
   skip_if_not(get_os() == "windows")
   set.seed(1)
   rtb <- rtoboxes(10, 4)
-  if (filesstrings::all_equal(rtb, c(0, 4, 1, 5))) {
-    expect_equal(rtb, c(0, 4, 1, 5))
-  } else { # R 3.5.0 on win-builder
-    expect_equal(rtb, c(2, 6, 0, 2))
-  }
+  expect_equal(rtb, c(2, 4, 2, 2))
 })
 
 test_that("rtoboxes errors correctly", {
