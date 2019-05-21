@@ -1,11 +1,17 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "detrendr",
   "description": "Detrend fluorescence microscopy image series for fluorescence \n    fluctuation and correlation spectroscopy ('FCS' and 'FFS') analysis. This \n    package contains functionality published in a 2016 paper \n    <doi:10.1093/bioinformatics/btx434> but it has been extended since then with\n    the Robin Hood algorithm and thus contains unpublished work.",
   "name": "detrendr: Detrend Images",
   "codeRepository": "https://www.github.com/rorynolan/detrendr",
-  "relatedLink": ["https://rorynolan.github.io/detrendr", "https://CRAN.R-project.org/package=detrendr"],
+  "relatedLink": [
+    "https://rorynolan.github.io/detrendr",
+    "https://CRAN.R-project.org/package=detrendr"
+  ],
   "issueTracker": "https://www.github.com/rorynolan/detrendr/issues",
   "license": "https://spdx.org/licenses/BSD-3-Clause",
   "version": "0.6.2",
@@ -244,6 +250,12 @@
     }
   ],
   "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.1"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "Rcpp",
@@ -504,9 +516,16 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "502.955KB",
-  "contIntegration": ["https://travis-ci.org/rorynolan/detrendr", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
-  "developmentStatus": ["http://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
+  "fileSize": "502.95KB",
+  "contIntegration": [
+    "https://travis-ci.org/rorynolan/detrendr",
+    "https://ci.appveyor.com/project/rorynolan/detrendr",
+    "https://codecov.io/github/rorynolan/detrendr?branch=master"
+  ],
+  "developmentStatus": [
+    "http://www.repostatus.org/#active",
+    "https://www.tidyverse.org/lifecycle/#stable"
+  ],
   "citation": [
     {
       "@type": "ScholarlyArticle",

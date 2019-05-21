@@ -11,7 +11,7 @@ test_that("myrpois works on linux", {
   set.seed(1)
   x <- myrpois(-5:5)
   if (getRversion() >= "3.6") {
-    ans <- c(-6, -6, -5, -1, -3, 0, 1, 2, 4, 4, 6) # travis
+    ans <- c(-6, -6, -5, -1, -3, 0, 1, 2, 4, 4, 4) # travis
     if (filesstrings::all_equal(x, ans)) {
       expect_equal(x, ans)
     } else {
