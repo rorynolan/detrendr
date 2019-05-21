@@ -19,7 +19,7 @@ test_that("myrpois works on linux", {
       if (filesstrings::all_equal(x, ans)) { # r-hub fedora
         expect_equal(x, ans)
       } else { # CRAN fedora
-        ans <- c(-4, -2, -3, -3, -2, 0, 0, 1, 5, 1, 6)
+        ans <- c(-6, -6, -5, -1, -3, 0, 1, 2, 4, 4, 6)
         expect_equal(x, ans)
       }
     }
