@@ -1,5 +1,3 @@
-context("Pillar calculations")
-
 test_that("brightness_pillars works", {
   d <- 2:4
   aaa <- array(seq_len(prod(d)), dim = d)

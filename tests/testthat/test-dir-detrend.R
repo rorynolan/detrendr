@@ -1,6 +1,5 @@
-context("Detrend directories")
-
 test_that("detrending entire derectories works", {
+  skip_if(getRversion() < "3.6.0")
   cwd <- setwd(tempdir())
   on.exit(setwd(cwd))
   orig_files <- c(
@@ -74,6 +73,21 @@ test_that("detrending entire derectories works", {
       )
     )
   }
+  if (get_os() == "linux") {
+    expect_equal(
+      dir("detrended"),
+      paste0(
+        c(
+          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
+          "bleached_detrended_thresh=Triangle=41.622_"
+        ),
+        c(
+          "boxcar_for_FFS_l=auto=NA,auto=3.tif",
+          "boxcar_for_FFS_l=auto=17.tif"
+        )
+      )
+    )
+  }
   filesstrings::dir.remove("detrended")
   set.seed(1)
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
@@ -90,6 +104,22 @@ test_that("detrending entire derectories works", {
   expect_equal(purrr::map(detrendeds, dim), purrr::map(detrendeds_dir, dim))
   expect_equal(unlist(detrendeds), unlist(detrendeds_dir))
   if (get_os() == "mac") {
+    expect_equal(
+      dir("detrended"),
+      paste0(
+        c(
+          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
+          "bleached_detrended_thresh=Triangle=41.622_"
+        ),
+        "exponential_",
+        c(
+          "for_FFS_tau=auto=NA,auto=NA.tif",
+          "for_FFS_tau=auto=22.0703125.tif"
+        )
+      )
+    )
+  }
+  if (get_os() == "linux") {
     expect_equal(
       dir("detrended"),
       paste0(
@@ -123,19 +153,36 @@ test_that("detrending entire derectories works", {
     purrr::map(ijtiff::read_tif, msg = FALSE)
   expect_equal(purrr::map(detrendeds, dim), purrr::map(detrendeds_dir, dim))
   expect_equal(unlist(detrendeds), unlist(detrendeds_dir))
-  expect_equal(
-    dir("detrended"),
-    paste0(
-      c(
-        "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-        "bleached_detrended_thresh=Triangle=41.622_"
-      ),
-      c(
-        "polynomial_for_FFS_degree=2,2.tif",
-        "polynomial_for_FFS_degree=2.tif"
+  if (get_os() == "mac") {
+    expect_equal(
+      dir("detrended"),
+      paste0(
+        c(
+          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
+          "bleached_detrended_thresh=Triangle=41.622_"
+        ),
+        c(
+          "polynomial_for_FFS_degree=2,2.tif",
+          "polynomial_for_FFS_degree=2.tif"
+        )
       )
     )
-  )
+  }
+  if (get_os() == "linux") {
+    expect_equal(
+      dir("detrended"),
+      paste0(
+        c(
+          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
+          "bleached_detrended_thresh=Triangle=41.622_"
+        ),
+        c(
+          "polynomial_for_FFS_degree=2,2.tif",
+          "polynomial_for_FFS_degree=2.tif"
+        )
+      )
+    )
+  }
   filesstrings::dir.remove("detrended")
   set.seed(1)
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
@@ -148,19 +195,36 @@ test_that("detrending entire derectories works", {
     purrr::map(ijtiff::read_tif, msg = FALSE)
   expect_equal(purrr::map(detrendeds, dim), purrr::map(detrendeds_dir, dim))
   expect_equal(unlist(detrendeds), unlist(detrendeds_dir))
-  expect_equal(
-    dir("detrended"),
-    paste0(
-      c(
-        "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-        "bleached_detrended_thresh=Triangle=41.622_"
-      ),
-      c(
-        "robinhood_swaps=222,222.tif",
-        "robinhood_swaps=222.tif"
+  if (get_os() == "mac") {
+    expect_equal(
+      dir("detrended"),
+      paste0(
+        c(
+          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
+          "bleached_detrended_thresh=Triangle=41.622_"
+        ),
+        c(
+          "robinhood_swaps=222,222.tif",
+          "robinhood_swaps=222.tif"
+        )
       )
     )
-  )
+  }
+  if (get_os() == "linux") {
+    expect_equal(
+      dir("detrended"),
+      paste0(
+        c(
+          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
+          "bleached_detrended_thresh=Triangle=41.622_"
+        ),
+        c(
+          "robinhood_swaps=222,222.tif",
+          "robinhood_swaps=222.tif"
+        )
+      )
+    )
+  }
   filesstrings::dir.remove("detrended")
   file.remove(dir(pattern = "tif$"))
   setwd(cwd)

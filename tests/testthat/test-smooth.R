@@ -1,5 +1,3 @@
-context("Smoothing")
-
 test_that("cpp smoothing functions work", {
   v <- runif(10)
   expect_equal(boxcar_smooth(v, 1), weighted_smooth(v, rep(1, 3)))
