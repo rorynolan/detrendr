@@ -82,7 +82,7 @@ test_that("detrending entire derectories works", {
           "bleached_detrended_thresh=Triangle=41.622_"
         ),
         c(
-          "boxcar_for_FFS_l=auto=NA,auto=3.tif",
+          "boxcar_for_FFS_l=auto=NA,auto=2.tif",
           "boxcar_for_FFS_l=auto=17.tif"
         )
       )
@@ -129,8 +129,8 @@ test_that("detrending entire derectories works", {
         ),
         "exponential_",
         c(
-          "for_FFS_tau=auto=NA,auto=NA.tif",
-          "for_FFS_tau=auto=22.0703125.tif"
+          "for_FFS_tau=auto=51.55029296875,auto=NA.tif",
+          "for_FFS_tau=auto=19.3359375.tif"
         )
       )
     )

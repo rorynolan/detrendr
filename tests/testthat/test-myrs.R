@@ -11,7 +11,7 @@ test_that("myrpois works on linux", {
   set.seed(1)
   x <- myrpois(-5:5)
   if (getRversion() >= "3.6") {
-    expect_equal(x, ans)
+    expect_equal(x, c(-7, -3, -7, -3, 0, 0, 1, 0, 3, 4, 3))
   }
 })
 
