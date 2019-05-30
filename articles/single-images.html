@@ -146,8 +146,7 @@
 <p><img src="single-images_files/figure-html/display-thresholded-mean-1.png" width="672"></p>
 <p>That seems to have worked: the background region in the top left is now greyed out, indicating that it has been set to <code>NA</code>. <em>Huang</em> thresholding can be slow, so if you want something similar but faster, try <em>Triangle</em>. Always check that your thresholding <em>looks right</em> afterwards.</p>
 <p>Thresholding of images is done with the <code>autothresholdr</code> package. Thresholding of a stack is preformed with <code>mean_stack_thresh()</code> which thresholds away pixels in the stack whose mean intensity is less than a certain threshold value.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pacman<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/pacman/topics/p_load">p_load</a></span>(autothresholdr)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">my_img_threshed &lt;-<span class="st"> </span><span class="kw">mean_stack_thresh</span>(my_img, <span class="st">"Huang"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">my_img_threshed &lt;-<span class="st"> </span>autothresholdr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/autothresholdr/topics/mean_stack_thresh">mean_stack_thresh</a></span>(my_img, <span class="st">"Huang"</span>)</a></code></pre></div>
 <p>Note that if all of the image is of interest, detrending is not necessary and should not be done.</p>
 </div>
 <div id="detrending" class="section level2">
