@@ -86,7 +86,7 @@
       <h1>Detrending single images</h1>
                         <h4 class="author">Rory Nolan</h4>
             
-            <h4 class="date">2019-05-30</h4>
+            <h4 class="date">2019-05-31</h4>
       
       
       <div class="hidden name"><code>single-images.Rmd</code></div>
@@ -108,7 +108,7 @@
 <pre><code>#&gt; [1] "/home/travis/R/Library/detrendr/extdata/2ch100frame.tif"</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_img &lt;-<span class="st"> </span><span class="kw">read_tif</span>(path)</a></code></pre></div>
 <pre><code>#&gt; Reading 2ch100frame.tif: an 8-bit, 30x28 pixel image of
-#&gt; unsigned integer type with 2 channels and 100 frames . . .</code></pre>
+#&gt; unsigned integer type. Reading 2 channels and 100 frames . . .</code></pre>
 <pre><code>#&gt;  Done.</code></pre>
 <p><code>my_img</code> is now a 4-dimensional array. Slots 1 and 2 hold the <code>y</code> and <code>x</code> pixel positions, slot 3 indexes the channel and slot 4 indexes the frame.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(my_img)</a></code></pre></div>

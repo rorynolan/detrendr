@@ -186,8 +186,9 @@ https://doi.org/10.1093/bioinformatics/btx434.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>## These examples are not run on CRAN because they take too long.</span>
 <span class='co'>## You can still try them for yourself.</span>
-<span class='no'>img</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ijtiff</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ijtiff/topics/read_tif'>read_tif</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'bleached.tif'</span>,
-                                    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'detrendr'</span>))
+<span class='no'>img</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ijtiff</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ijtiff/topics/read_tif'>read_tif</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"bleached.tif"</span>,
+  <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"detrendr"</span>
+))
 <span class='fu'>best_l</span>(<span class='no'>img</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='st'>"FFS"</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>

@@ -247,9 +247,13 @@ nice to have that taken care of should you want it.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>())
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"bleached.tif"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"detrendr"</span>),
-            <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"img"</span>, <span class='st'>"2ch_ij.tif"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ijtiff"</span>)),
-          <span class='st'>"."</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.copy</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"bleached.tif"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"detrendr"</span>),
+    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"img"</span>, <span class='st'>"2ch_ij.tif"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ijtiff"</span>)
+  ),
+  <span class='st'>"."</span>
+)
 <span class='fu'>dir_detrend_robinhood</span>(<span class='kw'>thresh</span> <span class='kw'>=</span> <span class='st'>"huang"</span>)
 <span class='fu'>dir_detrend_boxcar</span>(<span class='kw'>l</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='st'>"tri"</span>, <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='st'>"FFS"</span>)
 <span class='fu'>dir_detrend_exp</span>(<span class='kw'>tau</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='st'>"tri"</span>, <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='st'>"FCS"</span>)
