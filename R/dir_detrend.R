@@ -127,9 +127,9 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
     purpose %<>%
       filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
   }
+  if (endsWith(path, "/")) path %<>% filesstrings::before_last("/+$")
   need_to_change_dir <- stringr::str_detect(path, "/")
   if (need_to_change_dir) {
-    if (endsWith(path, "/")) path %<>% filesstrings::before_last("/+$")
     dir <- filesstrings::str_before_last(path, "/")
     path %<>% filesstrings::str_after_last("/")
     checkmate::assert_directory_exists(dir)
