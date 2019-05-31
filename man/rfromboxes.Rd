@@ -29,7 +29,6 @@ from each. An empty box cannot be drawn from.
 balls <- 1:10
 rfromboxes(40, balls)
 rfromboxes(40, balls, weights = c(rep(1, 9), 0))
-
 }
 \seealso{
 rtoboxes

@@ -65,8 +65,9 @@ rows_detrend_l_specified_mean_b <- function(mat, l, purpose, parallel) {
 #' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You can still try them for yourself.
-#' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-#'                                     package = 'detrendr'))
+#' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+#'   package = "detrendr"
+#' ))
 #' best_l(img, parallel = 2, purpose = "FFS")
 #' }
 #'
@@ -113,7 +114,9 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
       "and just", sum(img > 0), "of them are greater than zero."
     )
     if (is.na(sim_brightness)) stop(msg)
-    if (sim_brightness <= 1) return(NA)
+    if (sim_brightness <= 1) {
+      return(NA)
+    }
     maxl <- d[3] - 1
     big_l <- min(10, maxl)
     big_l_old <- big_l
@@ -154,7 +157,9 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
         if (is.na(mean_brightness_big_l_old)) stop(msg)
       }
     }
-    if (mean_brightness_big_l_old == 1) return(round(big_l_old))
+    if (mean_brightness_big_l_old == 1) {
+      return(round(big_l_old))
+    }
     l_upper <- big_l
     l_lower <- big_l_old
     mean_brightness_l_upper <- mean_brightness_big_l
@@ -183,7 +188,7 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
   } else {
     purrr::map_int(
       seq_len(d[3]),
-      ~best_l(img[, , ., , drop = FALSE],
+      ~ best_l(img[, , ., , drop = FALSE],
         purpose = purpose,
         parallel = parallel
       )

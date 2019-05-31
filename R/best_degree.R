@@ -49,8 +49,9 @@ cols_detrend_degree_specified_mean_b <- function(mat, degree, purpose,
 #' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You can still try them for yourself.
-#' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-#'                                     package = 'detrendr'))
+#' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+#'   package = "detrendr"
+#' ))
 #' best_degree(img, parallel = 2)
 #' }
 #' @export
@@ -96,7 +97,9 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
       "and just", sum(img > 0), "of them are greater than zero."
     )
     if (is.na(sim_brightness)) stop(msg)
-    if (sim_brightness <= 1) return(NA)
+    if (sim_brightness <= 1) {
+      return(NA)
+    }
     lower_degree <- 0
     lower_degree_brightness <- sim_brightness
     upper_degree <- 1
@@ -135,7 +138,7 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
   } else {
     purrr::map_int(
       seq_len(d[3]),
-      ~best_degree(img[, , ., , drop = FALSE],
+      ~ best_degree(img[, , ., , drop = FALSE],
         purpose = purpose,
         parallel = parallel
       )

@@ -74,19 +74,25 @@ test_that("detrending entire derectories works", {
     )
   }
   if (get_os() == "linux") {
-    expect_equal(
-      dir("detrended"),
-      paste0(
-        c(
-          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=41.622_"
-        ),
-        c(
-          "boxcar_for_FFS_l=auto=NA,auto=2.tif",
-          "boxcar_for_FFS_l=auto=17.tif"
-        )
+    dd <- dir("detrended")
+    ans0 <- paste0(
+      c(
+        "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
+        "bleached_detrended_thresh=Triangle=41.622_"
+      ),
+      c(
+        "boxcar_for_FFS_l=auto=NA,auto=2.tif",
+        "boxcar_for_FFS_l=auto=17.tif"
       )
     )
+    ans1 <- stringr::str_replace(ans0, "17", "15")  # fedora
+    if (filesstrings::all_equal(dd, ans0)) {
+      expect_equal(dd, ans0)
+    } else if (filesstrings::all_equal(dd, ans1)) {
+      expect_equal(dd, ans1)
+    } else {
+      expect_equal(dd, ans0)
+    }
   }
   filesstrings::dir.remove("detrended")
   set.seed(1)
@@ -140,7 +146,7 @@ test_that("detrending entire derectories works", {
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
     method = "tri"
   ) %>%
-    purrr::map(~suppressWarnings(img_detrend_polynom(.,
+    purrr::map(~ suppressWarnings(img_detrend_polynom(.,
       degree = 2,
       purpose = "ff"
     )))

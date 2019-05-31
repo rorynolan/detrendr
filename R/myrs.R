@@ -50,7 +50,6 @@ myrbern <- function(p, parallel = FALSE) {
 #' balls <- 1:10
 #' rfromboxes(40, balls)
 #' rfromboxes(40, balls, weights = c(rep(1, 9), 0))
-#'
 #' @export
 rfromboxes <- function(n, balls, weights = NULL) {
   checkmate::assert_number(n, lower = 0)
@@ -59,7 +58,9 @@ rfromboxes <- function(n, balls, weights = NULL) {
   if (is.null(weights)) quick[2] <- TRUE
   if (is.null(weights)) weights <- rep(1, length(balls))
   checkmate::assert_numeric(weights, lower = 0, any.missing = FALSE)
-  if (floor(n) == 0) return(rep(0, length(balls)))
+  if (floor(n) == 0) {
+    return(rep(0, length(balls)))
+  }
   checkmate::assert_number(n, lower = 1)
   if (n > sum(balls)) {
     stop(
@@ -99,9 +100,10 @@ rfromboxes <- function(n, balls, weights = NULL) {
 #' @examples
 #' rtoboxes(30, 7)
 #' rtoboxes(30, 7, capacities = c(rep(1, 3), rep(7, 4)))
-#' rtoboxes(30, 7, capacities = c(rep(1, 3), rep(70, 4)),
-#'          weights = c(rep(0.1, 6), 1))
-#'
+#' rtoboxes(30, 7,
+#'   capacities = c(rep(1, 3), rep(70, 4)),
+#'   weights = c(rep(0.1, 6), 1)
+#' )
 #' @export
 rtoboxes <- function(n, boxes, weights = NULL, capacities = NULL) {
   checkmate::assert_number(n, lower = 0, na.ok = FALSE)
@@ -137,7 +139,9 @@ rtoboxes <- function(n, boxes, weights = NULL, capacities = NULL) {
       )
     }
   }
-  if (n == 0) return(rep(0, boxes))
+  if (n == 0) {
+    return(rep(0, boxes))
+  }
   capacities[is.infinite(capacities)] <- -1 # infinite capacity allowed
   rtoboxes_(
     n = n, boxes = boxes, weights = weights, capacities = capacities,

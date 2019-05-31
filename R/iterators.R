@@ -1,5 +1,7 @@
 iter_mat_col_sets <- function(mat, n_sets) {
-  if (n_sets < 2) return(mat)
+  if (n_sets < 2) {
+    return(mat)
+  }
   if (n_sets >= ncol(mat)) {
     return(iterators::iapply(mat, 2))
   } else {

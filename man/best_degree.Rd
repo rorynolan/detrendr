@@ -41,8 +41,9 @@ detrending.
 \dontrun{
 ## These examples are not run on CRAN because they take too long.
 ## You can still try them for yourself.
-img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-                                    package = 'detrendr'))
+img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+  package = "detrendr"
+))
 best_degree(img, parallel = 2)
 }
 }

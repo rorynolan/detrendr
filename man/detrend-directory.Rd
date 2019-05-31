@@ -98,11 +98,16 @@ nice to have that taken care of should you want it.
 \examples{
 \dontrun{
 setwd(tempdir())
-file.copy(c(system.file("extdata", "bleached.tif", package = "detrendr"),
-            system.file("img", "2ch_ij.tif", package = "ijtiff")),
-          ".")
+file.copy(
+  c(
+    system.file("extdata", "bleached.tif", package = "detrendr"),
+    system.file("img", "2ch_ij.tif", package = "ijtiff")
+  ),
+  "."
+)
 dir_detrend_robinhood(thresh = "huang")
 dir_detrend_boxcar(l = "auto", thresh = "tri", purpose = "FFS")
 dir_detrend_exp(tau = "auto", thresh = "tri", purpose = "FCS")
-dir_detrend_polynom(degree = "auto", thresh = "huang", purpose = "FFS")}
+dir_detrend_polynom(degree = "auto", thresh = "huang", purpose = "FFS")
+}
 }

@@ -33,7 +33,9 @@ img_detrend_tau_specified <- function(arr3d, tau, cutoff, purpose,
     }
   }
   checkmate::assert_array(arr3d, d = 3)
-  if (is.na(tau)) return(arr3d)
+  if (is.na(tau)) {
+    return(arr3d)
+  }
   d <- dim(arr3d)
   l <- min(floor(-tau * log(cutoff)), d[3] %>% {
     (. - 1) + (. - 2)
@@ -53,7 +55,9 @@ img_detrend_l_specified <- function(arr3d, l, purpose, parallel) {
     }
   }
   checkmate::assert_array(arr3d, d = 3)
-  if (is.na(l)) return(arr3d)
+  if (is.na(l)) {
+    return(arr3d)
+  }
   d <- dim(arr3d)
   l <- min(l, d[3] %>% {
     (. - 1) + (. - 2)
@@ -74,8 +78,9 @@ img_detrend_degree_specified <- function(arr3d, degree, purpose,
     }
   }
   checkmate::assert_array(arr3d, d = 3)
-  if (is.na(degree)) return(arr3d)
-  d <- dim(arr3d)
+  if (is.na(degree)) {
+    return(arr3d)
+  }
   smoothed <- poly_fit_pillars(arr3d, degree, parallel = parallel)
   img_detrend_smoothed(arr3d, smoothed,
     purpose = purpose,
@@ -153,7 +158,9 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
   ) %>%
     rep(seq_along(.), times = .) %>%
     {
-      if (length(.) <= 1) return(.)
+      if (length(.) <= 1) {
+        return(.)
+      }
       sample(.)
     }
   elems_getting <- cbind(px_getting, frames_getting) %>%
@@ -250,8 +257,9 @@ NULL
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You can still try them for yourself.
 #'
-#' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-#'                                     package = 'detrendr'))
+#' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+#'   package = "detrendr"
+#' ))
 #' corrected <- img_detrend_rh(img)
 #' corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs", parallel = 2)
 #' corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs", parallel = 2)

@@ -106,8 +106,9 @@ series to remove the trend detailed by this polynomial fit.}
 ## These examples are not run on CRAN because they take too long.
 ## You can still try them for yourself.
 
-img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-                                    package = 'detrendr'))
+img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+  package = "detrendr"
+))
 corrected <- img_detrend_rh(img)
 corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs", parallel = 2)
 corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs", parallel = 2)

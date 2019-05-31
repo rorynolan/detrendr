@@ -39,8 +39,9 @@ rows_detrend_tau_specified_mean_b <- function(mat, tau, l, purpose,
 #' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You can still try them for yourself.
-#' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-#'                                     package = 'detrendr'))[, , 1, ]
+#' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+#'   package = "detrendr"
+#' ))[, , 1, ]
 #' best_tau(img, parallel = 2)
 #' }
 #'
@@ -88,7 +89,9 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
       "and just", sum(img > 0), "of them are greater than zero."
     )
     if (is.na(sim_brightness)) stop(msg)
-    if (sim_brightness <= 1) return(NA)
+    if (sim_brightness <= 1) {
+      return(NA)
+    }
     big_tau <- 100
     big_tau_old <- big_tau
     max_l <- ncol(sim_mat) %>% {
@@ -151,7 +154,7 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
   } else {
     purrr::map_dbl(
       seq_len(d[3]),
-      ~best_tau(img[, , ., , drop = FALSE],
+      ~ best_tau(img[, , ., , drop = FALSE],
         cutoff = cutoff, purpose = purpose,
         parallel = parallel
       )

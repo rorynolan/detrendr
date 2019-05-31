@@ -40,8 +40,13 @@ apply_on_pillars <- function(arr3d, FUN) {
   }
 }
 
-## Convert array indices to vector indices.
-## Just a faster version of arrayhelpers::array2vec().
+#' Convert array indices to vector indices.
+#'
+#' Just a faster version of arrayhelpers::array2vec().
+#'
+#' @inheritParams arrayhelpers::array2vec
+#'
+#' @noRd
 myarray2vec <- function(iarr, dim) {
   if (!is.matrix(iarr)) {
     dim(iarr) <- c(1, length(iarr))

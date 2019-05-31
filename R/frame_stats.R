@@ -8,10 +8,9 @@
 #' @return A numeric vector.
 #'
 #' @examples
-#' a <- array(seq_len(2 ^ 3), dim = rep(2, 3))
+#' a <- array(seq_len(2^3), dim = rep(2, 3))
 #' sum_frames(a)
 #' mean_frames(a)
-#'
 #' @export
 mean_frames <- function(arr3d, na_rm = FALSE) {
   checkmate::assert_numeric(arr3d)

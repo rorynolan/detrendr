@@ -28,13 +28,18 @@
 #' @examples
 #' \dontrun{
 #' setwd(tempdir())
-#' file.copy(c(system.file("extdata", "bleached.tif", package = "detrendr"),
-#'             system.file("img", "2ch_ij.tif", package = "ijtiff")),
-#'           ".")
+#' file.copy(
+#'   c(
+#'     system.file("extdata", "bleached.tif", package = "detrendr"),
+#'     system.file("img", "2ch_ij.tif", package = "ijtiff")
+#'   ),
+#'   "."
+#' )
 #' dir_detrend_robinhood(thresh = "huang")
 #' dir_detrend_boxcar(l = "auto", thresh = "tri", purpose = "FFS")
 #' dir_detrend_exp(tau = "auto", thresh = "tri", purpose = "FCS")
-#' dir_detrend_polynom(degree = "auto", thresh = "huang", purpose = "FFS")}
+#' dir_detrend_polynom(degree = "auto", thresh = "huang", purpose = "FFS")
+#' }
 NULL
 
 #' @rdname detrend-directory
@@ -43,9 +48,7 @@ dir_detrend_robinhood <- function(folder_path = ".", swaps = "auto",
                                   thresh = NULL, quick = FALSE,
                                   msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
-  cwd <- getwd()
-  on.exit(setwd(cwd))
-  setwd(folder_path)
+  withr::local_dir(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend,
     method = "R",
@@ -64,9 +67,7 @@ dir_detrend_rh <- dir_detrend_robinhood
 dir_detrend_boxcar <- function(folder_path = ".", l, purpose = c("FCS", "FFS"),
                                thresh = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
-  cwd <- getwd()
-  on.exit(setwd(cwd))
-  setwd(folder_path)
+  withr::local_dir(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "box",
     parameter = l,
@@ -81,9 +82,7 @@ dir_detrend_boxcar <- function(folder_path = ".", l, purpose = c("FCS", "FFS"),
 dir_detrend_exp <- function(folder_path = ".", tau, purpose = c("FCS", "FFS"),
                             thresh = NULL, parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
-  cwd <- getwd()
-  on.exit(setwd(cwd))
-  setwd(folder_path)
+  withr::local_dir(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "exp",
     parameter = tau,
@@ -99,9 +98,7 @@ dir_detrend_polynom <- function(folder_path = ".", degree,
                                 purpose = c("FCS", "FFS"), thresh = NULL,
                                 parallel = FALSE, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
-  cwd <- getwd()
-  on.exit(setwd(cwd))
-  setwd(folder_path)
+  withr::local_dir(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "poly",
     parameter = degree,
@@ -132,11 +129,11 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
   }
   need_to_change_dir <- stringr::str_detect(path, "/")
   if (need_to_change_dir) {
+    if (endsWith(path, "/")) path %<>% filesstrings::before_last("/+$")
     dir <- filesstrings::str_before_last(path, "/")
-    cwd <- getwd()
-    on.exit(setwd(cwd))
-    setwd(dir)
     path %<>% filesstrings::str_after_last("/")
+    checkmate::assert_directory_exists(dir)
+    withr::local_dir(dir)
   }
   img <- ijtiff::read_tif(path, msg = msg)
   if (msg) message("Detrending ", path, " . . .")
@@ -216,8 +213,9 @@ make_detrended_filename_ending <- function(img) {
   if ("thresh" %in% names(attributes(img))) {
     thresh_part <- make_thresh_filename_part(img)
   }
-  purpose <- dplyr::if_else(method == "robinhood",
-                            "", paste0("_for_", purpose)
+  purpose <- dplyr::if_else(
+    method == "robinhood",
+    "", paste0("_for_", purpose)
   )
   parameter <- paste(paste0(auto, parameter), collapse = ",")
   paste0(

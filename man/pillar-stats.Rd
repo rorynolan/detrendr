@@ -37,10 +37,9 @@ For an \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{img} (indexed as \
 median and variance of each pillar for each channel.
 }
 \examples{
-aaa <- array(seq_len(2 ^ 4), dim = rep(2, 4))  # a 2-channel, 2-frame array
+aaa <- array(seq_len(2^4), dim = rep(2, 4)) # a 2-channel, 2-frame array
 sum_pillars(aaa)
 mean_pillars(aaa)
 median_pillars(aaa)
 var_pillars(aaa)
-
 }

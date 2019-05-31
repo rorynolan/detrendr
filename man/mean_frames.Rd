@@ -21,8 +21,7 @@ A numeric vector.
 Frame \code{i} of a 3-dimensional array \code{arr3d} is defined as \code{arr3d[, , i]}.
 }
 \examples{
-a <- array(seq_len(2 ^ 3), dim = rep(2, 3))
+a <- array(seq_len(2^3), dim = rep(2, 3))
 sum_frames(a)
 mean_frames(a)
-
 }

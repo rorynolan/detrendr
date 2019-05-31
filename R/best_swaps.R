@@ -27,7 +27,9 @@ mat_swap_n_more <- function(mat, mat_orig, n, frame_weights, frame_balls,
   ) %>%
     rep(seq_along(.), times = .) %>%
     {
-      if (length(.) <= 1) return(.)
+      if (length(.) <= 1) {
+        return(.)
+      }
       sample(.)
     }
   winner_frames <- plyr::count(frames_getting) %>%
@@ -57,9 +59,11 @@ mat_swap_n_more <- function(mat, mat_orig, n, frame_weights, frame_balls,
 #' \dontrun{
 #' ## These examples are not run on CRAN because they take too long.
 #' ## You can still try them for yourself.
-#' img <- ijtiff::read_tif(system.file('extdata', 'bleached.tif',
-#'                                     package = 'detrendr'))
-#' best_swaps(img)}
+#' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
+#'   package = "detrendr"
+#' ))
+#' best_swaps(img)
+#' }
 #'
 #' @export
 best_swaps <- function(img, quick = FALSE) {
@@ -86,13 +90,17 @@ best_swaps <- function(img, quick = FALSE) {
     }
     newest <- purrr::rerun(9, best_swaps_naive(img)) %>%
       purrr::map_int(1)
-    if (filesstrings::all_equal(stats::median(newest), 0)) return(0L)
-    mean_b_epss <- purrr::map_dbl(newest, ~mean_b_eps(img, .))
+    if (filesstrings::all_equal(stats::median(newest), 0)) {
+      return(0L)
+    }
+    mean_b_epss <- purrr::map_dbl(newest, ~ mean_b_eps(img, .))
     mean_b_epss_std_mad_rel <- std_mad_rel(mean_b_epss)
     while (mean_b_epss_std_mad_rel > 0.05) {
       new_best_swaps_naive <- best_swaps_naive(img)
       newest %<>% c(new_best_swaps_naive)
-      if (filesstrings::all_equal(stats::median(newest), 0)) return(0L)
+      if (filesstrings::all_equal(stats::median(newest), 0)) {
+        return(0L)
+      }
       mean_b_epss %<>% c(mean_b_eps(img, new_best_swaps_naive))
       mean_b_epss_std_mad_rel <- std_mad_rel(mean_b_epss)
     }
@@ -105,7 +113,7 @@ best_swaps <- function(img, quick = FALSE) {
       sigmoid::relu() %>%
       as.integer()
   } else {
-    purrr::map_int(seq_len(d[3]), ~best_swaps(img[, , ., , drop = FALSE],
+    purrr::map_int(seq_len(d[3]), ~ best_swaps(img[, , ., , drop = FALSE],
       quick = quick
     ))
   }
@@ -157,7 +165,9 @@ best_swaps_naive <- function(img) {
     "and just", sum(img > 0), "of them are greater than zero."
   )
   if (is.na(sim_mean_b)) stop(msg)
-  if (sim_mean_b <= 1) return(0L)
+  if (sim_mean_b <= 1) {
+    return(0L)
+  }
   sim_px_sums <- sum_rows(sim_mat)
   sim_px_means <- sim_px_sums / ncol(sim_mat)
   sim_frame_sums <- sum_cols(sim_mat)

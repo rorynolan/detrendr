@@ -68,7 +68,7 @@ test_that("rfromboxes works on linux", {
   skip_if_not(get_os() == "linux")
   set.seed(1)
   x <- rfromboxes(10, 1:5)
-  ans <- c(1, 2, 2, 2, 3)  # travis
+  ans <- c(1, 2, 2, 2, 3) # travis
   if (getRversion() >= "3.6") {
     expect_equal(x, ans)
   }
@@ -122,7 +122,7 @@ test_that("rtoboxes works on linux", {
   set.seed(1)
   x <- rtoboxes(10, 4)
   if (getRversion() >= "3.6") {
-    ans <- c(2, 4, 2, 2)  # travis
+    ans <- c(2, 4, 2, 2) # travis
     expect_equal(x, ans)
   }
 })

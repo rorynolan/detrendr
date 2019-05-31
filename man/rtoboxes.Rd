@@ -27,9 +27,10 @@ Given a number of boxes, randomly distribute \emph{n} balls into these boxes.
 \examples{
 rtoboxes(30, 7)
 rtoboxes(30, 7, capacities = c(rep(1, 3), rep(7, 4)))
-rtoboxes(30, 7, capacities = c(rep(1, 3), rep(70, 4)),
-         weights = c(rep(0.1, 6), 1))
-
+rtoboxes(30, 7,
+  capacities = c(rep(1, 3), rep(70, 4)),
+  weights = c(rep(0.1, 6), 1)
+)
 }
 \seealso{
 rfromboxes

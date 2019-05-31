@@ -28,5 +28,4 @@ of each pillar.
 \examples{
 aaa <- array(1:16, dim = c(2, 2, 4))
 brightness_pillars(aaa)
-
 }

@@ -383,20 +383,20 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=ijtiff"
+      "sameAs": "https://github.com/ropensci/ijtiff"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "autothresholdr",
       "name": "autothresholdr",
-      "version": ">= 1.3.0",
+      "version": ">= 1.3.3",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=autothresholdr"
+      "sameAs": "https://github.com/rorynolan/autothresholdr"
     },
     {
       "@type": "SoftwareApplication",
@@ -427,14 +427,14 @@
       "@type": "SoftwareApplication",
       "identifier": "filesstrings",
       "name": "filesstrings",
-      "version": ">= 3.1.1",
+      "version": ">= 3.1.3",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=filesstrings"
+      "sameAs": "https://github.com/rorynolan/filesstrings"
     },
     {
       "@type": "SoftwareApplication",
@@ -511,12 +511,25 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "withr",
+      "name": "withr",
+      "version": ">= 2.1.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=withr"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "https://sysreqs.r-hub.io/get/gnumake"
     }
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "502.95KB",
+  "fileSize": "502.853KB",
   "contIntegration": [
     "https://travis-ci.org/rorynolan/detrendr",
     "https://ci.appveyor.com/project/rorynolan/detrendr",

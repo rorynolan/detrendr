@@ -13,12 +13,11 @@
 #'   ch, ])`, or `var(img[y, x, ch, ])`.
 #'
 #' @examples
-#' aaa <- array(seq_len(2 ^ 4), dim = rep(2, 4))  # a 2-channel, 2-frame array
+#' aaa <- array(seq_len(2^4), dim = rep(2, 4)) # a 2-channel, 2-frame array
 #' sum_pillars(aaa)
 #' mean_pillars(aaa)
 #' median_pillars(aaa)
 #' var_pillars(aaa)
-#'
 #' @name pillar-stats
 NULL
 
@@ -35,7 +34,7 @@ sum_pillars <- function(img, parallel = FALSE) {
     out <- sum_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~sum_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~ sum_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -56,7 +55,7 @@ mean_pillars <- function(img, parallel = FALSE) {
     out <- mean_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~mean_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~ mean_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -77,7 +76,7 @@ median_pillars <- function(img, parallel = FALSE) {
     out <- median_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~median_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~ median_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -98,7 +97,7 @@ var_pillars <- function(img, parallel = FALSE) {
     out <- var_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~var_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~ var_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
@@ -122,7 +121,6 @@ var_pillars <- function(img, parallel = FALSE) {
 #' @examples
 #' aaa <- array(1:16, dim = c(2, 2, 4))
 #' brightness_pillars(aaa)
-#'
 #' @export
 brightness_pillars <- function(img, parallel = FALSE) {
   checkmate::assert_numeric(img)
@@ -135,7 +133,7 @@ brightness_pillars <- function(img, parallel = FALSE) {
     out <- brightness_pillars_(img)
     d[3:4] <- 1
   } else {
-    out <- purrr::map(seq_len(d[3]), ~brightness_pillars_(img[, , ., ])) %>%
+    out <- purrr::map(seq_len(d[3]), ~ brightness_pillars_(img[, , ., ])) %>%
       unlist()
     d[4] <- 1
   }
