@@ -1,5 +1,6 @@
 test_that("detrending entire derectories works", {
   skip_if(getRversion() < "3.6.0")
+  skip_on_cran()
   cwd <- setwd(tempdir())
   on.exit(setwd(cwd))
   orig_files <- c(
