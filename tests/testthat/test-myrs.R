@@ -8,6 +8,7 @@ test_that("myrpois works on mac", {
 test_that("myrpois works on linux", {
   skip_if(getRversion() < "3.6.0")
   skip_if_not(get_os() == "linux")
+  skip_on_cran()
   set.seed(1)
   x <- myrpois(-5:5)
   expect_equal(x, c(-6, -6, -5, -1, -3, 0, 1, 2, 4, 4, 4))
@@ -34,6 +35,7 @@ test_that("myrbern works on mac", {
 test_that("myrbern works on linux", {
   skip_if(getRversion() < "3.6.0")
   skip_if_not(get_os() == "linux")
+  skip_on_cran()
   set.seed(1)
   x <- myrbern(seq(0.1, 0.9, length.out = 7))
   if (getRversion() >= "3.6") {
@@ -66,6 +68,7 @@ test_that("rfromboxes works on mac", {
 test_that("rfromboxes works on linux", {
   skip_if(getRversion() < "3.6.0")
   skip_if_not(get_os() == "linux")
+  skip_on_cran()
   set.seed(1)
   x <- rfromboxes(10, 1:5)
   ans <- c(1, 2, 2, 2, 3) # travis
@@ -119,6 +122,7 @@ test_that("rtoboxes works on mac", {
 test_that("rtoboxes works on linux", {
   skip_if(getRversion() < "3.6.0")
   skip_if_not(get_os() == "linux")
+  skip_on_cran()
   set.seed(1)
   x <- rtoboxes(10, 4)
   if (getRversion() >= "3.6") {
