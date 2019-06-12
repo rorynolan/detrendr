@@ -29,14 +29,14 @@ Imports:
     Rcpp (>= 1.0.1),
     RcppParallel,
     parallel,
-    checkmate (>= 1.9.1),
+    checkmate (>= 1.9.3),
     magrittr (>= 1.5),
     dplyr,
     foreach,
     doParallel,
     iterators,
     purrr,
-    ijtiff (>= 1.5.1),
+    ijtiff (>= 2.0.0),
     autothresholdr (>= 1.3.3),
     rlang (>= 0.3.3),
     stringr,
@@ -48,7 +48,6 @@ Imports:
     stringi,
     assertthat,
     withr (>= 2.1.0)
-Remotes: rorynolan/strex, rorynolan/filesstrings, ropensci/ijtiff, rorynolan/autothresholdr
 URL: https://rorynolan.github.io/detrendr, https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.1.1
