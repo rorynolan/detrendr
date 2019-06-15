@@ -1,3 +1,9 @@
+## `detrendr` 0.6.1
+
+#### BUG FIXES
+* Require necessary version of `glue`.
+* Temporary fix for upcoming R 3.6 which patches `base::sample()`. A more permanent fix should be provided when R 3.6 has landed.
+
 ## `detrendr` 0.6.0 
 
 #### NEW FEATURES 

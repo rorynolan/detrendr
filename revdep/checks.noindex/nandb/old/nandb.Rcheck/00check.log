@@ -1,10 +1,11 @@
 * using log directory ‘/Users/rnolan/Dropbox/DPhil/Misc/RStuff/detrendr/revdep/checks.noindex/nandb/old/nandb.Rcheck’
-* using R version 3.5.3 (2019-03-11)
+* using R version 3.6.0 (2019-04-26)
 * using platform: x86_64-apple-darwin15.6.0 (64-bit)
 * using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘nandb/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘nandb’ version ‘2.0.0’
+* this is package ‘nandb’ version ‘2.0.1’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -31,8 +32,7 @@
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
 * checking dependencies in R code ... NOTE
-Namespaces in Imports field not imported from:
-  ‘MASS’ ‘stats’
+Namespace in Imports field not imported from: ‘utils’
   All declared Imports should be used.
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
@@ -54,11 +54,11 @@ Namespaces in Imports field not imported from:
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... OK
   Running ‘spelling.R’
+  Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ... OK
   Running ‘testthat.R’
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
 * checking running R code from vignettes ... NONE
-* checking re-building of vignette outputs ... OK
-* checking PDF version of manual ... OK
+* checking re-building of vignette outputs ... SKIPPED
 * DONE
 Status: 1 NOTE

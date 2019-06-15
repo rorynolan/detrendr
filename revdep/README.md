@@ -2,27 +2,21 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.5.3 (2019-03-11) |
-|os       |macOS Mojave 10.14.1         |
+|version  |R version 3.6.0 (2019-04-26) |
+|os       |macOS Mojave 10.14.5         |
 |system   |x86_64, darwin15.6.0         |
 |ui       |RStudio                      |
 |language |(EN)                         |
 |collate  |en_GB.UTF-8                  |
 |ctype    |en_GB.UTF-8                  |
 |tz       |Europe/London                |
-|date     |2019-04-13                   |
+|date     |2019-06-15                   |
 
 # Dependencies
 
-|package  |old   |new |Δ  |
-|:--------|:-----|:---|:--|
-|detrendr |0.6.0 |NA  |*  |
+|package  |old   |new   |Δ  |
+|:--------|:-----|:-----|:--|
+|detrendr |0.6.1 |0.6.2 |*  |
 
 # Revdeps
-
-## All (1)
-
-|package                    |version |error |warning |note |
-|:--------------------------|:-------|:-----|:-------|:----|
-|[nandb](problems.md#nandb) |2.0.0   |      |        |1    |
 

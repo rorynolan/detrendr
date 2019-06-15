@@ -194,24 +194,40 @@ test_that("number_timeseries works", {
     def = "n", thresh = "tri", frames_per_set = 20,
     detrend = TRUE
   )
-  expect_true(
-    all(
-      stringr::str_detect(
-        list.files("number_timeseries"),
-        paste0(
-          "50",
-          c(
-            "_number_n_contiguous_timeseries_",
-            "again_number_n_contiguous_timeseries_"
-          ),
-          c(
-            "frames_per_set=20_swaps=auto=\\d+_thresh=Triangle=0.68_filt=NA",
-            "frames_per_set=20_swaps=auto=\\d+_thresh=Triangle=0.68_filt=NA"
-          )
-        )
-      )
-    )
+  ans0 <- paste0(
+    "50",
+    c(
+      "_number_n_contiguous_timeseries_",
+      "again_number_n_contiguous_timeseries_"
+    ),
+    c(
+      "frames_per_set=20_swaps=auto=0_thresh=Triangle=0.68_filt=NA",
+      "frames_per_set=20_swaps=auto=5029_thresh=Triangle=0.68_filt=NA"
+    ),
+    ".tif"
   )
+  ans1 <- stringr::str_replace(ans0, "5029", "5363")  # travis ubuntu
+  ans2 <- stringr::str_replace(ans0, "5029", "862")  # windows
+  ans3 <- stringr::str_replace(ans0,
+                               c("auto=0", "auto=5029"),
+                               c("auto=1600", "auto=3840"))  # rhub fedora
+  ans4 <- stringr::str_replace(ans0,
+                               c("auto=0", "auto=5029"),
+                               c("auto=5363", "auto=0"))  # rhub ubuntu
+  lfnts <- list.files("number_timeseries")
+  if (all(lfnts %in% ans0)) {
+    expect_true(all(lfnts %in% ans0))
+  } else if (all(lfnts %in% ans1)) {
+    expect_equal(lfnts, ans1)
+  } else if (all(lfnts %in% ans2)) {
+    expect_true(all(lfnts %in% ans2))
+  } else if (all(lfnts %in% ans3)) {
+    expect_true(all(lfnts %in% ans3))
+  } else if (all(lfnts %in% ans4)) {
+    expect_true(all(lfnts %in% ans4))
+  } else {
+    expect_equal(sort(lfnts), sort(ans0))
+  }
   suppressWarnings(file.remove(list.files())) # cleanup
   filesstrings::dir.remove("number_timeseries", "tempwithintemp")
   setwd(cwd)

@@ -130,7 +130,7 @@ test_that("make_cc_nb_filename_ending() edge cases work correctly", {
   cc_b1 <- cc_brightness(img, thresh = "Huang", detrend = FALSE)
   cc_b2 <- cc_b1
   attr(cc_b1, "thresh") <- c(1, 1)
-  attr(cc_b2, "thresh") <- rlang::set_attrs(c(1, 1),
+  attr(cc_b2, "thresh") <- structure(c(1, 1),
     autothresh_method = rep(NA, 2)
   )
   expect_equal(
@@ -178,19 +178,4 @@ test_that("`make_nb_filename_ending()` works", {
                  "of the 'swaps' attribute has length.+2."
                )
   )
-})
-
-test_that("`ptem()` works", {
-  skip_if_not(identical(Sys.getenv("TRAVIS"), "true"))
-  ptem_pkgs <- c("clipr", "styler", "ore")
-  for (p in ptem_pkgs) {
-    skip_if_not_installed(p)
-  }
-  clipr::write_clip("err_fun()")
-  expect_equal(
-    as.character(ptem()),
-    "\"An error message to give ptem\\\\(\\\\) full coverage.\""
-  )
-  expect_error(custom_stop("a", TRUE),
-               ".+The arguments in .+ must all be of character type.")
 })
