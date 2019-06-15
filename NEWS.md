@@ -2,6 +2,7 @@
 
 ## BUG FIXES
 * Demand latest, least buggy `filesstrings`, `ijtiff` and `autothresholdr`.
+* Permanentize the temporary fix from the previous version.
 
 
 # `detrendr` 0.6.1
