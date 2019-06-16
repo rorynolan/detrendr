@@ -1,4 +1,4 @@
-# `autothresholdr` 0.6.2
+# `detrendr` 0.6.2
 
 ## BUG FIXES
 * Demand latest, least buggy `filesstrings`, `ijtiff` and `autothresholdr`.
