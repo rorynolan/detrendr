@@ -1,7 +1,7 @@
 Package: detrendr
 Type: Package
 Title: Detrend Images
-Version: 0.6.2
+Version: 0.6.3
 Authors@R: c(
     person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
            role = c("aut", "cre"), 
@@ -24,10 +24,10 @@ LazyData: true
 SystemRequirements: GNU make
 Depends: R (>= 3.1)
 LinkingTo: Rcpp (>= 1.0.1),
-    RcppParallel
+    RcppParallel (>= 4.4.3)
 Imports: 
     Rcpp (>= 1.0.1),
-    RcppParallel,
+    RcppParallel (>= 4.4.3),
     parallel,
     checkmate (>= 1.9.3),
     magrittr (>= 1.5),
@@ -47,7 +47,8 @@ Imports:
     matrixStats,
     stringi,
     assertthat,
-    withr (>= 2.1.0)
+    withr (>= 2.1.0),
+    fs (>= 1.3.1)
 URL: https://rorynolan.github.io/detrendr, https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.1.1

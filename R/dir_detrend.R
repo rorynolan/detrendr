@@ -135,6 +135,20 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
     checkmate::assert_directory_exists(dir)
     withr::local_dir(dir)
   }
+  if (
+    stringr::str_ends(
+      filesstrings::before_last(fs::path_abs(path), stringr::coll("/")),
+      "/detrended"
+    )
+  ) {
+    rlang::warn(
+      paste(
+        "It looks like you're trying to detrend",
+        "an already detrended image.",
+        "That is never a good idea."
+      )
+    )
+  }
   img <- ijtiff::read_tif(path, msg = msg)
   if (msg) message("Detrending ", path, " . . .")
   if (!is.null(thresh)) {

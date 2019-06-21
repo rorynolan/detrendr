@@ -86,7 +86,7 @@ test_that("detrending entire derectories works", {
         "boxcar_for_FFS_l=auto=17.tif"
       )
     )
-    ans1 <- stringr::str_replace(ans0, "17", "15")  # fedora
+    ans1 <- stringr::str_replace(ans0, "17", "15") # fedora
     if (filesstrings::all_equal(dd, ans0)) {
       expect_equal(dd, ans0)
     } else if (filesstrings::all_equal(dd, ans1)) {
@@ -95,6 +95,8 @@ test_that("detrending entire derectories works", {
       expect_equal(dd, ans0)
     }
   }
+  expect_warning(dir_detrend_boxcar("detrended", l = 9, purpose = "fcs"),
+                 "already detrended")
   filesstrings::dir.remove("detrended")
   set.seed(1)
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
