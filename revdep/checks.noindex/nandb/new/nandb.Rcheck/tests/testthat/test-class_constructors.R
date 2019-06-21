@@ -93,11 +93,12 @@ test_that("Class construction edge cases function correctly", {
       "smooth"
     )
   )
-  expect_error(number_img(img, "r", 3, NA, NA),
-               paste0(
-                 "Argument `def` must be one of 'n' or 'N'.+You have used\\s?",
-                 "`def = 'r'`"
-               )
+  expect_error(
+    number_img(img, "r", 3, NA, NA),
+    paste0(
+      "Argument `def` must be one of 'n' or 'N'.+You have used\\s?",
+      "`def = 'r'`"
+    )
   )
   expect_error(number_img(img, "n", 4, 5, NA), "swaps.*spec.*must.*attr.*auto")
 })

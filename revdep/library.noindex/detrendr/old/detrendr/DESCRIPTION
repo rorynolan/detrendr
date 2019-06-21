@@ -1,7 +1,7 @@
 Package: detrendr
 Type: Package
 Title: Detrend Images
-Version: 0.6.1
+Version: 0.6.2
 Authors@R: c(
     person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
            role = c("aut", "cre"), 
@@ -21,29 +21,29 @@ Description: Detrend fluorescence microscopy image series for fluorescence
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
-LinkingTo: Rcpp, RcppParallel
 SystemRequirements: GNU make
-Imports: Rcpp, RcppParallel, parallel, checkmate, magrittr, dplyr,
-        foreach, doParallel, iterators, purrr, ijtiff (>= 1.5.0),
-        autothresholdr (>= 1.3.0), rlang, stringr, filesstrings (>=
-        3.0.0), plyr, glue (>= 1.3.0), sigmoid, matrixStats, stringi,
-        assertthat
+Depends: R (>= 3.1)
+LinkingTo: Rcpp (>= 1.0.1), RcppParallel
+Imports: Rcpp (>= 1.0.1), RcppParallel, parallel, checkmate (>= 1.9.3),
+        magrittr (>= 1.5), dplyr, foreach, doParallel, iterators,
+        purrr, ijtiff (>= 2.0.0), autothresholdr (>= 1.3.3), rlang (>=
+        0.3.3), stringr, filesstrings (>= 3.1.3), plyr, glue (>=
+        1.3.0), sigmoid, matrixStats, stringi, assertthat, withr (>=
+        2.1.0)
 URL: https://rorynolan.github.io/detrendr,
         https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 RoxygenNote: 6.1.1
 Suggests: testthat, knitr, rmarkdown, covr, abind, lattice, pacman,
-        tidyr, graphics, gridExtra, arrayhelpers, ore (>= 1.4.0),
-        clipr, styler, MASS, mgcv, spelling
+        tidyr, graphics, gridExtra, arrayhelpers, MASS, mgcv, spelling
 VignetteBuilder: knitr
 Language: en-US
 NeedsCompilation: yes
-Packaged: 2019-04-13 14:19:48 UTC; rnolan
+Packaged: 2019-06-15 15:07:04 UTC; rnolan
 Author: Rory Nolan [aut, cre] (<https://orcid.org/0000-0002-5239-4043>),
   Luis Alvarez [ctb, cph] (<https://orcid.org/0000-0003-1316-1906>),
   Sergi Padilla-Parra [ctb, ths, cph]
     (<https://orcid.org/0000-0002-8010-9481>)
 Repository: CRAN
-Date/Publication: 2019-04-13 15:02:39 UTC
-Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-27 05:22:28 UTC; unix
-Archs: detrendr.so.dSYM
+Date/Publication: 2019-06-15 15:40:03 UTC
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-06-21 11:30:10 UTC; unix

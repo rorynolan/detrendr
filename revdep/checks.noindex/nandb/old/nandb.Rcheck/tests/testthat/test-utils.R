@@ -3,19 +3,22 @@ context("Utils")
 test_that("nb_get_img() errors correctly", {
   set.seed(1)
   img <- array(runif(8), dim = rep(2, 3))
-  expect_error(nb_get_img(img),
-               paste0(
-                 "`img` must be positive integers \\(and NAs\\)\\s?",
-                 "only.+Element 1 of `img` is (\\d|\\.)+ which is\\s?",
-                 "neither.+NA nor positive integer."
-               ))
+  expect_error(
+    nb_get_img(img),
+    paste0(
+      "`img` must be positive integers \\(and NAs\\)\\s?",
+      "only.+Element 1 of `img` is (\\d|\\.)+ which is\\s?",
+      "neither.+NA nor positive integer."
+    )
+  )
   img <- array(8, dim = c(2, 2, 2, 1))
-  expect_error(nb_get_img(img),
-               paste0(
-                 "Your image only has one frame.+Images to be used for\\s?",
-                 "number and brightness analysis.+must have more than\\s?",
-                 "one frame."
-               )
+  expect_error(
+    nb_get_img(img),
+    paste0(
+      "Your image only has one frame.+Images to be used for\\s?",
+      "number and brightness analysis.+must have more than\\s?",
+      "one frame."
+    )
   )
 })
 
@@ -139,43 +142,48 @@ test_that("make_cc_nb_filename_ending() edge cases work correctly", {
   )
   cc_b_ts <- cc_brightness_timeseries(img, 20)
   attr(cc_b_ts, "frames_per_set") <- NULL
-  expect_error(make_cc_nb_filename_ending(cc_b_ts),
-               paste0(
-                 "If `cc_nb_img` is a cross-correlated number or\\s?",
-                 "brightness time.+series, then it must have an\\s?",
-                 "attribute 'frames_per_set'.+Your `cc_nb_img` appears\\s?",
-                 "to be a cross-correlated number.+or brightness time\\s?",
-                 "series without a 'frames_per_set'.+attribute."
-               ))
+  expect_error(
+    make_cc_nb_filename_ending(cc_b_ts),
+    paste0(
+      "If `cc_nb_img` is a cross-correlated number or\\s?",
+      "brightness time.+series, then it must have an\\s?",
+      "attribute 'frames_per_set'.+Your `cc_nb_img` appears\\s?",
+      "to be a cross-correlated number.+or brightness time\\s?",
+      "series without a 'frames_per_set'.+attribute."
+    )
+  )
 })
 
 test_that("`make_nb_filename_ending()` works", {
   img <- ijtiff::read_tif(system.file("extdata", "two_ch.tif",
-                                      package = "nandb"
+    package = "nandb"
   ))
   nts <- number_timeseries(img, "N", 20)
   attr(nts, "frames_per_set") <- NULL
-  expect_error(make_nb_filename_ending(nts),
-               paste0(
-                 "If `nb_img` is a number or brightness time series,\\s?",
-                 "then it.+must have an attribute 'frames_per_set'.+Your\\s?",
-                 "`nb_img` appears to be a number or brightness\\s?",
-                 "time.+series without a 'frames_per_set' attribute."
-               ))
+  expect_error(
+    make_nb_filename_ending(nts),
+    paste0(
+      "If `nb_img` is a number or brightness time series,\\s?",
+      "then it.+must have an attribute 'frames_per_set'.+Your\\s?",
+      "`nb_img` appears to be a number or brightness\\s?",
+      "time.+series without a 'frames_per_set' attribute."
+    )
+  )
   nts <- number_timeseries(img, "N", 20)
   attr(nts, "thresh") <- NA
-  expect_error(make_nb_filename_ending(nts),
-               paste0(
-                 "The lengths of the 'thresh', 'swaps' and 'filt'\\s?",
-                 "attributes and.+the 'autothresh_method' and 'auto'\\s?",
-                 "attriutes of the thresh and.+swaps attributes\\s?",
-                 "respectively of `nb_img` must all be the same.+as the\\s?",
-                 "number of channels in `img`.+There are 2 channels in\\s?",
-                 "`img`.+The 'thresh' attribute has length 1.+The\\s?",
-                 "'swaps' attribute has length 2.+The 'filt' attribute\\s?",
-                 "has length 2.+The 'autothresh_method' attribute of the\\s?",
-                 "'thresh'.+attribute has length 2.+The 'auto' attribute\\s?",
-                 "of the 'swaps' attribute has length.+2."
-               )
+  expect_error(
+    make_nb_filename_ending(nts),
+    paste0(
+      "The lengths of the 'thresh', 'swaps' and 'filt'\\s?",
+      "attributes and.+the 'autothresh_method' and 'auto'\\s?",
+      "attriutes of the thresh and.+swaps attributes\\s?",
+      "respectively of `nb_img` must all be the same.+as the\\s?",
+      "number of channels in `img`.+There are 2 channels in\\s?",
+      "`img`.+The 'thresh' attribute has length 1.+The\\s?",
+      "'swaps' attribute has length 2.+The 'filt' attribute\\s?",
+      "has length 2.+The 'autothresh_method' attribute of the\\s?",
+      "'thresh'.+attribute has length 2.+The 'auto' attribute\\s?",
+      "of the 'swaps' attribute has length.+2."
+    )
   )
 })

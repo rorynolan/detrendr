@@ -415,6 +415,7 @@
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
+      "version": ">= 1.2.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -529,7 +530,7 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "502.858KB",
+  "fileSize": "502.947KB",
   "contIntegration": [
     "https://travis-ci.org/rorynolan/detrendr",
     "https://ci.appveyor.com/project/rorynolan/detrendr",

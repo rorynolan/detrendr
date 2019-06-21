@@ -91,8 +91,7 @@ That seems to have worked: the background region in the top left is now greyed o
 Thresholding of images is done with the `autothresholdr` package. Thresholding of a stack is preformed with `mean_stack_thresh()` which thresholds away pixels in the stack whose mean intensity is less than a certain threshold value.
 
 ```{r autothresholdr-code} 
-pacman::p_load(autothresholdr)
-my_img_threshed <- mean_stack_thresh(my_img, "Huang")
+my_img_threshed <- autothresholdr::mean_stack_thresh(my_img, "Huang")
 ```
 
 Note that if all of the image is of interest, detrending is not necessary and should not be done.

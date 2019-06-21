@@ -46,8 +46,7 @@ display(mean_pillars(autothresholdr::mean_stack_thresh(my_img[, , 1, ], "h")))
 display(mean_pillars(autothresholdr::mean_stack_thresh(my_img[, , 2, ], "h")))
 
 ## ----autothresholdr-code-------------------------------------------------
-pacman::p_load(autothresholdr)
-my_img_threshed <- mean_stack_thresh(my_img, "Huang")
+my_img_threshed <- autothresholdr::mean_stack_thresh(my_img, "Huang")
 
 ## ----detrend-------------------------------------------------------------
 my_detrended_img <- img_detrend_robinhood(my_img_threshed)
