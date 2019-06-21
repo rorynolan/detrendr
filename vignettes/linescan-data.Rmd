@@ -1,0 +1,47 @@
+---
+title: "Linescan data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Linescan data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`detrendr` expects the time dimension to be the fourth dimension of the image (`y`, `x`, `channel`, `time`). Some people's data is linescan, meaning there is only one spatial dimension (`x`) and time is placed along the `y` axis of the image. We have an example in this package. It's 1,000 time points of a line of 64 pixels; it has 2 channels.
+
+```{r read-linescan}
+linescan_img <- ijtiff::read_tif(system.file("extdata", "linescan.tif",
+                                             package = "detrendr"))
+dim(linescan_img)
+```
+
+As you can see, the image has 1,000 rows and 64 columns in its two channels, so time is indeed along the `y` axis. This won't work with detrendr, so before detrending it, we need to put time on the fourth dimension. Fortunately, `ijtiff` provides a function for this.
+
+```{r convert-from-linescan}
+converted_img <- ijtiff::linescan_to_stack(linescan_img)
+dim(converted_img)
+```
+
+Now as you can see, time is on the fourth dimension, so we can proceed as normal.
+
+```{r detrend}
+library(detrendr)
+detrended_converted_img <- img_detrend_rh(converted_img)
+dim(detrended_converted_img)
+```
+
+This image is still in _stack_ format. You could now convert it back to linescan format if you like. 
+
+```{r back-to-linescan}
+linescan_detrended_img <- ijtiff::stack_to_linescan(detrended_converted_img)
+dim(linescan_detrended_img)
+```
+
+You can then do as you please with these results, such as save them with `ijtiff::write_tif()`.
