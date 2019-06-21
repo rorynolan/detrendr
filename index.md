@@ -60,3 +60,11 @@ These are discussed in two articles.
     images](https://rorynolan.github.io/detrendr/articles/single-images.html)
 2.  [Detrending many images in *batch*
     mode](https://rorynolan.github.io/detrendr/articles/batch-mode.html)
+
+### Linescan data
+
+The article [Linescan
+data](https://rorynolan.github.io/detrendr/articles/linescan-data.html)
+shows how to deal with data in linescan (as opposed to stack) format. If
+you don’t know what linescan data is, you don’t need to read this
+article.
