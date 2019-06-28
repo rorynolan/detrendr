@@ -55,5 +55,6 @@ See the package website at <https://rorynolan.github.io/detrendr>.
 Contributions to this package are welcome. The preferred method of
 contribution is through a github pull request. Feel free to contact me
 by creating an issue. Please note that this project is released with a
-[Contributor Code of Conduct](CONDUCT.md). By participating in this
-project you agree to abide by its terms.
+[Contributor Code of
+Conduct](https://github.com/rorynolan/detrendr/blob/master/CONDUCT.md).
+By participating in this project you agree to abide by its terms.
