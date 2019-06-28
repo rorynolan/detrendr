@@ -6,7 +6,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^junk$
-^README.*$
 ^cran-comments\.md$
 ^CONDUCT\.md$
 ^\.travis\.yml$
@@ -17,3 +16,4 @@
 ^revdep$
 ^pkgdown$
 ^codemeta\.json$
+^README\.Rmd$
