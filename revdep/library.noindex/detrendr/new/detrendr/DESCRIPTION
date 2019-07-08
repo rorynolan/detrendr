@@ -1,7 +1,7 @@
 Package: detrendr
 Type: Package
 Title: Detrend Images
-Version: 0.6.2
+Version: 0.6.4
 Authors@R: c(
     person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
            role = c("aut", "cre"), 
@@ -23,13 +23,13 @@ Encoding: UTF-8
 LazyData: true
 SystemRequirements: GNU make
 Depends: R (>= 3.1)
-LinkingTo: Rcpp (>= 1.0.1), RcppParallel
-Imports: Rcpp (>= 1.0.1), RcppParallel, parallel, checkmate (>= 1.9.3),
-        magrittr (>= 1.5), dplyr, foreach, doParallel, iterators,
-        purrr, ijtiff (>= 2.0.0), autothresholdr (>= 1.3.3), rlang (>=
-        0.3.3), stringr (>= 1.2.0), filesstrings (>= 3.1.3), plyr, glue
-        (>= 1.3.0), sigmoid, matrixStats, stringi, assertthat, withr
-        (>= 2.1.0)
+LinkingTo: Rcpp (>= 1.0.1), RcppParallel (>= 4.4.3)
+Imports: Rcpp (>= 1.0.1), RcppParallel (>= 4.4.3), parallel, checkmate
+        (>= 1.9.3), magrittr (>= 1.5), dplyr, foreach, doParallel,
+        iterators, purrr, ijtiff (>= 2.0.2), autothresholdr (>= 1.3.3),
+        rlang (>= 0.3.3), stringr (>= 1.2.0), filesstrings (>= 3.1.5),
+        plyr, glue (>= 1.3.0), sigmoid, matrixStats, stringi (>=
+        1.3.1), assertthat, withr (>= 2.1.0), fs (>= 1.3.1)
 URL: https://rorynolan.github.io/detrendr,
         https://www.github.com/rorynolan/detrendr
 BugReports: https://www.github.com/rorynolan/detrendr/issues
@@ -42,9 +42,9 @@ Language: en-US
 RemoteType: local
 RemoteUrl: /Users/rnolan/Dropbox/DPhil/Misc/RStuff/detrendr
 NeedsCompilation: yes
-Packaged: 2019-06-21 11:31:55 UTC; rnolan
+Packaged: 2019-07-08 10:31:20 UTC; rnolan
 Author: Rory Nolan [aut, cre] (<https://orcid.org/0000-0002-5239-4043>),
   Luis Alvarez [ctb, cph] (<https://orcid.org/0000-0003-1316-1906>),
   Sergi Padilla-Parra [ctb, ths, cph]
     (<https://orcid.org/0000-0002-8010-9481>)
-Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-06-21 11:31:55 UTC; unix
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-07-08 10:31:21 UTC; unix

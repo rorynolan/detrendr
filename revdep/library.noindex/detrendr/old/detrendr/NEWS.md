@@ -1,8 +1,15 @@
-# `autothresholdr` 0.6.2
+# `detrendr` 0.6.3
+
+## BUG FIXES
+* Ignore a test on CRAN mac (it's fine on travis mac).
+* Insist on latest, bug-fixed `filesstrings` v3.1.5.
+
+
+# `detrendr` 0.6.2
 
 ## BUG FIXES
 * Demand latest, least buggy `filesstrings`, `ijtiff` and `autothresholdr`.
-* Permanentize the temporary fix from the previous version.
+* Permanently fix the issues that were temporarily fixed in the previous version (R 3.6 has now landed).
 
 
 # `detrendr` 0.6.1

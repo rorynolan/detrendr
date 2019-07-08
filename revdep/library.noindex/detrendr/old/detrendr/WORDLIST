@@ -33,6 +33,8 @@ io
 Jakobsdottir
 labelled
 lifecycle
+linescan
+Linescan
 Maro
 Muñoz
 nandb
@@ -48,3 +50,4 @@ rstudio
 RStudio
 rtoboxes
 TIFFs
+travis

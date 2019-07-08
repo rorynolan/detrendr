@@ -1,7 +1,7 @@
 Package: detrendr
 Type: Package
 Title: Detrend Images
-Version: 0.6.3
+Version: 0.6.4
 Authors@R: c(
     person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
            role = c("aut", "cre"), 
@@ -36,7 +36,7 @@ Imports:
     doParallel,
     iterators,
     purrr,
-    ijtiff (>= 2.0.0),
+    ijtiff (>= 2.0.2),
     autothresholdr (>= 1.3.3),
     rlang (>= 0.3.3),
     stringr (>= 1.2.0),

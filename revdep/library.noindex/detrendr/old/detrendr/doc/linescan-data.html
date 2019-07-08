@@ -11,9 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2019-06-28" />
 
-<title>Batch mode</title>
+<title>Linescan data</title>
 
 
 
@@ -300,23 +299,32 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 
-<h1 class="title toc-ignore">Batch mode</h1>
-<h4 class="date">2019-06-28</h4>
+<h1 class="title toc-ignore">Linescan data</h1>
 
 
 
-<p>First of all, please read the vignette on detrending single images at <a href="https://rorynolan.github.io/detrendr/articles/single-images.html" class="uri">https://rorynolan.github.io/detrendr/articles/single-images.html</a> to see how detrending works on an individual image basis and to understand the nature and importance of thresholding. It’s not necessary to understand every line, but it provides important context.</p>
-<div id="batch-detrending" class="section level2">
-<h2>Batch detrending</h2>
-<p>Batch detrending applies the same routine to all of the images in a directory. If you have a directory with some images that you want to detrend and some that you don’t, put the ones you want to detrend in their own directory and detrend that directory. Then put the resulting images wherever you like.</p>
-<p>First decide whether or not your images need to be thresholded or not. Again, if some need to be thresholded and some don’t, put these in separate directories and detrend them separately. Always remember to check that the thresholding worked satisfactorily when it has been employed.</p>
-<p>To detrend a directory <code>path/to/some/dir</code> with e.g. <em>Huang</em> thresholding, run</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">dir_detrend_robinhood</span>(<span class="st">&quot;path/to/some/dir&quot;</span>, <span class="dt">thresh =</span> <span class="st">&quot;Huang&quot;</span>)</a></code></pre></div>
-<p>To go without thresholding, just run</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">dir_detrend_robinhood</span>(<span class="st">&quot;path/to/some/dir&quot;</span>)</a></code></pre></div>
-<p>This will make a new directory called <code>detrended</code> within <code>path/to/some/dir</code> which will contain the detrended TIFF images. They will be named in such a way as to make clear that they were detrended and how they were detrended (with which method and parameters).</p>
-<p>The legacy methods also have their batch modes. For example, to use exponential filtering detrending, use <code>dir_detrend_exp()</code>.</p>
-</div>
+<p><code>detrendr</code> expects the time dimension to be the fourth dimension of the image (<code>y</code>, <code>x</code>, <code>channel</code>, <code>time</code>). Some people’s data is linescan, meaning there is only one spatial dimension (<code>x</code>) and time is placed along the <code>y</code> axis of the image. We have an example in this package. It’s 1,000 time points of a line of 64 pixels; it has 2 channels.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">linescan_img &lt;-<span class="st"> </span>ijtiff<span class="op">::</span><span class="kw">read_tif</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;linescan.tif&quot;</span>,</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">                                             <span class="dt">package =</span> <span class="st">&quot;detrendr&quot;</span>))</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; Reading linescan.tif: an 8-bit, 1000x64 pixel image of</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; unsigned integer type. Reading 2 channels and 1 frame . . .</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt;  Done.</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">dim</span>(linescan_img)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; [1] 1000   64    2    1</span></a></code></pre></div>
+<p>As you can see, the image has 1,000 rows and 64 columns in its two channels, so time is indeed along the <code>y</code> axis. This won’t work with detrendr, so before detrending it, we need to put time on the fourth dimension. Fortunately, <code>ijtiff</code> provides a function for this.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">converted_img &lt;-<span class="st"> </span>ijtiff<span class="op">::</span><span class="kw">linescan_to_stack</span>(linescan_img)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">dim</span>(converted_img)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; [1]    1   64    2 1000</span></a></code></pre></div>
+<p>Now as you can see, time is on the fourth dimension, so we can proceed as normal.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(detrendr)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">detrended_converted_img &lt;-<span class="st"> </span><span class="kw">img_detrend_rh</span>(converted_img)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">dim</span>(detrended_converted_img)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; [1]    1   64    2 1000</span></a></code></pre></div>
+<p>This image is still in <em>stack</em> format. You could now convert it back to linescan format if you like.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">linescan_detrended_img &lt;-<span class="st"> </span>ijtiff<span class="op">::</span><span class="kw">stack_to_linescan</span>(detrended_converted_img)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">dim</span>(linescan_detrended_img)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; [1] 1000   64    2    1</span></a></code></pre></div>
+<p>You can then do as you please with these results, such as save them with <code>ijtiff::write_tif()</code>.</p>
 
 
 
