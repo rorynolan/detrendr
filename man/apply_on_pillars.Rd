@@ -19,7 +19,7 @@ length \code{l > 1}, a 3-dimensional array whereby \code{arr[i, j, ] =
   FUN(arr3d[i, j, ])}.
 }
 \description{
-Define a 'pillar' of a 3-dimensional array as pillar \code{i,j} off array
+Define a 'pillar' of a 3-dimensional array as pillar \verb{i,j} off array
 \code{arr} being \code{arr[i, j, ]}. This function applies a specified
 function to each pillar.
 }

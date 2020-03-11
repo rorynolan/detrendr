@@ -9,20 +9,48 @@
 \alias{dir_detrend_polynom}
 \title{Detrend all TIFF images in an entire folder.}
 \usage{
-dir_detrend_robinhood(folder_path = ".", swaps = "auto",
-  thresh = NULL, quick = FALSE, msg = TRUE)
+dir_detrend_robinhood(
+  folder_path = ".",
+  swaps = "auto",
+  thresh = NULL,
+  quick = FALSE,
+  msg = TRUE
+)
 
-dir_detrend_rh(folder_path = ".", swaps = "auto", thresh = NULL,
-  quick = FALSE, msg = TRUE)
+dir_detrend_rh(
+  folder_path = ".",
+  swaps = "auto",
+  thresh = NULL,
+  quick = FALSE,
+  msg = TRUE
+)
 
-dir_detrend_boxcar(folder_path = ".", l, purpose = c("FCS", "FFS"),
-  thresh = NULL, parallel = FALSE, msg = TRUE)
+dir_detrend_boxcar(
+  folder_path = ".",
+  l,
+  purpose = c("FCS", "FFS"),
+  thresh = NULL,
+  parallel = FALSE,
+  msg = TRUE
+)
 
-dir_detrend_exp(folder_path = ".", tau, purpose = c("FCS", "FFS"),
-  thresh = NULL, parallel = FALSE, msg = TRUE)
+dir_detrend_exp(
+  folder_path = ".",
+  tau,
+  purpose = c("FCS", "FFS"),
+  thresh = NULL,
+  parallel = FALSE,
+  msg = TRUE
+)
 
-dir_detrend_polynom(folder_path = ".", degree, purpose = c("FCS",
-  "FFS"), thresh = NULL, parallel = FALSE, msg = TRUE)
+dir_detrend_polynom(
+  folder_path = ".",
+  degree,
+  purpose = c("FCS", "FFS"),
+  thresh = NULL,
+  parallel = FALSE,
+  msg = TRUE
+)
 }
 \arguments{
 \item{folder_path}{The path (relative or absolute) to the folder you wish to

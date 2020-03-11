@@ -15,11 +15,15 @@ img_detrend_rh(img, swaps = "auto", quick = FALSE)
 
 img_detrend_boxcar(img, l, purpose = c("FCS", "FFS"), parallel = FALSE)
 
-img_detrend_exp(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
-  parallel = FALSE)
+img_detrend_exp(
+  img,
+  tau,
+  cutoff = 0.05,
+  purpose = c("FCS", "FFS"),
+  parallel = FALSE
+)
 
-img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"),
-  parallel = FALSE)
+img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"), parallel = FALSE)
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
@@ -70,7 +74,7 @@ average, every point gets a weight. This can slow down the computation
 massively. However, many of the weights will be approximately zero. With
 cutoff, we say that any point with weight less than or equal to \code{cutoff}
 times the maximum weight may be ignored; so with \code{cutoff = 0.05}, any
-weight less than 5\% of the maximum weight may be ignored. The default
+weight less than 5\\% of the maximum weight may be ignored. The default
 value of this parameter is sensible and its value should not be set to
 anything else without good reason.}
 

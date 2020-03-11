@@ -4,8 +4,7 @@
 \alias{best_tau}
 \title{Find the best tau parameter for exponential smoothing detrending.}
 \usage{
-best_tau(img, cutoff = 0.05, parallel = FALSE, purpose = c("FCS",
-  "FFS"))
+best_tau(img, cutoff = 0.05, parallel = FALSE, purpose = c("FCS", "FFS"))
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
@@ -18,7 +17,7 @@ average, every point gets a weight. This can slow down the computation
 massively. However, many of the weights will be approximately zero. With
 cutoff, we say that any point with weight less than or equal to \code{cutoff}
 times the maximum weight may be ignored; so with \code{cutoff = 0.05}, any
-weight less than 5\% of the maximum weight may be ignored. The default
+weight less than 5\\% of the maximum weight may be ignored. The default
 value of this parameter is sensible and its value should not be set to
 anything else without good reason.}
 
