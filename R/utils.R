@@ -15,6 +15,8 @@ translate_parallel <- function(parallel) {
 
 get_seed <- function() sample.int(.Machine$integer.max, 1)
 
+relu <- function(x) ifelse(x >= 0, x, 0)
+
 #' Apply a function to each pillar of a 3-dimensional array.
 #'
 #' Define a 'pillar' of a 3-dimensional array as pillar `i,j` off array
@@ -92,14 +94,14 @@ custom_stop_bullet <- function(string) {
   checkmate::assert_string(string)
   string %<>% strwrap(width = 57)
   string[1] %<>% {
-    glue::glue("    * {.}")
+    stringr::str_glue("    * {.}")
   }
   if (length(string) > 1) {
     string[-1] %<>% {
-      glue::glue("      {.}")
+      stringr::str_glue("      {.}")
     }
   }
-  glue::glue_collapse(string, sep = "\n")
+  stringr::str_c(string, collapse = "\n")
 }
 
 #' Nicely formatted error message.
@@ -107,7 +109,7 @@ custom_stop_bullet <- function(string) {
 #' Format an error message with bullet-pointed sub-messages with nice
 #' line-breaks.
 #'
-#' Arguments should be entered as `glue`-style strings.
+#' Arguments should be entered as [glue::glue()]-style strings.
 #'
 #' @param main_message The main error message.
 #' @param ... Bullet-pointed sub-messages.

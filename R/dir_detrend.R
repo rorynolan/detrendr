@@ -112,7 +112,7 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
                          quick = FALSE, parallel = FALSE, msg = TRUE) {
   checkmate::assert_file_exists(path)
   checkmate::assert_string(method)
-  if (stringi::stri_startswith_coll("robinhood", tolower(method))) {
+  if (stringr::str_starts(stringr::coll("robinhood"), tolower(method))) {
     method <- "robinhood"
   }
   method %<>% filesstrings::match_arg(c(
@@ -137,7 +137,10 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
   }
   if (
     stringr::str_ends(
-      filesstrings::before_last(fs::path_abs(path), stringr::coll("/")),
+      filesstrings::before_last(
+        tools::file_path_as_absolute(path),
+        stringr::coll("/")
+      ),
       "/detrended"
     )
   ) {
@@ -186,13 +189,13 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
 
 
 make_thresh_filename_part <- function(img) {
-  assertthat::assert_that("thresh" %in% names(attributes(img)))
   thresh <- attr(img, "thresh")
   if (is.list(thresh)) {
     threshs <- unlist(thresh)
-    methods <- purrr::map(thresh, attr, "autothresh_method") %T>% {
-      for (i in seq_along(.)) if (is.null(.[[i]])) .[[i]] <- NA
-    } %>%
+    methods <- purrr::map(thresh, attr, "autothresh_method") %T>%
+      {
+        for (i in seq_along(.)) if (is.null(.[[i]])) .[[i]] <- NA
+      } %>%
       unlist()
     paste0(
       "thresh=",
@@ -209,9 +212,6 @@ make_detrended_filename_ending <- function(img) {
   method <- attr(img, "method")
   checkmate::assert_string(method)
   parameter <- attr(img, "parameter")
-  assertthat::assert_that(
-    method %in% c("boxcar", "exponential", "polynomial", "robinhood")
-  )
   symbol <- switch(method, boxcar = "l", exponential = "tau",
     polynomial = "degree", robinhood = "swaps"
   )
@@ -221,7 +221,6 @@ make_detrended_filename_ending <- function(img) {
   purpose <- ""
   if (method != "robinhood") {
     purpose <- attr(img, "purpose")
-    assertthat::assert_that(purpose %in% c("FCS", "FFS"))
   }
   thresh_part <- ""
   if ("thresh" %in% names(attributes(img))) {

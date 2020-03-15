@@ -1,7 +1,6 @@
 rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
   checkmate::assert_string(purpose)
-  purpose %<>% stringr::str_to_lower()
-  assertthat::assert_that(purpose %in% c("fcs", "ffs"))
+  purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   deviations_from_smoothed <- mat - mat_smoothed
   row_means <- mean_rows(mat, parallel = parallel)
   if (purpose == "ffs") {
@@ -16,11 +15,13 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
   }
   out_real <- row_means + deviations_from_smoothed
   rm(deviations_from_smoothed)
-  out_int <- floor(out_real) %>% {
-    . + myrbern(out_real - ., parallel = parallel)
-  } %T>% {
-    .[. < 0] <- 0
-  }
+  out_int <- floor(out_real) %>%
+    {
+      . + myrbern(out_real - ., parallel = parallel)
+    } %T>%
+    {
+      .[. < 0] <- 0
+    }
   dim(out_int) <- dim(mat)
   out_int
 }

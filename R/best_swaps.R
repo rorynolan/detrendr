@@ -84,7 +84,7 @@ best_swaps <- function(img, quick = FALSE) {
   if (length(d) == 3) {
     if (quick) {
       out <- (best_swaps_naive(img) - best_swaps_naive(pois_mean_img(img))) %>%
-        sigmoid::relu() %>%
+        relu() %>%
         as.integer()
       return(out)
     }
@@ -110,7 +110,7 @@ best_swaps <- function(img, quick = FALSE) {
     ) %>%
       purrr::map_int(1)
     (stats::median(newest) - stats::median(overestimates)) %>%
-      sigmoid::relu() %>%
+      relu() %>%
       as.integer()
   } else {
     purrr::map_int(seq_len(d[3]), ~ best_swaps(img[, , ., , drop = FALSE],

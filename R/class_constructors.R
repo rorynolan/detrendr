@@ -37,12 +37,15 @@ detrended_img <- function(img, method, parameter, auto, purpose = NULL) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   checkmate::assert_numeric(img)
   checkmate::assert_string(method)
-  if (stringi::stri_startswith_coll("robinhood", method)) method <- "robinhood"
-  method %<>% filesstrings::match_arg(c(
-    "boxcar", "exponential", "polynomial",
-    "rh", "robinhood"
-  ),
-  ignore_case = TRUE
+  if (stringr::str_starts(stringr::coll("robinhood"), method)) {
+    method <- "robinhood"
+  }
+  method %<>% filesstrings::match_arg(
+    c(
+      "boxcar", "exponential", "polynomial",
+      "rh", "robinhood"
+    ),
+    ignore_case = TRUE
   )
   if (method == "rh") method <- "robinhood"
   if (method != "robinhood") {
