@@ -452,7 +452,7 @@
       "@type": "SoftwareApplication",
       "identifier": "RcppParallel",
       "name": "RcppParallel",
-      "version": ">= 4.4.3",
+      "version": ">= 5.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -512,7 +512,7 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "526.756KB",
+  "fileSize": "526.759KB",
   "contIntegration": [
     "https://travis-ci.org/rorynolan/detrendr",
     "https://ci.appveyor.com/project/rorynolan/detrendr",

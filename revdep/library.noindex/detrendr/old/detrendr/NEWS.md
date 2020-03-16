@@ -1,3 +1,9 @@
+# `detrendr` 0.6.4
+
+## BUG FIXES
+* Insist on latest, bug-fixed `ijtiff` v2.0.2.
+
+
 # `detrendr` 0.6.3
 
 ## BUG FIXES

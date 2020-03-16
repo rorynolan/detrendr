@@ -1,3 +1,9 @@
+# `detrendr` 0.6.5
+
+## BUG FIXES
+* `ggplot2` needed to be in `Suggests` because it is used in a vignette.
+
+
 # `detrendr` 0.6.4
 
 ## BUG FIXES
@@ -81,5 +87,5 @@
 * This package no longer exports functions for TIFF I/O nor image display.
 
 
-# `detrendr` detrendr 0.1.0
+# `detrendr` 0.1.0
 * The first CRAN-worthy version.

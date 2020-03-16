@@ -46,7 +46,7 @@ Imports:
     plyr,
     purrr,
     Rcpp (>= 1.0.1),
-    RcppParallel (>= 4.4.3),
+    RcppParallel (>= 5.0.0),
     rlang (>= 0.3.3),
     stringr (>= 1.4.0),
     tools,
@@ -70,7 +70,7 @@ Suggests:
     tidyr
 LinkingTo: 
     Rcpp (>= 1.0.1),
-    RcppParallel (>= 4.4.3)
+    RcppParallel (>= 5.0.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
