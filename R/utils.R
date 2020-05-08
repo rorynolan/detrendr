@@ -42,45 +42,6 @@ apply_on_pillars <- function(arr3d, FUN) {
   }
 }
 
-#' Convert array indices to vector indices.
-#'
-#' Just a faster version of arrayhelpers::array2vec().
-#'
-#' @inheritParams arrayhelpers::array2vec
-#'
-#' @noRd
-myarray2vec <- function(iarr, dim) {
-  if (!is.matrix(iarr)) {
-    dim(iarr) <- c(1, length(iarr))
-  }
-  if (ncol(iarr) != length(dim)) {
-    custom_stop(
-      "Number of columns in `iarr` and number of dimensions must be the same.",
-      "
-      There are {ncol(iarr)} columns in `iarr` and you have specified
-      {length(dim)} dimensions.
-      "
-    )
-  }
-  if (any(sweep(iarr, 2, dim) > 0)) {
-    bad <- iarr > dim
-    row <- match(TRUE, matrixStats::rowAnys(bad))
-    rowc <- paste0("c(", glue::glue_collapse(iarr[row, ], sep = ", "), ")")
-    dimc <- paste0("c(", glue::glue_collapse(dim, sep = ", "), ")")
-    col <- match(TRUE, bad[row, ])
-    custom_stop(
-      "You are requesting an array index outside the dimension of your array.",
-      "
-      Row {row} of `iarr` is `{rowc}` and `dim` is `{dimc}`, so element {col} of
-      that row, {iarr[row, col]}, is too big as it is bigger than element
-      {col} of `dim`, {dim[col]}.
-      "
-    )
-  }
-  pdim <- c(1, cumprod(dim[-length(dim)]))
-  iarr <- iarr - 1
-  rowSums(sweep(iarr, 2, pdim, "*")) + 1
-}
 
 #' Construct the bullet point bits for `custom_stop()`.
 #'
@@ -153,4 +114,11 @@ get_os <- function() {
   }
   if (os == "osx") os <- "mac"
   tolower(os)
+}
+
+win32bit <- function() {
+  sys_info <- tolower(Sys.info())
+  windows <- get_os() == "windows"
+  bit64 <- stringr::str_detect(sys_info[["machine"]], stringr::coll("64"))
+  windows && (!bit64)
 }

@@ -163,9 +163,11 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
       }
       sample(.)
     }
-  elems_getting <- cbind(px_getting, frames_getting) %>%
-    myarray2vec(d)
-  arr3d %<>% vec_add1s(elems_getting)
+  if (length(px_getting)) {
+    elems_getting <- cbind(px_getting, frames_getting) %>%
+      arrayhelpers::array2vec(d)
+    arr3d %<>% vec_add1s(elems_getting)
+  }
   arr3d
 }
 

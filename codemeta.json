@@ -10,18 +10,19 @@
   "codeRepository": "https://www.github.com/rorynolan/detrendr",
   "relatedLink": [
     "https://rorynolan.github.io/detrendr",
-    "https://CRAN.R-project.org/package=detrendr"
+    "https://CRAN.R-project.org/package=detrendr",
+    "https://www.github.com/rorynolan/detrendr#readme"
   ],
   "issueTracker": "https://www.github.com/rorynolan/detrendr/issues",
   "license": "https://spdx.org/licenses/BSD-3-Clause",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.1",
+    "version": "4.0.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
+  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -98,18 +99,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=abind"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "arrayhelpers",
-      "name": "arrayhelpers",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=arrayhelpers"
     },
     {
       "@type": "SoftwareApplication",
@@ -280,6 +269,19 @@
       "identifier": "R",
       "name": "R",
       "version": ">= 3.1"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "arrayhelpers",
+      "name": "arrayhelpers",
+      "version": ">= 1.1.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=arrayhelpers"
     },
     {
       "@type": "SoftwareApplication",
@@ -512,7 +514,7 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "526.759KB",
+  "fileSize": "525.967KB",
   "contIntegration": [
     "https://travis-ci.org/rorynolan/detrendr",
     "https://ci.appveyor.com/project/rorynolan/detrendr",

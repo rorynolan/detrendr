@@ -1,4 +1,4 @@
 library(testthat)
 library(detrendr)
 
-test_check("detrendr")
+if (!detrendr:::win32bit()) test_check("detrendr")

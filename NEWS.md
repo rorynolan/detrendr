@@ -1,3 +1,9 @@
+# `detrendr` 0.6.6
+
+## BUG FIXES
+Cope with `ijtiff` not working on 32-bit Windows.
+
+
 # `detrendr` 0.6.5
 
 ## BUG FIXES
