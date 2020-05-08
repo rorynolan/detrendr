@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="Rory Nolan" />
 
-<meta name="date" content="2019-07-08" />
+<meta name="date" content="2020-03-16" />
 
 <title>Detrending single images</title>
 
@@ -96,7 +96,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -117,9 +117,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -288,7 +285,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -303,7 +301,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Detrending single images</h1>
 <h4 class="author">Rory Nolan</h4>
-<h4 class="date">2019-07-08</h4>
+<h4 class="date">2020-03-16</h4>
 
 
 
@@ -317,7 +315,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>The image can be read into R with the <code>read_tif()</code> command provided by the <code>ijtiff</code> package. We’ll assign it to a variable called <code>my_img</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;2ch100frame.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;detrendr&quot;</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">print</span>(path)</a></code></pre></div>
-<pre><code>#&gt; [1] &quot;/private/var/folders/l_/2mwm03p55zg7zjykv084hhvr0000gn/T/Rtmpd2s3Ig/Rinst712a5424f3bd/detrendr/extdata/2ch100frame.tif&quot;</code></pre>
+<pre><code>#&gt; [1] &quot;/private/var/folders/l_/2mwm03p55zg7zjykv084hhvr0000gn/T/RtmpDWxX7F/Rinst134141cd600d0/detrendr/extdata/2ch100frame.tif&quot;</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_img &lt;-<span class="st"> </span><span class="kw">read_tif</span>(path)</a></code></pre></div>
 <pre><code>#&gt; Reading 2ch100frame.tif: an 8-bit, 30x28 pixel image of
 #&gt; unsigned integer type. Reading 2 channels and 100 frames . . .</code></pre>
@@ -350,6 +348,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>These mean intensity profiles neatly show that the image series has been detrended. Beware, however, that these mean intensity profiles are not a great way to compare detrending routines. There is the temptation to say whichever detrending routine finishes with the flattest mean intensity profile is the best, but this is not true because it is possible to over-detrend (which will over-flatten the mean intensity profile). More rigorous procedures are needed to compare detrending routines, for example using images with simulated photobleaching or other trend-inducing phenomena introduced.</p>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

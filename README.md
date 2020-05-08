@@ -1,5 +1,5 @@
 
-# `detrendr` <img src="man/figures/logo.png" align="right" height=141/>
+# `detrendr` <img src="man/figures/logo.png" align="right" height=141/> 
 
 Detrend fluorescence microscopy image series for fluorescence
 fluctuation and correlation spectroscopy (FCS and FFS) analysis. This

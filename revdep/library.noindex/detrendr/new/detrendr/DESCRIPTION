@@ -1,7 +1,7 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.5
+Version: 0.6.6
 Authors@R: 
     c(person(given = "Rory",
              family = "Nolan",
@@ -27,31 +27,32 @@ Description: Detrend fluorescence microscopy image series for
     unpublished work.
 License: BSD_3_clause + file LICENSE
 URL: https://rorynolan.github.io/detrendr,
-        https://www.github.com/rorynolan/detrendr
+        https://www.github.com/rorynolan/detrendr#readme
 BugReports: https://www.github.com/rorynolan/detrendr/issues
 Depends: R (>= 3.1)
-Imports: autothresholdr (>= 1.3.3), checkmate (>= 1.9.3), doParallel,
-        dplyr, filesstrings (>= 3.1.5), foreach, ijtiff (>= 2.0.2),
-        iterators, magrittr (>= 1.5), matrixStats, parallel, plyr,
-        purrr, Rcpp (>= 1.0.1), RcppParallel (>= 4.4.3), rlang (>=
-        0.3.3), stringr (>= 1.4.0), tools, withr (>= 2.1.0)
-Suggests: abind, arrayhelpers, covr, ggplot2, glue (>= 1.3.0),
-        graphics, gridExtra, knitr, lattice, MASS, mgcv, pacman,
-        rmarkdown, spelling, testthat, tidyr
-LinkingTo: Rcpp (>= 1.0.1), RcppParallel (>= 4.4.3)
+Imports: arrayhelpers (>= 1.1.0), autothresholdr (>= 1.3.3), checkmate
+        (>= 1.9.3), doParallel, dplyr, filesstrings (>= 3.1.5),
+        foreach, ijtiff (>= 2.0.2), iterators, magrittr (>= 1.5),
+        matrixStats, parallel, plyr, purrr, Rcpp (>= 1.0.1),
+        RcppParallel (>= 5.0.0), rlang (>= 0.3.3), stringr (>= 1.4.0),
+        tools, withr (>= 2.1.0)
+Suggests: abind, covr, ggplot2, glue (>= 1.3.0), graphics, gridExtra,
+        knitr, lattice, MASS, mgcv, pacman, rmarkdown, spelling,
+        testthat, tidyr
+LinkingTo: Rcpp (>= 1.0.1), RcppParallel (>= 5.0.0)
 VignetteBuilder: knitr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 SystemRequirements: GNU make
 RemoteType: local
 RemoteUrl: /Users/rnolan/Dropbox/DPhil/Misc/RStuff/detrendr
 NeedsCompilation: yes
-Packaged: 2020-03-16 16:43:18 UTC; rnolan
+Packaged: 2020-05-08 02:01:16 UTC; rnolan
 Author: Rory Nolan [aut, cre] (<https://orcid.org/0000-0002-5239-4043>),
   Luis Alvarez [ctb, cph] (<https://orcid.org/0000-0003-1316-1906>),
   Sergi Padilla-Parra [ctb, ths, cph]
     (<https://orcid.org/0000-0002-8010-9481>)
-Built: R 3.6.1; x86_64-apple-darwin15.6.0; 2020-03-16 16:43:19 UTC; unix
+Built: R 4.0.0; x86_64-apple-darwin17.0; 2020-05-08 02:01:17 UTC; unix

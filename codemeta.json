@@ -514,7 +514,7 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "525.967KB",
+  "fileSize": "525.965KB",
   "contIntegration": [
     "https://travis-ci.org/rorynolan/detrendr",
     "https://ci.appveyor.com/project/rorynolan/detrendr",

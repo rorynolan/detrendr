@@ -1,2 +1,3 @@
 package,old,new,delta
-detrendr,0.6.4,0.6.5,*
+detrendr,0.6.5,0.6.6,*
+RcppParallel,NA,5.0.0,*

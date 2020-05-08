@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# `detrendr` <img src="man/figures/logo.png" align="right" height=141/>
+# `detrendr` <img src="man/figures/logo.png" align="right" height=141/> 
 
 Detrend fluorescence microscopy image series for fluorescence fluctuation and correlation spectroscopy (FCS and FFS) analysis. This package contains functionality published in a 2016 paper https://doi.org/10.1093/bioinformatics/btx434 but it has been extended since then with the _Robin Hood_ algorithm and thus contains unpublished work.
 

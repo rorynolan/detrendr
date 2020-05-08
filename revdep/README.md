@@ -2,21 +2,22 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.6.1 (2019-07-05) |
-|os       |macOS Mojave 10.14.6         |
-|system   |x86_64, darwin15.6.0         |
+|version  |R version 4.0.0 (2020-04-24) |
+|os       |macOS Catalina 10.15.4       |
+|system   |x86_64, darwin17.0           |
 |ui       |RStudio                      |
 |language |(EN)                         |
 |collate  |en_GB.UTF-8                  |
 |ctype    |en_GB.UTF-8                  |
 |tz       |Europe/London                |
-|date     |2020-03-16                   |
+|date     |2020-05-08                   |
 
 # Dependencies
 
-|package  |old   |new   |Δ  |
-|:--------|:-----|:-----|:--|
-|detrendr |0.6.4 |0.6.5 |*  |
+|package      |old   |new   |Δ  |
+|:------------|:-----|:-----|:--|
+|detrendr     |0.6.5 |0.6.6 |*  |
+|RcppParallel |NA    |5.0.0 |*  |
 
 # Revdeps
 
