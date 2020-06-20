@@ -1,5 +1,5 @@
 test_that("best_tau works", {
-  skip_on_os("solaris")
+  skip_on_cran()
   skip_if(getRversion() < "3.6.0")
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
@@ -36,7 +36,7 @@ test_that("best_tau works", {
 })
 
 test_that("best_l works", {
-  skip_on_os("solaris")
+  skip_on_cran()
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
   ), msg = FALSE)
@@ -78,6 +78,7 @@ test_that("best_l works", {
 })
 
 test_that("best_degree works", {
+  skip_on_cran()
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
   ), msg = FALSE)

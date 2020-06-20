@@ -1,7 +1,13 @@
+# `detrendr` 0.6.7
+
+## BUG FIXES
+* Skip a few tests on CRAN (necessary because CRAN has so many different machines with various RNG implementations).
+
+
 # `detrendr` 0.6.6
 
 ## BUG FIXES
-Cope with `ijtiff` not working on 32-bit Windows.
+* Cope with `ijtiff` not working on 32-bit Windows.
 
 
 # `detrendr` 0.6.5

@@ -95,8 +95,10 @@ test_that("detrending entire derectories works", {
       expect_equal(dd, ans0)
     }
   }
-  expect_warning(dir_detrend_boxcar("detrended", l = 9, purpose = "fcs"),
-                 "already detrended")
+  expect_warning(
+    dir_detrend_boxcar("detrended", l = 9, purpose = "fcs"),
+    "already detrended"
+  )
   filesstrings::dir.remove("detrended")
   set.seed(1)
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
