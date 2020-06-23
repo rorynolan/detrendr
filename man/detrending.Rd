@@ -56,7 +56,7 @@ calculation (like number and brightness), choose 'FFS'. If it is an FCS
 number and brightness or autocorrelation), choose 'FCS'. The difference is
 that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
 mean and variance, whereas if \code{purpose} is 'FCS', the time series is
-corrected for non-stationary mean only. `purpose`` is not required for
+corrected for non-stationary mean only. \code{purpose} is not required for
 \emph{Robin Hood} detrending.}
 
 \item{parallel}{Would you like to use multiple cores to speed up this

@@ -231,7 +231,7 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
 #'   number and brightness or autocorrelation), choose 'FCS'. The difference is
 #'   that if `purpose` is 'FFS', the time series is corrected for non-stationary
 #'   mean and variance, whereas if `purpose` is 'FCS', the time series is
-#'   corrected for non-stationary mean only. `purpose`` is not required for
+#'   corrected for non-stationary mean only. `purpose` is not required for
 #'   _Robin Hood_ detrending.
 #' @param parallel Would you like to use multiple cores to speed up this
 #'   function? If so, set the number of cores here, or to use all available
