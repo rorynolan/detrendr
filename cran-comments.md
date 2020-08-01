@@ -2,9 +2,9 @@
 
 ## Test environments
 
-* local mac OS X install, R 4.0.0
-* ubuntu 14.04 (on travis-ci), R 4.0.0
-* Windows Server 2012 (on AppVeyor), R 4.0.0
+* local mac OS X install, R 4.0.2
+* ubuntu 14.04 (on travis-ci), R 4.0.2
+* Windows Server 2012 (on AppVeyor), R 4.0.2
 * win-builder (devel and release)
 
 

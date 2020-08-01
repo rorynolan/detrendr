@@ -19,10 +19,9 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -514,16 +513,9 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "526.033KB",
-  "contIntegration": [
-    "https://travis-ci.org/rorynolan/detrendr",
-    "https://ci.appveyor.com/project/rorynolan/detrendr",
-    "https://codecov.io/github/rorynolan/detrendr?branch=master"
-  ],
-  "developmentStatus": [
-    "http://www.repostatus.org/#active",
-    "https://www.tidyverse.org/lifecycle/#stable"
-  ],
+  "fileSize": "21404.885KB",
+  "contIntegration": ["https://travis-ci.org/rorynolan/detrendr", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
+  "developmentStatus": ["http://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
   "citation": [
     {
       "@type": "ScholarlyArticle",

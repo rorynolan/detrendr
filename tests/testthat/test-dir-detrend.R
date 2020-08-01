@@ -4,7 +4,7 @@ test_that("detrending entire derectories works", {
   cwd <- setwd(tempdir())
   on.exit(setwd(cwd))
   orig_files <- c(
-    system.file("img", "2ch_ij.tif", package = "ijtiff"),
+    system.file("img", "2ch_ij.tif", package = "detrendr"),
     system.file("extdata", "bleached.tif", package = "detrendr")
   )
   file.copy(orig_files, ".")

@@ -1,3 +1,9 @@
+# `detrendr` 0.6.8
+
+## BUG FIXES
+* An image needed for the tests is no longer included in `ijtiff` so `detrendr` needs to have it itself.
+
+
 # `detrendr` 0.6.7
 
 ## BUG FIXES
