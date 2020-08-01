@@ -152,7 +152,7 @@
 <p>That seems to have worked: the background region in the top left is now greyed out, indicating that it has been set to <code>NA</code>. <em>Huang</em> thresholding can be slow, so if you want something similar but faster, try <em>Triangle</em>. Always check that your thresholding <em>looks right</em> afterwards.</p>
 <p>Thresholding of images is done with the <code>autothresholdr</code> package. Thresholding of a stack is preformed with <code>mean_stack_thresh()</code> which thresholds away pixels in the stack whose mean intensity is less than a certain threshold value.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">my_img_threshed</span> <span class="kw">&lt;-</span> <span class="kw pkg">autothresholdr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/autothresholdr/man/mean_stack_thresh.html">mean_stack_thresh</a></span>(<span class="no">my_img</span>, <span class="st">"Huang"</span>)</pre></body></html></div>
-<p>Note that if all of the image is of interest, detrending is not necessary and should not be done.</p>
+<p>Note that if all of the image is of interest, thresholding is not necessary and should not be done.</p>
 </div>
 <div id="detrending" class="section level2">
 <h2 class="hasAnchor">
