@@ -9,3 +9,4 @@ knitr::opts_chunk$set(
 
 ## ----detrend-dir-no-thresh, eval=FALSE----------------------------------------
 #  dir_detrend_robinhood("path/to/some/dir")
+

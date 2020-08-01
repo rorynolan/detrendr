@@ -117,7 +117,7 @@ test_that("detrending works", {
   x2 <- img_detrend_rh(img[, , 1, ], 10)
   expect_equal(x1, x2)
   skip_if_not_installed("abind")
-  twoch <- system.file("img", "2ch_ij.tif", package = "detrendr") %>%
+  twoch <- system.file("extdata", "2ch_ij.tif", package = "detrendr") %>%
     ijtiff::read_tif(msg = FALSE)
   set.seed(8)
   x1 <- img_detrend_rh(twoch, c("auto", NA), quick = TRUE)
