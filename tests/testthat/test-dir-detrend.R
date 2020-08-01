@@ -62,7 +62,9 @@ test_that("detrending entire derectories works", {
     purrr::map(detrendeds, dim),
     purrr::map(detrendeds_dir, dim)
   )
-  expect_equivalent(unlist(detrendeds), unlist(detrendeds_dir))
+  expect_equivalent(unlist(detrendeds), unlist(detrendeds_dir),
+    tolerance = 1
+  )
   if (get_os() == "mac") {
     expect_equal(
       dir("detrended"),
