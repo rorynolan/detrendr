@@ -254,6 +254,7 @@ test_that("detrending entire derectories works", {
 })
 
 test_that("file_detrend() deals with other directories correctly", {
+  skip_on_cran()
   setwd(tempdir())
   filesstrings::create_dir("tempwithintemp")
   file.copy(

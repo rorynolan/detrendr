@@ -85,11 +85,11 @@ best_swaps <- function(img, quick = FALSE) {
     if (quick) {
       out <- (best_swaps_naive(img) - best_swaps_naive(pois_mean_img(img))) %>%
         relu() %>%
-        as.integer()
+        as.double()
       return(out)
     }
     newest <- purrr::rerun(9, best_swaps_naive(img)) %>%
-      purrr::map_int(1)
+      purrr::map_dbl(1)
     if (filesstrings::all_equal(stats::median(newest), 0)) {
       return(0L)
     }
@@ -108,12 +108,12 @@ best_swaps <- function(img, quick = FALSE) {
       length(newest),
       best_swaps_naive(pois_mean_img(img))
     ) %>%
-      purrr::map_int(1)
+      purrr::map_dbl(1)
     (stats::median(newest) - stats::median(overestimates)) %>%
       relu() %>%
       as.integer()
   } else {
-    purrr::map_int(seq_len(d[3]), ~ best_swaps(img[, , ., , drop = FALSE],
+    purrr::map_dbl(seq_len(d[3]), ~ best_swaps(img[, , ., , drop = FALSE],
       quick = quick
     ))
   }
@@ -288,5 +288,5 @@ best_swaps_naive <- function(img) {
   } else {
     out <- max_swaps
   }
-  as.integer(out)
+  out
 }

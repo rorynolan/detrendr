@@ -1,6 +1,5 @@
 Library: /Users/rnolan/Dropbox/DPhil/Misc/RStuff/detrendr/revdep/library.noindex/detrendr/old
 detrendr (0.6.7)
-ijtiff   (2.1.2)
 
 Library: /Users/rnolan/Dropbox/DPhil/Misc/RStuff/detrendr/revdep/library.noindex/nandb
 abind          (1.4-5)
