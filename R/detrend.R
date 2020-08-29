@@ -159,9 +159,10 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
     rep(seq_along(.), times = .) %>%
     {
       if (length(.) <= 1) {
-        return(.)
+        .
+      } else {
+        sample(.)
       }
-      sample(.)
     }
   if (length(px_getting)) {
     elems_getting <- cbind(px_getting, frames_getting) %>%

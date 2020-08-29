@@ -28,9 +28,10 @@ mat_swap_n_more <- function(mat, mat_orig, n, frame_weights, frame_balls,
     rep(seq_along(.), times = .) %>%
     {
       if (length(.) <= 1) {
-        return(.)
+        .
+      } else {
+        sample(.)
       }
-      sample(.)
     }
   winner_frames <- plyr::count(frames_getting) %>%
     dplyr::rename(frame = "x", amount = "freq")
