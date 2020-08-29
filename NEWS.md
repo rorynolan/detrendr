@@ -1,3 +1,9 @@
+# `detrendr` 0.6.9
+
+## BUG FIXES
+* Fix for magrittr 2.0 (which no longer allows you to call `return(.)` on a magrittr dot).
+
+
 # `detrendr` 0.6.8
 
 ## BUG FIXES

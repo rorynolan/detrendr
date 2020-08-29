@@ -1,5 +1,5 @@
 
-# `detrendr` <img src="man/figures/logo.png" align="right" height=141/> 
+# `detrendr` <img src="man/figures/logo.png" align="right" height=141/>
 
 Detrend fluorescence microscopy image series for fluorescence
 fluctuation and correlation spectroscopy (FCS and FFS) analysis. This
@@ -24,7 +24,7 @@ downloads](http://cranlogs.r-pkg.org/badges/detrendr)
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
-developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 ## Installation
@@ -48,7 +48,7 @@ for the ultra-curious and should be thought of as unreliable.
 
 ## How to use the package
 
-See the package website at <https://rorynolan.github.io/detrendr>.
+See the package website at <https://rorynolan.github.io/detrendr/>.
 
 ## Contribution
 

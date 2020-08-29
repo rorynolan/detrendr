@@ -7,15 +7,17 @@
   "identifier": "detrendr",
   "description": "Detrend fluorescence microscopy image series for\n    fluorescence fluctuation and correlation spectroscopy ('FCS' and\n    'FFS') analysis. This package contains functionality published in a\n    2016 paper <doi:10.1093/bioinformatics/btx434> but it has been\n    extended since then with the Robin Hood algorithm and thus contains\n    unpublished work.",
   "name": "detrendr: Detrend Images",
-  "codeRepository": "https://www.github.com/rorynolan/detrendr",
+  "codeRepository": "https://github.com/rorynolan/detrendr",
   "relatedLink": [
     "https://rorynolan.github.io/detrendr",
     "https://CRAN.R-project.org/package=detrendr",
-    "https://www.github.com/rorynolan/detrendr#readme"
+    "https://www.github.com/rorynolan/detrendr#readme",
+    "https://rorynolan.github.io/detrendr/",
+    "https://github.com/rorynolan/detrendr#readme"
   ],
-  "issueTracker": "https://www.github.com/rorynolan/detrendr/issues",
+  "issueTracker": "https://github.com/rorynolan/detrendr/issues",
   "license": "https://spdx.org/licenses/BSD-3-Clause",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -513,9 +515,9 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "18681.647KB",
+  "fileSize": "18682.344KB",
   "contIntegration": ["https://travis-ci.org/rorynolan/detrendr", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
-  "developmentStatus": ["http://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
+  "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
   "citation": [
     {
       "@type": "ScholarlyArticle",
