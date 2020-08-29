@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
       </span>
     </div>
 
@@ -117,7 +117,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/rorynolan/detrendr/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -132,15 +137,26 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      
+      <small>Source: <a href='https://github.com/rorynolan/detrendr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="detrendr-0-6-8" class="section level1">
-<h1 class="page-header" data-toc-text="0.6.8">
-<a href="#detrendr-0-6-8" class="anchor"></a><small> 2020-08-03 </small><code>detrendr</code> 0.6.8</h1>
+    <div id="detrendr-0-6-9" class="section level1">
+<h1 class="page-header" data-toc-text="0.6.9">
+<a href="#detrendr-0-6-9" class="anchor"></a><small> Unreleased </small><code>detrendr</code> 0.6.9</h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>BUG FIXES</h2>
+<ul>
+<li>Fix for magrittr 2.0 (which no longer allows you to call <code><a href="https://rdrr.io/r/base/function.html">return(.)</a></code> on a magrittr dot).</li>
+</ul>
+</div>
+</div>
+    <div id="detrendr-0-6-8" class="section level1">
+<h1 class="page-header" data-toc-text="0.6.8">
+<a href="#detrendr-0-6-8" class="anchor"></a><small> 2020-08-03 </small><code>detrendr</code> 0.6.8</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>An image needed for the tests is no longer included in <code>ijtiff</code> so <code>detrendr</code> needs to have it itself.</li>
 </ul>
@@ -149,9 +165,9 @@
     <div id="detrendr-0-6-7" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.7">
 <a href="#detrendr-0-6-7" class="anchor"></a><small> 2020-06-24 </small><code>detrendr</code> 0.6.7</h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-2" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Skip a few tests on CRAN (necessary because CRAN has so many different machines with various RNG implementations).</li>
 </ul>
@@ -160,9 +176,9 @@
     <div id="detrendr-0-6-6" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.6">
 <a href="#detrendr-0-6-6" class="anchor"></a><small> 2020-05-08 </small><code>detrendr</code> 0.6.6</h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-3" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Cope with <code>ijtiff</code> not working on 32-bit Windows.</li>
 </ul>
@@ -171,9 +187,9 @@
     <div id="detrendr-0-6-5" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.5">
 <a href="#detrendr-0-6-5" class="anchor"></a><small> 2020-03-16 </small><code>detrendr</code> 0.6.5</h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-4" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>
 <code>ggplot2</code> needed to be in <code>Suggests</code> because it is used in a vignette.</li>
@@ -183,9 +199,9 @@
     <div id="detrendr-0-6-4" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.4">
 <a href="#detrendr-0-6-4" class="anchor"></a><small> 2019-07-08 </small><code>detrendr</code> 0.6.4</h1>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-5" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Insist on latest, bug-fixed <code>ijtiff</code> v2.0.2.</li>
 </ul>
@@ -194,9 +210,9 @@
     <div id="detrendr-0-6-3" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.3">
 <a href="#detrendr-0-6-3" class="anchor"></a><small> 2019-06-29 </small><code>detrendr</code> 0.6.3</h1>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-6" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Ignore a test on CRAN mac (it’s fine on travis mac).</li>
 <li>Insist on latest, bug-fixed <code>filesstrings</code> v3.1.5.</li>
@@ -206,9 +222,9 @@
     <div id="detrendr-0-6-2" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.2">
 <a href="#detrendr-0-6-2" class="anchor"></a><small> 2019-06-15 </small><code>detrendr</code> 0.6.2</h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-7" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Demand latest, least buggy <code>filesstrings</code>, <code>ijtiff</code> and <code>autothresholdr</code>.</li>
 <li>Permanently fix the issues that were temporarily fixed in the previous version (R 3.6 has now landed).</li>
@@ -218,9 +234,9 @@
     <div id="detrendr-0-6-1" class="section level1">
 <h1 class="page-header" data-toc-text="0.6.1">
 <a href="#detrendr-0-6-1" class="anchor"></a><small> 2019-04-13 </small><code>detrendr</code> 0.6.1</h1>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-8" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Require necessary version of <code>glue</code>.</li>
 <li>Temporary fix for upcoming R 3.6 which patches <code><a href="https://rdrr.io/r/base/sample.html">base::sample()</a></code>. A more permanent fix should be provided when R 3.6 has landed.</li>
@@ -249,9 +265,9 @@
     <div id="detrendr-0-5-2" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.2">
 <a href="#detrendr-0-5-2" class="anchor"></a><small> Unreleased </small><code>detrendr</code> 0.5.2</h1>
-<div id="bug-fixes-8" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-8" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-9" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Detrending was not working well for images which had dimension 1 in x or y.</li>
 </ul>
@@ -260,9 +276,9 @@
     <div id="detrendr-0-5-1" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.1">
 <a href="#detrendr-0-5-1" class="anchor"></a><small> 2018-04-24 </small><code>detrendr</code> 0.5.1</h1>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-10" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Fix tests for CRAN fedora and mac.</li>
 </ul>
@@ -302,9 +318,9 @@
 <li>Batch processing: detrend an entire folder with the likes of <code><a href="../reference/detrend-directory.html">dir_detrend_exp()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes-10" class="section level2">
+<div id="bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-10" class="anchor"></a>BUG FIXES</h2>
+<a href="#bug-fixes-11" class="anchor"></a>BUG FIXES</h2>
 <ul>
 <li>Asymmetric images caused R to crash.</li>
 <li>
