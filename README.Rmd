@@ -22,7 +22,7 @@ Detrend fluorescence microscopy image series for fluorescence fluctuation and co
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
 ![RStudio CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr)
 ![RStudio CRAN monthly downloads](http://cranlogs.r-pkg.org/badges/detrendr)
-[![Rdocumentation](http://www.rdocumentation.org/badges/version/detrendr)](http://www.rdocumentation.org/packages/detrendr)
+[![Rdocumentation](https://www.rdocumentation.org/badges/version/detrendr)](https://www.rdocumentation.org/packages/detrendr)
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
