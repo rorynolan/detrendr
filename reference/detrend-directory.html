@@ -82,7 +82,7 @@ in the same folder." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -150,48 +150,48 @@ all of the TIFF images in a folder, saving the detrended images as TIFF files
 in the same folder.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dir_detrend_robinhood</span>(
-  <span class='kw'>folder_path</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='kw'>swaps</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>quick</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>msg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>dir_detrend_robinhood</span><span class='op'>(</span>
+  folder_path <span class='op'>=</span> <span class='st'>"."</span>,
+  swaps <span class='op'>=</span> <span class='st'>"auto"</span>,
+  thresh <span class='op'>=</span> <span class='cn'>NULL</span>,
+  quick <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  msg <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>dir_detrend_rh</span>(
-  <span class='kw'>folder_path</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='kw'>swaps</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>quick</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>msg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>dir_detrend_rh</span><span class='op'>(</span>
+  folder_path <span class='op'>=</span> <span class='st'>"."</span>,
+  swaps <span class='op'>=</span> <span class='st'>"auto"</span>,
+  thresh <span class='op'>=</span> <span class='cn'>NULL</span>,
+  quick <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  msg <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>dir_detrend_boxcar</span>(
-  <span class='kw'>folder_path</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='no'>l</span>,
-  <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FCS"</span>, <span class='st'>"FFS"</span>),
-  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>msg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>dir_detrend_boxcar</span><span class='op'>(</span>
+  folder_path <span class='op'>=</span> <span class='st'>"."</span>,
+  <span class='va'>l</span>,
+  purpose <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FCS"</span>, <span class='st'>"FFS"</span><span class='op'>)</span>,
+  thresh <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  msg <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>dir_detrend_exp</span>(
-  <span class='kw'>folder_path</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='no'>tau</span>,
-  <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FCS"</span>, <span class='st'>"FFS"</span>),
-  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>msg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>dir_detrend_exp</span><span class='op'>(</span>
+  folder_path <span class='op'>=</span> <span class='st'>"."</span>,
+  <span class='va'>tau</span>,
+  purpose <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FCS"</span>, <span class='st'>"FFS"</span><span class='op'>)</span>,
+  thresh <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  msg <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>dir_detrend_polynom</span>(
-  <span class='kw'>folder_path</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='no'>degree</span>,
-  <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"FCS"</span>, <span class='st'>"FFS"</span>),
-  <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>msg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>dir_detrend_polynom</span><span class='op'>(</span>
+  folder_path <span class='op'>=</span> <span class='st'>"."</span>,
+  <span class='va'>degree</span>,
+  purpose <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FCS"</span>, <span class='st'>"FFS"</span><span class='op'>)</span>,
+  thresh <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  msg <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,7 +213,7 @@ vector or list.</p></td>
     <tr>
       <th>thresh</th>
       <td><p>The threshold or thresholding method (see
-<code><a href='https://rdrr.io/pkg/autothresholdr/man/mean_stack_thresh.html'>autothresholdr::mean_stack_thresh()</a></code>) to use on the image prior to
+<code><a href='https://rorynolan.github.io/autothresholdr/reference/mean_stack_thresh.html'>autothresholdr::mean_stack_thresh()</a></code>) to use on the image prior to
 detrending.</p></td>
     </tr>
     <tr>
@@ -285,20 +285,21 @@ processing, it's not so easy to efficiently do one after the other, so it's
 nice to have that taken care of should you want it.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"bleached.tif"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"detrendr"</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"img"</span>, <span class='st'>"2ch_ij.tif"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ijtiff"</span>)
-  ),
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"bleached.tif"</span>, package <span class='op'>=</span> <span class='st'>"detrendr"</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"img"</span>, <span class='st'>"2ch_ij.tif"</span>, package <span class='op'>=</span> <span class='st'>"ijtiff"</span><span class='op'>)</span>
+  <span class='op'>)</span>,
   <span class='st'>"."</span>
-)
-<span class='fu'>dir_detrend_robinhood</span>(<span class='kw'>thresh</span> <span class='kw'>=</span> <span class='st'>"huang"</span>)
-<span class='fu'>dir_detrend_boxcar</span>(<span class='kw'>l</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='st'>"tri"</span>, <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='st'>"FFS"</span>)
-<span class='fu'>dir_detrend_exp</span>(<span class='kw'>tau</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='st'>"tri"</span>, <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='st'>"FCS"</span>)
-<span class='fu'>dir_detrend_polynom</span>(<span class='kw'>degree</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>thresh</span> <span class='kw'>=</span> <span class='st'>"huang"</span>, <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='st'>"FFS"</span>)
-}</div></pre>
+<span class='op'>)</span>
+<span class='fu'>dir_detrend_robinhood</span><span class='op'>(</span>thresh <span class='op'>=</span> <span class='st'>"huang"</span><span class='op'>)</span>
+<span class='fu'>dir_detrend_boxcar</span><span class='op'>(</span>l <span class='op'>=</span> <span class='st'>"auto"</span>, thresh <span class='op'>=</span> <span class='st'>"tri"</span>, purpose <span class='op'>=</span> <span class='st'>"FFS"</span><span class='op'>)</span>
+<span class='fu'>dir_detrend_exp</span><span class='op'>(</span>tau <span class='op'>=</span> <span class='st'>"auto"</span>, thresh <span class='op'>=</span> <span class='st'>"tri"</span>, purpose <span class='op'>=</span> <span class='st'>"FCS"</span><span class='op'>)</span>
+<span class='fu'>dir_detrend_polynom</span><span class='op'>(</span>degree <span class='op'>=</span> <span class='st'>"auto"</span>, thresh <span class='op'>=</span> <span class='st'>"huang"</span>, purpose <span class='op'>=</span> <span class='st'>"FFS"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -314,7 +315,7 @@ nice to have that taken care of should you want it.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

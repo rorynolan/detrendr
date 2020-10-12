@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Get the sums/means/medians/variances of pillars of an
-<a href='https://docs.ropensci.org/ijtiff/reference/ijtiff_img.html'>ijtiff_img</a>-style array. — pillar-stats • detrendr</title>
+ijtiff_img-style array. — pillar-stats • detrendr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
 
 
 <meta property="og:title" content="Get the sums/means/medians/variances of pillars of an
-<a href='https://docs.ropensci.org/ijtiff/reference/ijtiff_img.html'>ijtiff_img</a>-style array. — pillar-stats" />
+ijtiff_img-style array. — pillar-stats" />
 <meta property="og:description" content="For an ijtiff_img-style array img (indexed as img[y, x, channel, frame]), pillar xy of channel
 ch is defined as img[y, x, ch, ]. These functions compute the mean,
 median and variance of each pillar for each channel." />
@@ -84,7 +84,7 @@ median and variance of each pillar for each channel." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -153,13 +153,13 @@ median and variance of each pillar for each channel." />
 median and variance of each pillar for each channel.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sum_pillars</span>(<span class='no'>img</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>sum_pillars</span><span class='op'>(</span><span class='va'>img</span>, parallel <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>mean_pillars</span>(<span class='no'>img</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>mean_pillars</span><span class='op'>(</span><span class='va'>img</span>, parallel <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>median_pillars</span>(<span class='no'>img</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>median_pillars</span><span class='op'>(</span><span class='va'>img</span>, parallel <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>var_pillars</span>(<span class='no'>img</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>var_pillars</span><span class='op'>(</span><span class='va'>img</span>, parallel <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,8 +185,9 @@ cores, use <code>parallel = TRUE</code>.</p></td>
 <code>arr[y, x, ch, 1]</code> is equal to <code><a href='https://rdrr.io/r/base/mean.html'>mean(img[y, x, ch, ])</a></code>, <code><a href='https://rdrr.io/r/stats/median.html'>median(img[y, x, ch, ])</a></code>, or <code><a href='https://rdrr.io/r/stats/cor.html'>var(img[y, x, ch, ])</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>aaa</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>2</span>^<span class='fl'>4</span>), <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>)) <span class='co'># a 2-channel, 2-frame array</span>
-<span class='fu'>sum_pillars</span>(<span class='no'>aaa</span>)</div><div class='output co'>#&gt; , , 1, 1
+    <pre class="examples"><div class='input'><span class='va'>aaa</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>^</span><span class='fl'>4</span><span class='op'>)</span>, dim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># a 2-channel, 2-frame array</span>
+<span class='fu'>sum_pillars</span><span class='op'>(</span><span class='va'>aaa</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; , , 1, 1
 #&gt; 
 #&gt;      [,1] [,2]
 #&gt; [1,]   10   14
@@ -197,7 +198,8 @@ cores, use <code>parallel = TRUE</code>.</p></td>
 #&gt;      [,1] [,2]
 #&gt; [1,]   18   22
 #&gt; [2,]   20   24
-#&gt; </div><div class='input'><span class='fu'>mean_pillars</span>(<span class='no'>aaa</span>)</div><div class='output co'>#&gt; , , 1, 1
+#&gt; </div><div class='input'><span class='fu'>mean_pillars</span><span class='op'>(</span><span class='va'>aaa</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; , , 1, 1
 #&gt; 
 #&gt;      [,1] [,2]
 #&gt; [1,]    5    7
@@ -208,7 +210,8 @@ cores, use <code>parallel = TRUE</code>.</p></td>
 #&gt;      [,1] [,2]
 #&gt; [1,]    9   11
 #&gt; [2,]   10   12
-#&gt; </div><div class='input'><span class='fu'>median_pillars</span>(<span class='no'>aaa</span>)</div><div class='output co'>#&gt; , , 1, 1
+#&gt; </div><div class='input'><span class='fu'>median_pillars</span><span class='op'>(</span><span class='va'>aaa</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; , , 1, 1
 #&gt; 
 #&gt;      [,1] [,2]
 #&gt; [1,]    5    7
@@ -219,7 +222,8 @@ cores, use <code>parallel = TRUE</code>.</p></td>
 #&gt;      [,1] [,2]
 #&gt; [1,]    9   11
 #&gt; [2,]   10   12
-#&gt; </div><div class='input'><span class='fu'>var_pillars</span>(<span class='no'>aaa</span>)</div><div class='output co'>#&gt; , , 1, 1
+#&gt; </div><div class='input'><span class='fu'>var_pillars</span><span class='op'>(</span><span class='va'>aaa</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; , , 1, 1
 #&gt; 
 #&gt;      [,1] [,2]
 #&gt; [1,]   32   32
@@ -246,7 +250,7 @@ cores, use <code>parallel = TRUE</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

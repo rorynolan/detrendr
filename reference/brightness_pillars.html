@@ -82,7 +82,7 @@ of each pillar." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -150,7 +150,7 @@ of each pillar." />
 of each pillar.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>brightness_pillars</span>(<span class='no'>img</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>brightness_pillars</span><span class='op'>(</span><span class='va'>img</span>, parallel <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,8 +176,9 @@ cores, use <code>parallel = TRUE</code>.</p></td>
 one frame. <code>arr[y, x, ch, 1]</code> is equal to <code>var(img[y, x, ch, ]) / mean(img[y, x, ch, ])</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>aaa</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fl'>1</span>:<span class='fl'>16</span>, <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>))
-<span class='fu'>brightness_pillars</span>(<span class='no'>aaa</span>)</div><div class='output co'>#&gt; , , 1, 1
+    <pre class="examples"><div class='input'><span class='va'>aaa</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>16</span>, dim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>brightness_pillars</span><span class='op'>(</span><span class='va'>aaa</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; , , 1, 1
 #&gt; 
 #&gt;          [,1]     [,2]
 #&gt; [1,] 3.809524 2.962963
@@ -198,7 +199,7 @@ one frame. <code>arr[y, x, ch, 1]</code> is equal to <code>var(img[y, x, ch, ]) 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -92,13 +92,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="single-images_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Detrending single images</h1>
                         <h4 class="author">Rory Nolan</h4>
             
-            <h4 class="date">2020-09-03</h4>
+            <h4 class="date">2020-10-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rorynolan/detrendr/blob/master/vignettes/single-images.Rmd"><code>vignettes/single-images.Rmd</code></a></small>
       <div class="hidden name"><code>single-images.Rmd</code></div>
@@ -109,21 +109,25 @@
     
 <p>In this vignette, we will look at detrending single images interactively in an R session.</p>
 <p>First let’s load <code>detrendr</code> and <code>ijtiff</code>, which is for reading TIFF files:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="kw pkg">pacman</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span>(<span class="no">detrendr</span>, <span class="no">ijtiff</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">detrendr</span>, <span class="va">ijtiff</span><span class="op">)</span></pre></div>
 <div id="an-image-in-need-of-detrending" class="section level2">
 <h2 class="hasAnchor">
 <a href="#an-image-in-need-of-detrending" class="anchor"></a>An image in need of detrending</h2>
 <p>The package contains a sample image series which can be found at<br><code><a href="https://rdrr.io/r/base/system.file.html">system.file("extdata", "2ch100frame.tif", package = "detrendr")</a></code>. It’s 2 channels each with 100 frames. Diffusing fluorescent particles are imaged. Protein A is labelled with a red dye and red photons are collected in channel 1. Protein B is labelled in green and green photons are collected in channel 2.</p>
 <p>The image can be read into R with the <code>read_tif()</code> command provided by the <code>ijtiff</code> package. We’ll assign it to a variable called <code>my_img</code>.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">path</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"2ch100frame.tif"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"detrendr"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">path</span>)</pre></body></html></div>
-<pre><code>#&gt; [1] "/home/travis/R/Library/detrendr/extdata/2ch100frame.tif"</code></pre>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">my_img</span> <span class="kw">&lt;-</span> <span class="fu">read_tif</span>(<span class="no">path</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"2ch100frame.tif"</span>, package <span class="op">=</span> <span class="st">"detrendr"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
+<pre><code>#&gt; [1] "/Users/runner/work/_temp/Library/detrendr/extdata/2ch100frame.tif"</code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="va">my_img</span> <span class="op">&lt;-</span> <span class="fu">read_tif</span><span class="op">(</span><span class="va">path</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; Reading 2ch100frame.tif: an 8-bit, 30x28 pixel image of
 #&gt; unsigned integer type. Reading 2 channels and 100 frames . . .</code></pre>
 <pre><code>#&gt;  Done.</code></pre>
 <p><code>my_img</code> is now a 4-dimensional array. Slots 1 and 2 hold the <code>y</code> and <code>x</code> pixel positions, slot 3 indexes the channel and slot 4 indexes the frame.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">my_img</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">my_img</span><span class="op">)</span></pre></div>
 <pre><code>#&gt; [1]  30  28   2 100</code></pre>
 <p>Plotting the mean intensities of the frames in the two channels, we can see that the second channel has more obvious bleaching.</p>
 <p><img src="single-images_files/figure-html/plot-mean-profile-1.png" width="672"></p>
@@ -158,7 +162,8 @@
 <p><img src="single-images_files/figure-html/display-thresholded-mean-1.png" width="672"></p>
 <p>That seems to have worked: the background region in the top left is now greyed out, indicating that it has been set to <code>NA</code>. <em>Huang</em> thresholding can be slow, so if you want something similar but faster, try <em>Triangle</em>. Always check that your thresholding <em>looks right</em> afterwards.</p>
 <p>Thresholding of images is done with the <code>autothresholdr</code> package. Thresholding of a stack is preformed with <code>mean_stack_thresh()</code> which thresholds away pixels in the stack whose mean intensity is less than a certain threshold value.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">my_img_threshed</span> <span class="kw">&lt;-</span> <span class="kw pkg">autothresholdr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/autothresholdr/man/mean_stack_thresh.html">mean_stack_thresh</a></span>(<span class="no">my_img</span>, <span class="st">"Huang"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="va">my_img_threshed</span> <span class="op">&lt;-</span> <span class="fu">autothresholdr</span><span class="fu">::</span><span class="fu"><a href="https://rorynolan.github.io/autothresholdr/reference/mean_stack_thresh.html">mean_stack_thresh</a></span><span class="op">(</span><span class="va">my_img</span>, <span class="st">"Huang"</span><span class="op">)</span></pre></div>
 <p>Note that if all of the image is of interest, thresholding is not necessary and should not be done.</p>
 </div>
 <div id="detrending" class="section level2">
@@ -166,7 +171,8 @@
 <a href="#detrending" class="anchor"></a>Detrending</h2>
 <p>The best detrending method is <em>Robin Hood</em>, so I’ll be using that here. Other detrending methods provided in this package are there for legacy reasons.</p>
 <p>To detrend the above thresholded with the <em>Robin Hood</em> algorithm, run</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">my_detrended_img</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/detrending.html">img_detrend_robinhood</a></span>(<span class="no">my_img_threshed</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="va">my_detrended_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detrending.html">img_detrend_robinhood</a></span><span class="op">(</span><span class="va">my_img_threshed</span><span class="op">)</span></pre></div>
 <p>Let’s check out the mean intensity profiles of this detrended image.</p>
 <p><img src="single-images_files/figure-html/plot-detrended-mean-profile-1.png" width="672"></p>
 <p>These mean intensity profiles neatly show that the image series has been detrended. Beware, however, that these mean intensity profiles are not a great way to compare detrending routines. There is the temptation to say whichever detrending routine finishes with the flattest mean intensity profile is the best, but this is not true because it is possible to over-detrend (which will over-flatten the mean intensity profile). More rigorous procedures are needed to compare detrending routines, for example using images with simulated photobleaching or other trend-inducing phenomena introduced.</p>
@@ -188,7 +194,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

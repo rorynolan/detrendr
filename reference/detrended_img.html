@@ -91,7 +91,7 @@ not required for Robin Hood detrending.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@ not required for Robin Hood detrending.
 
     <div class="ref-description">
     <p>A detrended_img is a 4-dimensional array of positive integers in the style
-of an <a href='https://docs.ropensci.org/ijtiff/reference/ijtiff_img.html'>ijtiff_img</a> (indexed by <code>img[y, x, channel, frame]</code>) which is the result of a detrending routine. It has 4 attributes:</p><dl'>
+of an <a href='https://docs.ropensci.org/ijtiff/reference/ijtiff_img.html'>ijtiff_img</a> (indexed by <code>img[y, x, channel, frame]</code>) which is the result of a detrending routine. It has 4 attributes:</p><dl>
  <dt><code>parameter</code></dt><dd><p>The value
 of the parameter used. This will be the <code>l</code>, <code>tau</code> or <code>degree</code> parameter for
 the respective methods.</p></dd> <dt><code>auto</code></dt><dd><p>A boolean that is <code>TRUE</code> if the
@@ -168,7 +168,7 @@ not required for <em>Robin Hood</em> detrending.</p></dd>
 
     </div>
 
-    <pre class="usage"><span class='fu'>detrended_img</span>(<span class='no'>img</span>, <span class='no'>method</span>, <span class='no'>parameter</span>, <span class='no'>auto</span>, <span class='kw'>purpose</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>detrended_img</span><span class='op'>(</span><span class='va'>img</span>, <span class='va'>method</span>, <span class='va'>parameter</span>, <span class='va'>auto</span>, purpose <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,7 +226,7 @@ function sets negative values of <code>img</code> to zero.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

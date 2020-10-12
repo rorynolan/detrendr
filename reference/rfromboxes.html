@@ -82,7 +82,7 @@ from each. An empty box cannot be drawn from." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -150,7 +150,7 @@ draw a number of balls from these boxes, recording how many balls was drawn
 from each. An empty box cannot be drawn from.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rfromboxes</span>(<span class='no'>n</span>, <span class='no'>balls</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>rfromboxes</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>balls</span>, weights <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,8 +181,10 @@ number of balls drawn from each box.</p>
     <div class='dont-index'><p>rtoboxes</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>balls</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
-<span class='fu'>rfromboxes</span>(<span class='fl'>40</span>, <span class='no'>balls</span>)</div><div class='output co'>#&gt;  [1] 1 2 3 4 4 6 6 6 4 4</div><div class='input'><span class='fu'>rfromboxes</span>(<span class='fl'>40</span>, <span class='no'>balls</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>9</span>), <span class='fl'>0</span>))</div><div class='output co'>#&gt;  [1] 1 2 3 4 5 6 5 5 9 0</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>balls</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
+<span class='fu'>rfromboxes</span><span class='op'>(</span><span class='fl'>40</span>, <span class='va'>balls</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] 1 2 3 4 0 6 5 3 8 8</div><div class='input'><span class='fu'>rfromboxes</span><span class='op'>(</span><span class='fl'>40</span>, <span class='va'>balls</span>, weights <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>9</span><span class='op'>)</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] 1 2 3 4 5 6 7 4 8 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -198,7 +200,7 @@ number of balls drawn from each box.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

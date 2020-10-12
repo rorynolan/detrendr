@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@
     <p>Given a number of boxes, randomly distribute <em>n</em> balls into these boxes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rtoboxes</span>(<span class='no'>n</span>, <span class='no'>boxes</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>capacities</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>rtoboxes</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>boxes</span>, weights <span class='op'>=</span> <span class='cn'>NULL</span>, capacities <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,10 +180,13 @@ number of balls placed in each box.</p>
     <div class='dont-index'><p>rfromboxes</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>rtoboxes</span>(<span class='fl'>30</span>, <span class='fl'>7</span>)</div><div class='output co'>#&gt; [1] 6 2 7 4 1 7 3</div><div class='input'><span class='fu'>rtoboxes</span>(<span class='fl'>30</span>, <span class='fl'>7</span>, <span class='kw'>capacities</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>7</span>, <span class='fl'>4</span>)))</div><div class='output co'>#&gt; [1] 1 1 1 7 6 7 7</div><div class='input'><span class='fu'>rtoboxes</span>(<span class='fl'>30</span>, <span class='fl'>7</span>,
-  <span class='kw'>capacities</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>70</span>, <span class='fl'>4</span>)),
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.1</span>, <span class='fl'>6</span>), <span class='fl'>1</span>)
-)</div><div class='output co'>#&gt; [1]  1  1  1  1  2  3 21</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>rtoboxes</span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>7</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 5 4 4 6 4 3 4</div><div class='input'><span class='fu'>rtoboxes</span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>7</span>, capacities <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 1 1 7 7 6 7</div><div class='input'><span class='fu'>rtoboxes</span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>7</span>,
+  capacities <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>70</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,
+  weights <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  1  1  1  2  4  2 19</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -199,7 +202,7 @@ number of balls placed in each box.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
