@@ -1,3 +1,9 @@
+# `detrendr` 0.6.10
+
+## BUG FIXES
+* Insist on bug-fixed `filesstrings` >= 3.2.
+
+
 # `detrendr` 0.6.9
 
 ## BUG FIXES

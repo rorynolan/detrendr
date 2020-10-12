@@ -20,9 +20,4 @@ matrix:
             - libmagick++-dev
             - libgit2-dev
       after_success: travis_wait 30 Rscript -e 'covr::codecov()'
-      before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
-      deploy:
-        provider: script
-        script: Rscript -e 'pkgdown::deploy_site_github()'
-        skip_cleanup: true
     - os: osx
