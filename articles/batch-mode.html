@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.11</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -78,7 +78,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rorynolan/detrendr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -97,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Batch mode</h1>
             
-            <h4 class="date">2020-10-12</h4>
+            <h4 class="date">2021-01-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rorynolan/detrendr/blob/master/vignettes/batch-mode.Rmd"><code>vignettes/batch-mode.Rmd</code></a></small>
       <div class="hidden name"><code>batch-mode.Rmd</code></div>
@@ -113,11 +113,11 @@
 <p>Batch detrending applies the same routine to all of the images in a directory. If you have a directory with some images that you want to detrend and some that you don’t, put the ones you want to detrend in their own directory and detrend that directory. Then put the resulting images wherever you like.</p>
 <p>First decide whether or not your images need to be thresholded or not. Again, if some need to be thresholded and some don’t, put these in separate directories and detrend them separately. Always remember to check that the thresholding worked satisfactorily when it has been employed.</p>
 <p>To detrend a directory <code>path/to/some/dir</code> with e.g. <em>Huang</em> thresholding, run</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="../reference/detrend-directory.html">dir_detrend_robinhood</a></span><span class="op">(</span><span class="st">"path/to/some/dir"</span>, thresh <span class="op">=</span> <span class="st">"Huang"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/detrend-directory.html">dir_detrend_robinhood</a></span><span class="op">(</span><span class="st">"path/to/some/dir"</span>, thresh <span class="op">=</span> <span class="st">"Huang"</span><span class="op">)</span></code></pre></div>
 <p>To go without thresholding, just run</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/detrend-directory.html">dir_detrend_robinhood</a></span><span class="op">(</span><span class="st">"path/to/some/dir"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/detrend-directory.html">dir_detrend_robinhood</a></span><span class="op">(</span><span class="st">"path/to/some/dir"</span><span class="op">)</span></code></pre></div>
 <p>This will make a new directory called <code>detrended</code> within <code>path/to/some/dir</code> which will contain the detrended TIFF images. They will be named in such a way as to make clear that they were detrended and how they were detrended (with which method and parameters).</p>
 <p>The legacy methods also have their batch modes. For example, to use exponential filtering detrending, use <code><a href="../reference/detrend-directory.html">dir_detrend_exp()</a></code>.</p>
 </div>

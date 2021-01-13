@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.11</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -78,7 +78,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rorynolan/detrendr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -106,30 +106,30 @@
     
     
 <p><code>detrendr</code> expects the time dimension to be the fourth dimension of the image (<code>y</code>, <code>x</code>, <code>channel</code>, <code>time</code>). Some people’s data is linescan, meaning there is only one spatial dimension (<code>x</code>) and time is placed along the <code>y</code> axis of the image. We have an example in this package. It’s 1,000 time points of a line of 64 pixels; it has 2 channels.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">linescan_img</span> <span class="op">&lt;-</span> <span class="fu">ijtiff</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/ijtiff/reference/read_tif.html">read_tif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"linescan.tif"</span>,
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linescan_img</span> <span class="op">&lt;-</span> <span class="fu">ijtiff</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/ijtiff/reference/read_tif.html">read_tif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"linescan.tif"</span>,
                                              package <span class="op">=</span> <span class="st">"detrendr"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Reading linescan.tif: an 8-bit, 1000x64 pixel image of</span>
 <span class="co">#&gt; unsigned integer type. Reading 2 channels and 1 frame . . .</span>
 <span class="co">#&gt;  Done.</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">linescan_img</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1000   64    2    1</span></pre></div>
+<span class="co">#&gt; [1] 1000   64    2    1</span></code></pre></div>
 <p>As you can see, the image has 1,000 rows and 64 columns in its two channels, so time is indeed along the <code>y</code> axis. This won’t work with detrendr, so before detrending it, we need to put time on the fourth dimension. Fortunately, <code>ijtiff</code> provides a function for this.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">converted_img</span> <span class="op">&lt;-</span> <span class="fu">ijtiff</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/ijtiff/reference/linescan-conversion.html">linescan_to_stack</a></span><span class="op">(</span><span class="va">linescan_img</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">converted_img</span> <span class="op">&lt;-</span> <span class="fu">ijtiff</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/ijtiff/reference/linescan-conversion.html">linescan_to_stack</a></span><span class="op">(</span><span class="va">linescan_img</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">converted_img</span><span class="op">)</span>
-<span class="co">#&gt; [1]    1   64    2 1000</span></pre></div>
+<span class="co">#&gt; [1]    1   64    2 1000</span></code></pre></div>
 <p>Now as you can see, time is on the fourth dimension, so we can proceed as normal.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rorynolan.github.io/detrendr/">detrendr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rorynolan.github.io/detrendr/">detrendr</a></span><span class="op">)</span>
 <span class="va">detrended_converted_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detrending.html">img_detrend_rh</a></span><span class="op">(</span><span class="va">converted_img</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">detrended_converted_img</span><span class="op">)</span>
-<span class="co">#&gt; [1]    1   64    2 1000</span></pre></div>
+<span class="co">#&gt; [1]    1   64    2 1000</span></code></pre></div>
 <p>This image is still in <em>stack</em> format. You could now convert it back to linescan format if you like.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">linescan_detrended_img</span> <span class="op">&lt;-</span> <span class="fu">ijtiff</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/ijtiff/reference/linescan-conversion.html">stack_to_linescan</a></span><span class="op">(</span><span class="va">detrended_converted_img</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linescan_detrended_img</span> <span class="op">&lt;-</span> <span class="fu">ijtiff</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/ijtiff/reference/linescan-conversion.html">stack_to_linescan</a></span><span class="op">(</span><span class="va">detrended_converted_img</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">linescan_detrended_img</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1000   64    2    1</span></pre></div>
+<span class="co">#&gt; [1] 1000   64    2    1</span></code></pre></div>
 <p>You can then do as you please with these results, such as save them with <code><a href="https://docs.ropensci.org/ijtiff/reference/write_tif.html">ijtiff::write_tif()</a></code>.</p>
   </div>
 
