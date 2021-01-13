@@ -19,5 +19,8 @@ matrix:
             - libfftw3-dev
             - libmagick++-dev
             - libgit2-dev
+            - libharfbuzz-dev
+            - libfribidi-dev
       after_success: travis_wait 30 Rscript -e 'covr::codecov()'
     - os: osx
+      env: _R_CHECK_LENGTH_1_CONDITION_=true
