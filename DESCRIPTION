@@ -1,7 +1,7 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.10
+Version: 0.6.11
 Authors@R: 
     c(person(given = "Rory",
              family = "Nolan",

@@ -17,7 +17,7 @@
   ],
   "issueTracker": "https://github.com/rorynolan/detrendr/issues",
   "license": "https://spdx.org/licenses/BSD-3-Clause",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -515,7 +515,7 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "18682.653KB",
+  "fileSize": "18682.986KB",
   "contIntegration": ["https://travis-ci.org/rorynolan/detrendr", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
   "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
   "citation": [

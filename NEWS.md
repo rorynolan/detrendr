@@ -1,3 +1,9 @@
+# `detrendr` 0.6.11
+
+## BUG FIXES
+* Allow the answer for `l` in a test to be either 17 _or_ 18.
+
+
 # `detrendr` 0.6.10
 
 ## BUG FIXES
