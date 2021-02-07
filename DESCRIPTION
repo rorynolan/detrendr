@@ -1,7 +1,7 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.11
+Version: 0.6.12
 Authors@R: 
     c(person(given = "Rory",
              family = "Nolan",
@@ -64,6 +64,7 @@ Suggests:
     matrixStats,
     mgcv,
     pacman,
+    R.utils,
     rmarkdown,
     spelling,
     testthat,

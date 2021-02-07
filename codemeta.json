@@ -17,7 +17,7 @@
   ],
   "issueTracker": "https://github.com/rorynolan/detrendr/issues",
   "license": "https://spdx.org/licenses/BSD-3-Clause",
-  "version": "0.6.11",
+  "version": "0.6.12",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -226,6 +226,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=pacman"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R.utils",
+      "name": "R.utils",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=R.utils"
     },
     {
       "@type": "SoftwareApplication",
@@ -515,7 +527,7 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "18682.986KB",
+  "fileSize": "19994.202KB",
   "contIntegration": ["https://travis-ci.org/rorynolan/detrendr", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
   "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#stable"],
   "citation": [

@@ -4,9 +4,10 @@
 #include <vector>
 #include <cstdint>
 #include <random>
+#include <cmath>
 
-template <class IntType, class IntVec, class NumVec /*float or int type*/>
-IntVec rfromboxes(IntType n, IntVec& balls, NumVec& weights, int seed) {
+template <class NumType, class IntVec, class NumVec>
+IntVec rfromboxes(NumType n, IntVec& balls, NumVec& weights, int seed) {
   // beware that this function modifies `balls` and `weights`
   std::size_t balls_sz = balls.size();
   for (std::size_t i = 0; i != balls_sz; ++i) {
@@ -17,7 +18,8 @@ IntVec rfromboxes(IntType n, IntVec& balls, NumVec& weights, int seed) {
   IntVec out(balls_sz);
   typedef std::discrete_distribution<std::size_t> ddIT;
   ddIT distribution(weights.begin(), weights.end());
-  for (IntType i = 0; i != n; ++i) {
+  NumType n_floored = std::floor(n);
+  for (NumType i = 0; i < n_floored; ++i) {
     std::size_t draw = distribution(generator);
     out[draw]++;
     balls[draw]--;
@@ -29,8 +31,8 @@ IntVec rfromboxes(IntType n, IntVec& balls, NumVec& weights, int seed) {
   return out;
 }
 
-template <class IntType, class IntVec, class NumVec /*float or int type*/>
-IntVec rtoboxes(IntType n, IntType boxes,
+template <class NumType, class IntType, class IntVec, class NumVec>
+IntVec rtoboxes(NumType n, IntType boxes,
                 NumVec& weights, IntVec& capacities, int seed) {
   // beware that this function modifies `weights` and `capacities`
   std::size_t cap_sz = capacities.size();
@@ -47,7 +49,8 @@ IntVec rtoboxes(IntType n, IntType boxes,
   IntVec out(boxes);
   typedef std::discrete_distribution<uintmax_t> ddIT;
   ddIT distribution(weights.begin(), weights.end());
-  for (std::size_t i = 0; i != n; ++i) {
+  NumType n_floored = std::floor(n);
+  for (NumType i = 0; i < n_floored; ++i) {
     std::size_t draw = distribution(generator);
     out[draw]++;
     if (out[draw] == capacities[draw]) {

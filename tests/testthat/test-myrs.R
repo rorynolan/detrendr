@@ -164,3 +164,17 @@ test_that("rtoboxes errors correctly", {
     )
   )
 })
+
+test_that("rfromboxes and rtoboxes doesn't hang with a non-integer n", {
+  skip_if_not_installed("R.utils")
+  boxes <- R.utils::withTimeout(
+    rtoboxes(5.5, 3),
+    timeout = 5
+  )
+  expect_equal(sum(boxes), 5)
+  from <- R.utils::withTimeout(
+    rfromboxes(2.5, boxes, boxes),
+    timeout = 5
+  )
+  expect_equal(sum(from), 2)
+})

@@ -1,3 +1,9 @@
+# `detrendr` 0.6.12
+
+## BUG FIXES
+* `rfromboxes()` and `rtoboxes()` needed to floor the argument `n`. Lack of doing so was causing them to hang.
+
+
 # `detrendr` 0.6.11
 
 ## BUG FIXES
