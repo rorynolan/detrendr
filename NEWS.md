@@ -1,3 +1,9 @@
+# `detrendr` 0.6.13
+
+## BUG FIXES
+* Remove `LazyData` from `DESCRIPTION` (was causing CRAN note).
+
+
 # `detrendr` 0.6.12
 
 ## BUG FIXES

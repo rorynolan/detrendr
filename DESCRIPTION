@@ -1,7 +1,7 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.12
+Version: 0.6.13
 Authors@R: 
     c(person(given = "Rory",
              family = "Nolan",
@@ -76,7 +76,6 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 SystemRequirements: GNU make

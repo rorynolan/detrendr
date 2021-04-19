@@ -20,7 +20,6 @@ Status](https://img.shields.io/codecov/c/github/rorynolan/detrendr/master.svg)](
 downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr)
 ![RStudio CRAN monthly
 downloads](http://cranlogs.r-pkg.org/badges/detrendr)
-[![Rdocumentation](https://www.rdocumentation.org/badges/version/detrendr)](https://www.rdocumentation.org/packages/detrendr)
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
