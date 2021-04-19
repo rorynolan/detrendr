@@ -23,4 +23,5 @@ matrix:
             - libfribidi-dev
       after_success: travis_wait 30 Rscript -e 'covr::codecov()'
     - os: osx
+      osx_image: xcode12.2
       env: _R_CHECK_LENGTH_1_CONDITION_=true NOT_CRAN=true
