@@ -1,3 +1,9 @@
+# `detrendr` 0.6.14
+
+## BUG FIXES
+* A bug fix in `autothresholdr` broke a `detrendr` test.
+
+
 # `detrendr` 0.6.13
 
 ## BUG FIXES

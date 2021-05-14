@@ -69,7 +69,7 @@ test_that("detrending entire derectories works", {
     dir_detrended <- paste0(
       c(
         "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-        "bleached_detrended_thresh=Triangle=41.622_"
+        "bleached_detrended_thresh=Triangle=54.644_"
       ),
       c(
         "boxcar_for_FFS_l=auto=NA,auto=3.tif",
@@ -80,7 +80,7 @@ test_that("detrending entire derectories works", {
       dir_detrended <- paste0(
         c(
           "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=41.622_"
+          "bleached_detrended_thresh=Triangle=54.644_"
         ),
         c(
           "boxcar_for_FFS_l=auto=NA,auto=3.tif",
@@ -95,7 +95,7 @@ test_that("detrending entire derectories works", {
     ans0 <- paste0(
       c(
         "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-        "bleached_detrended_thresh=Triangle=41.622_"
+        "bleached_detrended_thresh=Triangle=54.644_"
       ),
       c(
         "boxcar_for_FFS_l=auto=NA,auto=2.tif",
@@ -141,7 +141,7 @@ test_that("detrending entire derectories works", {
           paste0(
             c(
               "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-              "bleached_detrended_thresh=Triangle=41.622_"
+              "bleached_detrended_thresh=Triangle=54.644_"
             ),
             "exponential_",
             c(
@@ -155,7 +155,7 @@ test_that("detrending entire derectories works", {
           paste0(
             c(
               "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-              "bleached_detrended_thresh=Triangle=41.622_"
+              "bleached_detrended_thresh=Triangle=54.644_"
             ),
             "exponential_",
             c(
@@ -173,7 +173,7 @@ test_that("detrending entire derectories works", {
       paste0(
         c(
           "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=41.622_"
+          "bleached_detrended_thresh=Triangle=54.644_"
         ),
         "exponential_",
         c(
@@ -204,7 +204,7 @@ test_that("detrending entire derectories works", {
       paste0(
         c(
           "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=41.622_"
+          "bleached_detrended_thresh=Triangle=54.644_"
         ),
         c(
           "robinhood_swaps=222,222.tif",
@@ -219,7 +219,7 @@ test_that("detrending entire derectories works", {
       paste0(
         c(
           "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=41.622_"
+          "bleached_detrended_thresh=Triangle=54.644_"
         ),
         c(
           "robinhood_swaps=222,222.tif",
@@ -257,7 +257,7 @@ test_that("detrending entire derectories works", {
       dir("detrended"),
       paste0(
         c(
-          "bleached_detrended_thresh=Triangle=41.622_"
+          "bleached_detrended_thresh=Triangle=54.644_"
         ),
         c(
           "polynomial_for_FFS_degree=2.tif"
@@ -270,7 +270,7 @@ test_that("detrending entire derectories works", {
       dir("detrended"),
       paste0(
         c(
-          "bleached_detrended_thresh=Triangle=41.622_"
+          "bleached_detrended_thresh=Triangle=54.644_"
         ),
         c(
           "polynomial_for_FFS_degree=2.tif"
