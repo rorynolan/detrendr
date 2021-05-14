@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.14</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1 data-toc-skip>Detrending single images</h1>
                         <h4 class="author">Rory Nolan</h4>
             
-            <h4 class="date">2021-04-19</h4>
+            <h4 class="date">2021-05-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rorynolan/detrendr/blob/master/vignettes/single-images.Rmd"><code>vignettes/single-images.Rmd</code></a></small>
       <div class="hidden name"><code>single-images.Rmd</code></div>
@@ -130,6 +130,8 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">my_img</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; [1]  30  28   2 100</code></pre>
 <p>Plotting the mean intensities of the frames in the two channels, we can see that the second channel has more obvious bleaching.</p>
+<pre><code>#&gt; Warning: Removed 1 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>#&gt; Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <p><img src="single-images_files/figure-html/plot-mean-profile-1.png" width="672"></p>
 <p>However, notice that channel 2 bleaches from 29 to 27 which is approximately 7%. That’s not much, so little correction will be necessary. This is good, you should always endeavour to keep bleaching below 20% and bleaching correction (detrending) should be viewed as a necessary evil.</p>
 <p>The mean intensity of channel 1 is 0.81 and the mean intensity of channel 2 is 25.13. Let’s view the mean intensity images of channels 1 and 2.</p>
@@ -162,7 +164,7 @@
 <p><img src="single-images_files/figure-html/display-thresholded-mean-1.png" width="672"></p>
 <p>That seems to have worked: the background region in the top left is now greyed out, indicating that it has been set to <code>NA</code>. <em>Huang</em> thresholding can be slow, so if you want something similar but faster, try <em>Triangle</em>. Always check that your thresholding <em>looks right</em> afterwards.</p>
 <p>Thresholding of images is done with the <code>autothresholdr</code> package. Thresholding of a stack is preformed with <code>mean_stack_thresh()</code> which thresholds away pixels in the stack whose mean intensity is less than a certain threshold value.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_img_threshed</span> <span class="op">&lt;-</span> <span class="fu">autothresholdr</span><span class="fu">::</span><span class="fu"><a href="https://rorynolan.github.io/autothresholdr/reference/mean_stack_thresh.html">mean_stack_thresh</a></span><span class="op">(</span><span class="va">my_img</span>, <span class="st">"Huang"</span><span class="op">)</span></code></pre></div>
 <p>Note that if all of the image is of interest, thresholding is not necessary and should not be done.</p>
 </div>
@@ -171,7 +173,7 @@
 <a href="#detrending" class="anchor"></a>Detrending</h2>
 <p>The best detrending method is <em>Robin Hood</em>, so I’ll be using that here. Other detrending methods provided in this package are there for legacy reasons.</p>
 <p>To detrend the above thresholded with the <em>Robin Hood</em> algorithm, run</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_detrended_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detrending.html">img_detrend_robinhood</a></span><span class="op">(</span><span class="va">my_img_threshed</span><span class="op">)</span></code></pre></div>
 <p>Let’s check out the mean intensity profiles of this detrended image.</p>
 <p><img src="single-images_files/figure-html/plot-detrended-mean-profile-1.png" width="672"></p>
