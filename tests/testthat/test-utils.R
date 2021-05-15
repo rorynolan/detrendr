@@ -1,5 +1,3 @@
-context("Utilities")
-
 test_that("translate_parallel() works", {
   expect_equal(translate_parallel(FALSE), 1)
   max_cores <- parallel::detectCores()

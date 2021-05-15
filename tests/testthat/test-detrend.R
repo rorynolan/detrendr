@@ -1,7 +1,6 @@
 test_that("detrending works", {
   skip_if(getRversion() < "3.6.0")
   skip_on_cran()
-  context("Boxcar detrending")
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
   ), msg = FALSE)
@@ -33,7 +32,6 @@ test_that("detrending works", {
       "`purpose`."
     )
   )
-  context("Exponential filtering detrending")
   corrected <- img_detrend_exp(img[, , 1, ], "auto",
     parallel = 2,
     purpose = "ff"
@@ -61,14 +59,13 @@ test_that("detrending works", {
       "`purpose`."
     )
   )
-  context("Polynomial detrending")
   expect_warning(
     img_detrend_polynom(img, "auto", parallel = 2, purpose = "ff"),
     "polynomial degree"
   )
   expect_equal(img_detrend_degree_specified(img, NA, "ff", FALSE),
     img,
-    check.attributes = FALSE
+    ignore_attr = TRUE
   )
   corrected <- suppressWarnings(img_detrend_polynom(img, "auto",
     purpose = "ff",
@@ -109,7 +106,6 @@ test_that("detrending works", {
       "`purpose`."
     )
   )
-  context("Robin Hood detrending")
   corrected <- img_detrend_rh(img)
   expect_equal(mean(brightness_pillars(corrected)), 4.38, tolerance = 0.01)
   set.seed(8)
@@ -167,7 +163,6 @@ test_that("detrending works", {
   )
 })
 
-context("Detrending errors")
 test_that("detrending errors correctly", {
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"

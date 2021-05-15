@@ -1,5 +1,3 @@
-context("class_constructors")
-
 test_that("detrended_img works", {
   three_d <- array(runif(8), dim = rep(2, 3))
   expect_error(

@@ -67,13 +67,15 @@ Suggests:
     R.utils,
     rmarkdown,
     spelling,
-    testthat,
+    testthat (>= 3.0),
     tidyr
 LinkingTo: 
     Rcpp (>= 1.0.1),
     RcppParallel (>= 5.0.2)
 VignetteBuilder: 
     knitr
+Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)

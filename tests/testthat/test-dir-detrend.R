@@ -58,62 +58,36 @@ test_that("detrending entire derectories works", {
   }
   detrendeds_dir <- dir(pattern = "detrended.*tif", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif, msg = FALSE)
-  expect_equivalent(
+  expect_equal(
     purrr::map(detrendeds, dim),
-    purrr::map(detrendeds_dir, dim)
+    purrr::map(detrendeds_dir, dim),
+    ignore_attr = TRUE
   )
-  expect_equivalent(unlist(detrendeds), unlist(detrendeds_dir),
-    tolerance = 1
+  expect_equal(unlist(detrendeds), unlist(detrendeds_dir),
+    tolerance = 1,
+    ignore_attr = TRUE
   )
-  if (get_os() == "mac") {
-    dir_detrended <- paste0(
-      c(
-        "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-        "bleached_detrended_thresh=Triangle=54.644_"
-      ),
-      c(
-        "boxcar_for_FFS_l=auto=NA,auto=3.tif",
-        "boxcar_for_FFS_l=auto=17.tif"
-      )
+  expect_match(
+    dir("detrended")[1],
+    paste0(
+      "2ch_ij_detrended_",
+      "thresh=Triangle=\\d+\\.?\\d*,Triangle=\\d+\\.?\\d*_",
+      "boxcar_for_FFS_l=auto=(NA|\\d+),auto=(NA|\\d+).tif"
     )
-    if (!isTRUE(all.equal(dir_detrended, dir("detrended")))) {
-      dir_detrended <- paste0(
-        c(
-          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=54.644_"
-        ),
-        c(
-          "boxcar_for_FFS_l=auto=NA,auto=3.tif",
-          "boxcar_for_FFS_l=auto=18.tif"
-        )
-      )
-    }
-    expect_equal(dir("detrended"), dir_detrended)
-  }
-  if (get_os() == "linux") {
-    dd <- dir("detrended")
-    ans0 <- paste0(
-      c(
-        "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-        "bleached_detrended_thresh=Triangle=54.644_"
-      ),
-      c(
-        "boxcar_for_FFS_l=auto=NA,auto=2.tif",
-        "boxcar_for_FFS_l=auto=17.tif"
-      )
+  )
+  expect_match(
+    dir("detrended")[2],
+    paste0(
+      "bleached_detrended_",
+      "thresh=Triangle=\\d+\\.?\\d*_",
+      "boxcar_for_FFS_l=auto=\\d+.tif"
     )
-    ans1 <- stringr::str_replace(ans0, "17", "15") # fedora
-    if (filesstrings::all_equal(dd, ans0)) {
-      expect_equal(dd, ans0)
-    } else if (filesstrings::all_equal(dd, ans1)) {
-      expect_equal(dd, ans1)
-    } else {
-      expect_equal(dd, ans0)
-    }
-  }
-  expect_warning(
-    dir_detrend_boxcar("detrended", l = 9, purpose = "fcs"),
-    "already detrended"
+  )
+  suppressWarnings(
+    expect_warning(
+      dir_detrend_boxcar("detrended", l = 9, purpose = "fcs"),
+      "already detrended"
+    )
   )
   filesstrings::dir.remove("detrended")
   set.seed(1)
@@ -128,61 +102,31 @@ test_that("detrending entire derectories works", {
   )
   detrendeds_dir <- dir(pattern = "detrended.*tif", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif, msg = FALSE)
-  expect_equivalent(
+  expect_equal(
     purrr::map(detrendeds, dim),
-    purrr::map(detrendeds_dir, dim)
+    purrr::map(detrendeds_dir, dim),
+    ignore_attr = TRUE
   )
-  expect_equivalent(unlist(detrendeds), unlist(detrendeds_dir), tolerance = 1)
-  if (get_os() == "mac") {
-    expect_true(
-      any(
-        filesstrings::all_equal(
-          dir("detrended"),
-          paste0(
-            c(
-              "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-              "bleached_detrended_thresh=Triangle=54.644_"
-            ),
-            "exponential_",
-            c(
-              "for_FFS_tau=auto=NA,auto=NA.tif",
-              "for_FFS_tau=auto=22.0703125.tif"
-            )
-          )
-        ),
-        filesstrings::all_equal(
-          dir("detrended"),
-          paste0(
-            c(
-              "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-              "bleached_detrended_thresh=Triangle=54.644_"
-            ),
-            "exponential_",
-            c(
-              "for_FFS_tau=auto=NA,auto=NA.tif",
-              "for_FFS_tau=auto=21.38671875.tif"
-            )
-          )
-        )
-      )
+  expect_equal(unlist(detrendeds), unlist(detrendeds_dir),
+    tolerance = 1, ignore_attr = TRUE
+  )
+  expect_match(
+    dir("detrended")[1],
+    paste0(
+      "2ch_ij_detrended_",
+      "thresh=Triangle=\\d+\\.?\\d*,Triangle=\\d+\\.?\\d*_",
+      "exponential_for_FFS_tau=auto=(NA|\\d+\\.?\\d*),auto=(NA|\\d+\\.?\\d*)",
+      ".tif"
     )
-  }
-  if (get_os() == "linux") {
-    expect_equal(
-      dir("detrended"),
-      paste0(
-        c(
-          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=54.644_"
-        ),
-        "exponential_",
-        c(
-          "for_FFS_tau=auto=51.55029296875,auto=NA.tif",
-          "for_FFS_tau=auto=19.3359375.tif"
-        )
-      )
+  )
+  expect_match(
+    dir("detrended")[2],
+    paste0(
+      "bleached_detrended_",
+      "thresh=Triangle=\\d+\\.?\\d*_",
+      "exponential_for_FFS_tau=auto=\\d+\\.?\\d*.tif"
     )
-  }
+  )
   filesstrings::dir.remove("detrended")
   set.seed(1)
   detrendeds <- purrr::map(orig_imgs, autothresholdr::mean_stack_thresh,
@@ -193,41 +137,28 @@ test_that("detrending entire derectories works", {
   dir_detrend_rh(swaps = 222, thresh = "tri", msg = FALSE)
   detrendeds_dir <- dir(pattern = "detrended.*tif$", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif, msg = FALSE)
-  expect_equivalent(
+  expect_equal(
     purrr::map(detrendeds, dim),
-    purrr::map(detrendeds_dir, dim)
+    purrr::map(detrendeds_dir, dim),
+    ignore_attr = TRUE
   )
-  expect_equivalent(unlist(detrendeds), unlist(detrendeds_dir))
-  if (get_os() == "mac") {
-    expect_equal(
-      dir("detrended"),
-      paste0(
-        c(
-          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=54.644_"
-        ),
-        c(
-          "robinhood_swaps=222,222.tif",
-          "robinhood_swaps=222.tif"
-        )
-      )
+  expect_equal(unlist(detrendeds), unlist(detrendeds_dir), ignore_attr = TRUE)
+  expect_match(
+    dir("detrended")[1],
+    paste0(
+      "2ch_ij_detrended_",
+      "thresh=Triangle=\\d+\\.?\\d*,Triangle=\\d+\\.?\\d*_",
+      "robinhood_swaps=222,222.tif"
     )
-  }
-  if (get_os() == "linux") {
-    expect_equal(
-      dir("detrended"),
-      paste0(
-        c(
-          "2ch_ij_detrended_thresh=Triangle=0.6,Triangle=0.6_",
-          "bleached_detrended_thresh=Triangle=54.644_"
-        ),
-        c(
-          "robinhood_swaps=222,222.tif",
-          "robinhood_swaps=222.tif"
-        )
-      )
+  )
+  expect_match(
+    dir("detrended")[2],
+    paste0(
+      "bleached_detrended_",
+      "thresh=Triangle=\\d+\\.?\\d*_",
+      "robinhood_swaps=222.tif"
     )
-  }
+  )
   filesstrings::dir.remove("detrended")
   set.seed(1)
   file.remove("2ch_ij.tif")
@@ -247,37 +178,21 @@ test_that("detrending entire derectories works", {
   ))
   detrendeds_dir <- dir(pattern = "detrended.*tif", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif, msg = FALSE)
-  expect_equivalent(
+  expect_equal(
     purrr::map(detrendeds, dim),
-    purrr::map(detrendeds_dir, dim)
+    purrr::map(detrendeds_dir, dim),
+    ignore_attr = TRUE
   )
-  expect_equivalent(unlist(detrendeds), unlist(detrendeds_dir), tolerance = 1)
-  if (get_os() == "mac") {
-    expect_equal(
-      dir("detrended"),
-      paste0(
-        c(
-          "bleached_detrended_thresh=Triangle=54.644_"
-        ),
-        c(
-          "polynomial_for_FFS_degree=2.tif"
-        )
-      )
+  expect_equal(unlist(detrendeds), unlist(detrendeds_dir),
+    tolerance = 1, ignore_attr = TRUE
+  )
+  expect_match(
+    dir("detrended"),
+    paste0(
+      "bleached_detrended_",
+      "thresh=Triangle=\\d+\\.?\\d*_polynomial_for_FFS_degree=2.tif"
     )
-  }
-  if (get_os() == "linux") {
-    expect_equal(
-      dir("detrended"),
-      paste0(
-        c(
-          "bleached_detrended_thresh=Triangle=54.644_"
-        ),
-        c(
-          "polynomial_for_FFS_degree=2.tif"
-        )
-      )
-    )
-  }
+  )
   filesstrings::dir.remove("detrended")
   file.remove(dir(pattern = "tif$"))
   setwd(cwd)

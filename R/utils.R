@@ -115,10 +115,3 @@ get_os <- function() {
   if (os == "osx") os <- "mac"
   tolower(os)
 }
-
-win32bit <- function() {
-  sys_info <- tolower(Sys.info())
-  windows <- get_os() == "windows"
-  bit64 <- stringr::str_detect(sys_info[["machine"]], stringr::coll("64"))
-  windows && (!bit64)
-}

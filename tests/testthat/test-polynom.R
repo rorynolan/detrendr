@@ -11,7 +11,7 @@ test_that("poly_fits works", {
     poly_fit_cols(m, 2) %T>% {
       .[, 1] <- NA
     },
-    check.attributes = FALSE
+    ignore_attr = TRUE
   )
   x <- matrix(sample(1:100, 20), ncol = 2)
   x[1, 1] <- NA
