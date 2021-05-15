@@ -1,7 +1,7 @@
 # `detrendr` 0.6.14
 
 ## BUG FIXES
-* Simplify the testing of `dir_detrend().
+* Simplify the testing of `dir_detrend()`.
 
 
 # `detrendr` 0.6.13
