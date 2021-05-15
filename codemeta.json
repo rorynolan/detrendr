@@ -528,7 +528,7 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "fileSize": "18808.332KB",
+  "fileSize": "18808.431KB",
   "contIntegration": ["https://travis-ci.org/rorynolan/detrendr", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
   "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html"],
   "citation": [
