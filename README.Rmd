@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 Detrend fluorescence microscopy image series for fluorescence fluctuation and correlation spectroscopy (FCS and FFS) analysis. This package contains functionality published in a 2016 paper https://doi.org/10.1093/bioinformatics/btx434 but it has been extended since then with the _Robin Hood_ algorithm and thus contains unpublished work.
 
-[![Travis-CI Build Status](https://travis-ci.org/rorynolan/detrendr.svg?branch=master)](https://travis-ci.org/rorynolan/detrendr)
+[![R-CMD-check](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/rorynolan/detrendr?branch=master&svg=true)](https://ci.appveyor.com/project/rorynolan/detrendr)
 [![Coverage Status](https://img.shields.io/codecov/c/github/rorynolan/detrendr/master.svg)](https://codecov.io/github/rorynolan/detrendr?branch=master)
 
