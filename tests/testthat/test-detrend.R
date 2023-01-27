@@ -63,8 +63,9 @@ test_that("detrending works", {
     img_detrend_polynom(img, "auto", parallel = 2, purpose = "ff"),
     "polynomial degree"
   )
-  expect_equal(img_detrend_degree_specified(img, NA, "ff", FALSE),
-    img,
+  expect_equal(
+    ijtiff::as_ijtiff_img(img_detrend_degree_specified(img, NA, "ff", FALSE)),
+    ijtiff::as_ijtiff_img(img),
     ignore_attr = TRUE
   )
   corrected <- suppressWarnings(img_detrend_polynom(img, "auto",

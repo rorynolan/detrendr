@@ -1,30 +1,21 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.14
-Authors@R: 
-    c(person(given = "Rory",
-             family = "Nolan",
-             role = c("aut", "cre"),
-             email = "rorynoolan@gmail.com",
-             comment = c(ORCID = "0000-0002-5239-4043")),
-      person(given = "Luis",
-             family = "Alvarez",
-             role = c("ctb", "cph"),
-             email = "lalvarez@well.ox.ac.uk",
-             comment = c(ORCID = "0000-0003-1316-1906")),
-      person(given = "Sergi",
-             family = "Padilla-Parra",
-             role = c("ctb", "ths", "cph"),
-             email = "spadilla@well.ox.ac.uk",
-             comment = c(ORCID = "0000-0002-8010-9481")))
+Version: 0.6.15
+Authors@R: c(
+    person("Rory", "Nolan", , "rorynoolan@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5239-4043")),
+    person("Luis", "Alvarez", , "lalvarez@well.ox.ac.uk", role = c("ctb", "cph"),
+           comment = c(ORCID = "0000-0003-1316-1906")),
+    person("Sergi", "Padilla-Parra", , "spadilla@well.ox.ac.uk", role = c("ctb", "ths", "cph"),
+           comment = c(ORCID = "0000-0002-8010-9481"))
+  )
 Maintainer: Rory Nolan <rorynoolan@gmail.com>
-Description: Detrend fluorescence microscopy image series for
-    fluorescence fluctuation and correlation spectroscopy ('FCS' and
-    'FFS') analysis. This package contains functionality published in a
-    2016 paper <doi:10.1093/bioinformatics/btx434> but it has been
-    extended since then with the Robin Hood algorithm and thus contains
-    unpublished work.
+Description: Detrend fluorescence microscopy image series for fluorescence
+    fluctuation and correlation spectroscopy ('FCS' and 'FFS') analysis.
+    This package contains functionality published in a 2016 paper
+    <doi:10.1093/bioinformatics/btx434> but it has been extended since
+    then with the Robin Hood algorithm and thus contains unpublished work.
 License: BSD_3_clause + file LICENSE
 URL: https://rorynolan.github.io/detrendr/,
     https://github.com/rorynolan/detrendr#readme
@@ -37,7 +28,7 @@ Imports:
     checkmate (>= 1.9.3),
     doParallel,
     dplyr,
-    filesstrings (>= 3.2),
+    filesstrings (>= 3.2.4),
     foreach,
     ijtiff (>= 2.2),
     iterators,
@@ -45,7 +36,7 @@ Imports:
     parallel,
     plyr,
     purrr,
-    Rcpp (>= 1.0.1),
+    Rcpp (>= 1.0.10),
     RcppParallel (>= 5.0.2),
     rlang (>= 0.3.3),
     stringr (>= 1.4),
@@ -70,7 +61,7 @@ Suggests:
     testthat (>= 3.0),
     tidyr
 LinkingTo: 
-    Rcpp (>= 1.0.1),
+    Rcpp (>= 1.0.10),
     RcppParallel (>= 5.0.2)
 VignetteBuilder: 
     knitr
@@ -79,5 +70,5 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 SystemRequirements: GNU make

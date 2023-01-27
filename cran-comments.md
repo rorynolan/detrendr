@@ -1,11 +1,9 @@
-
-
 ## Test environments
-
-* local mac OS X install, R 4.0.3
-* ubuntu 14.04 (on travis-ci), R 4.0.3
-* Windows Server 2012 (on AppVeyor), R 4.0.3
-* win-builder (devel and release)
+- local OS X install, R 4.2.1
+- ubuntu 20.04 (on GitHub Actions), R 4.2.1
+- Windows server 2022 (on GitHub Actions), R 4.2.1
+- win-builder (devel and release)
+- rhub::check_for_cran()
 
 
 # R CMD check results
