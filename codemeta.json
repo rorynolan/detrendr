@@ -513,7 +513,7 @@
     },
     "SystemRequirements": "GNU make"
   },
-  "fileSize": "813.34KB",
+  "fileSize": "10422.966KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -576,6 +576,6 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "contIntegration": ["https://travis-ci.org/rorynolan/detrendr", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
+  "contIntegration": ["https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
   "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html"]
 }
