@@ -94,7 +94,7 @@
       <h1 data-toc-skip>Detrending single images</h1>
                         <h4 data-toc-skip class="author">Rory Nolan</h4>
             
-            <h4 data-toc-skip class="date">2023-01-28</h4>
+            <h4 data-toc-skip class="date">2023-03-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rorynolan/detrendr/blob/HEAD/vignettes/single-images.Rmd" class="external-link"><code>vignettes/single-images.Rmd</code></a></small>
       <div class="hidden name"><code>single-images.Rmd</code></div>
@@ -146,7 +146,7 @@
 <div class="section level2">
 <h2 id="thresholding">Thresholding<a class="anchor" aria-label="anchor" href="#thresholding"></a>
 </h2>
-<p>You can see here that this is an image of part of a cell, with the edge of the cell across the top left and hence the top left corner of the image is not cell, just background. It’s important to <em>threshold</em> away this background part: the detrending routine assumes that all parts of the image are part of the region of interest (the cell), so we need to set the background parts to <code>NA</code> beforehand to tell the detrending routine that this area should be excluded. <code>detrendr</code> has all of the thresholding functionality of the <em>ImageJ Auto Threshold</em> plugin. You can read more about this at <a href="https://imagej.net/Auto_Threshold" class="external-link uri">https://imagej.net/Auto_Threshold</a>. My favourite method is <em>Huang</em>. Let’s look at both of these channels with <em>Huang</em> thresholding.</p>
+<p>You can see here that this is an image of part of a cell, with the edge of the cell across the top left and hence the top left corner of the image is not cell, just background. It’s important to <em>threshold</em> away this background part: the detrending routine assumes that all parts of the image are part of the region of interest (the cell), so we need to set the background parts to <code>NA</code> beforehand to tell the detrending routine that this area should be excluded. <code>detrendr</code> has all of the thresholding functionality of the <em>ImageJ Auto Threshold</em> plugin. You can read more about this at <a href="https://imagej.net/plugins/auto-threshold" class="external-link uri">https://imagej.net/plugins/auto-threshold</a>. My favourite method is <em>Huang</em>. Let’s look at both of these channels with <em>Huang</em> thresholding.</p>
 <pre><code><span><span class="co">#&gt; Using basic display functionality.</span></span>
 <span><span class="co">#&gt;   * For better display functionality, install the EBImage package.</span></span>
 <span><span class="co">#&gt;   * To install `EBImage`:</span></span>
