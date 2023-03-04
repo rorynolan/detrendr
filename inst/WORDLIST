@@ -1,4 +1,3 @@
-AppVeyor
 Aricescu
 Bioinformatics
 CMD
@@ -23,6 +22,7 @@ bioinformatics
 bona
 brightnesses
 btx
+codecov
 detrend
 detrending
 dev
