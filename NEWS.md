@@ -1,7 +1,7 @@
 # `detrendr` 0.6.15
 
 ## BUG FIXES
-* Insist on newest, bug-fixed `filesstrings` and `Rcpp`.
+* Insist on newest, bug-fixed `filesstrings`, `Rcpp` and `RcppParallel`.
 
 
 # `detrendr` 0.6.14

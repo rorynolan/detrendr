@@ -37,7 +37,7 @@ Imports:
     plyr,
     purrr,
     Rcpp (>= 1.0.10),
-    RcppParallel (>= 5.0.2),
+    RcppParallel (>= 5.1.7),
     rlang (>= 0.3.3),
     stringr (>= 1.4),
     tools,
@@ -62,7 +62,7 @@ Suggests:
     tidyr
 LinkingTo: 
     Rcpp (>= 1.0.10),
-    RcppParallel (>= 5.0.2)
+    RcppParallel (>= 5.1.7)
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

@@ -458,7 +458,7 @@
       "@type": "SoftwareApplication",
       "identifier": "RcppParallel",
       "name": "RcppParallel",
-      "version": ">= 5.0.2",
+      "version": ">= 5.1.7",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -513,7 +513,7 @@
     },
     "SystemRequirements": "GNU make"
   },
-  "fileSize": "10422.966KB",
+  "fileSize": "10422.396KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -541,7 +541,7 @@
         },
         {
           "@type": "Person",
-          "givenName": ["G.", "Maria"],
+          "givenName": "G. Maria",
           "familyName": "Jakobsdottir"
         },
         {
@@ -551,7 +551,7 @@
         },
         {
           "@type": "Person",
-          "givenName": ["A.", "Radu"],
+          "givenName": "A. Radu",
           "familyName": "Aricescu"
         },
         {
@@ -576,6 +576,6 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "contIntegration": ["https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml", "https://ci.appveyor.com/project/rorynolan/detrendr", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
+  "contIntegration": ["https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
   "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html"]
 }

@@ -90,7 +90,7 @@ display(mean_pillars(my_img[, , 2, ]))
 
 ## Thresholding
 
-You can see here that this is an image of part of a cell, with the edge of the cell across the top left and hence the top left corner of the image is not cell, just background. It's important to _threshold_ away this background part: the detrending routine assumes that all parts of the image are part of the region of interest (the cell), so we need to set the background parts to `NA` beforehand to tell the detrending routine that this area should be excluded. `detrendr` has all of the thresholding functionality of the _ImageJ Auto Threshold_ plugin. You can read more about this at https://imagej.net/Auto_Threshold. My favourite method is _Huang_. Let's look at both of these channels with _Huang_ thresholding.
+You can see here that this is an image of part of a cell, with the edge of the cell across the top left and hence the top left corner of the image is not cell, just background. It's important to _threshold_ away this background part: the detrending routine assumes that all parts of the image are part of the region of interest (the cell), so we need to set the background parts to `NA` beforehand to tell the detrending routine that this area should be excluded. `detrendr` has all of the thresholding functionality of the _ImageJ Auto Threshold_ plugin. You can read more about this at https://imagej.net/plugins/auto-threshold. My favourite method is _Huang_. Let's look at both of these channels with _Huang_ thresholding.
 
 ```{r display-thresholded-mean, echo=FALSE, fig.height=4}
 graphics::par(mfrow = c(1, 2))

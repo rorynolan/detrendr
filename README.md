@@ -9,8 +9,7 @@ since then with the *Robin Hood* algorithm and thus contains unpublished
 work.
 
 [![R-CMD-check](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/rorynolan/detrendr/master.svg)](https://codecov.io/github/rorynolan/detrendr?branch=master)
+[![codecov](https://app.codecov.io/gh/rorynolan/detrendr/branch/master/graph/badge.svg?token=GkXMOLXlAH)](https://app.codecov.io/gh/rorynolan/detrendr)
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
 ![RStudio CRAN
