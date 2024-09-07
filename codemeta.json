@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/rorynolan/detrendr",
   "issueTracker": "https://github.com/rorynolan/detrendr/issues",
   "license": "https://spdx.org/licenses/BSD-3-Clause",
-  "version": "0.6.15",
+  "version": "0.6.16",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -513,7 +513,7 @@
     },
     "SystemRequirements": "GNU make"
   },
-  "fileSize": "10422.395KB",
+  "fileSize": "813.008KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -576,6 +576,6 @@
   ],
   "releaseNotes": "https://github.com/rorynolan/detrendr/blob/master/NEWS.md",
   "readme": "https://github.com/rorynolan/detrendr/blob/master/README.md",
-  "contIntegration": ["https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml", "https://codecov.io/github/rorynolan/detrendr?branch=master"],
+  "contIntegration": ["https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/rorynolan/detrendr"],
   "developmentStatus": ["https://www.repostatus.org/#active", "https://lifecycle.r-lib.org/articles/stages.html"]
 }
