@@ -1,7 +1,7 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.15
+Version: 0.6.16
 Authors@R: c(
     person("Rory", "Nolan", , "rorynoolan@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5239-4043")),
