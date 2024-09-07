@@ -1,78 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/batch-mode.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/linescan-data.html</loc>
-  </url>
-  <url>
-    <loc>/articles/single-images.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/apply_on_pillars.html</loc>
-  </url>
-  <url>
-    <loc>/reference/best_degree.html</loc>
-  </url>
-  <url>
-    <loc>/reference/best_l.html</loc>
-  </url>
-  <url>
-    <loc>/reference/best_swaps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/best_tau.html</loc>
-  </url>
-  <url>
-    <loc>/reference/brightness_pillars.html</loc>
-  </url>
-  <url>
-    <loc>/reference/detrend-directory.html</loc>
-  </url>
-  <url>
-    <loc>/reference/detrended_img.html</loc>
-  </url>
-  <url>
-    <loc>/reference/detrending.html</loc>
-  </url>
-  <url>
-    <loc>/reference/detrendr.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mean_frames.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pillar-stats.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rfromboxes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rtoboxes.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/CONDUCT.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/batch-mode.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/linescan-data.html</loc></url>
+<url><loc>/articles/single-images.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/apply_on_pillars.html</loc></url>
+<url><loc>/reference/best_degree.html</loc></url>
+<url><loc>/reference/best_l.html</loc></url>
+<url><loc>/reference/best_swaps.html</loc></url>
+<url><loc>/reference/best_tau.html</loc></url>
+<url><loc>/reference/brightness_pillars.html</loc></url>
+<url><loc>/reference/detrend-directory.html</loc></url>
+<url><loc>/reference/detrended_img.html</loc></url>
+<url><loc>/reference/detrending.html</loc></url>
+<url><loc>/reference/detrendr.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/mean_frames.html</loc></url>
+<url><loc>/reference/pillar-stats.html</loc></url>
+<url><loc>/reference/rfromboxes.html</loc></url>
+<url><loc>/reference/rtoboxes.html</loc></url>
 </urlset>
+
