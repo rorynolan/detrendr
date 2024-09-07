@@ -1,3 +1,9 @@
+# `detrendr` 0.6.16
+
+## BUG FIXES
+* Dynamically generate `PKG_CXXFLAGS` at compile time using `RcppParallel`.
+
+
 # `detrendr` 0.6.15
 
 ## BUG FIXES
