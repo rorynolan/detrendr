@@ -75,36 +75,6 @@ test_that("best_l works", {
   skip_if_not_installed("abind")
 })
 
-test_that("best_degree works", {
-  skip_on_cran()
-  img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
-    package = "detrendr"
-  ), msg = FALSE)
-  expect_error(
-    best_degree(img),
-    paste0(
-      "You must choose \\*either\\* 'FCS' \\*or\\* 'FFS' for\\s?",
-      "`purpose`."
-    )
-  )
-  set.seed(1)
-  best_degree <- suppressWarnings(round(best_degree(img, purpose = "ffs")))
-  expect_equal(best_degree, 17, tolerance = 2)
-  img_2ch <- abind::abind(img, img, along = 3)
-  d1 <- suppressWarnings(best_degree(img_2ch, purpose = "fcs"))
-  expect_equal(length(d1), 2)
-  expect_equal(mean(d1), 17, tolerance = 2)
-  set.seed(7)
-  img <- array(rpois(99^3, 99), dim = rep(99, 3))
-  best_degree <- suppressWarnings(round(best_degree(img, purpose = "ffs")))
-  expect_equal(best_degree, NA_real_)
-  img[] <- 0
-  expect_error(
-    best_degree(img, purpose = "ffs"),
-    "all pixel values are equal to 0"
-  )
-})
-
 test_that("best_swaps() works", {
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"

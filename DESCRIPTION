@@ -62,7 +62,8 @@ Suggests:
     tidyr
 LinkingTo: 
     Rcpp (>= 1.0.10),
-    RcppParallel (>= 5.1.7)
+    RcppParallel (>= 5.1.7),
+    RcppThread
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

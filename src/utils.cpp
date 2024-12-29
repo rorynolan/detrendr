@@ -21,3 +21,36 @@ IntegerVector vec_add1s(IntegerVector vec, IntegerVector add_pos) {
   return vec;
 }
 
+// Convert std::vector<std::vector<int>> to IntegerMatrix with column-major layout
+// (each inner vector represents a column)
+IntegerMatrix vec_to_matrix_colmajor(const std::vector<std::vector<int>>& vec) {
+  if (vec.empty()) {
+    return IntegerMatrix(0, 0);
+  }
+  std::size_t ncol = vec.size();
+  std::size_t nrow = vec[0].size();
+  IntegerMatrix out(nrow, ncol);
+  for (std::size_t i = 0; i < ncol; ++i) {
+    for (std::size_t j = 0; j < nrow; ++j) {
+      out(j, i) = vec[i][j];
+    }
+  }
+  return out;
+}
+
+// Convert std::vector<std::vector<int>> to IntegerMatrix with row-major layout
+// (each inner vector represents a row)
+IntegerMatrix vec_to_matrix_rowmajor(const std::vector<std::vector<int>>& vec) {
+  if (vec.empty()) {
+    return IntegerMatrix(0, 0);
+  }
+  std::size_t nrow = vec.size();
+  std::size_t ncol = vec[0].size();
+  IntegerMatrix out(nrow, ncol);
+  for (std::size_t i = 0; i < nrow; ++i) {
+    for (std::size_t j = 0; j < ncol; ++j) {
+      out(i, j) = vec[i][j];
+    }
+  }
+  return out;
+}

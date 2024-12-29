@@ -178,3 +178,65 @@ test_that("rfromboxes and rtoboxes doesn't hang with a non-integer n", {
   )
   expect_equal(sum(from), 2)
 })
+
+test_that("myrpois_frames produces consistent results on mac", {
+  skip_if(getRversion() < "3.6.0")
+  skip_if_not(get_os() == "mac")
+  set.seed(1)
+  means <- 1:5
+  frame_length <- 3
+  result <- myrpois_frames(means, frame_length)
+  expect_equal(dim(result), c(frame_length, length(means)))
+  expect_equal(result[,1], c(1, 1, 0))  # Updated expected values with seed(1)
+  # Test parallel vs non-parallel results
+  set.seed(1)
+  parallel_result <- myrpois_frames(means, frame_length, parallel = TRUE)
+  set.seed(1)
+  serial_result <- myrpois_frames(means, frame_length, parallel = FALSE)
+  expect_equal(parallel_result, serial_result)
+})
+
+test_that("myrpois_frames_t produces consistent results on mac", {
+  skip_if(getRversion() < "3.6.0")
+  skip_if_not(get_os() == "mac")
+  set.seed(1)
+  means <- 1:5
+  frame_length <- 3
+  result <- myrpois_frames_t(means, frame_length)
+  expect_equal(dim(result), c(length(means), frame_length))
+  expect_equal(result[1,], c(1, 1, 0))  # Updated expected values with seed(1)
+  # Test parallel vs non-parallel results
+  set.seed(1)
+  parallel_result <- myrpois_frames_t(means, frame_length, parallel = TRUE)
+  set.seed(1)
+  serial_result <- myrpois_frames_t(means, frame_length, parallel = FALSE)
+  expect_equal(parallel_result, serial_result)
+})
+
+test_that("myrpois_frames handles edge cases", {
+  skip_if(getRversion() < "3.6.0")
+  # Empty means vector - returns empty matrix
+  result_empty <- myrpois_frames(numeric(0), 3)
+  expect_equal(dim(result_empty), c(3, 0))
+  # Zero frame length - returns empty matrix
+  result_zero <- myrpois_frames(1:5, 0)
+  expect_equal(dim(result_zero), c(0, 5))
+  # Negative means
+  result_neg <- myrpois_frames(c(-2, -1, 0, 1, 2), 2)
+  expect_equal(dim(result_neg), c(2, 5))
+  expect_true(all(result_neg[, 4:5] >= 0))  # Positive means give non-negative results
+})
+
+test_that("myrpois_frames_t handles edge cases", {
+  skip_if(getRversion() < "3.6.0")
+  # Empty means vector - returns empty matrix
+  result_empty <- myrpois_frames_t(numeric(0), 3)
+  expect_equal(dim(result_empty), c(0, 3))
+  # Zero frame length - returns empty matrix
+  result_zero <- myrpois_frames_t(1:5, 0)
+  expect_equal(dim(result_zero), c(5, 0))
+  # Negative means
+  result_neg <- myrpois_frames_t(c(-2, -1, 0, 1, 2), 2)
+  expect_equal(dim(result_neg), c(5, 2))
+  expect_true(all(result_neg[4:5,] >= 0))  # Positive means give non-negative results
+})

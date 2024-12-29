@@ -1,13 +1,15 @@
-// [[Rcpp::depends(RcppParallel)]]
+// [[Rcpp::depends(RcppThread)]]
 
 #include <random>
-
+#include <vector>
 #include <Rcpp.h>
-#include <RcppParallel.h>
+#include <RcppThread.h>
 
 using namespace Rcpp;
-using namespace RcppParallel;
 
+// Forward declarations from utils.cpp
+IntegerMatrix vec_to_matrix_colmajor(const std::vector<std::vector<int>>& vec);
+IntegerMatrix vec_to_matrix_rowmajor(const std::vector<std::vector<int>>& vec);
 
 int mysign(double x) {
   if (x >= 0) {
@@ -17,134 +19,74 @@ int mysign(double x) {
   }
 }
 
-struct MyRPois : public Worker {
-
-  const RVector<double> means;
-  int seed;
-
-  // destination
-  RVector<int> output;
-
-  // initialize with source and destination
-  MyRPois(NumericVector means, int seed, IntegerVector output) :
-    means(means), seed(seed), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    std::minstd_rand generator_int(seed + begin);
-    std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
-    for (std::size_t i = begin; i != end; ++i) {
-      int seed_i = distribution_int(generator_int);
-      std::minstd_rand generator(seed_i);
-      std::poisson_distribution<int> distribution(std::abs(means[i]));
-      output[i] = distribution(generator) * mysign(means[i]);
-    }
-  }
-};
-
 // [[Rcpp::export]]
 IntegerVector myrpois_(NumericVector means, int seed) {
-
   std::size_t n = means.size();
-
-  // allocate the matrix we will return
-  IntegerVector output(n);
-
-  // create the worker
-  MyRPois myRPois(means, seed, output);
-
-  // call it with parallelFor
-  parallelFor(0, n, myRPois);
-
-  return output;
-}
-
-struct MyRPoisFrames : public Worker {
-
-  const RVector<double> means;
-  std::size_t frame_length;
-  int seed;
-
-  // destination
-  RMatrix<int> output;
-
-  // initialize with source and destination
-  MyRPoisFrames(NumericVector means, std::size_t frame_length,
-                int seed, IntegerMatrix output) :
-    means(means), frame_length(frame_length), seed(seed), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      std::minstd_rand generator_int(seed + begin);
-      std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
-      int seed_i = distribution_int(generator_int);
-      std::minstd_rand generator(seed_i);
-      std::poisson_distribution<int> distribution(std::abs(means[i]));
-      for (std::size_t j = 0; j != frame_length; ++j) {
-        output(j, i) = distribution(generator);
-      }
-    }
+  if (n == 0) {
+    return IntegerVector(0);
   }
-};
+  
+  std::vector<int> temp_output(n);
+  
+  auto worker = [&](std::size_t i) {
+    std::minstd_rand generator_int(seed + i);
+    std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
+    int seed_i = distribution_int(generator_int);
+    std::minstd_rand generator(seed_i);
+    std::poisson_distribution<int> distribution(std::abs(means[i]));
+    temp_output[i] = distribution(generator) * mysign(means[i]);
+  };
+
+  RcppThread::parallelFor(0, n, worker);
+  return IntegerVector(temp_output.begin(), temp_output.end());
+}
 
 // [[Rcpp::export]]
 IntegerMatrix myrpois_frames_(NumericVector means, std::size_t frame_length,
-                              int seed) {
-
+                             int seed) {
   std::size_t ncol = means.size();
-
-  IntegerMatrix output(frame_length, ncol);
-
-  // create the worker
-  MyRPoisFrames myRPoisFrames(means, frame_length, seed, output);
-
-  // call it with parallelFor
-  parallelFor(0, ncol, myRPoisFrames);
-
-  return output;
-}
-
-
-struct MyRPoisFramesT : public Worker {
-
-  const RVector<double> means;
-  std::size_t frame_length;
-  int seed;
-
-  // destination
-  RMatrix<int> output;
-
-  // initialize with source and destination
-  MyRPoisFramesT(NumericVector means, std::size_t frame_length,
-                 int seed, IntegerMatrix output) :
-    means(means), frame_length(frame_length), seed(seed), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      std::minstd_rand generator_int(seed + begin);
-      std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
-      int seed_i = distribution_int(generator_int);
-      std::minstd_rand generator(seed_i);
-      std::poisson_distribution<int> distribution(std::abs(means[i]));
-      for (std::size_t j = 0; j != frame_length; ++j) {
-        output(i, j) = distribution(generator);
-      }
-    }
+  if (ncol == 0) {
+    return IntegerMatrix(frame_length, 0);
   }
-};
+  
+  std::vector<std::vector<int>> temp_output(ncol, std::vector<int>(frame_length));
+  
+  auto worker = [&](std::size_t i) {
+    std::minstd_rand generator_int(seed + i);
+    std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
+    int seed_i = distribution_int(generator_int);
+    std::minstd_rand generator(seed_i);
+    std::poisson_distribution<int> distribution(std::abs(means[i]));
+    for (std::size_t j = 0; j != frame_length; ++j) {
+      temp_output[i][j] = distribution(generator) * mysign(means[i]);
+    }
+  };
+
+  RcppThread::parallelFor(0, ncol, worker);
+  return vec_to_matrix_colmajor(temp_output);
+}
 
 // [[Rcpp::export]]
 IntegerMatrix myrpois_frames_t_(NumericVector means, std::size_t frame_length,
-                                int seed) {
-
+                               int seed) {
   std::size_t nrow = means.size();
+  if (nrow == 0) {
+    return IntegerMatrix(0, frame_length);
+  }
+  
+  std::vector<std::vector<int>> temp_output(nrow, std::vector<int>(frame_length));
+  
+  auto worker = [&](std::size_t i) {
+    std::minstd_rand generator_int(seed + i);
+    std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
+    int seed_i = distribution_int(generator_int);
+    std::minstd_rand generator(seed_i);
+    std::poisson_distribution<int> distribution(std::abs(means[i]));
+    for (std::size_t j = 0; j != frame_length; ++j) {
+      temp_output[i][j] = distribution(generator) * mysign(means[i]);
+    }
+  };
 
-  IntegerMatrix output(nrow, frame_length);
-
-  // create the worker
-  MyRPoisFramesT myRPoisFramesT(means, frame_length, seed, output);
-
-  // call it with parallelFor
-  parallelFor(0, nrow, myRPoisFramesT);
-
-  return output;
+  RcppThread::parallelFor(0, nrow, worker);
+  return vec_to_matrix_rowmajor(temp_output);
 }
