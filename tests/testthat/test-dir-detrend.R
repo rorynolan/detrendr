@@ -14,46 +14,48 @@ test_that("detrending entire derectories works", {
   set.seed(1)
   while (class(detrendeds) == "try-error") {
     set.seed(get_seed())
-    detrendeds <- tryCatch(purrr::map(orig_imgs,
-      autothresholdr::mean_stack_thresh,
-      method = "tri"
-    ) %>%
-      purrr::map(img_detrend_boxcar,
-        l = "auto",
-        purpose = "ff"
-      ),
-    error = function(e) {
-      err_msg <- conditionMessage(e)
-      if (!stringr::str_detect(
-        err_msg,
-        "Even.*most severe d"
-      )) {
-        stop(err_msg)
-      } else {
-        structure(err_msg, class = "try-error")
+    detrendeds <- tryCatch(
+      purrr::map(orig_imgs,
+        autothresholdr::mean_stack_thresh,
+        method = "tri"
+      ) %>%
+        purrr::map(img_detrend_boxcar,
+          l = "auto",
+          purpose = "ff"
+        ),
+      error = function(e) {
+        err_msg <- conditionMessage(e)
+        if (!stringr::str_detect(
+          err_msg,
+          "Even.*most severe d"
+        )) {
+          stop(err_msg)
+        } else {
+          structure(err_msg, class = "try-error")
+        }
       }
-    }
     )
   }
   eee <- try(stop("eee"), silent = TRUE)
   set.seed(1)
   while (class(eee) == "try-error") {
     set.seed(get_seed())
-    eee <- tryCatch(dir_detrend_boxcar(
-      l = "auto", thresh = "tri",
-      purpose = "ff", msg = FALSE
-    ),
-    error = function(e) {
-      err_msg <- conditionMessage(e)
-      if (!stringr::str_detect(
-        err_msg,
-        "Even .* most severe detrend"
-      )) {
-        stop("unexpected error")
-      } else {
-        structure(err_msg, class = "try-error")
+    eee <- tryCatch(
+      dir_detrend_boxcar(
+        l = "auto", thresh = "tri",
+        purpose = "ff", msg = FALSE
+      ),
+      error = function(e) {
+        err_msg <- conditionMessage(e)
+        if (!stringr::str_detect(
+          err_msg,
+          "Even .* most severe detrend"
+        )) {
+          stop("unexpected error")
+        } else {
+          structure(err_msg, class = "try-error")
+        }
       }
-    }
     )
   }
   detrendeds_dir <- dir(pattern = "detrended.*tif", recursive = TRUE) %>%

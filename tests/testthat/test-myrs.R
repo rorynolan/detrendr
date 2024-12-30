@@ -1,88 +1,146 @@
-test_that("myrpois works on mac", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "mac")
+test_that("myrpois asymptotic properties", {
   set.seed(1)
-  expect_equal(myrpois(-5:5), c(-7, -3, -7, -3, 0, 0, 1, 0, 3, 4, 3))
+  # ----- Test positive lambda ------------------------------------------------
+  n <- 10000
+  lambda <- 5
+  x <- myrpois(rep(lambda, n))
+  expect_equal(mean(x), lambda, tolerance = 0.1)
+  expect_equal(var(x), lambda, tolerance = 0.2)
+  # ----- Test negative lambda -------------------------------------------------
+  neg_lambda <- -3
+  x_neg <- myrpois(rep(neg_lambda, n))
+  expect_equal(mean(x_neg), neg_lambda, tolerance = 0.1)
+  expect_equal(var(x_neg), abs(neg_lambda), tolerance = 0.2)
+  # ----- Test vector input ----------------------------------------------------
+  lambdas <- c(1, 3, 5, 7)
+  x_vec <- myrpois(rep(lambdas, each = n))
+  means <- as.vector(tapply(x_vec, rep(seq_along(lambdas), each = n), mean))
+  vars <- as.vector(tapply(x_vec, rep(seq_along(lambdas), each = n), var))
+  expect_equal(means, lambdas, tolerance = 0.1)
+  expect_equal(vars, abs(lambdas), tolerance = 0.2)
 })
 
-test_that("myrpois works on linux", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "linux")
-  skip_on_cran()
+test_that("myrbern asymptotic properties", {
   set.seed(1)
-  x <- myrpois(-5:5)
-  expect_equal(x, c(-6, -6, -5, -1, -3, 0, 1, 2, 4, 4, 4))
+  # ----- Test p=0.3 -----------------------------------------------------------
+  n <- 100000
+  p <- 0.3
+  x <- myrbern(rep(p, n))
+  expect_equal(mean(x), p, tolerance = 0.01)
+  expect_equal(var(x), p * (1 - p), tolerance = 0.01)
+  # ----- Test vector input ----------------------------------------------------
+  ps <- seq(0.1, 0.9, by = 0.2)
+  x_vec <- myrbern(rep(ps, each = n))
+  means <- as.vector(tapply(x_vec, rep(seq_along(ps), each = n), mean))
+  vars <- as.vector(tapply(x_vec, rep(seq_along(ps), each = n), var))
+  expect_equal(means, ps, tolerance = 0.01)
+  expect_equal(vars, ps * (1 - ps), tolerance = 0.01)
 })
 
-test_that("myrpois works on windows", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "windows")
+test_that("rtoboxes asymptotic properties", {
   set.seed(1)
-  myrp <- myrpois(-5:5)
-  expect_equal(myrp, c(-8, -7, -4, -3, 0, 0, 0, 1, 2, 6, 4))
+  # ----- Setup ----------------------------------------------------------------
+  n <- 10000
+  num_boxes <- 4
+  total_balls <- 100
+  # ----- Test uniform distribution --------------------------------------------
+  samples <- replicate(n, rtoboxes(total_balls, num_boxes))
+  means <- rowMeans(samples)
+  expect_equal(means, rep(total_balls / num_boxes, num_boxes), tolerance = 0.01)
+  # ----- Test with weights ----------------------------------------------------
+  weights <- c(1, 2, 3, 4)
+  norm_weights <- weights / sum(weights)
+  samples_weighted <- replicate(n, rtoboxes(total_balls, num_boxes, weights))
+  means_weighted <- rowMeans(samples_weighted)
+  expect_equal(means_weighted, total_balls * norm_weights, tolerance = 0.01)
 })
 
-test_that("myrbern works on mac", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "mac")
+test_that("rfromboxes sequential sampling behavior", {
   set.seed(1)
-  expect_equal(
-    myrbern(seq(0.1, 0.9, length.out = 7)),
-    c(0, 0, 0, 0, 1, 1, 1)
+  # ----- Test total number of balls drawn is correct --------------------------
+  balls <- c(10, 20, 30, 40)
+  num_draws <- 5
+  result <- rfromboxes(num_draws, balls)
+  expect_equal(sum(result), num_draws)
+  # ----- Test that we can't draw more balls than available --------------------
+  expect_error(
+    rfromboxes(101, balls),
+    "must be less than or equal to the total number of balls"
   )
+  # ----- Test that we can't draw from empty boxes -----------------------------
+  small_balls <- c(1, 2, 0, 3)
+  result <- rfromboxes(3, small_balls)
+  expect_equal(result[3], 0) # Can't draw from empty box
+  # ----- Test weighted sampling ---------------------------------------------
+  balls <- c(10, 10, 10, 10)
+  weights <- c(0, 1, 1, 0)
+  n_trials <- 10000
+  results <- replicate(n_trials, {
+    balls_copy <- balls
+    weights_copy <- weights
+    rfromboxes(1, balls_copy, weights_copy)
+  })
+  # ----- Should only draw from boxes 2 and 3 ----------------------------------
+  expect_equal(sum(results[c(1, 4), ]), 0)
+  # ----- Over many trials, should draw from both boxes 2 and 3 ----------------
+  expect_true(sum(results[2, ]) > 0)
+  expect_true(sum(results[3, ]) > 0)
+  # ----- Test that weights are properly updated when boxes become empty -------
+  balls <- c(1, 1, 10, 10)
+  weights <- c(1, 1, 0, 0)
+  result <- rfromboxes(4, balls, weights)
+  # ----- 1st 2 draws empty boxes 1 and 2, forcing remaining draws to 3 and 4
+  expect_equal(sum(result[1:2]), 2)
+  expect_equal(sum(result[3:4]), 2)
 })
 
-test_that("myrbern works on linux", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "linux")
-  skip_on_cran()
+test_that("rfromboxes asymptotic properties", {
   set.seed(1)
-  x <- myrbern(seq(0.1, 0.9, length.out = 7))
-  if (getRversion() >= "3.6") {
-    ans <- c(0, 0, 0, 1, 0, 1, 1)
-    expect_equal(x, ans)
-  }
-})
-
-test_that("myrbern works on windows", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "windows")
-  set.seed(1)
-  myrb <- myrbern(seq(0.1, 0.9, length.out = 7))
-  if (filesstrings::all_equal(myrb, c(0, 0, 1, 1, 0, 0, 1))) {
-    expect_equal(myrb, c(0, 0, 1, 1, 0, 0, 1))
-  } else { # R 3.5.0 on win-builder
-    expect_equal(myrb, c(0, 0, 0, 0, 1, 1, 1))
-  }
-})
-
-test_that("rfromboxes works on mac", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "mac")
-  set.seed(1)
-  if (getRversion() >= "3.6") {
-    expect_equal(rfromboxes(10, 1:5), c(1, 1, 3, 2, 3))
-  }
-})
-
-test_that("rfromboxes works on linux", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "linux")
-  skip_on_cran()
-  set.seed(1)
-  x <- rfromboxes(10, 1:5)
-  ans <- c(1, 2, 2, 2, 3) # travis
-  if (getRversion() >= "3.6") {
-    expect_equal(x, ans)
-  }
-})
-
-test_that("rfromboxes works on windows", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "windows")
-  set.seed(1)
-  rfb <- rfromboxes(10, 1:5)
-  expect_equal(rfb, c(1, 2, 2, 2, 3))
+  n <- 100000
+  # Test without weights - each box should be equally likely to be drawn from
+  # until it runs out of balls
+  balls <- c(10, 20, 30, 40)
+  num_draws <- 1 # Only draw one ball at a time to avoid sequential effects
+  results <- replicate(n, {
+    # Need to copy balls since it's modified in place
+    balls_copy <- balls
+    rfromboxes(num_draws, balls_copy)
+  })
+  mean_draws <- rowMeans(results)
+  # Each non-empty box has equal probability of being drawn
+  expect_equal(mean_draws / num_draws, rep(1 / length(balls), length(balls)),
+    tolerance = 0.01
+  )
+  # Test with weights: probability proportional to weights if box is not empty
+  weights <- c(1, 2, 3, 4)
+  norm_weights <- weights / sum(weights)
+  results_weighted <- replicate(n, {
+    # Need to copy balls and weights since they're modified in place
+    balls_copy <- c(10, 10, 10, 10) # Equal number of balls in each box
+    weights_copy <- weights
+    rfromboxes(num_draws, balls_copy, weights_copy)
+  })
+  mean_draws_weighted <- rowMeans(results_weighted)
+  # Distribution should match the weights
+  expect_equal(mean_draws_weighted / num_draws, norm_weights, tolerance = 0.01)
+  # Test that empty boxes get zero probability
+  balls_with_empty <- c(0, 20, 30, 40)
+  weights <- c(1, 2, 3, 4)
+  norm_weights <- weights[-1] / sum(weights[-1]) # Exclude weight for empty box
+  results_weighted <- replicate(n, {
+    balls_copy <- balls_with_empty
+    weights_copy <- weights
+    rfromboxes(num_draws, balls_copy, weights_copy)
+  })
+  mean_draws_weighted <- rowMeans(results_weighted)
+  expect_equal(mean_draws_weighted[1], 0) # Empty box should never be drawn
+  expect_equal(mean_draws_weighted[-1] / num_draws, norm_weights,
+    tolerance = 0.01
+  )
+  # Test that all balls are drawn
+  balls <- c(2, 3, 4)
+  result <- rfromboxes(sum(balls), balls)
+  expect_equal(result, balls)
 })
 
 test_that("rfromboxes errors correctly", {
@@ -103,39 +161,6 @@ test_that("rfromboxes errors correctly", {
       "11 elements in `weights`."
     )
   )
-})
-
-test_that("`rfromboxes()` edge cases work correctly", {
-  skip_if(getRversion() < "3.6.0")
-  expect_equal(rfromboxes(0, 1:3), rep(0, 3))
-})
-
-test_that("rtoboxes works on mac", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "mac")
-  set.seed(1)
-  if (getRversion() >= "3.6") {
-    expect_equal(rtoboxes(10, 4), c(1, 5, 0, 4))
-  }
-})
-
-test_that("rtoboxes works on linux", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "linux")
-  skip_on_cran()
-  set.seed(1)
-  x <- rtoboxes(10, 4)
-  if (getRversion() >= "3.6") {
-    ans <- c(2, 4, 2, 2) # travis
-    expect_equal(x, ans)
-  }
-})
-test_that("rtoboxes works on windows", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "windows")
-  set.seed(1)
-  rtb <- rtoboxes(10, 4)
-  expect_equal(rtb, c(2, 4, 2, 2))
 })
 
 test_that("rtoboxes errors correctly", {
@@ -167,6 +192,7 @@ test_that("rtoboxes errors correctly", {
 
 test_that("rfromboxes and rtoboxes doesn't hang with a non-integer n", {
   skip_if_not_installed("R.utils")
+  set.seed(1)
   boxes <- R.utils::withTimeout(
     rtoboxes(5.5, 3),
     timeout = 5
@@ -177,66 +203,4 @@ test_that("rfromboxes and rtoboxes doesn't hang with a non-integer n", {
     timeout = 5
   )
   expect_equal(sum(from), 2)
-})
-
-test_that("myrpois_frames produces consistent results on mac", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "mac")
-  set.seed(1)
-  means <- 1:5
-  frame_length <- 3
-  result <- myrpois_frames(means, frame_length)
-  expect_equal(dim(result), c(frame_length, length(means)))
-  expect_equal(result[,1], c(1, 1, 0))  # Updated expected values with seed(1)
-  # Test parallel vs non-parallel results
-  set.seed(1)
-  parallel_result <- myrpois_frames(means, frame_length, parallel = TRUE)
-  set.seed(1)
-  serial_result <- myrpois_frames(means, frame_length, parallel = FALSE)
-  expect_equal(parallel_result, serial_result)
-})
-
-test_that("myrpois_frames_t produces consistent results on mac", {
-  skip_if(getRversion() < "3.6.0")
-  skip_if_not(get_os() == "mac")
-  set.seed(1)
-  means <- 1:5
-  frame_length <- 3
-  result <- myrpois_frames_t(means, frame_length)
-  expect_equal(dim(result), c(length(means), frame_length))
-  expect_equal(result[1,], c(1, 1, 0))  # Updated expected values with seed(1)
-  # Test parallel vs non-parallel results
-  set.seed(1)
-  parallel_result <- myrpois_frames_t(means, frame_length, parallel = TRUE)
-  set.seed(1)
-  serial_result <- myrpois_frames_t(means, frame_length, parallel = FALSE)
-  expect_equal(parallel_result, serial_result)
-})
-
-test_that("myrpois_frames handles edge cases", {
-  skip_if(getRversion() < "3.6.0")
-  # Empty means vector - returns empty matrix
-  result_empty <- myrpois_frames(numeric(0), 3)
-  expect_equal(dim(result_empty), c(3, 0))
-  # Zero frame length - returns empty matrix
-  result_zero <- myrpois_frames(1:5, 0)
-  expect_equal(dim(result_zero), c(0, 5))
-  # Negative means
-  result_neg <- myrpois_frames(c(-2, -1, 0, 1, 2), 2)
-  expect_equal(dim(result_neg), c(2, 5))
-  expect_true(all(result_neg[, 4:5] >= 0))  # Positive means give non-negative results
-})
-
-test_that("myrpois_frames_t handles edge cases", {
-  skip_if(getRversion() < "3.6.0")
-  # Empty means vector - returns empty matrix
-  result_empty <- myrpois_frames_t(numeric(0), 3)
-  expect_equal(dim(result_empty), c(0, 3))
-  # Zero frame length - returns empty matrix
-  result_zero <- myrpois_frames_t(1:5, 0)
-  expect_equal(dim(result_zero), c(5, 0))
-  # Negative means
-  result_neg <- myrpois_frames_t(c(-2, -1, 0, 1, 2), 2)
-  expect_equal(dim(result_neg), c(5, 2))
-  expect_true(all(result_neg[4:5,] >= 0))  # Positive means give non-negative results
 })

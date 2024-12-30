@@ -38,8 +38,9 @@ myrbern <- function(p, parallel = FALSE) {
 #' @param balls A vector of natural numbers. The number of balls in each box to
 #'   begin with.
 #' @param weights A non-negative numeric vector the same length as `balls`. The
-#'   relative probabilities of drawing a ball from each box. Default is each box
-#'   is equally likely to be drawn from.
+#'   relative probabilities of drawing a ball from each box. Default is 1 for
+#'   each box, which means each non-empty box has an equal probability of being
+#'   drawn from. If a box becomes empty, its probability becomes zero.
 #'
 #' @return A vector of natural numbers with the same length as `balls`. The
 #'   number of balls drawn from each box.
@@ -48,8 +49,8 @@ myrbern <- function(p, parallel = FALSE) {
 #'
 #' @examples
 #' balls <- 1:10
-#' rfromboxes(40, balls)
-#' rfromboxes(40, balls, weights = c(rep(1, 9), 0))
+#' rfromboxes(40, balls)  # Each non-empty box has equal probability
+#' rfromboxes(40, balls, weights = c(rep(1, 9), 0))  # Box 10 never drawn from
 #' @export
 rfromboxes <- function(n, balls, weights = NULL) {
   checkmate::assert_number(n, lower = 0)
