@@ -65,14 +65,14 @@ dir_detrend_rh <- dir_detrend_robinhood
 #' @rdname detrend-directory
 #' @export
 dir_detrend_boxcar <- function(folder_path = ".", l, purpose = c("FCS", "FFS"),
-                               thresh = NULL, parallel = FALSE, msg = TRUE) {
+                               thresh = NULL, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   withr::local_dir(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "box",
     parameter = l,
     purpose = purpose, thresh = thresh,
-    parallel = parallel, msg = msg
+    msg = msg
   ) %>%
     invisible()
 }
@@ -80,14 +80,14 @@ dir_detrend_boxcar <- function(folder_path = ".", l, purpose = c("FCS", "FFS"),
 #' @rdname detrend-directory
 #' @export
 dir_detrend_exp <- function(folder_path = ".", tau, purpose = c("FCS", "FFS"),
-                            thresh = NULL, parallel = FALSE, msg = TRUE) {
+                            thresh = NULL, msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   withr::local_dir(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "exp",
     parameter = tau,
     purpose = purpose, thresh = thresh,
-    parallel = parallel, msg = msg
+    msg = msg
   ) %>%
     invisible()
 }
@@ -96,30 +96,31 @@ dir_detrend_exp <- function(folder_path = ".", tau, purpose = c("FCS", "FFS"),
 #' @export
 dir_detrend_polynom <- function(folder_path = ".", degree,
                                 purpose = c("FCS", "FFS"), thresh = NULL,
-                                parallel = FALSE, msg = TRUE) {
+                                msg = TRUE) {
   checkmate::assert_directory_exists(folder_path)
   withr::local_dir(folder_path)
   tiffs <- list.files(pattern = "\\.tiff*")
   purrr::map_chr(tiffs, file_detrend, "poly",
     parameter = degree,
     purpose = purpose,
-    thresh = thresh, parallel = parallel, msg = msg
+    thresh = thresh, msg = msg
   ) %>%
     invisible()
 }
 
 file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
-                         quick = FALSE, parallel = FALSE, msg = TRUE) {
+                         quick = FALSE, msg = TRUE) {
   checkmate::assert_file_exists(path)
   checkmate::assert_string(method)
   if (stringr::str_starts(stringr::coll("robinhood"), tolower(method))) {
     method <- "robinhood"
   }
-  method %<>% filesstrings::match_arg(c(
-    "boxcar", "exponential", "polynomial",
-    "rh", "robinhood"
-  ),
-  ignore_case = TRUE
+  method %<>% filesstrings::match_arg(
+    c(
+      "boxcar", "exponential", "polynomial",
+      "rh", "robinhood"
+    ),
+    ignore_case = TRUE
   )
   if (method == "rh") method <- "robinhood"
   if (method != "robinhood") {
@@ -161,18 +162,15 @@ file_detrend <- function(path, method, parameter, purpose = NULL, thresh = NULL,
   img <- switch(method,
     boxcar = img_detrend_boxcar(img,
       l = parameter,
-      purpose = purpose,
-      parallel = parallel
+      purpose = purpose
     ),
     exponential = img_detrend_exp(img,
       tau = parameter,
-      purpose = purpose,
-      parallel = parallel
+      purpose = purpose
     ),
     polynomial = img_detrend_polynom(img,
       degree = parameter,
-      purpose = purpose,
-      parallel = parallel
+      purpose = purpose
     ),
     robinhood = img_detrend_rh(img, swaps = parameter, quick = quick)
   )
@@ -212,8 +210,11 @@ make_detrended_filename_ending <- function(img) {
   method <- attr(img, "method")
   checkmate::assert_string(method)
   parameter <- attr(img, "parameter")
-  symbol <- switch(method, boxcar = "l", exponential = "tau",
-    polynomial = "degree", robinhood = "swaps"
+  symbol <- switch(method,
+    boxcar = "l",
+    exponential = "tau",
+    polynomial = "degree",
+    robinhood = "swaps"
   )
   checkmate::assert_string(symbol)
   auto <- attr(img, "auto") %>%

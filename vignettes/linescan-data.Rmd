@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 
 ```{r read-linescan}
 linescan_img <- ijtiff::read_tif(system.file("extdata", "linescan.tif",
-                                             package = "detrendr"))
+  package = "detrendr"
+))
 dim(linescan_img)
 ```
 

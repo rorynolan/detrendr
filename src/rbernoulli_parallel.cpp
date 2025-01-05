@@ -1,50 +1,37 @@
-// [[Rcpp::depends(RcppParallel)]]
+// [[Rcpp::depends(RcppThread)]]
 
 #include <random>
-
+#include <vector>
 #include <Rcpp.h>
-#include <RcppParallel.h>
+#include <RcppThread.h>
 
 using namespace Rcpp;
-using namespace RcppParallel;
-
-struct MyRBernoulli : public Worker {
-
-  const RVector<double> p;
-  int seed;
-
-  // destination
-  RVector<int> output;
-
-  // initialize with source and destination
-  MyRBernoulli(NumericVector p, int seed, IntegerVector output) :
-    p(p), seed(seed), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    std::minstd_rand generator_int(seed + begin);
-    std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
-    for (std::size_t i = begin; i != end; ++i) {
-      int seed_i = distribution_int(generator_int);
-      std::minstd_rand generator(seed_i);
-      std::bernoulli_distribution distribution(p[i]);
-      output[i] = distribution(generator);
-    }
-  }
-};
 
 // [[Rcpp::export]]
 IntegerVector myrbernoulli_(NumericVector p, int seed) {
-
   std::size_t n = p.size();
+  if (n == 0) {
+    return IntegerVector(0);
+  }
+  
+  // Check probability bounds
+  for (std::size_t i = 0; i < n; ++i) {
+    if (p[i] < 0 || p[i] > 1) {
+      stop("All probability values must be between 0 and 1");
+    }
+  }
+  
+  std::vector<int> temp_output(n);
+  
+  auto worker = [&](std::size_t i) {
+    std::minstd_rand generator_int(seed + i);
+    std::uniform_int_distribution<int> distribution_int(1, RAND_MAX);
+    int seed_i = distribution_int(generator_int);
+    std::minstd_rand generator(seed_i);
+    std::bernoulli_distribution distribution(p[i]);
+    temp_output[i] = distribution(generator);
+  };
 
-  // allocate the matrix we will return
-  IntegerVector output(n);
-
-  // create the worker
-  MyRBernoulli myRBernoulli(p, seed, output);
-
-  // call it with parallelFor
-  parallelFor(0, n, myRBernoulli);
-
-  return output;
+  RcppThread::parallelFor(0, n, worker);
+  return IntegerVector(temp_output.begin(), temp_output.end());
 }

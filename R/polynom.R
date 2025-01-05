@@ -1,4 +1,4 @@
-poly_fit_pillars <- function(arr3d, degree, parallel = FALSE) {
+poly_fit_pillars <- function(arr3d, degree) {
   d <- dim(arr3d)
   if (degree >= d[3]) {
     stop(
@@ -7,12 +7,12 @@ poly_fit_pillars <- function(arr3d, degree, parallel = FALSE) {
       "of length at least ", d[3] + 1, "."
     )
   }
-  pillars_to_cols(arr3d, parallel = parallel) %>%
-    poly_fit_cols(degree, parallel = parallel) %>%
-    cols_to_pillars(dim(arr3d), parallel = parallel)
+  pillars_to_cols(arr3d) %>%
+    poly_fit_cols(degree) %>%
+    cols_to_pillars(dim(arr3d))
 }
 
-poly_fit_cols <- function(mat, degree, parallel = FALSE) {
+poly_fit_cols <- function(mat, degree) {
   degree <- floor(degree)
   nr <- nrow(mat)
   if (degree >= nr) {
@@ -26,7 +26,6 @@ poly_fit_cols <- function(mat, degree, parallel = FALSE) {
   }
   x1 <- seq_len(nr)
   x <- stats::poly(x1, degree, raw = TRUE)
-  n_cores <- translate_parallel(parallel)
   na_cols <- apply(mat, 2, anyNA)
   any_na_cols <- any(na_cols)
   out <- mat %T>% {
@@ -36,16 +35,7 @@ poly_fit_cols <- function(mat, degree, parallel = FALSE) {
     non_na_cols <- !na_cols
     mat <- mat[, non_na_cols, drop = FALSE]
   }
-  if (n_cores == 1) {
-    fits <- stats::fitted(stats::lm(mat ~ x))
-  } else {
-    it <- iter_mat_col_sets(mat, n_cores)
-    doParallel::registerDoParallel(n_cores)
-    on.exit(doParallel::stopImplicitCluster())
-    fits <- foreach::foreach(cols = it, .combine = "cbind") %dopar% {
-      stats::fitted(stats::lm(cols ~ x))
-    }
-  }
+  fits <- stats::fitted(stats::lm(mat ~ x))
   if (any_na_cols) {
     out[, non_na_cols] <- fits
     out

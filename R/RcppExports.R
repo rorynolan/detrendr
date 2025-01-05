@@ -9,24 +9,16 @@ dbl_anyNA <- function(x) {
     .Call(`_detrendr_dbl_anyNA`, x)
 }
 
-brightness_cols_ <- function(cols) {
-    .Call(`_detrendr_brightness_cols_`, cols)
+brightness_cols <- function(cols) {
+    .Call(`_detrendr_brightness_cols`, cols)
 }
 
-brightness_cols_given_mean_ <- function(cols, means) {
-    .Call(`_detrendr_brightness_cols_given_mean_`, cols, means)
+brightness_cols_given_mean <- function(cols, means) {
+    .Call(`_detrendr_brightness_cols_given_mean`, cols, means)
 }
 
-mean_cols_ <- function(cols) {
-    .Call(`_detrendr_mean_cols_`, cols)
-}
-
-var_cols_given_mean_ <- function(cols, means) {
-    .Call(`_detrendr_var_cols_given_mean_`, cols, means)
-}
-
-sum_cols_ <- function(cols) {
-    .Call(`_detrendr_sum_cols_`, cols)
+var_cols_given_mean <- function(cols, means) {
+    .Call(`_detrendr_var_cols_given_mean`, cols, means)
 }
 
 mean_frames_ <- function(arr3d) {
@@ -53,14 +45,6 @@ dbl_mean_frames_na_omit <- function(arr3d) {
     .Call(`_detrendr_dbl_mean_frames_na_omit`, arr3d)
 }
 
-int_anyNA_pillars <- function(arr3d) {
-    .Call(`_detrendr_int_anyNA_pillars`, arr3d)
-}
-
-dbl_anyNA_pillars <- function(arr3d) {
-    .Call(`_detrendr_dbl_anyNA_pillars`, arr3d)
-}
-
 sum_pillars_ <- function(arr3d) {
     .Call(`_detrendr_sum_pillars_`, arr3d)
 }
@@ -81,12 +65,12 @@ brightness_pillars_ <- function(arr3d) {
     .Call(`_detrendr_brightness_pillars_`, arr3d)
 }
 
-pillars_to_cols_ <- function(arr3d) {
-    .Call(`_detrendr_pillars_to_cols_`, arr3d)
+pillars_to_cols <- function(arr3d) {
+    .Call(`_detrendr_pillars_to_cols`, arr3d)
 }
 
-cols_to_pillars_ <- function(mat, output_dim) {
-    .Call(`_detrendr_cols_to_pillars_`, mat, output_dim)
+cols_to_pillars <- function(mat, output_dim) {
+    .Call(`_detrendr_cols_to_pillars`, mat, output_dim)
 }
 
 myrbernoulli_ <- function(p, seed) {
@@ -109,24 +93,20 @@ px_take_mat <- function(mat, mat_orig, frames_losing, seed) {
     .Call(`_detrendr_px_take_mat`, mat, mat_orig, frames_losing, seed)
 }
 
-brightness_rows_ <- function(rows) {
-    .Call(`_detrendr_brightness_rows_`, rows)
+brightness_rows <- function(rows) {
+    .Call(`_detrendr_brightness_rows`, rows)
 }
 
-brightness_rows_given_mean_ <- function(rows, means) {
-    .Call(`_detrendr_brightness_rows_given_mean_`, rows, means)
+brightness_rows_given_mean <- function(rows, means) {
+    .Call(`_detrendr_brightness_rows_given_mean`, rows, means)
 }
 
-mean_rows_ <- function(rows) {
-    .Call(`_detrendr_mean_rows_`, rows)
+var_rows_given_mean <- function(rows, means) {
+    .Call(`_detrendr_var_rows_given_mean`, rows, means)
 }
 
-var_rows_given_mean_ <- function(rows, means) {
-    .Call(`_detrendr_var_rows_given_mean_`, rows, means)
-}
-
-sum_rows_ <- function(rows) {
-    .Call(`_detrendr_sum_rows_`, rows)
+sum_rows <- function(rows) {
+    .Call(`_detrendr_sum_rows`, rows)
 }
 
 myrpois_ <- function(means, seed) {
@@ -153,20 +133,20 @@ exp_smooth <- function(vec, tau, l) {
     .Call(`_detrendr_exp_smooth`, vec, tau, l)
 }
 
-boxcar_smooth_rows_ <- function(mat, l) {
-    .Call(`_detrendr_boxcar_smooth_rows_`, mat, l)
+boxcar_smooth_rows <- function(mat, l) {
+    .Call(`_detrendr_boxcar_smooth_rows`, mat, l)
 }
 
-boxcar_smooth_pillars_ <- function(arr, l) {
-    .Call(`_detrendr_boxcar_smooth_pillars_`, arr, l)
+boxcar_smooth_pillars <- function(arr, l) {
+    .Call(`_detrendr_boxcar_smooth_pillars`, arr, l)
 }
 
-exp_smooth_rows_ <- function(mat, tau, l) {
-    .Call(`_detrendr_exp_smooth_rows_`, mat, tau, l)
+exp_smooth_rows <- function(mat, tau, l) {
+    .Call(`_detrendr_exp_smooth_rows`, mat, tau, l)
 }
 
-exp_smooth_pillars_ <- function(arr, tau, l) {
-    .Call(`_detrendr_exp_smooth_pillars_`, arr, tau, l)
+exp_smooth_pillars <- function(arr, tau, l) {
+    .Call(`_detrendr_exp_smooth_pillars`, arr, tau, l)
 }
 
 square_root_ <- function(x) {

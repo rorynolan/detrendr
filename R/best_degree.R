@@ -1,27 +1,23 @@
-cols_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
+cols_detrend_smoothed <- function(mat, mat_smoothed, purpose) {
   t(mat) %>%
     rows_detrend_smoothed(t(mat_smoothed),
-      purpose = purpose,
-      parallel = parallel
+      purpose = purpose
     ) %>%
     t()
 }
 
-cols_detrend_degree_specified <- function(mat, degree, purpose, parallel) {
-  smoothed <- poly_fit_cols(mat, degree, parallel = parallel)
+cols_detrend_degree_specified <- function(mat, degree, purpose) {
+  smoothed <- poly_fit_cols(mat, degree)
   cols_detrend_smoothed(mat, smoothed,
-    purpose = purpose,
-    parallel = parallel
+    purpose = purpose
   )
 }
 
-cols_detrend_degree_specified_mean_b <- function(mat, degree, purpose,
-                                                 parallel) {
+cols_detrend_degree_specified_mean_b <- function(mat, degree, purpose) {
   cols_detrend_degree_specified(mat, degree,
-    purpose = purpose,
-    parallel = parallel
+    purpose = purpose
   ) %>%
-    brightness_cols(parallel = parallel) %>%
+    brightness_cols() %>%
     mean(na.rm = TRUE)
 }
 
@@ -52,10 +48,10 @@ cols_detrend_degree_specified_mean_b <- function(mat, degree, purpose,
 #' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
 #'   package = "detrendr"
 #' ))
-#' best_degree(img, parallel = 2)
+#' best_degree(img)
 #' }
 #' @export
-best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
+best_degree <- function(img, purpose = c("FCS", "FFS")) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
@@ -68,24 +64,20 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
     custom_stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
   }
   purpose %<>% filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
-  checkmate::assert(
-    checkmate::check_flag(parallel),
-    checkmate::check_count(parallel)
-  )
   d <- dim(img)
   if (length(d) == 4 && d[3] == 1) {
     d <- d[-3]
     dim(img) <- d
   }
   if (length(d) == 3) {
-    frame_length <- sum(!anyNA_pillars(img))
+    frame_length <- sum(!apply(img, 1:2, anyNA))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_brightness <- NA
     for (i in 0:9) {
       if (is.na(sim_brightness)) {
-        sim_mat <- myrpois_frames_t(frame_means, frame_length, parallel)
+        sim_mat <- myrpois_frames_t(frame_means, frame_length)
         if (!filesstrings::all_equal(sim_mat)) {
-          sim_brightness <- brightness_cols(sim_mat, parallel = parallel) %>%
+          sim_brightness <- brightness_cols(sim_mat) %>%
             mean(na.rm = TRUE)
         }
       }
@@ -105,7 +97,7 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
     upper_degree <- 1
     upper_degree_brightness <- cols_detrend_degree_specified_mean_b(
       sim_mat, upper_degree,
-      purpose = purpose, parallel = parallel
+      purpose = purpose
     )
     if (is.na(upper_degree_brightness)) stop(msg)
     if (upper_degree_brightness < 1) {
@@ -119,7 +111,7 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
       upper_degree <- upper_degree + 1
       upper_degree_brightness <- cols_detrend_degree_specified_mean_b(
         sim_mat, upper_degree,
-        purpose = purpose, parallel = parallel
+        purpose = purpose
       )
       if (is.na(upper_degree_brightness)) stop(msg)
     }
@@ -139,8 +131,7 @@ best_degree <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
     purrr::map_int(
       seq_len(d[3]),
       ~ best_degree(img[, , ., , drop = FALSE],
-        purpose = purpose,
-        parallel = parallel
+        purpose = purpose
       )
     )
   }

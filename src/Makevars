@@ -1,2 +1,1 @@
-PKG_LIBS += $(shell ${R_HOME}/bin/Rscript -e "RcppParallel::RcppParallelLibs()")
-PKG_CXXFLAGS += $(shell ${R_HOME}/bin/Rscript -e "RcppParallel::CxxFlags()")
+PKG_LIBS = `${R_HOME}/bin/Rscript -e "RcppThread::LdFlags()"`

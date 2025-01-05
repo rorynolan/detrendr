@@ -1,195 +1,92 @@
-// [[Rcpp::depends(RcppParallel)]]
+// [[Rcpp::depends(RcppThread)]]
 
 #include <vector>
-
-#include <RcppParallel.h>
+#include <numeric>
 #include <Rcpp.h>
+#include <RcppThread.h>
 
 #include "summary_stats.h"
 
-using namespace RcppParallel;
 using namespace Rcpp;
-
 using std::vector;
 
-
-struct BrightnessCols : public Worker {
-
-  RMatrix<int> cols;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  BrightnessCols(IntegerMatrix cols, NumericVector output) :
-    cols(cols), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> col_i(cols.column(i).begin(), cols.column(i).end());
-        output[i] = brightness(col_i);
-    }
-  }
-};
-
 // [[Rcpp::export]]
-NumericVector brightness_cols_(IntegerMatrix cols) {
-
+NumericVector brightness_cols(IntegerMatrix cols) {
   std::size_t ncol = cols.ncol();
+  std::size_t nrow = cols.nrow();
+  if (ncol == 0) {
+    return NumericVector(0);
+  }
 
-  NumericVector output(ncol);
+  // Convert matrix to vector - R matrices are column-major
+  vector<int> data(cols.begin(), cols.end());
+  vector<double> temp_output(ncol);
 
-  // create the worker
-  BrightnessCols brightnessCols(cols, output);
+  auto worker = [&data, &temp_output, nrow](std::size_t i) {
+    temp_output[i] = brightness(
+      data.begin() + i * nrow,
+      data.begin() + (i + 1) * nrow
+    );
+  };
 
-  // call it with parallelFor
-  parallelFor(0, ncol, brightnessCols);
-
-  return output;
+  RcppThread::parallelFor(0, ncol, worker);
+  return NumericVector(temp_output.begin(), temp_output.end());
 }
 
-struct BrightnessColsGivenMean : public Worker {
-
-  RMatrix<int> cols;
-  RVector<double> means;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  BrightnessColsGivenMean(IntegerMatrix cols, NumericVector means,
-                 NumericVector output) :
-    cols(cols), means(means), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> col_i(cols.column(i).begin(), cols.column(i).end());
-      output[i] = brightness(col_i, means[i]);
-    }
-  }
-};
-
 // [[Rcpp::export]]
-NumericVector brightness_cols_given_mean_(IntegerMatrix cols,
-                                          NumericVector means) {
-
+NumericVector brightness_cols_given_mean(IntegerMatrix cols, NumericVector means) {
   std::size_t ncol = cols.ncol();
+  std::size_t nrow = cols.nrow();
+  if (ncol == 0) {
+    return NumericVector(0);
+  }
 
-  NumericVector output(ncol);
+  if (means.length() != ncol) {
+    stop("Length of means must match number of columns");
+  }
 
-  // create the worker
-  BrightnessColsGivenMean brightnessColsGivenMean(cols, means, output);
+  // Convert matrix to vector - R matrices are column-major
+  vector<int> data(cols.begin(), cols.end());
+  vector<double> temp_output(ncol);
+  vector<double> means_vec(means.begin(), means.end());
 
-  // call it with parallelFor
-  parallelFor(0, ncol, brightnessColsGivenMean);
+  auto worker = [&data, &temp_output, &means_vec, nrow](std::size_t i) {
+    temp_output[i] = brightness(
+      data.begin() + i * nrow,
+      data.begin() + (i + 1) * nrow,
+      means_vec[i]
+    );
+  };
 
-  return output;
+  RcppThread::parallelFor(0, ncol, worker);
+  return NumericVector(temp_output.begin(), temp_output.end());
 }
 
-struct MeanCols : public Worker {
-
-  RMatrix<int> cols;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  MeanCols(IntegerMatrix cols, NumericVector output) :
-    cols(cols), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> col_i(cols.column(i).begin(), cols.column(i).end());
-      output[i] = mymean(col_i);
-    }
-  }
-};
-
 // [[Rcpp::export]]
-NumericVector mean_cols_(IntegerMatrix cols) {
-
+NumericVector var_cols_given_mean(IntegerMatrix cols, NumericVector means) {
   std::size_t ncol = cols.ncol();
-
-  NumericVector output(ncol);
-
-  // create the worker
-  MeanCols meanCols(cols, output);
-
-  // call it with parallelFor
-  parallelFor(0, ncol, meanCols);
-
-  return output;
-}
-
-struct VarColsGivenMean : public Worker {
-
-  RMatrix<int> cols;
-  RVector<double> means;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  VarColsGivenMean(IntegerMatrix cols, NumericVector means,
-                   NumericVector output) :
-    cols(cols), means(means), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> col_i(cols.column(i).begin(), cols.column(i).end());
-      output[i] = myvar(col_i, means[i]);
-    }
+  std::size_t nrow = cols.nrow();
+  if (ncol == 0) {
+    return NumericVector(0);
   }
-};
 
-// [[Rcpp::export]]
-NumericVector var_cols_given_mean_(IntegerMatrix cols, NumericVector means) {
-
-  std::size_t ncol = cols.ncol();
-
-  NumericVector output(ncol);
-
-  // create the worker
-  VarColsGivenMean varColsGivenMean(cols, means, output);
-
-  // call it with parallelFor
-  parallelFor(0, ncol, varColsGivenMean);
-
-  return output;
-}
-
-
-struct SumCols : public Worker {
-
-  RMatrix<int> cols;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  SumCols(IntegerMatrix cols, NumericVector output) :
-    cols(cols), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      output[i] = std::accumulate(cols.column(i).begin(), cols.column(i).end(),
-                                  0.0);
-    }
+  if (means.length() != ncol) {
+    stop("Length of means must match number of columns");
   }
-};
 
-// [[Rcpp::export]]
-NumericVector sum_cols_(IntegerMatrix cols) {
+  // Convert matrix to vector - R matrices are column-major
+  vector<int> data(cols.begin(), cols.end());
+  vector<double> temp_output(ncol);
+  vector<double> means_vec(means.begin(), means.end());
 
-  std::size_t ncol = cols.ncol();
+  auto worker = [&data, &temp_output, &means_vec, nrow](std::size_t i) {
+    temp_output[i] = myvar(
+      data.begin() + i * nrow,
+      data.begin() + (i + 1) * nrow,
+      means_vec[i]
+    );
+  };
 
-  NumericVector output(ncol);
-
-  // create the worker
-  SumCols sumCols(cols, output);
-
-  // call it with parallelFor
-  parallelFor(0, ncol, sumCols);
-
-  return output;
+  RcppThread::parallelFor(0, ncol, worker);
+  return NumericVector(temp_output.begin(), temp_output.end());
 }

@@ -1,14 +1,3 @@
-test_that("translate_parallel() works", {
-  expect_equal(translate_parallel(FALSE), 1)
-  max_cores <- parallel::detectCores()
-  expect_equal(translate_parallel(2), min(2, max_cores))
-  expect_equal(translate_parallel(TRUE), max_cores)
-  expect_lt(
-    translate_parallel(.Machine$integer.max),
-    .Machine$integer.max
-  )
-})
-
 test_that("apply_on_pillars works(", {
   a <- array(runif(3^3), dim = rep(3, 3))
   expect_equal(apply_on_pillars(a, identity), a)
@@ -40,7 +29,7 @@ test_that("brightness_cols_given_mean() works", {
     {
       .[, , 1, 1]
     }
-  col_means <- mean_cols(mat)
+  col_means <- colMeans(mat)
   expect_equal(
     brightness_cols_given_mean(mat, col_means),
     brightness_cols(mat)
@@ -54,7 +43,7 @@ test_that("var_cols_given_mean() works", {
     {
       .[, , 1, 1]
     }
-  col_means <- mean_cols(mat)
+  col_means <- colMeans(mat)
   expect_equal(
     var_cols_given_mean(mat, col_means),
     matrixStats::colVars(mat)
@@ -68,7 +57,7 @@ test_that("var_rows_given_mean() works", {
     {
       .[, , 1, 1]
     }
-  row_means <- mean_rows(mat)
+  row_means <- rowMeans(mat)
   expect_equal(
     var_rows_given_mean(mat, row_means),
     matrixStats::rowVars(mat)

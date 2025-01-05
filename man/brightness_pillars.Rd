@@ -4,17 +4,13 @@
 \alias{brightness_pillars}
 \title{Get the brightness of pillars of a 3d array.}
 \usage{
-brightness_pillars(img, parallel = FALSE)
+brightness_pillars(img)
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
 or a 3-dimensional array which is a single channel of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
-
-\item{parallel}{Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use \code{parallel = TRUE}.}
 }
 \value{
 An \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{arr} with

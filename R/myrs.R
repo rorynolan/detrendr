@@ -1,30 +1,18 @@
-myrpois <- function(means, parallel = FALSE) {
-  n_cores <- translate_parallel(parallel)
-  RcppParallel::setThreadOptions(n_cores)
-  on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
+myrpois <- function(means) {
   myrpois_(means, get_seed())
 }
 
 ## every column is a frame, every row is a pixel
-myrpois_frames <- function(means, frame_length, parallel = FALSE) {
-  n_cores <- translate_parallel(parallel)
-  RcppParallel::setThreadOptions(n_cores)
-  on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
+myrpois_frames <- function(means, frame_length) {
   myrpois_frames_(means, frame_length, get_seed())
 }
 
 ## every column is a pixel, every row is a frame
-myrpois_frames_t <- function(means, frame_length, parallel = FALSE) {
-  n_cores <- translate_parallel(parallel)
-  RcppParallel::setThreadOptions(n_cores)
-  on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
+myrpois_frames_t <- function(means, frame_length) {
   myrpois_frames_t_(means, frame_length, get_seed())
 }
 
-myrbern <- function(p, parallel = FALSE) {
-  n_cores <- translate_parallel(parallel)
-  RcppParallel::setThreadOptions(n_cores)
-  on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
+myrbern <- function(p) {
   myrbernoulli_(p, get_seed())
 }
 
@@ -49,8 +37,8 @@ myrbern <- function(p, parallel = FALSE) {
 #'
 #' @examples
 #' balls <- 1:10
-#' rfromboxes(40, balls)  # Each non-empty box has equal probability
-#' rfromboxes(40, balls, weights = c(rep(1, 9), 0))  # Box 10 never drawn from
+#' rfromboxes(40, balls) # Each non-empty box has equal probability
+#' rfromboxes(40, balls, weights = c(rep(1, 9), 0)) # Box 10 never drawn from
 #' @export
 rfromboxes <- function(n, balls, weights = NULL) {
   checkmate::assert_number(n, lower = 0)
@@ -63,10 +51,13 @@ rfromboxes <- function(n, balls, weights = NULL) {
     return(rep(0, length(balls)))
   }
   checkmate::assert_number(n, lower = 1)
-  if (n > sum(balls)) {
+  n_gettable_balls <- sum(balls * as.logical(weights))
+  if (n > n_gettable_balls) {
     stop(
-      "`n` must be less than or equal to the total number of balls.", "\n",
-      "    * You have `n = ", n, "` and you have ", sum(balls), " balls."
+      "`n` must be less than or equal to the total number of gettable balls.",
+      "\n",
+      "    * You have `n = ", n, "` and you have ",
+      n_gettable_balls, " gettable balls."
     )
   }
   if (length(weights) != length(balls)) {

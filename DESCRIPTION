@@ -1,7 +1,7 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.16
+Version: 1.0.0
 Authors@R: c(
     person("Rory", "Nolan", , "rorynoolan@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5239-4043")),
@@ -26,18 +26,15 @@ Imports:
     arrayhelpers (>= 1.1.0),
     autothresholdr (>= 1.3.11),
     checkmate (>= 1.9.3),
-    doParallel,
     dplyr,
     filesstrings (>= 3.2.4),
     foreach,
     ijtiff (>= 2.2),
     iterators,
     magrittr (>= 1.5),
-    parallel,
     plyr,
     purrr,
     Rcpp (>= 1.0.10),
-    RcppParallel (>= 5.1.7),
     rlang (>= 0.3.3),
     stringr (>= 1.4),
     tools,
@@ -55,6 +52,7 @@ Suggests:
     matrixStats,
     mgcv,
     pacman,
+    RcppThread,
     R.utils,
     rmarkdown,
     spelling,
@@ -62,7 +60,6 @@ Suggests:
     tidyr
 LinkingTo: 
     Rcpp (>= 1.0.10),
-    RcppParallel (>= 5.1.7),
     RcppThread
 VignetteBuilder: 
     knitr
@@ -71,5 +68,4 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
-SystemRequirements: GNU make
+RoxygenNote: 7.3.2

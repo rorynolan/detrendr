@@ -3,10 +3,6 @@
 
 #include <vector>
 
-#include <RcppParallel.h>
-
-using namespace RcppParallel;
-
 template <class T, class Vec, class VecInt>
 std::vector<T> extract_pillar(const Vec& arr3d,
                               const VecInt& arr3d_dim,

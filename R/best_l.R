@@ -1,12 +1,10 @@
-rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
+rows_detrend_smoothed <- function(mat, mat_smoothed, purpose) {
   checkmate::assert_string(purpose)
   purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   deviations_from_smoothed <- mat - mat_smoothed
-  row_means <- mean_rows(mat, parallel = parallel)
+  row_means <- rowMeans(mat)
   if (purpose == "ffs") {
-    variance_correction_factors <- square_root(row_means / mat_smoothed,
-      parallel = parallel
-    ) %T>% {
+    variance_correction_factors <- square_root(row_means / mat_smoothed) %T>% {
       .[!is.finite(.)] <- 1
     }
     deviations_from_smoothed <- deviations_from_smoothed *
@@ -17,7 +15,7 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
   rm(deviations_from_smoothed)
   out_int <- floor(out_real) %>%
     {
-      . + myrbern(out_real - ., parallel = parallel)
+      . + myrbern(out_real - .)
     } %T>%
     {
       .[. < 0] <- 0
@@ -26,20 +24,14 @@ rows_detrend_smoothed <- function(mat, mat_smoothed, purpose, parallel) {
   out_int
 }
 
-rows_detrend_l_specified <- function(mat, l, purpose, parallel) {
-  smoothed <- boxcar_smooth_rows(mat, l, parallel = parallel)
-  rows_detrend_smoothed(mat, smoothed,
-    purpose = purpose,
-    parallel = parallel
-  )
+rows_detrend_l_specified <- function(mat, l, purpose) {
+  smoothed <- boxcar_smooth_rows(mat, l)
+  rows_detrend_smoothed(mat, smoothed, purpose = purpose)
 }
 
-rows_detrend_l_specified_mean_b <- function(mat, l, purpose, parallel) {
-  rows_detrend_l_specified(mat, l,
-    purpose = purpose,
-    parallel = parallel
-  ) %>%
-    brightness_rows(parallel = parallel) %>%
+rows_detrend_l_specified_mean_b <- function(mat, l, purpose) {
+  rows_detrend_l_specified(mat, l, purpose = purpose) %>%
+    brightness_rows() %>%
     mean(na.rm = TRUE)
 }
 
@@ -69,11 +61,11 @@ rows_detrend_l_specified_mean_b <- function(mat, l, purpose, parallel) {
 #' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
 #'   package = "detrendr"
 #' ))
-#' best_l(img, parallel = 2, purpose = "FFS")
+#' best_l(img, purpose = "FFS")
 #' }
 #'
 #' @export
-best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
+best_l <- function(img, purpose = c("FCS", "FFS")) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
@@ -86,24 +78,20 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
     custom_stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
   }
   purpose %<>% filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
-  checkmate::assert(
-    checkmate::check_flag(parallel),
-    checkmate::check_count(parallel)
-  )
   d <- dim(img)
   if (length(d) == 4 && d[3] == 1) {
     d <- d[-3]
     dim(img) <- d
   }
   if (length(d) == 3) {
-    frame_length <- sum(!anyNA_pillars(img))
+    frame_length <- sum(!apply(img, 1:2, anyNA))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_brightness <- NA
     for (i in 0:9) {
       if (is.na(sim_brightness)) {
-        sim_mat <- myrpois_frames(frame_means, frame_length, parallel)
+        sim_mat <- myrpois_frames(frame_means, frame_length)
         if (!filesstrings::all_equal(sim_mat)) {
-          sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
+          sim_brightness <- brightness_rows(sim_mat) %>%
             mean(na.rm = TRUE)
         }
       }
@@ -121,12 +109,13 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
     maxl <- d[3] - 1
     big_l <- min(10, maxl)
     big_l_old <- big_l
-    max_l <- ncol(sim_mat) %>% {
-      (. - 1) + (. - 2)
-    }
+    max_l <- ncol(sim_mat) %>%
+      {
+        (. - 1) + (. - 2)
+      }
     mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
       sim_mat, big_l,
-      purpose = "ffs", parallel = parallel
+      purpose = "ffs"
     )
     if (is.na(mean_brightness_big_l)) stop(msg)
     mean_brightness_big_l_old <- mean_brightness_big_l
@@ -135,7 +124,7 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
       big_l <- min(maxl, 2 * big_l)
       mean_brightness_big_l <- rows_detrend_l_specified_mean_b(
         sim_mat, big_l,
-        purpose = "ffs", parallel = parallel
+        purpose = "ffs"
       )
       if (is.na(mean_brightness_big_l)) stop(msg)
     }
@@ -153,7 +142,7 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
         }
         mean_brightness_big_l_old <- rows_detrend_l_specified_mean_b(
           sim_mat, big_l_old,
-          purpose = "ffs", parallel = parallel
+          purpose = "ffs"
         )
         if (is.na(mean_brightness_big_l_old)) stop(msg)
       }
@@ -169,7 +158,7 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
       middle_l <- round(mean(c(l_lower, l_upper)))
       middle_brightness_mean <- rows_detrend_l_specified_mean_b(
         sim_mat, middle_l,
-        purpose = "ffs", parallel = parallel
+        purpose = "ffs"
       )
       if (is.na(middle_brightness_mean)) stop(msg)
       if (middle_brightness_mean < 1) {
@@ -190,8 +179,7 @@ best_l <- function(img, parallel = FALSE, purpose = c("FCS", "FFS")) {
     purrr::map_int(
       seq_len(d[3]),
       ~ best_l(img[, , ., , drop = FALSE],
-        purpose = purpose,
-        parallel = parallel
+        purpose = purpose
       )
     )
   }

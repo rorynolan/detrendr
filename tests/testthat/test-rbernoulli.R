@@ -1,6 +1,4 @@
 test_that("parallel bernoulli sampling works", {
-  skip_if_not(get_os() == "linux")
-
   # Test basic functionality with fixed seed
   n <- 1000
   p <- runif(n)

@@ -13,8 +13,9 @@ rfromboxes(n, balls, weights = NULL)
 begin with.}
 
 \item{weights}{A non-negative numeric vector the same length as \code{balls}. The
-relative probabilities of drawing a ball from each box. Default is each box
-is equally likely to be drawn from.}
+relative probabilities of drawing a ball from each box. Default is 1 for
+each box, which means each non-empty box has an equal probability of being
+drawn from. If a box becomes empty, its probability becomes zero.}
 }
 \value{
 A vector of natural numbers with the same length as \code{balls}. The
@@ -27,8 +28,8 @@ from each. An empty box cannot be drawn from.
 }
 \examples{
 balls <- 1:10
-rfromboxes(40, balls)
-rfromboxes(40, balls, weights = c(rep(1, 9), 0))
+rfromboxes(40, balls)  # Each non-empty box has equal probability
+rfromboxes(40, balls, weights = c(rep(1, 9), 0))  # Box 10 never drawn from
 }
 \seealso{
 rtoboxes

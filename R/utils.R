@@ -8,7 +8,7 @@ translate_parallel <- function(parallel) {
     n_cores <- parallel::detectCores()
   } else if (is.numeric(parallel)) {
     n_cores <- parallel
-    if (n_cores > parallel::detectCores()) n_cores <- parallel::detectCores()
+    if (n_cores > parallel::detectCores()) n_cores <- RcppThread::detectCores()
   }
   n_cores
 }
@@ -33,13 +33,14 @@ relu <- function(x) ifelse(x >= 0, x, 0)
 #'   FUN(arr3d[i, j, ])}.
 #' @export
 apply_on_pillars <- function(arr3d, FUN) {
-  apply(arr3d, c(1, 2), FUN) %>% {
-    if (length(dim(.)) == 3) {
-      aperm(., c(2, 3, 1))
-    } else {
-      .
+  apply(arr3d, c(1, 2), FUN) %>%
+    {
+      if (length(dim(.)) == 3) {
+        aperm(., c(2, 3, 1))
+      } else {
+        .
+      }
     }
-  }
 }
 
 

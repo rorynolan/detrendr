@@ -9,23 +9,19 @@
 \title{Get the sums/means/medians/variances of pillars of an
 \link[ijtiff:ijtiff_img]{ijtiff_img}-style array.}
 \usage{
-sum_pillars(img, parallel = FALSE)
+sum_pillars(img)
 
-mean_pillars(img, parallel = FALSE)
+mean_pillars(img)
 
-median_pillars(img, parallel = FALSE)
+median_pillars(img)
 
-var_pillars(img, parallel = FALSE)
+var_pillars(img)
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
 or a 3-dimensional array which is a single channel of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
-
-\item{parallel}{Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use \code{parallel = TRUE}.}
 }
 \value{
 An \link[ijtiff:ijtiff_img]{ijtiff_img}-style array \code{arr} with one frame.

@@ -13,17 +13,11 @@ img_detrend_robinhood(img, swaps = "auto", quick = FALSE)
 
 img_detrend_rh(img, swaps = "auto", quick = FALSE)
 
-img_detrend_boxcar(img, l, purpose = c("FCS", "FFS"), parallel = FALSE)
+img_detrend_boxcar(img, l, purpose = c("FCS", "FFS"))
 
-img_detrend_exp(
-  img,
-  tau,
-  cutoff = 0.05,
-  purpose = c("FCS", "FFS"),
-  parallel = FALSE
-)
+img_detrend_exp(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"))
 
-img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"), parallel = FALSE)
+img_detrend_polynom(img, degree, purpose = c("FCS", "FFS"))
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
@@ -58,10 +52,6 @@ that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
 mean and variance, whereas if \code{purpose} is 'FCS', the time series is
 corrected for non-stationary mean only. \code{purpose} is not required for
 \emph{Robin Hood} detrending.}
-
-\item{parallel}{Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use \code{parallel = TRUE}.}
 
 \item{tau}{The \eqn{tau} parameter for \emph{exponential filtering} detrending.
 This must be a positive number. Set this to "auto" to use Nolan's algorithm
@@ -114,14 +104,14 @@ img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
   package = "detrendr"
 ))
 corrected <- img_detrend_rh(img)
-corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs", parallel = 2)
-corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs", parallel = 2)
-corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs", parallel = 2)
-corrected <- img_detrend_exp(img, "auto", purpose = "ffs", parallel = 2)
-corrected10 <- img_detrend_exp(img, 10, purpose = "ffs", parallel = 2)
-corrected50 <- img_detrend_exp(img, 50, purpose = "fcs", parallel = 2)
-corrected <- img_detrend_polynom(img, "auto", purpose = "ffs", parallel = 2)
-corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs", parallel = 2)
+corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs")
+corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs")
+corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs")
+corrected <- img_detrend_exp(img, "auto", purpose = "ffs")
+corrected10 <- img_detrend_exp(img, 10, purpose = "ffs")
+corrected50 <- img_detrend_exp(img, 50, purpose = "fcs")
+corrected <- img_detrend_polynom(img, "auto", purpose = "ffs")
+corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs")
 }
 }
 \references{

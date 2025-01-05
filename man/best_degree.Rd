@@ -4,17 +4,13 @@
 \alias{best_degree}
 \title{Find the best polynomial degree for polynomial detrending.}
 \usage{
-best_degree(img, parallel = FALSE, purpose = c("FCS", "FFS"))
+best_degree(img, purpose = c("FCS", "FFS"))
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, channel, frame]})
 or a 3-dimensional array which is a single channel of an
 \link[ijtiff:ijtiff_img]{ijtiff_img} (indexed by \code{img[y, x, frame]}).}
-
-\item{parallel}{Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use \code{parallel = TRUE}.}
 
 \item{purpose}{What type of calculation do you intend to perform on the
 detrended image? If it is an FFS (fluorescence fluctuation spectroscopy)
@@ -44,7 +40,7 @@ detrending.
 img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
   package = "detrendr"
 ))
-best_degree(img, parallel = 2)
+best_degree(img)
 }
 }
 \references{

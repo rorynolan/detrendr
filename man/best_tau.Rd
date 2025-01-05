@@ -4,7 +4,7 @@
 \alias{best_tau}
 \title{Find the best tau parameter for exponential smoothing detrending.}
 \usage{
-best_tau(img, cutoff = 0.05, parallel = FALSE, purpose = c("FCS", "FFS"))
+best_tau(img, cutoff = 0.05, purpose = c("FCS", "FFS"))
 }
 \arguments{
 \item{img}{A 4-dimensional array in the style of an
@@ -20,10 +20,6 @@ times the maximum weight may be ignored; so with \code{cutoff = 0.05}, any
 weight less than 5\\% of the maximum weight may be ignored. The default
 value of this parameter is sensible and its value should not be set to
 anything else without good reason.}
-
-\item{parallel}{Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use \code{parallel = TRUE}.}
 
 \item{purpose}{What type of calculation do you intend to perform on the
 detrended image? If it is an FFS (fluorescence fluctuation spectroscopy)
@@ -53,7 +49,7 @@ smoothing detrending.
 img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
   package = "detrendr"
 ))[, , 1, ]
-best_tau(img, parallel = 2)
+best_tau(img, purpose = "FCS")
 }
 
 }

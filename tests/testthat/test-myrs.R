@@ -65,7 +65,7 @@ test_that("rfromboxes sequential sampling behavior", {
   # ----- Test that we can't draw more balls than available --------------------
   expect_error(
     rfromboxes(101, balls),
-    "must be less than or equal to the total number of balls"
+    "must be less than or equal to the total number of gettable balls"
   )
   # ----- Test that we can't draw from empty boxes -----------------------------
   small_balls <- c(1, 2, 0, 3)
@@ -88,10 +88,10 @@ test_that("rfromboxes sequential sampling behavior", {
   # ----- Test that weights are properly updated when boxes become empty -------
   balls <- c(1, 1, 10, 10)
   weights <- c(1, 1, 0, 0)
-  result <- rfromboxes(4, balls, weights)
-  # ----- 1st 2 draws empty boxes 1 and 2, forcing remaining draws to 3 and 4
+  result <- rfromboxes(2, balls, weights)
+  # ----- 1st 2 draws empty boxes 1 and 2, since they have non-zero weights
   expect_equal(sum(result[1:2]), 2)
-  expect_equal(sum(result[3:4]), 2)
+  expect_equal(sum(result[3:4]), 0)
 })
 
 test_that("rfromboxes asymptotic properties", {
@@ -144,16 +144,13 @@ test_that("rfromboxes asymptotic properties", {
 })
 
 test_that("rfromboxes errors correctly", {
+  # ----- Test that n must be <= total number of balls ------------------------
   expect_error(
     rfromboxes(10, 1:3),
-    paste0(
-      "`n` must be less than or equal to the total ",
-      "number of balls.*",
-      "You have.*n = ", 10, ".*6 balls"
-    )
+    "must be less than or equal to the total number of gettable balls"
   )
   expect_error(
-    rfromboxes(10, 1:5, 1:11),
+    suppressWarnings(rfromboxes(10, 1:5, 1:11)),
     paste0(
       "The length of `weights` must be equal to ",
       "the length of `balls`.", ".*",

@@ -23,14 +23,11 @@ NULL
 
 #' @rdname pillar-stats
 #' @export
-sum_pillars <- function(img, parallel = FALSE) {
+sum_pillars <- function(img) {
   checkmate::assert_numeric(img)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   d <- dim(img)
   if (length(d) == 3) {
-    n_cores <- translate_parallel(parallel)
-    RcppParallel::setThreadOptions(n_cores)
-    on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
     out <- sum_pillars_(img)
     d[3:4] <- 1
   } else {
@@ -44,14 +41,11 @@ sum_pillars <- function(img, parallel = FALSE) {
 
 #' @rdname pillar-stats
 #' @export
-mean_pillars <- function(img, parallel = FALSE) {
+mean_pillars <- function(img) {
   checkmate::assert_numeric(img)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   d <- dim(img)
   if (length(d) == 3) {
-    n_cores <- translate_parallel(parallel)
-    RcppParallel::setThreadOptions(n_cores)
-    on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
     out <- mean_pillars_(img)
     d[3:4] <- 1
   } else {
@@ -65,14 +59,11 @@ mean_pillars <- function(img, parallel = FALSE) {
 
 #' @rdname pillar-stats
 #' @export
-median_pillars <- function(img, parallel = FALSE) {
+median_pillars <- function(img) {
   checkmate::assert_numeric(img)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   d <- dim(img)
   if (length(d) == 3) {
-    n_cores <- translate_parallel(parallel)
-    RcppParallel::setThreadOptions(n_cores)
-    on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
     out <- median_pillars_(img)
     d[3:4] <- 1
   } else {
@@ -86,14 +77,11 @@ median_pillars <- function(img, parallel = FALSE) {
 
 #' @rdname pillar-stats
 #' @export
-var_pillars <- function(img, parallel = FALSE) {
+var_pillars <- function(img) {
   checkmate::assert_numeric(img)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   d <- dim(img)
   if (length(d) == 3) {
-    n_cores <- translate_parallel(parallel)
-    RcppParallel::setThreadOptions(n_cores)
-    on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
     out <- var_pillars_(img)
     d[3:4] <- 1
   } else {
@@ -122,14 +110,9 @@ var_pillars <- function(img, parallel = FALSE) {
 #' aaa <- array(1:16, dim = c(2, 2, 4))
 #' brightness_pillars(aaa)
 #' @export
-brightness_pillars <- function(img, parallel = FALSE) {
-  checkmate::assert_numeric(img)
-  checkmate::assert_array(img, min.d = 3, max.d = 4)
+brightness_pillars <- function(img) {
   d <- dim(img)
   if (length(d) == 3) {
-    n_cores <- translate_parallel(parallel)
-    RcppParallel::setThreadOptions(n_cores)
-    on.exit(RcppParallel::setThreadOptions(RcppParallel::defaultNumThreads()))
     out <- brightness_pillars_(img)
     d[3:4] <- 1
   } else {
@@ -139,17 +122,4 @@ brightness_pillars <- function(img, parallel = FALSE) {
   }
   dim(out) <- d
   out
-}
-
-anyNA_pillars <- function(arr3d) {
-  checkmate::assert_array(arr3d, d = 3)
-  checkmate::assert(
-    checkmate::check_integer(arr3d),
-    checkmate::check_numeric(arr3d)
-  )
-  if (isTRUE(checkmate::check_integer(arr3d))) {
-    int_anyNA_pillars(arr3d)
-  } else {
-    dbl_anyNA_pillars(arr3d)
-  }
 }

@@ -1,196 +1,115 @@
-// [[Rcpp::depends(RcppParallel)]]
+// [[Rcpp::depends(RcppThread)]]
 
 #include <vector>
 #include <numeric>
-
-#include <RcppParallel.h>
 #include <Rcpp.h>
+#include <RcppThread.h>
 
 #include "summary_stats.h"
 
-using namespace RcppParallel;
 using namespace Rcpp;
-
 using std::vector;
 
-
-struct BrightnessRows : public Worker {
-
-  RMatrix<int> rows;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  BrightnessRows(IntegerMatrix rows, NumericVector output) :
-    rows(rows), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> row_i(rows.row(i).begin(), rows.row(i).end());
-        output[i] = brightness(row_i);
-    }
+// Helper function to extract a row from column-major matrix
+template <typename T>
+vector<T> extract_row(const vector<T>& data, std::size_t row, std::size_t nrow, std::size_t ncol) {
+  vector<T> result(ncol);
+  for (std::size_t j = 0; j < ncol; ++j) {
+    result[j] = data[j * nrow + row];
   }
-};
-
-// [[Rcpp::export]]
-NumericVector brightness_rows_(IntegerMatrix rows) {
-
-  std::size_t nrow = rows.nrow();
-
-  NumericVector output(nrow);
-
-  // create the worker
-  BrightnessRows brightnessRows(rows, output);
-
-  // call it with parallelFor
-  parallelFor(0, nrow, brightnessRows);
-
-  return output;
+  return result;
 }
 
-struct BrightnessRowsGivenMean : public Worker {
-
-  RMatrix<int> rows;
-  RVector<double> means;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  BrightnessRowsGivenMean(IntegerMatrix rows, NumericVector means,
-                          NumericVector output) :
-    rows(rows), means(means), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> row_i(rows.row(i).begin(), rows.row(i).end());
-      output[i] = brightness(row_i, means[i]);
-    }
-  }
-};
-
 // [[Rcpp::export]]
-NumericVector brightness_rows_given_mean_(IntegerMatrix rows,
-                                          NumericVector means) {
-
+NumericVector brightness_rows(IntegerMatrix rows) {
+  std::size_t ncol = rows.ncol();
   std::size_t nrow = rows.nrow();
+  if (nrow == 0) {
+    return NumericVector(0);
+  }
 
-  NumericVector output(nrow);
+  // Convert matrix to vector - R matrices are column-major
+  vector<int> data(rows.begin(), rows.end());
+  vector<double> temp_output(nrow);
 
-  // create the worker
-  BrightnessRowsGivenMean brightnessRowsGivenMean(rows, means, output);
+  auto worker = [&data, &temp_output, nrow, ncol](std::size_t i) {
+    vector<int> row = extract_row(data, i, nrow, ncol);
+    temp_output[i] = brightness(row.begin(), row.end());
+  };
 
-  // call it with parallelFor
-  parallelFor(0, nrow, brightnessRowsGivenMean);
-
-  return output;
+  RcppThread::parallelFor(0, nrow, worker);
+  return NumericVector(temp_output.begin(), temp_output.end());
 }
 
-struct MeanRows : public Worker {
-
-  RMatrix<int> rows;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  MeanRows(IntegerMatrix rows, NumericVector output) :
-    rows(rows), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> row_i(rows.row(i).begin(), rows.row(i).end());
-      output[i] = mymean(row_i);
-    }
-  }
-};
-
 // [[Rcpp::export]]
-NumericVector mean_rows_(IntegerMatrix rows) {
-
+NumericVector brightness_rows_given_mean(IntegerMatrix rows, NumericVector means) {
+  std::size_t ncol = rows.ncol();
   std::size_t nrow = rows.nrow();
+  if (nrow == 0) {
+    return NumericVector(0);
+  }
 
-  NumericVector output(nrow);
+  if (means.length() != nrow) {
+    stop("Length of means must match number of rows");
+  }
 
-  // create the worker
-  MeanRows meanRows(rows, output);
+  // Convert matrix to vector - R matrices are column-major
+  vector<int> data(rows.begin(), rows.end());
+  vector<double> temp_output(nrow);
+  vector<double> means_vec(means.begin(), means.end());
 
-  // call it with parallelFor
-  parallelFor(0, nrow, meanRows);
+  auto worker = [&data, &temp_output, &means_vec, nrow, ncol](std::size_t i) {
+    vector<int> row = extract_row(data, i, nrow, ncol);
+    temp_output[i] = brightness(row.begin(), row.end(), means_vec[i]);
+  };
 
-  return output;
+  RcppThread::parallelFor(0, nrow, worker);
+  return NumericVector(temp_output.begin(), temp_output.end());
 }
 
-
-struct VarRowsGivenMean : public Worker {
-
-  RMatrix<int> rows;
-  RVector<double> means;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  VarRowsGivenMean(IntegerMatrix rows, NumericVector means,
-                   NumericVector output) :
-    rows(rows), means(means), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      const vector<int> row_i(rows.row(i).begin(), rows.row(i).end());
-      output[i] = myvar(row_i, means[i]);
-    }
-  }
-};
-
 // [[Rcpp::export]]
-NumericVector var_rows_given_mean_(IntegerMatrix rows, NumericVector means) {
-
+NumericVector var_rows_given_mean(IntegerMatrix rows, NumericVector means) {
+  std::size_t ncol = rows.ncol();
   std::size_t nrow = rows.nrow();
+  if (nrow == 0) {
+    return NumericVector(0);
+  }
 
-  NumericVector output(nrow);
+  if (means.length() != nrow) {
+    stop("Length of means must match number of rows");
+  }
 
-  // create the worker
-  VarRowsGivenMean varRowsGivenMean(rows, means, output);
+  // Convert matrix to vector - R matrices are column-major
+  vector<int> data(rows.begin(), rows.end());
+  vector<double> temp_output(nrow);
+  vector<double> means_vec(means.begin(), means.end());
 
-  // call it with parallelFor
-  parallelFor(0, nrow, varRowsGivenMean);
+  auto worker = [&data, &temp_output, &means_vec, nrow, ncol](std::size_t i) {
+    vector<int> row = extract_row(data, i, nrow, ncol);
+    temp_output[i] = myvar(row.begin(), row.end(), means_vec[i]);
+  };
 
-  return output;
+  RcppThread::parallelFor(0, nrow, worker);
+  return NumericVector(temp_output.begin(), temp_output.end());
 }
 
-
-struct SumRows : public Worker {
-
-  RMatrix<int> rows;
-
-  // destination
-  RVector<double> output;
-
-  // initialize with source and destination
-  SumRows(IntegerMatrix rows, NumericVector output) :
-    rows(rows), output(output) {}
-
-  void operator()(std::size_t begin, std::size_t end) {
-    for (std::size_t i = begin; i != end; ++i) {
-      output[i] = std::accumulate(rows.row(i).begin(), rows.row(i).end(), 0.0);
-    }
-  }
-};
-
 // [[Rcpp::export]]
-NumericVector sum_rows_(IntegerMatrix rows) {
-
+NumericVector sum_rows(IntegerMatrix rows) {
+  std::size_t ncol = rows.ncol();
   std::size_t nrow = rows.nrow();
+  if (nrow == 0) {
+    return NumericVector(0);
+  }
 
-  NumericVector output(nrow);
+  // Convert matrix to vector - R matrices are column-major
+  vector<int> data(rows.begin(), rows.end());
+  vector<double> temp_output(nrow);
 
-  // create the worker
-  SumRows sumRows(rows, output);
+  auto worker = [&data, &temp_output, nrow, ncol](std::size_t i) {
+    vector<int> row = extract_row(data, i, nrow, ncol);
+    temp_output[i] = std::accumulate(row.begin(), row.end(), 0.0);
+  };
 
-  // call it with parallelFor
-  parallelFor(0, nrow, sumRows);
-
-  return output;
+  RcppThread::parallelFor(0, nrow, worker);
+  return NumericVector(temp_output.begin(), temp_output.end());
 }

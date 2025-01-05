@@ -1,14 +1,11 @@
-img_detrend_smoothed <- function(arr3d, arr3d_smoothed, purpose, parallel) {
+img_detrend_smoothed <- function(arr3d, arr3d_smoothed, purpose) {
   checkmate::assert_string(purpose)
   purpose %<>% filesstrings::match_arg(c("fcs", "ffs"), ignore_case = TRUE)
   arr3d_smoothed[arr3d_smoothed < 0] <- 0
   deviations_from_smoothed <- arr3d - arr3d_smoothed
-  pillar_means <- as.vector(mean_pillars(arr3d, parallel = parallel))
+  pillar_means <- as.vector(mean_pillars(arr3d))
   if (purpose == "ffs") {
-    variance_correction_factors <- square_root(pillar_means /
-      arr3d_smoothed,
-    parallel = parallel
-    ) %T>% {
+    variance_correction_factors <- square_root(pillar_means / arr3d_smoothed) %T>% {
       .[!is.finite(.)] <- 1
     }
     deviations_from_smoothed <- deviations_from_smoothed *
@@ -17,15 +14,15 @@ img_detrend_smoothed <- function(arr3d, arr3d_smoothed, purpose, parallel) {
   }
   out_real <- pillar_means + deviations_from_smoothed
   rm(deviations_from_smoothed)
-  out_int <- floor(out_real) %>% {
-    . + myrbern(out_real - ., parallel = parallel)
-  }
+  out_int <- floor(out_real) %>%
+    {
+      . + myrbern(out_real - .)
+    }
   dim(out_int) <- dim(arr3d)
   out_int
 }
 
-img_detrend_tau_specified <- function(arr3d, tau, cutoff, purpose,
-                                      parallel) {
+img_detrend_tau_specified <- function(arr3d, tau, cutoff, purpose) {
   checkmate::assert_array(arr3d)
   if (length(dim(arr3d)) == 4 && dim(arr3d)[3] == 1) {
     dim(arr3d) %<>% {
@@ -37,17 +34,15 @@ img_detrend_tau_specified <- function(arr3d, tau, cutoff, purpose,
     return(arr3d)
   }
   d <- dim(arr3d)
-  l <- min(floor(-tau * log(cutoff)), d[3] %>% {
-    (. - 1) + (. - 2)
-  })
-  smoothed <- exp_smooth_pillars(arr3d, tau, l, parallel = parallel)
-  img_detrend_smoothed(arr3d, smoothed,
-    purpose = purpose,
-    parallel = parallel
-  )
+  l <- min(floor(-tau * log(cutoff)), d[3] %>%
+    {
+      (. - 1) + (. - 2)
+    })
+  smoothed <- exp_smooth_pillars(arr3d, tau, l)
+  img_detrend_smoothed(arr3d, smoothed, purpose = purpose)
 }
 
-img_detrend_l_specified <- function(arr3d, l, purpose, parallel) {
+img_detrend_l_specified <- function(arr3d, l, purpose) {
   checkmate::assert_array(arr3d)
   if (length(dim(arr3d)) == 4 && dim(arr3d)[3] == 1) {
     dim(arr3d) %<>% {
@@ -59,18 +54,15 @@ img_detrend_l_specified <- function(arr3d, l, purpose, parallel) {
     return(arr3d)
   }
   d <- dim(arr3d)
-  l <- min(l, d[3] %>% {
-    (. - 1) + (. - 2)
-  })
-  smoothed <- boxcar_smooth_pillars(arr3d, l, parallel = parallel)
-  img_detrend_smoothed(arr3d, smoothed,
-    purpose = purpose,
-    parallel = parallel
-  )
+  l <- min(l, d[3] %>%
+    {
+      (. - 1) + (. - 2)
+    })
+  smoothed <- boxcar_smooth_pillars(arr3d, l)
+  img_detrend_smoothed(arr3d, smoothed, purpose = purpose)
 }
 
-img_detrend_degree_specified <- function(arr3d, degree, purpose,
-                                         parallel) {
+img_detrend_degree_specified <- function(arr3d, degree, purpose) {
   checkmate::assert_array(arr3d)
   if (length(dim(arr3d)) == 4 && dim(arr3d)[3] == 1) {
     dim(arr3d) %<>% {
@@ -81,11 +73,8 @@ img_detrend_degree_specified <- function(arr3d, degree, purpose,
   if (is.na(degree)) {
     return(arr3d)
   }
-  smoothed <- poly_fit_pillars(arr3d, degree, parallel = parallel)
-  img_detrend_smoothed(arr3d, smoothed,
-    purpose = purpose,
-    parallel = parallel
-  )
+  smoothed <- poly_fit_pillars(arr3d, degree)
+  img_detrend_smoothed(arr3d, smoothed, purpose = purpose)
 }
 
 img_detrend_swaps_specified <- function(arr3d, swaps) {
@@ -234,9 +223,6 @@ img_detrend_swaps_specified <- function(arr3d, swaps) {
 #'   mean and variance, whereas if `purpose` is 'FCS', the time series is
 #'   corrected for non-stationary mean only. `purpose` is not required for
 #'   _Robin Hood_ detrending.
-#' @param parallel Would you like to use multiple cores to speed up this
-#'   function? If so, set the number of cores here, or to use all available
-#'   cores, use `parallel = TRUE`.
 #'
 #' @return The detrended image, an object of class [detrended_img].
 #'
@@ -264,14 +250,14 @@ NULL
 #'   package = "detrendr"
 #' ))
 #' corrected <- img_detrend_rh(img)
-#' corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs", parallel = 2)
-#' corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs", parallel = 2)
-#' corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs", parallel = 2)
-#' corrected <- img_detrend_exp(img, "auto", purpose = "ffs", parallel = 2)
-#' corrected10 <- img_detrend_exp(img, 10, purpose = "ffs", parallel = 2)
-#' corrected50 <- img_detrend_exp(img, 50, purpose = "fcs", parallel = 2)
-#' corrected <- img_detrend_polynom(img, "auto", purpose = "ffs", parallel = 2)
-#' corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs", parallel = 2)
+#' corrected <- img_detrend_boxcar(img, "auto", purpose = "fcs")
+#' corrected10 <- img_detrend_boxcar(img, 10, purpose = "fcs")
+#' corrected50 <- img_detrend_boxcar(img, 50, purpose = "fcs")
+#' corrected <- img_detrend_exp(img, "auto", purpose = "ffs")
+#' corrected10 <- img_detrend_exp(img, 10, purpose = "ffs")
+#' corrected50 <- img_detrend_exp(img, 50, purpose = "fcs")
+#' corrected <- img_detrend_polynom(img, "auto", purpose = "ffs")
+#' corrected2 <- img_detrend_polynom(img, 2, purpose = "ffs")
 #' }
 #' @export
 img_detrend_robinhood <- function(img, swaps = "auto", quick = FALSE) {
@@ -346,8 +332,7 @@ img_detrend_rh <- img_detrend_robinhood
 
 #' @rdname detrending
 #' @export
-img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
-                               parallel = FALSE) {
+img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS")) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   checkmate::assert_numeric(img, lower = 0)
   if (filesstrings::all_equal(purpose, c("FCS", "FFS"))) {
@@ -389,20 +374,16 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
       }
       out[, , i, ] <- img_detrend_l_specified(img[, , i, , drop = FALSE],
         l[[i]],
-        purpose = purpose,
-        parallel = parallel
+        purpose = purpose
       ) %>%
         as.vector()
     } else if (is.character(l[[i]])) {
       l[[i]] %<>% tolower()
       if (stringr::str_starts(stringr::coll("auto"), l[[i]])) {
         auto[[i]] <- TRUE
-        l[[i]] <- best_l(img[, , i, , drop = FALSE],
-          parallel = parallel, purpose = purpose
-        )
+        l[[i]] <- best_l(img[, , i, , drop = FALSE], purpose = purpose)
         out[, , i, ] <- img_detrend_l_specified(img[, , i, ], l[[i]],
-          purpose = purpose,
-          parallel = parallel
+          purpose = purpose
         ) %>%
           as.vector()
       } else {
@@ -423,8 +404,7 @@ img_detrend_boxcar <- function(img, l, purpose = c("FCS", "FFS"),
 
 #' @rdname detrending
 #' @export
-img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
-                            parallel = FALSE) {
+img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS")) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(purpose, c("FCS", "FFS"))) {
     custom_stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
@@ -461,8 +441,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
       }
       out[, , i, ] <- img_detrend_tau_specified(img[, , i, , drop = FALSE],
         tau[[i]], cutoff,
-        purpose = purpose,
-        parallel = parallel
+        purpose = purpose
       ) %>%
         as.vector()
     } else if (is.character(tau[[i]])) {
@@ -470,13 +449,11 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
       if (stringr::str_starts(stringr::coll("auto"), tau[[i]])) {
         auto[[i]] <- TRUE
         tau[[i]] <- best_tau(img[, , i, , drop = FALSE],
-          cutoff = cutoff, purpose = purpose,
-          parallel = parallel
+          cutoff = cutoff, purpose = purpose
         )
         out[, , i, ] <- img_detrend_tau_specified(img[, , i, , drop = FALSE],
           tau[[i]], cutoff,
-          purpose = purpose,
-          parallel = parallel
+          purpose = purpose
         ) %>%
           as.vector()
       } else {
@@ -499,8 +476,7 @@ img_detrend_exp <- function(img, tau, cutoff = 0.05, purpose = c("FCS", "FFS"),
 
 #' @rdname detrending
 #' @export
-img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
-                                parallel = FALSE) {
+img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS")) {
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(purpose, c("FCS", "FFS"))) {
     custom_stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
@@ -543,20 +519,18 @@ img_detrend_polynom <- function(img, degree, purpose = c("FCS", "FFS"),
       }
       out[, , i, ] <- img_detrend_degree_specified(img[, , i, , drop = FALSE],
         degree[[i]],
-        purpose = purpose,
-        parallel = parallel
+        purpose = purpose
       ) %>%
         as.vector()
     } else if (is.character(degree[[i]])) {
       degree[[i]] %<>% tolower()
       if (stringr::str_starts(stringr::coll("auto"), degree[[i]])) {
         degree[[i]] <- best_degree(img[, , i, , drop = FALSE],
-          purpose = purpose, parallel = parallel
+          purpose = purpose
         )
         out[, , i, ] <- img_detrend_degree_specified(img[, , i, , drop = FALSE],
           degree[[i]],
-          purpose = purpose,
-          parallel = parallel
+          purpose = purpose
         ) %>%
           as.vector()
       } else {

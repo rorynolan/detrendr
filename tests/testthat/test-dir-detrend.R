@@ -1,6 +1,5 @@
 test_that("detrending entire derectories works", {
   skip_if(getRversion() < "3.6")
-  skip_on_cran()
   cwd <- setwd(tempdir(check = TRUE))
   on.exit(setwd(cwd))
   orig_files <- c(
@@ -136,7 +135,7 @@ test_that("detrending entire derectories works", {
   ) %>%
     purrr::map(img_detrend_rh, swaps = 222)
   set.seed(1)
-  dir_detrend_rh(swaps = 222, thresh = "tri", msg = FALSE)
+  dir_detrend_rh(swaps = 222, thresh = "tri")
   detrendeds_dir <- dir(pattern = "detrended.*tif$", recursive = TRUE) %>%
     purrr::map(ijtiff::read_tif, msg = FALSE)
   expect_equal(
@@ -201,7 +200,6 @@ test_that("detrending entire derectories works", {
 })
 
 test_that("file_detrend() deals with other directories correctly", {
-  skip_on_cran()
   setwd(tempdir())
   filesstrings::create_dir("tempwithintemp")
   file.copy(

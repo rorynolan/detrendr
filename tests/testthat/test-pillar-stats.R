@@ -59,8 +59,6 @@ test_that("pillar-stats works", {
 })
 
 test_that("parallel pillar stats work", {
-  skip_if_not(get_os() == "linux")
-
   # Create test array
   arr <- array(runif(2 * 3 * 4), dim = c(2, 3, 4))
 
@@ -85,7 +83,7 @@ test_that("parallel pillar stats work", {
   expect_equal(result_medians, expected_medians)
 
   # Test brightness_pillars_
-  expected_brightness <- apply(arr, c(1, 2), brightness)
+  expected_brightness <- apply(arr, c(1, 2), brightness_vec)
   result_brightness <- brightness_pillars_(arr)
   expect_equal(result_brightness, expected_brightness)
 

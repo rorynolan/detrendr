@@ -149,7 +149,7 @@ best_swaps_naive <- function(img) {
   checkmate::assert_array(img, d = 3)
   d <- dim(img)
   n_frames <- d[3]
-  frame_length <- sum(!anyNA_pillars(img))
+  frame_length <- sum(!apply(img, 1:2, anyNA))
   frame_means <- apply(img, 3, mean, na.rm = TRUE)
   sim_mean_b <- NA
   for (i in seq_len(99)) {
@@ -173,7 +173,7 @@ best_swaps_naive <- function(img) {
   }
   sim_px_sums <- sum_rows(sim_mat)
   sim_px_means <- sim_px_sums / ncol(sim_mat)
-  sim_frame_sums <- sum_cols(sim_mat)
+  sim_frame_sums <- colSums(sim_mat)
   sim_frame_sum_mean <- mean(sim_frame_sums)
   frame_weights <- sim_frame_sums - sim_frame_sum_mean
   frame_balls <- frame_weights %T>% {

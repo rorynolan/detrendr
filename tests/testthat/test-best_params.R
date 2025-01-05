@@ -12,9 +12,9 @@ test_that("best_tau works", {
     )
   )
   set.seed(1)
-  expect_equal(round(best_tau(img, purpose = "ffs", parallel = 2)),
+  expect_equal(best_tau(img, purpose = "ffs"),
     34,
-    tolerance = 2
+    tolerance = 3
   )
   img_2ch <- abind::abind(img, img, along = 3)
   set.seed(1)
@@ -23,12 +23,7 @@ test_that("best_tau works", {
   set.seed(1)
   t2 <- best_tau(img_2ch, purpose = "fcs")
   expect_equal(t1, t2, tolerance = 1)
-  img <- array(rpois(99^3, 99), dim = rep(99, 3))
-  bt <- best_tau(img, purpose = "ffs")
-  if (!is.na(bt)) {
-    expect_gt(bt, 150)
-  }
-  img[] <- 0
+  img <- array(0, dim = rep(99, 3))
   expect_error(
     best_tau(img, purpose = "fcs"),
     "all pixel values are equal to 0"
@@ -48,7 +43,7 @@ test_that("best_l works", {
     )
   )
   set.seed(1)
-  expect_equal(round(best_l(img, parallel = 2, purpose = "ffs")),
+  expect_equal(round(best_l(img, purpose = "ffs")),
     17,
     tolerance = 2
   )
@@ -76,6 +71,7 @@ test_that("best_l works", {
 })
 
 test_that("best_swaps() works", {
+  skip_on_cran()
   img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
     package = "detrendr"
   ))

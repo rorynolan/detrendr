@@ -30,7 +30,6 @@ dir_detrend_boxcar(
   l,
   purpose = c("FCS", "FFS"),
   thresh = NULL,
-  parallel = FALSE,
   msg = TRUE
 )
 
@@ -39,7 +38,6 @@ dir_detrend_exp(
   tau,
   purpose = c("FCS", "FFS"),
   thresh = NULL,
-  parallel = FALSE,
   msg = TRUE
 )
 
@@ -48,7 +46,6 @@ dir_detrend_polynom(
   degree,
   purpose = c("FCS", "FFS"),
   thresh = NULL,
-  parallel = FALSE,
   msg = TRUE
 )
 }
@@ -90,10 +87,6 @@ that if \code{purpose} is 'FFS', the time series is corrected for non-stationary
 mean and variance, whereas if \code{purpose} is 'FCS', the time series is
 corrected for non-stationary mean only. \code{purpose} is not required for
 \emph{Robin Hood} detrending.}
-
-\item{parallel}{Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use \code{parallel = TRUE}.}
 
 \item{tau}{The \eqn{tau} parameter for \emph{exponential filtering} detrending.
 This must be a positive number. Set this to "auto" to use Nolan's algorithm

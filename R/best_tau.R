@@ -1,18 +1,15 @@
-rows_detrend_tau_specified <- function(mat, tau, l, purpose, parallel) {
-  smoothed <- exp_smooth_rows(mat, tau, l, parallel = parallel)
+rows_detrend_tau_specified <- function(mat, tau, l, purpose) {
+  smoothed <- exp_smooth_rows(mat, tau, l)
   rows_detrend_smoothed(mat, smoothed,
-    purpose = purpose,
-    parallel = parallel
+    purpose = purpose
   )
 }
 
-rows_detrend_tau_specified_mean_b <- function(mat, tau, l, purpose,
-                                              parallel) {
+rows_detrend_tau_specified_mean_b <- function(mat, tau, l, purpose) {
   rows_detrend_tau_specified(mat, tau, l,
-    purpose = purpose,
-    parallel = parallel
+    purpose = purpose
   ) %>%
-    brightness_rows(parallel = parallel) %>%
+    brightness_rows() %>%
     mean(na.rm = TRUE)
 }
 
@@ -42,12 +39,11 @@ rows_detrend_tau_specified_mean_b <- function(mat, tau, l, purpose,
 #' img <- ijtiff::read_tif(system.file("extdata", "bleached.tif",
 #'   package = "detrendr"
 #' ))[, , 1, ]
-#' best_tau(img, parallel = 2)
+#' best_tau(img, purpose = "FCS")
 #' }
 #'
 #' @export
-best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
-                     purpose = c("FCS", "FFS")) {
+best_tau <- function(img, cutoff = 0.05, purpose = c("FCS", "FFS")) {
   checkmate::assert_numeric(img, lower = 0)
   checkmate::assert_array(img, min.d = 3, max.d = 4)
   if (filesstrings::all_equal(img)) {
@@ -60,24 +56,20 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
     stop("You must choose *either* 'FCS' *or* 'FFS' for `purpose`.")
   }
   purpose %<>% filesstrings::match_arg(c("FCS", "FFS"), ignore_case = TRUE)
-  checkmate::assert(
-    checkmate::check_flag(parallel),
-    checkmate::check_count(parallel)
-  )
   d <- dim(img)
   if (length(d) == 4 && d[3] == 1) {
     d <- d[-3]
     dim(img) <- d
   }
   if (length(d) == 3) {
-    frame_length <- sum(!anyNA_pillars(img))
+    frame_length <- sum(!apply(img, 1:2, anyNA))
     frame_means <- apply(img, 3, mean, na.rm = TRUE)
     sim_brightness <- NA
     for (i in 0:9) {
       if (is.na(sim_brightness)) {
-        sim_mat <- myrpois_frames(frame_means, frame_length, parallel)
+        sim_mat <- myrpois_frames(frame_means, frame_length)
         if (!filesstrings::all_equal(sim_mat)) {
-          sim_brightness <- brightness_rows(sim_mat, parallel = parallel) %>%
+          sim_brightness <- brightness_rows(sim_mat) %>%
             mean(na.rm = TRUE)
         }
       }
@@ -94,13 +86,14 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
     }
     big_tau <- 100
     big_tau_old <- big_tau
-    max_l <- ncol(sim_mat) %>% {
-      (. - 1) + (. - 2)
-    }
+    max_l <- ncol(sim_mat) %>%
+      {
+        (. - 1) + (. - 2)
+      }
     l <- min(floor(-big_tau * log(cutoff)), max_l)
     mean_brightness_big_tau <- rows_detrend_tau_specified_mean_b(
       sim_mat, big_tau, l,
-      purpose = "ffs", parallel = parallel
+      purpose = "ffs"
     )
     if (is.na(mean_brightness_big_tau)) stop(msg)
     mean_brightness_big_tau_old <- mean_brightness_big_tau
@@ -110,7 +103,7 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
       l <- min(floor(-big_tau * log(cutoff)), max_l)
       mean_brightness_big_tau <- rows_detrend_tau_specified_mean_b(
         sim_mat, big_tau, l,
-        purpose = "ffs", parallel = parallel
+        purpose = "ffs"
       )
       if (is.na(mean_brightness_big_tau)) stop(msg)
     }
@@ -120,7 +113,7 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
         l <- min(floor(-big_tau_old * log(cutoff)), max_l)
         mean_brightness_big_tau_old <- rows_detrend_tau_specified_mean_b(
           sim_mat, big_tau_old, l,
-          purpose = "ffs", parallel = parallel
+          purpose = "ffs"
         )
         if (is.na(mean_brightness_big_tau_old)) stop(msg)
       }
@@ -135,7 +128,7 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
       l <- min(floor(-middle_tau * log(cutoff)), max_l)
       middle_brightness_mean <- rows_detrend_tau_specified_mean_b(
         sim_mat, middle_tau, l,
-        purpose = "ffs", parallel = parallel
+        purpose = "ffs"
       )
       if (is.na(middle_brightness_mean)) stop(msg)
       if (middle_brightness_mean < 1) {
@@ -155,8 +148,7 @@ best_tau <- function(img, cutoff = 0.05, parallel = FALSE,
     purrr::map_dbl(
       seq_len(d[3]),
       ~ best_tau(img[, , ., , drop = FALSE],
-        cutoff = cutoff, purpose = purpose,
-        parallel = parallel
+        cutoff = cutoff, purpose = purpose
       )
     )
   }
