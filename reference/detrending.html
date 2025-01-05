@@ -18,7 +18,7 @@ trend) by detrending."><meta property="og:image" content="/logo.png"><!-- mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -75,17 +75,11 @@ trend) by <em>detrending</em>.</p>
 <span></span>
 <span><span class="fu">img_detrend_rh</span><span class="op">(</span><span class="va">img</span>, swaps <span class="op">=</span> <span class="st">"auto"</span>, quick <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="va">l</span>, purpose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FCS"</span>, <span class="st">"FFS"</span><span class="op">)</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="va">l</span>, purpose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FCS"</span>, <span class="st">"FFS"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">img_detrend_exp</span><span class="op">(</span></span>
-<span>  <span class="va">img</span>,</span>
-<span>  <span class="va">tau</span>,</span>
-<span>  cutoff <span class="op">=</span> <span class="fl">0.05</span>,</span>
-<span>  purpose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FCS"</span>, <span class="st">"FFS"</span><span class="op">)</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
+<span><span class="fu">img_detrend_exp</span><span class="op">(</span><span class="va">img</span>, <span class="va">tau</span>, cutoff <span class="op">=</span> <span class="fl">0.05</span>, purpose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FCS"</span>, <span class="st">"FFS"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">img_detrend_polynom</span><span class="op">(</span><span class="va">img</span>, <span class="va">degree</span>, purpose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FCS"</span>, <span class="st">"FFS"</span><span class="op">)</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">img_detrend_polynom</span><span class="op">(</span><span class="va">img</span>, <span class="va">degree</span>, purpose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FCS"</span>, <span class="st">"FFS"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -133,12 +127,6 @@ that if <code>purpose</code> is 'FFS', the time series is corrected for non-stat
 mean and variance, whereas if <code>purpose</code> is 'FCS', the time series is
 corrected for non-stationary mean only. <code>purpose</code> is not required for
 <em>Robin Hood</em> detrending.</p></dd>
-
-
-<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use <code>parallel = TRUE</code>.</p></dd>
 
 
 <dt id="arg-tau">tau<a class="anchor" aria-label="anchor" href="#arg-tau"></a></dt>
@@ -205,14 +193,14 @@ https://doi.org/10.1093/bioinformatics/btx434.</p>
 <span class="r-in"><span>  package <span class="op">=</span> <span class="st">"detrendr"</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">corrected</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_rh</span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="st">"auto"</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected10</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="fl">10</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected50</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="fl">50</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_exp</span><span class="op">(</span><span class="va">img</span>, <span class="st">"auto"</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected10</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_exp</span><span class="op">(</span><span class="va">img</span>, <span class="fl">10</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected50</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_exp</span><span class="op">(</span><span class="va">img</span>, <span class="fl">50</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_polynom</span><span class="op">(</span><span class="va">img</span>, <span class="st">"auto"</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">corrected2</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_polynom</span><span class="op">(</span><span class="va">img</span>, <span class="fl">2</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="st">"auto"</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected10</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="fl">10</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected50</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_boxcar</span><span class="op">(</span><span class="va">img</span>, <span class="fl">50</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_exp</span><span class="op">(</span><span class="va">img</span>, <span class="st">"auto"</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected10</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_exp</span><span class="op">(</span><span class="va">img</span>, <span class="fl">10</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected50</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_exp</span><span class="op">(</span><span class="va">img</span>, <span class="fl">50</span>, purpose <span class="op">=</span> <span class="st">"fcs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_polynom</span><span class="op">(</span><span class="va">img</span>, <span class="st">"auto"</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corrected2</span> <span class="op">&lt;-</span> <span class="fu">img_detrend_polynom</span><span class="op">(</span><span class="va">img</span>, <span class="fl">2</span>, purpose <span class="op">=</span> <span class="st">"ffs"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

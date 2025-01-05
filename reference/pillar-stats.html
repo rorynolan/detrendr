@@ -19,7 +19,7 @@ median and variance of each pillar for each channel."><meta property="og:image" 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -73,13 +73,13 @@ median and variance of each pillar for each channel.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sum_pillars</span><span class="op">(</span><span class="va">img</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sum_pillars</span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">mean_pillars</span><span class="op">(</span><span class="va">img</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">mean_pillars</span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">median_pillars</span><span class="op">(</span><span class="va">img</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">median_pillars</span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">var_pillars</span><span class="op">(</span><span class="va">img</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">var_pillars</span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -91,12 +91,6 @@ median and variance of each pillar for each channel.</p>
 <a href="https://docs.ropensci.org/ijtiff/reference/ijtiff_img.html" class="external-link">ijtiff_img</a> (indexed by <code>img[y, x, channel, frame]</code>)
 or a 3-dimensional array which is a single channel of an
 <a href="https://docs.ropensci.org/ijtiff/reference/ijtiff_img.html" class="external-link">ijtiff_img</a> (indexed by <code>img[y, x, frame]</code>).</p></dd>
-
-
-<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>Would you like to use multiple cores to speed up this
-function? If so, set the number of cores here, or to use all available
-cores, use <code>parallel = TRUE</code>.</p></dd>
 
 </dl></div>
     <div id="value">
