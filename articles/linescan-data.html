@@ -108,7 +108,8 @@ an example in this package. It’s 1,000 time points of a line of 64
 pixels; it has 2 channels.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">linescan_img</span> <span class="op">&lt;-</span> <span class="fu">ijtiff</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/ijtiff/reference/read_tif.html" class="external-link">read_tif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"linescan.tif"</span>,</span>
-<span>                                             package <span class="op">=</span> <span class="st">"detrendr"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  package <span class="op">=</span> <span class="st">"detrendr"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
 <span><span class="co">#&gt;   object 'type_sum.accel' not found</span></span>
 <span><span class="co">#&gt; Reading linescan.tif: an 8-bit, 1000x64 pixel image of</span></span>
