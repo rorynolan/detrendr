@@ -17,3 +17,22 @@ Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
 novel automatic detrending algorithm, Bioinformatics,
 https://doi.org/10.1093/bioinformatics/btx434.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://rorynolan.github.io/detrendr/}
+  \item \url{https://github.com/rorynolan/detrendr#readme}
+  \item Report bugs at \url{https://github.com/rorynolan/detrendr/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Rory Nolan \email{rorynoolan@gmail.com} (\href{https://orcid.org/0000-0002-5239-4043}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Luis Alvarez \email{lalvarez@well.ox.ac.uk} (\href{https://orcid.org/0000-0003-1316-1906}{ORCID}) [contributor, copyright holder]
+  \item Sergi Padilla-Parra \email{spadilla@well.ox.ac.uk} (\href{https://orcid.org/0000-0002-8010-9481}{ORCID}) [contributor, thesis advisor, copyright holder]
+}
+
+}

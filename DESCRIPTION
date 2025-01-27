@@ -1,7 +1,7 @@
 Type: Package
 Package: detrendr
 Title: Detrend Images
-Version: 0.6.16
+Version: 0.6.17
 Authors@R: c(
     person("Rory", "Nolan", , "rorynoolan@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5239-4043")),
@@ -52,6 +52,7 @@ Suggests:
     knitr,
     lattice,
     MASS,
+    magick,
     matrixStats,
     mgcv,
     pacman,
@@ -70,5 +71,5 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 SystemRequirements: GNU make

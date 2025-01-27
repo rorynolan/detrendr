@@ -9,13 +9,13 @@ since then with the *Robin Hood* algorithm and thus contains unpublished
 work.
 
 [![R-CMD-check](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://app.codecov.io/gh/rorynolan/detrendr/branch/master/graph/badge.svg?token=GkXMOLXlAH)](https://app.codecov.io/gh/rorynolan/detrendr)
+[![codecov](https://codecov.io/github/rorynolan/detrendr/graph/badge.svg?token=GkXMOLXlAH)](https://codecov.io/github/rorynolan/detrendr)
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
 ![RStudio CRAN
-downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr)
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/detrendr)
 ![RStudio CRAN monthly
-downloads](http://cranlogs.r-pkg.org/badges/detrendr)
+downloads](https://cranlogs.r-pkg.org/badges/detrendr)
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively

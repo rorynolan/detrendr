@@ -1,3 +1,9 @@
+# `detrendr` 0.6.17
+
+## BUG FIXES
+* Prep for new `ijtiff::display()`.
+
+
 # `detrendr` 0.6.16
 
 ## BUG FIXES

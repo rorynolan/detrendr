@@ -16,11 +16,11 @@ knitr::opts_chunk$set(
 Detrend fluorescence microscopy image series for fluorescence fluctuation and correlation spectroscopy (FCS and FFS) analysis. This package contains functionality published in a 2016 paper https://doi.org/10.1093/bioinformatics/btx434 but it has been extended since then with the _Robin Hood_ algorithm and thus contains unpublished work.
 
 [![R-CMD-check](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rorynolan/detrendr/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://app.codecov.io/gh/rorynolan/detrendr/branch/master/graph/badge.svg?token=GkXMOLXlAH)](https://app.codecov.io/gh/rorynolan/detrendr)
+[![codecov](https://codecov.io/github/rorynolan/detrendr/graph/badge.svg?token=GkXMOLXlAH)](https://codecov.io/github/rorynolan/detrendr)
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
-![RStudio CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/detrendr)
-![RStudio CRAN monthly downloads](http://cranlogs.r-pkg.org/badges/detrendr)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/detrendr)](https://cran.r-project.org/package=detrendr)
+![RStudio CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/detrendr)
+![RStudio CRAN monthly downloads](https://cranlogs.r-pkg.org/badges/detrendr)
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)

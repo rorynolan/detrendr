@@ -20,7 +20,6 @@ if (getRversion() >= "2.15.1") {
 #' for preprocessing in fluorescence fluctuation and correlation spectroscopy
 #' (FFS and FCS).
 #'
-#' @docType package
 #' @name detrendr
 #' @aliases detrendr-package
 #' @references Rory Nolan, Luis A. J. Alvarez, Jonathan Elegheert, Maro
@@ -28,4 +27,4 @@ if (getRversion() >= "2.15.1") {
 #'   Aricescu, Sergi Padilla-Parra; nandb—number and brightness in R with a
 #'   novel automatic detrending algorithm, Bioinformatics,
 #'   https://doi.org/10.1093/bioinformatics/btx434.
-NULL
+"_PACKAGE"
