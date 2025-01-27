@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.17</span>
       </span>
     </div>
 
@@ -92,7 +92,7 @@
       <h1 data-toc-skip>Detrending single images</h1>
                         <h4 data-toc-skip class="author">Rory Nolan</h4>
             
-            <h4 data-toc-skip class="date">2025-01-05</h4>
+            <h4 data-toc-skip class="date">2025-01-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rorynolan/detrendr/blob/master/vignettes/single-images.Rmd" class="external-link"><code>vignettes/single-images.Rmd</code></a></small>
       <div class="hidden name"><code>single-images.Rmd</code></div>
@@ -140,7 +140,7 @@ can see that the second channel has more obvious bleaching.</p>
 <span><span class="co">#&gt; (`stat_smooth()`).</span></span></code></pre>
 <pre><code><span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre>
-<p><img src="single-images_files/figure-html/plot-mean-profile-1.png" width="672"></p>
+<p><img src="single-images_files/figure-html/plot-mean-profile-1.png" width="100%"></p>
 <p>However, notice that channel 2 bleaches from 29 to 27 which is
 approximately 7%. That’s not much, so little correction will be
 necessary. This is good, you should always endeavour to keep bleaching
@@ -186,7 +186,7 @@ method is <em>Huang</em>. Let’s look at both of these channels with
 <span><span class="co">#&gt;   * To install `EBImage`:</span></span>
 <span><span class="co">#&gt;     - Install `BiocManager` with `install.packages("BiocManager")`.</span></span>
 <span><span class="co">#&gt;     - Then run `BiocManager::install("EBImage")`.</span></span></code></pre>
-<p><img src="single-images_files/figure-html/display-thresholded-mean-1.png" width="672"></p>
+<p><img src="single-images_files/figure-html/display-thresholded-mean-1.png" width="100%"></p>
 <p>That seems to have worked: the background region in the top left is
 now greyed out, indicating that it has been set to <code>NA</code>.
 <em>Huang</em> thresholding can be slow, so if you want something
@@ -213,7 +213,7 @@ algorithm, run</p>
 <code class="sourceCode R"><span><span class="va">my_detrended_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detrending.html">img_detrend_robinhood</a></span><span class="op">(</span><span class="va">my_img_threshed</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s check out the mean intensity profiles of this detrended
 image.</p>
-<p><img src="single-images_files/figure-html/plot-detrended-mean-profile-1.png" width="672"></p>
+<p><img src="single-images_files/figure-html/plot-detrended-mean-profile-1.png" width="100%"></p>
 <p>These mean intensity profiles neatly show that the image series has
 been detrended. Beware, however, that these mean intensity profiles are
 not a great way to compare detrending routines. There is the temptation

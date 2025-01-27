@@ -19,7 +19,7 @@ from each. An empty box cannot be drawn from."><meta property="og:image" content
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">detrendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.17</span>
       </span>
     </div>
 
@@ -91,9 +91,8 @@ begin with.</p></dd>
 
 <dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
 <dd><p>A non-negative numeric vector the same length as <code>balls</code>. The
-relative probabilities of drawing a ball from each box. Default is 1 for
-each box, which means each non-empty box has an equal probability of being
-drawn from. If a box becomes empty, its probability becomes zero.</p></dd>
+relative probabilities of drawing a ball from each box. Default is each box
+is equally likely to be drawn from.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -109,9 +108,9 @@ number of balls drawn from each box.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">balls</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span></span>
-<span class="r-in"><span><span class="fu">rfromboxes</span><span class="op">(</span><span class="fl">40</span>, <span class="va">balls</span><span class="op">)</span>  <span class="co"># Each non-empty box has equal probability</span></span></span>
+<span class="r-in"><span><span class="fu">rfromboxes</span><span class="op">(</span><span class="fl">40</span>, <span class="va">balls</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 2 3 4 0 6 5 3 8 8</span>
-<span class="r-in"><span><span class="fu">rfromboxes</span><span class="op">(</span><span class="fl">40</span>, <span class="va">balls</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">9</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Box 10 never drawn from</span></span></span>
+<span class="r-in"><span><span class="fu">rfromboxes</span><span class="op">(</span><span class="fl">40</span>, <span class="va">balls</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">9</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 2 3 4 5 6 7 4 8 0</span>
 </code></pre></div>
     </div>
